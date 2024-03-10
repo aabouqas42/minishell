@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/10 20:44:24 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/10 21:04:26 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS =
 SRC = minishell.c minishell_utils.c
 OBJ = $(SRC:%.c=%.o)
 NAME = minishell
-HEADER = minishell.h
+HEADER = include/minishell.h
 all: $(NAME) $(HEADER)
 
 $(NAME): $(OBJ) $(HEADER)
