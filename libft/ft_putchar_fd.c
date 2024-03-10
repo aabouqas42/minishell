@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:23:51 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/10 20:34:16 by mait-elk         ###   ########.fr       */
+/*   Created: 2023/11/05 18:14:37 by mait-elk          #+#    #+#             */
+/*   Updated: 2023/11/14 09:18:04 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+void	ft_putchar_fd(char c, int fd)
 {
-	
+	if (fd < 0)
+		return ;
+	write(fd, &c, 1);
 }

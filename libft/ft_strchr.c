@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:23:51 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/10 20:34:16 by mait-elk         ###   ########.fr       */
+/*   Created: 2023/11/01 22:07:17 by mait-elk          #+#    #+#             */
+/*   Updated: 2023/11/13 15:36:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+char	*ft_strchr(const char *s, int c)
 {
-	
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (*s == (char)c)
+		return ((char *)s);
+	return (0);
 }

@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:23:51 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/10 20:34:16 by mait-elk         ###   ########.fr       */
+/*   Created: 2023/11/01 21:52:05 by mait-elk          #+#    #+#             */
+/*   Updated: 2023/11/13 14:22:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+int	ft_toupper(int c)
 {
-	
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	return (c);
 }

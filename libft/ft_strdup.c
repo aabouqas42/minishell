@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:23:51 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/10 20:34:16 by mait-elk         ###   ########.fr       */
+/*   Created: 2023/11/07 23:36:27 by mait-elk          #+#    #+#             */
+/*   Updated: 2023/11/13 21:56:33 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+char	*ft_strdup(const char *s1)
 {
-	
+	size_t	i;
+	char	*res;
+
+	i = 0;
+	res = malloc(ft_strlen(s1) + 1);
+	if (!res)
+		return (0);
+	while (*s1)
+	{
+		res[i] = *s1;
+		s1++;
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }

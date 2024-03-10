@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:23:51 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/10 20:34:16 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/03/10 20:24:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef MINISHELL_H
+#define MINISHELL_H
 
-int main(int ac, char **av, char **env)
-{
-	
-}
+
+
+#endif
