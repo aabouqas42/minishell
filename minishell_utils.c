@@ -6,7 +6,13 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:34:26 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/10 20:35:00 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/10 20:38:23 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+void	ft()
+{
+	printf(":)\n");
+}
