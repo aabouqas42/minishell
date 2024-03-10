@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:38:31 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/10 20:42:00 by aabouqas         ###   ########.fr       */
+/*   Created: 2023/11/06 12:31:35 by mait-elk          #+#    #+#             */
+/*   Updated: 2023/12/04 10:54:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	while (1)
+	t_list	*saver;
+
+	if (!lst || !del)
+		return ;
+	while ((*lst))
 	{
-		char *line = readline(">> ");
-		printf("\n[%s]\n", line);
-		free (line);
+		saver = (*lst)->next;
+		del((*lst)->content);
+		free((*lst));
+		*lst = saver;
 	}
 }

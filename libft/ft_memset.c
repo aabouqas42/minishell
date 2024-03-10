@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:38:31 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/10 20:42:00 by aabouqas         ###   ########.fr       */
+/*   Created: 2023/11/02 11:40:26 by mait-elk          #+#    #+#             */
+/*   Updated: 2023/11/11 18:29:30 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	while (1)
+	size_t			i;
+	unsigned char	*buff;
+
+	buff = (unsigned char *)b;
+	i = 0;
+	while (i < len)
 	{
-		char *line = readline(">> ");
-		printf("\n[%s]\n", line);
-		free (line);
+		buff[i] = c;
+		i++;
 	}
+	return (buff);
 }

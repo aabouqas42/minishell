@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:38:31 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/10 20:42:00 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/03/10 20:38:38 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+#define MINISHELL_H
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <readline/readline.h>
 
-int main(int ac, char **av, char **env)
-{
-	while (1)
-	{
-		char *line = readline(">> ");
-		printf("\n[%s]\n", line);
-		free (line);
-	}
-}
+#endif

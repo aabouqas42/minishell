@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:38:31 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/10 20:42:00 by aabouqas         ###   ########.fr       */
+/*   Created: 2023/11/06 10:49:37 by mait-elk          #+#    #+#             */
+/*   Updated: 2023/11/14 10:21:23 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+t_list	*ft_lstlast(t_list *lst)
 {
-	while (1)
+	t_list	*ptr;
+
+	ptr = lst;
+	while (ptr)
 	{
-		char *line = readline(">> ");
-		printf("\n[%s]\n", line);
-		free (line);
+		if (!ptr->next)
+			break ;
+		ptr = ptr->next;
 	}
+	return (ptr);
 }

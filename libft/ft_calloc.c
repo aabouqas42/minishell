@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:38:31 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/10 20:42:00 by aabouqas         ###   ########.fr       */
+/*   Created: 2023/11/07 10:00:58 by mait-elk          #+#    #+#             */
+/*   Updated: 2023/11/13 14:18:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+void	*ft_calloc(size_t count, size_t size)
 {
-	while (1)
-	{
-		char *line = readline(">> ");
-		printf("\n[%s]\n", line);
-		free (line);
-	}
+	char	*res;
+
+	res = malloc(count * size);
+	if (!res)
+		return (0);
+	ft_bzero(res, count * size);
+	return (res);
 }

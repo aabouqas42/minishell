@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_str.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:38:31 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/10 20:42:00 by aabouqas         ###   ########.fr       */
+/*   Created: 2023/11/17 17:44:15 by mait-elk          #+#    #+#             */
+/*   Updated: 2023/12/04 10:42:00 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+int	_prt_char(char c)
 {
-	while (1)
+	return (write(1, &c, 1));
+}
+
+int	_prt_str(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (write(1, "(null)", 6));
+	while (s[i])
 	{
-		char *line = readline(">> ");
-		printf("\n[%s]\n", line);
-		free (line);
+		if (_prt_char(s[i]) == -1)
+			return (-1);
+		i++;
 	}
+	return (i);
 }
