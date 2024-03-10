@@ -3,25 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
+#    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/10 20:44:24 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/10 21:06:24 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-CFLAGS = 
-SRC = minishell.c minishell_utils.c
-OBJ = $(SRC:%.c=%.o)
+CFLAGS = -Wall -Werror -Wextra
+CC = cc $(CFLAGS)
+INC = include/
+SRCS = 
+SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
-HEADER = minishell.h
-all: $(NAME) $(HEADER)
 
-$(NAME): $(OBJ) $(HEADER)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-%.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
+all: $(NAME) 
+
+$(NAME): $(SRCS_O) $(INC)$(NAME).h
+	$(CC) $(NAME).c $(OBJ) -o $(NAME) -I $(INC)
+
+%.o: %.c $(INC)$(NAME).h
+	$(CC) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
+
+fclean: clean 
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: clean

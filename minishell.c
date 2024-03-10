@@ -6,13 +6,13 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:23:51 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/10 20:57:37 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/10 21:08:08 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
-int main(int ac, char **av, char **env)
-{
+// int main(int ac, char **av, char **env)
+// {
 	
-}
+// }
