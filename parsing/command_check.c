@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/12 17:50:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:53:33 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static char	*get_paths_env(char	**env)
 {
-	if (env == NULL || *env == NULL)
-		return (NULL);
 	while (*env)
 	{
 		if (ft_strnstr(*env, "PATH=", ft_strlen(*env)))
@@ -31,8 +29,10 @@ int	is_valid_cmd(char **env, char *cmd, char **dest)
 	char	*tmp;
 	size_t	i;
 
+	if (env == NULL || cmd == NULL || dest == NULL)
+		return (CMD_FAIL);
 	paths = ft_split(get_paths_env(env), ':');
-	if (paths == NULL || cmd == NULL)
+	if (paths == NULL)
 		return (CMD_INVALID);
 	tmp = ft_strjoin("/", cmd);
 	if (tmp == NULL)
