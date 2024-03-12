@@ -6,7 +6,7 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/12 13:11:24 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/03/12 17:06:13 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CFLAGS = -Wall -Werror -Wextra
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
-SRCS = 
+SRCS = parsing/command_check.c
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
 
