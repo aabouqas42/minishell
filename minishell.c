@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:23:51 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/12 17:44:23 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:56:02 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,6 @@ int main(int ac, char **av, char **env)
 		}
 		env++;
 	}
-	// if ( == CMD_VALID)
-		// ft_printf("%s is valid\n", cmd);
-	// else
-		// ft_printf("%s is invalid\n", cmd);
 	printf("^%d^", is_valid_cmd(env, av[1], &cmd));
 	return (EXIT_SUCCESS);
 }
