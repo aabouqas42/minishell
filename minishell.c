@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/12 17:39:53 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:47:19 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void f(int n)
 
 int main(int ac, char **av, char **env)
 {
-	char	**commands;
+	(void)ac;
+	(void)av;
 	char	**paths;
 	char	*cmd;
+	char	**commands;
+	char	*line;
 	int		index;
-	paths = ft_split(get_path(env), ':');
-	int child_pid;
-	char *line;
-	signal(SIGQUIT, f);
-	int ret;
-	while (1)
+	int		child_pid;
+	int		ret;
+	while (*env)
 	{
 		line = readline("aabouqas@aabouqas42$ ");
 		commands = ft_split(line, ' ');
@@ -42,4 +42,5 @@ int main(int ac, char **av, char **env)
 		}
 		while (waitpid(child_pid, &ret, 0) != -1);
 	}
+	return (EXIT_SUCCESS);
 }
