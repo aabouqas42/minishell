@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/11 18:16:52 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/12 12:25:40 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,5 +25,7 @@ $(NAME): $(OBJ) $(HEADER) $(LIBFT)
 	$(CC) $(CFLAGS) -I headers -lreadline -c $< -o $@
 $(LIBFT):
 	make -C libft
+fclean: clean
+	rm -f $(NAME)
 clean:
 	rm -f $(OBJ)

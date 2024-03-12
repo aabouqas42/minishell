@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:38:31 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/11 18:50:58 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:16:03 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,34 @@ int main(int ac, char **av, char **env)
 		// printf("%s\n", env[i++]);
 	// printf("%s\n", env[4]);
 	paths = ft_split(env[4] + 5, ':');
-	// int i = 0;
-	// while (paths[i])
-	// 	printf("[%s]\n", paths[i++]);
 	// char *argv[] = {"ls", "-l", NULL};
 	// printf("%d\n", n);
 	// execv("/bin/ls", argv);
 	// int check;
+	// int e = access("/usr/local/bin/ls", X_OK);
+	// printf("%d\n", e);
+	// exit(0);
+	int child_pid;
+	char *line;
+	line = readline("aabouqas@aabouqas42$ ");
 	while (1)
 	{
-		char *line = readline("$ ");
 		commands = ft_split(line, ' ');
 		index = check_command(paths, commands[0]);
-		if (index != 0)
+		if (index == -1)
 			errexit("command not found\n", NULL);
-		cmd = ft_strjoin(paths[index], ft_strjoin("/", commands[0]));
-		// printf("[%s]\n", commands[0]);
-		// paths[0] -= 4;
+		cmd = ft_strjoin(paths[index], "/");
+		cmd = ft_strjoin(cmd, commands[0]);
+		free(cmd);
 		char *envp[] = { "PATH=/usr/bin", NULL };
-		int n = execve(cmd, commands, envp);
-		printf("[%d %s]\n", n, cmd);
-		free (line);
-		free (cmd);
+		child_pid = fork();
+		if (child_pid == 0)
+		{
+			int n = execve(cmd, commands, envp);
+			free (line);
+			free (cmd);
+		}
+		while (waitpid(child_pid, NULL, 0) != -1);
+		line = readline("aabouqas@aabouqas42$ ");
 	}
 }

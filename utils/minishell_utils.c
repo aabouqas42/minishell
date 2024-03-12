@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/11 18:37:19 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:01:36 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ void	errexit(char *msg, void *to_free)
 int	check_command(char **paths, char *cmd)
 {
 	char	*cmd_path;
+	char	*program;
 	int		i;
 
+	i = 0;
 	while (paths[i])
 	{
-		cmd_path = ft_strjoin(paths[i], cmd);
-		if (cmd_path == NULL)
-			return (-1);
+		program = ft_strjoin("/", cmd);
+		cmd_path = ft_strjoin(paths[i], program);
+		free(program);
 		if (access(cmd_path, X_OK) == 0)
-			return (free (cmd_path), i);
-		free (cmd_path);
+			return (free(cmd_path), i);
 		i++;
 	}
 	return (0);
