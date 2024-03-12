@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/12 17:21:47 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:39:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ int main(int ac, char **av, char **env)
 	{
 		line = readline("aabouqas@aabouqas42$ ");
 		commands = ft_split(line, ' ');
-		index = check_command(paths, commands[0]);
-		cmd = ft_strjoin(paths[index], "/");
-		cmd = ft_strjoin(cmd, commands[0]);
-		free(cmd);
+		index = is_valid_cmd(paths, commands[0], &cmd);
+		printf("[%s]\n", cmd);
 		child_pid = fork();
 		if (child_pid == 0)
 		{

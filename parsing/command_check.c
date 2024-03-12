@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/12 17:23:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:28:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	is_valid_cmd(char **paths, char *cmd, char **dest)
 {
 	char	*tmp;
-	int		status;
 	size_t	i;
 
 	if (paths == NULL || cmd == NULL || *paths == NULL)
@@ -36,3 +35,4 @@ int	is_valid_cmd(char **paths, char *cmd, char **dest)
 	free(tmp);
 	return (CMD_INVALID);
 }
+
