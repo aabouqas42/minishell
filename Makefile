@@ -6,7 +6,7 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/12 17:42:21 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/03/12 17:46:21 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME = minishell
 
 all: $(NAME)
 
-$(NAME): $(SRCS_O) $(INC)$(NAME).h $(LIBFT)
+$(NAME): $(NAME).c $(SRCS_O) $(INC)$(NAME).h $(LIBFT)
 	$(CC) $(NAME).c $(SRCS_O) $(LIBFT) -o $(NAME)
 
 %.o: %.c $(INC)$(NAME).h
@@ -31,7 +31,7 @@ $(LIBFT):
 
 clean:
 	make -C libft/ clean
-	rm -f $(OBJ)
+	rm -f $(SRCS_O)
 
 fclean: clean 
 	make -C libft/ fclean
