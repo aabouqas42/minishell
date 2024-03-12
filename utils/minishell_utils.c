@@ -6,11 +6,11 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/12 15:21:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:21:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../headers/minishell.h"
+# include "../include/minishell.h"
 
 void	errexit(char *msg, void *to_free)
 {

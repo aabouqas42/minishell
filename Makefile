@@ -6,28 +6,37 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/12 15:21:02 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/12 17:19:50 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-CFLAGS = 
-SRC = minishell.c utils/minishell_utils.c 
-OBJ = $(SRC:%.c=%.o)
-NAME = minishell
-HEADER = headers/minishell.h
+CFLAGS = -Wall -Werror -Wextra
+CC = cc $(CFLAGS)
+INC = include/
 LIBFT = libft/libft.a
-all: $(NAME) $(HEADER)
+SRCS = parsing/command_check.c
+SRCS_O = $(SRCS:.c=.o)
+NAME = minishell
 
-$(NAME): $(OBJ) $(HEADER) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -I headers -lreadline -o $(NAME)
-%.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -I headers -lreadline -c $< -o $@
-$(LIBFT):
-	make -C libft
-fclean: clean
-	rm -f $(NAME)
+all: $(NAME)
+
+$(NAME): $(SRCS_O) $(INC)$(NAME).h $(LIBFT)
+	$(CC) $(NAME).c $(OBJ) $(LIBFT) -o $(NAME)
+
+%.o: %.c $(INC)$(NAME).h
+	$(CC) -c $< -o $@
+
+$(LIBFT): 
+	make -C libft/
+
 clean:
+	make -C libft/ clean
 	rm -f $(OBJ)
 
+fclean: clean 
+	make -C libft/ fclean
+	rm -f $(NAME)
+
 re: fclean all
+
+.PHONY: clean

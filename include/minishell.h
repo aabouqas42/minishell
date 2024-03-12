@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/12 12:56:52 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:23:18 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,11 @@
 int		check_command(char **paths, char *cmd);
 void	errexit(char *msg, void *to_free);
 char	*get_path(char **env);
+
+#define CMD_FAIL -1
+#define CMD_INVALID 0
+#define CMD_VALID 1
+
+int	is_valid_cmd(char **paths, char *cmd, char **dest);
 
 #endif
