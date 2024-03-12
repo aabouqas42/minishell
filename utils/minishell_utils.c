@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/12 12:01:36 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:21:51 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,29 @@ int	check_command(char **paths, char *cmd)
 	int		i;
 
 	i = 0;
+	program = ft_strjoin("/", cmd);
 	while (paths[i])
 	{
-		program = ft_strjoin("/", cmd);
 		cmd_path = ft_strjoin(paths[i], program);
-		free(program);
 		if (access(cmd_path, X_OK) == 0)
-			return (free(cmd_path), i);
+			return (free(cmd_path), free (program), i);
+		free(cmd_path);
 		i++;
 	}
-	return (0);
+	free (program);
+	return (-1);
+}
+
+char	*get_path(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strnstr(env[i], "PATH=", ft_strlen(env[i])))
+			return (env[i] + 5);
+		i++;
+	}
+	return (NULL);
 }
