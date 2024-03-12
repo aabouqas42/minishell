@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   free_adv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/12 17:27:24 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/03/12 17:33:13 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/03/12 17:35:42 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <readline/readline.h>
+#include "../include/minishell.h"
 
-#define CMD_FAIL -1
-#define CMD_INVALID 0
-#define CMD_VALID 1
+void	free_2darray(char **array)
+{
+	size_t	i;
 
-int	is_valid_cmd(char **env, char *cmd, char **dest);
-
-
-#endif
+	if (array == NULL)
+		return ;
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}

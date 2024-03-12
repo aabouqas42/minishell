@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:23:51 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/12 17:12:26 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:32:21 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	char *paths;
+	char	*cmd;
 	while (*env)
 	{
 		if (ft_strnstr(*env, "PATH=", ft_strlen(*env)) != NULL)
@@ -26,9 +27,10 @@ int main(int ac, char **av, char **env)
 		}
 		env++;
 	}
-	if (is_valid_cmd(ft_split(paths, ':'), av[1]) == CMD_VALID)
-		ft_printf("%s is valid\n", av[1]);
-	else
-		ft_printf("%s is invalid\n", av[1]);
+	// if ( == CMD_VALID)
+		// ft_printf("%s is valid\n", cmd);
+	// else
+		// ft_printf("%s is invalid\n", cmd);
+	printf("^%d^", is_valid_cmd(env, av[1], &cmd));
 	return (EXIT_SUCCESS);
 }

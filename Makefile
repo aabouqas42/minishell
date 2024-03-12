@@ -6,7 +6,7 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/12 17:06:13 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/03/12 17:16:57 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(SRCS_O) $(INC)$(NAME).h $(LIBFT)
-	$(CC) $(NAME).c $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(NAME).c $(SRCS_O) $(LIBFT) -o $(NAME)
 
 %.o: %.c $(INC)$(NAME).h
 	$(CC) -c $< -o $@
