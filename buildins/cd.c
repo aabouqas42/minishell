@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/13 00:24:28 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/13 02:59:48 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	cd(char *dir_name)
 	char	*temp;
 	char	*path;
 	
+	if (dir_name == NULL)
+		return (-1);
 	if (get_dir_name(dir_name) != NULL)
 	{
 		chdir(dir_name);
