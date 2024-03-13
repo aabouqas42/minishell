@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/13 02:59:15 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 03:33:06 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,28 @@ char	*get_username(char **env)
 	return ("mait-aabouqas");
 }
 
+int	buildins(char **cmd, char *line)
+{
+	if (ft_strncmp(cmd[0], "cd", 2) == 0)
+		return (cd(cmd[1]), 1);
+	if (ft_strncmp(cmd[0], "echo", 5) == 0)
+		return (echo(line + ft_strlen(cmd[0])), 1);
+	return (0);
+}
+
 int	execute(char **env)
 {
 	char	*program_path;
 	char	**cmd;
 	char	*line;
-	// int		child_pid;
 
 	printf("%s@1337 $ ", get_username(env));
 	line = readline(NULL);
 	if (line == NULL || *line == '\0')
 		return (free(line), 0);
 	cmd = ft_split(line, ' ');
-	if (ft_strncmp(cmd[0], "cd", 2) == 0)
-	{
-		cd(cmd[1]);
-		return (0);
-	}
-	if (ft_strncmp(cmd[0], "echo", 4) == 0)
-	{
-		echo(line + ft_strlen(cmd[0]));
-		return (0);
-	}
+	if (buildins(cmd, line))
+		return (free (line), free_2darray(cmd), 1);
 	if (is_valid_cmd(env, cmd[0], &program_path) != CMD_VALID)
 	{
 		printf("\033[31mCommand not found : %s\033[0m\n", line);
@@ -55,7 +55,6 @@ int	execute(char **env)
 		free_2darray(cmd);
 		return (-1);
 	}
-	// child_pid = fork();
 	if (fork() == 0)
 		execve(program_path, cmd, NULL);
 	free (line);
@@ -63,14 +62,8 @@ int	execute(char **env)
 	return (-1);
 }
 
-void f()
-{
-	system("leaks minishell");
-}
-
 int	main(int ac, char **av, char **env)
 {
-	atexit(f);
 	while (1)
 	{
 		execute(env);
