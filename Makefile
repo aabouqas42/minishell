@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/12 18:21:31 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/13 00:19:45 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CFLAGS = -lreadline
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
-SRCS = parsing/command_check.c quick_utils/free_adv.c
+SRCS = parsing/command_check.c quick_utils/free_adv.c buildins/cd.c
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
 
