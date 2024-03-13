@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/13 02:59:15 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:26:20 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	execute(char **env)
 	char	*program_path;
 	char	**cmd;
 	char	*line;
-	// int		child_pid;
+	int		child_pid;
 
 	printf("%s@1337 $ ", get_username(env));
 	line = readline(NULL);
@@ -55,8 +55,8 @@ int	execute(char **env)
 		free_2darray(cmd);
 		return (-1);
 	}
-	// child_pid = fork();
-	if (fork() == 0)
+	child_pid = fork();
+	if (child_pid == 0)
 		execve(program_path, cmd, NULL);
 	free (line);
 	free_2darray(cmd);
