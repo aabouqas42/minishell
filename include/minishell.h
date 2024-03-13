@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/13 01:59:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:23:54 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ int		is_valid_cmd(char **env, char *cmd, char **dest);
 void	free_2darray(char **array);
 int		cd(char *dir_name);
 int		echo(char *args);
-
 
 #endif
