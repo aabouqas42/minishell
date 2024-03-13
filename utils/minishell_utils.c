@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_adv.c                                         :+:      :+:    :+:   */
+/*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 17:33:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/12 17:49:30 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/03/12 17:31:27 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+# include "../include/minishell.h"
 
-void	free_2darray(char **array)
+void	errexit(char *msg, void *to_free)
 {
-	size_t	i;
+	free(to_free);
+	exit(-1);
+}
 
-	if (array == NULL)
-		return ;
+char	*get_path(char **env)
+{
+	int	i;
+
 	i = 0;
-	while (array[i])
+	while (env[i])
 	{
-		free(array[i]);
+		if (ft_strnstr(env[i], "PATH=", ft_strlen(env[i])))
+			return (env[i] + 5);
 		i++;
 	}
-	free(array);
+	return (NULL);
 }
