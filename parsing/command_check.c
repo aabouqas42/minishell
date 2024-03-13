@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/13 00:48:35 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 02:36:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	is_valid_cmd(char **env, char *cmd, char **dest)
 
 	if (env == NULL || cmd == NULL || dest == NULL)
 		return (CMD_FAIL);
+	if (access(cmd, X_OK) == 0)
+		return (*dest = cmd, CMD_VALID);
 	paths = ft_split(get_paths_env(env), ':');
 	if (paths == NULL)
 		return (CMD_INVALID);

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/13 02:22:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 02:45:21 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ int	echo(char *line)
 	j = 1;
 	while (*line == ' ')
 		line++;
-	if (ft_strnstr(line, "-n", ft_strlen(line)))
-		(j = 0, line += 2);
+	if (*line == '-')
+		if (ft_strnstr(line, "-n", ft_strlen(line)))
+			(j = 0, line += 2);
 	while (*line == ' ')
 		line++;
 	while (line[i])
