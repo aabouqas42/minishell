@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/13 15:25:04 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:44:54 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ char	*get_username(char **env)
 
 int	buildins(char **cmd, char *line)
 {
-	if (ft_strncmp(cmd[0], "exit", 4) == 0)
+	if (ft_strncmp(cmd[0], "exit", 4) == 0 && ft_strlen(cmd[0]) == 4)
 		return (exit(0), 1);
-	if (ft_strncmp(cmd[0], "clear", 5) == 0)
+	if (ft_strncmp(cmd[0], "clear", 5) == 0 && ft_strlen(cmd[0]) == 5)
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (ft_strncmp(cmd[0], "cd", 2) == 0)
+	if (ft_strncmp(cmd[0], "cd", 2) == 0 && ft_strlen(cmd[0]) == 2)
 		return (cd(cmd[1]), 1);
-	if (ft_strncmp(cmd[0], "echo", 5) == 0)
+	if (ft_strncmp(cmd[0], "echo", 5) == 0 && ft_strlen(cmd[0]) == 5)
 		return (echo(line + ft_strlen(cmd[0])), 1);
 	return (0);
 }
@@ -42,10 +42,11 @@ int	execute(char **env)
 	char	*line;
 	int		child_pid;
 
-	printf("%s@1337 $ ", get_username(env));
-	line = readline(NULL);
+	// printf("%s@1337 $ ", get_username(env));
+	line = readline("$ > ");
 	if (line == NULL || *line == '\0')
 		return (free(line), 0);
+	add_history(line);
 	cmd = ft_split(line, ' ');
 	if (buildins(cmd, line))
 		return (free (line), free_2darray(cmd), 1);
@@ -62,6 +63,11 @@ int	execute(char **env)
 	free (line);
 	free_2darray(cmd);
 	return (-1);
+}
+
+void f(int s)
+{
+	(void)s;
 }
 
 int	main(int ac, char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/13 14:53:29 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:28:47 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 static char	*get_paths_env(char	**env)
 {
-	while (*env)
-	{
-		if (ft_strnstr(*env, "PATH=", ft_strlen(*env)))
-			return (*env + 5);
-		env++;
-	}
+	char	*paths;
+
+	paths = getenv("PATH");
+	if (paths)
+		return (paths);
 	return (NULL);
 }
 
