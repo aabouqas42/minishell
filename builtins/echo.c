@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/13 16:05:17 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/14 22:49:26 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	echo(char *line)
 	{
 		if (line[i] == '\\' && line[i+1] != '\0')
 			printf("%c", line[i+1]);
-		else if (line[i] != '\"')
+		else if (line[i] != '\"' && line[i] != '\'')
 			printf("%c", line[i]);
 		i++;
 	}

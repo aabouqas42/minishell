@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/14 22:36:53 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:12:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ int	execute(t_data *data)
 	}
 	child_pid = fork();
 	if (child_pid == 0)
-		execve(program_path, cmd, env);
-	free (line);
-	free_2darray(cmd);
+		execve(data->program_path, data->argv, data->env);
 	return (-1);
 }
 
