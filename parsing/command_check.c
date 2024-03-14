@@ -6,50 +6,46 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/13 21:58:52 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/14 22:36:22 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char	*get_paths_env()
+char	*get_paths_env(t_data *data)
 {
 	char	*paths;
 
 	paths = getenv("PATH");
 	if (paths)
 		return (paths);
-	return (NULL);
+	_free(data);
+	exit(-1);
 }
 
-int	is_valid_cmd(char *cmd, char **dest)
+int	is_valid_cmd(t_data *data, char *cmd)
 {
-	char	**paths;
 	char	*tmp;
+	char	*cm;
 	size_t	i;
 
-	if (cmd == NULL || dest == NULL)
+	if (data->env == NULL || cmd == NULL)
 		return (CMD_FAIL);
 	if (access(cmd, X_OK) == 0)
-		return (*dest = cmd, CMD_VALID);
-	paths = ft_split(get_paths_env(), ':');
-	if (paths == NULL)
-		return (CMD_INVALID);
+		return (data->program_path = cmd, CMD_VALID);
 	tmp = ft_strjoin("/", cmd);
 	if (tmp == NULL)
-		return (free_2darray(paths), CMD_FAIL);
+		return (exit(-1), CMD_FAIL);
 	i = 0;
-	while (paths[i])
+	while (data->paths[i])
 	{
-		cmd = ft_strjoin(paths[i], tmp);
-		if (cmd == NULL)
-			return (free_2darray(paths), free(tmp), CMD_FAIL);
-		if (access(cmd, X_OK) == 0)
-			return (free_2darray(paths), free(tmp), *dest = cmd, CMD_VALID);
-		free(cmd);
+		cm = ft_strjoin(data->paths[i], tmp);
+		if (cm == NULL)
+			return (free(tmp), exit(-1), CMD_FAIL);
+		if (access(cm, X_OK) == 0)
+			return (data->program_path = cm, free(tmp), CMD_VALID);
+		free(cm);
 		i++;
 	}
-	free(tmp);
-	free_2darray(paths);
 	return (CMD_INVALID);
 }

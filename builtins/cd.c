@@ -6,7 +6,11 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
+<<<<<<< HEAD:builtins/cd.c
 /*   Updated: 2024/03/13 15:52:18 by mait-elk         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/13 16:01:37 by aabouqas         ###   ########.fr       */
+>>>>>>> 715defb8d36bf1879dbf7a34f44cb31435fd3925:buildins/cd.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +26,11 @@ int	cd(char *dir_name)
 	char	*wd;
 	char	*temp;
 	char	*path;
-	
 	if (dir_name == NULL)
 		return (-1);
+	dir_name += *dir_name == '"';
+	if (ft_strrchr(dir_name, '"') != NULL)
+		*ft_strrchr(dir_name, '"') = '\0';
 	if (get_dir_name(dir_name) != NULL)
 		return (chdir(dir_name), 0);
 	wd = getcwd(NULL, 0);

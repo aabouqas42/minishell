@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_adv.c                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 17:33:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/12 17:49:30 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/03/14 13:35:06 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/03/14 13:40:29 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	free_2darray(char **array)
+int	pwd()
 {
-	size_t	i;
+	char	*working_dir;
 
-	if (array == NULL)
-		return ;
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
+	working_dir = getcwd(NULL, 0);
+	if (working_dir == NULL)
+		return (-1);
+	printf("%s\n", working_dir);
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/13 21:10:15 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/03/14 22:36:10 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
 SRCS = 	parsing/command_check.c \
-		utils/free_adv.c \
-		builtins/cd.c builtins/echo.c
+		utils/minishell_utils.c \
+		buildins/cd.c buildins/echo.c buildins/pwd.c
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
 
