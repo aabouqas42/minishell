@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/14 15:45:47 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:50:26 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	data_init(t_data *data, char **env)
 	data->argv = NULL;
 	data->line = NULL;
 	data->program_path = NULL;
-	data->program_env = NULL;
 	data->paths = NULL;
 	data->env = env;
 	data->promte = get_promte();

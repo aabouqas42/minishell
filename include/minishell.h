@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/14 14:29:23 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:48:41 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_env
 typedef struct s_data
 {
 	char	**env;
-	char	**program_env;
 	char	**argv;
 	char	**paths;
 	char	*promte;

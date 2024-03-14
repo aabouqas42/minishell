@@ -6,40 +6,30 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/14 15:49:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:55:40 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-char	*get_username(char **env)
-{
-	char	*uname;
-
-	uname = getenv("USER");
-	if (uname)
-		return (uname);
-	return ("mait-aabouqas");
-}
-
 int	buildins(t_data *data)
 {
-	if (! ft_strncmp(data->argv[0], "exit", 4) && ft_strlen(data->argv[0]) == 4)
+	if (!ft_strncmp(data->argv[0], "exit", 4) && ft_strlen(data->argv[0]) == 4)
 		return (_free(data), exit(0), 1);
-	if (! ft_strncmp(data->argv[0], "clear", 5) && ft_strlen(data->argv[0]) == 5)
+	if (!ft_strncmp(data->argv[0], "clear", 5) && ft_strlen(data->argv[0]) == 5)
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (! ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
+	if (!ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
 		return (cd(data->argv[1]), 1);
-	if (! ft_strncmp(data->argv[0], "echo", 5) && ft_strlen(data->argv[0]) == 5)
+	if (!ft_strncmp(data->argv[0], "echo", 4) && ft_strlen(data->argv[0]) == 4)
 		return (echo(data->line + ft_strlen(data->argv[0])), 1);
-	if (! ft_strncmp(data->argv[0], "pwd", 3) && ft_strlen(data->argv[0]) == 3)
+	if (!ft_strncmp(data->argv[0], "pwd", 3) && ft_strlen(data->argv[0]) == 3)
 		return (pwd(), 1);
 	return (0);
 }
 
 int	execute(t_data *data)
 {
-	int		child_pid;
+	int	child_pid;
 
 	data->line = readline(data->promte);
 	if (data->line == NULL || *data->line == '\0')
@@ -59,6 +49,11 @@ int	execute(t_data *data)
 	return (-1);
 }
 
+void	f()
+{
+	system("leaks minishell");
+}
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -66,6 +61,7 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 
 	data_init(&data, env);
+	atexit(f);
 	while (1)
 	{
 		execute(&data);
