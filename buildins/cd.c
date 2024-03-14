@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/13 03:47:08 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:01:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ int	cd(char *dir_name)
 	char	*wd;
 	char	*temp;
 	char	*path;
-	
 	if (dir_name == NULL)
 		return (-1);
+	dir_name += *dir_name == '"';
+	if (ft_strrchr(dir_name, '"') != NULL)
+		*ft_strrchr(dir_name, '"') = '\0';
 	if (get_dir_name(dir_name) != NULL)
 		return (chdir(dir_name), 0);
 	wd = getcwd(NULL, 0);

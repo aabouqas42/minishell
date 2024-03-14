@@ -6,28 +6,67 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/12 17:31:27 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:33:01 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/minishell.h"
 
-void	errexit(char *msg, void *to_free)
+void	free_tab(char **array)
 {
-	free(to_free);
-	exit(-1);
-}
+	size_t	i;
 
-char	*get_path(char **env)
-{
-	int	i;
-
+	if (array == NULL)
+		return ;
 	i = 0;
-	while (env[i])
+	while (array[i])
 	{
-		if (ft_strnstr(env[i], "PATH=", ft_strlen(env[i])))
-			return (env[i] + 5);
+		free(array[i]);
 		i++;
 	}
-	return (NULL);
+	free(array);
+}
+
+void	_free(t_data *data)
+{
+	free (data->line);
+	free (data->program_path);
+	free_tab(data->argv);
+	free_tab(data->paths);
+	free (data->promte);
+}
+
+char	*get_promte()
+{
+	char	*promte;
+	char	*user;
+
+	user = getenv("USER");
+	if (user == NULL)
+		user = "mait-aabouqas";
+	promte = ft_strjoin(user, "@1337 $ ");
+	if (promte == NULL)
+		return (free (user), NULL);
+	return (promte);
+}
+
+int	data_init(t_data *data, char **env)
+{
+	char	*paths;
+
+	data->argv = NULL;
+	data->line = NULL;
+	data->program_path = NULL;
+	data->program_env = NULL;
+	data->paths = NULL;
+	data->env = env;
+	data->promte = get_promte();
+	paths = get_paths_env(data);
+	data->paths = ft_split(paths, ':');
+	if (data->paths == NULL)
+	{
+		_free(data);
+		exit(-1);
+	}
+	return (0);
 }
