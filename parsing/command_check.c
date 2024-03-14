@@ -6,13 +6,13 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/13 15:28:47 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 21:58:52 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char	*get_paths_env(char	**env)
+static char	*get_paths_env()
 {
 	char	*paths;
 
@@ -22,17 +22,17 @@ static char	*get_paths_env(char	**env)
 	return (NULL);
 }
 
-int	is_valid_cmd(char **env, char *cmd, char **dest)
+int	is_valid_cmd(char *cmd, char **dest)
 {
 	char	**paths;
 	char	*tmp;
 	size_t	i;
 
-	if (env == NULL || cmd == NULL || dest == NULL)
+	if (cmd == NULL || dest == NULL)
 		return (CMD_FAIL);
 	if (access(cmd, X_OK) == 0)
 		return (*dest = cmd, CMD_VALID);
-	paths = ft_split(get_paths_env(env), ':');
+	paths = ft_split(get_paths_env(), ':');
 	if (paths == NULL)
 		return (CMD_INVALID);
 	tmp = ft_strjoin("/", cmd);

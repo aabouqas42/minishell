@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/13 15:30:32 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 21:11:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define CMD_INVALID 0
 # define CMD_VALID 1
 
-int		is_valid_cmd(char **env, char *cmd, char **dest);
+int		is_valid_cmd(char *cmd, char **dest);
 void	free_2darray(char **array);
 int		cd(char *dir_name);
 int		echo(char *args);

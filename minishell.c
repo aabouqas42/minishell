@@ -6,21 +6,11 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/13 15:44:54 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:59:13 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-char	*get_username(char **env)
-{
-	char	*uname;
-
-	uname = getenv("USER");
-	if (uname)
-		return (uname);
-	return ("mait-aabouqas");
-}
 
 int	buildins(char **cmd, char *line)
 {
@@ -38,30 +28,33 @@ int	buildins(char **cmd, char *line)
 int	execute(char **env)
 {
 	char	*program_path;
-	char	**cmd;
+	char	**argv;
 	char	*line;
 	int		child_pid;
 
-	// printf("%s@1337 $ ", get_username(env));
 	line = readline("$ > ");
 	if (line == NULL || *line == '\0')
 		return (free(line), 0);
 	add_history(line);
-	cmd = ft_split(line, ' ');
-	if (buildins(cmd, line))
-		return (free (line), free_2darray(cmd), 1);
-	if (is_valid_cmd(env, cmd[0], &program_path) != CMD_VALID)
+	argv = ft_split(line, ' ');
+	if (buildins(argv, line))
+		return (free (line), free_2darray(argv), 1);
+	if (is_valid_cmd(argv[0], &program_path) != CMD_VALID)
 	{
 		printf("\033[31mCommand not found : %s\033[0m\n", line);
 		free (line);
-		free_2darray(cmd);
+		free_2darray(argv);
 		return (-1);
 	}
 	child_pid = fork();
 	if (child_pid == 0)
-		execve(program_path, cmd, env);
+	{
+		argv++;
+		// printf("<%s %s>\n", program_path, *cmd);
+		execve(program_path, argv, env);
+	}
 	free (line);
-	free_2darray(cmd);
+	free_2darray(argv);
 	return (-1);
 }
 
