@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/13 02:46:45 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:12:51 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	echo(char *line)
 	{
 		if (line[i] == '\\' && line[i+1] != '\0')
 			printf("%c", line[i+1]);
-		else if (line[i] != '\"')
+		else if (line[i] != '\"' && line[i] != '\'')
 			printf("%c", line[i]);
 		i++;
 	}

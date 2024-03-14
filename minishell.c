@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/14 16:55:40 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:05:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 
 	data_init(&data, env);
-	atexit(f);
 	while (1)
 	{
 		execute(&data);
