@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/14 14:49:06 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:49:16 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ char	*get_username(char **env)
 	return ("mait-aabouqas");
 }
 
-int	buildins(char **cmd, char *line)
+int	buildins(t_data *data)
 {
-	if (ft_strncmp(cmd[0], "exit", 4) == 0 && ft_strlen(cmd[0]) == 4)
-		return (exit(0), 1);
-	if (ft_strncmp(cmd[0], "clear", 5) == 0 && ft_strlen(cmd[0]) == 5)
+	if (! ft_strncmp(data->argv[0], "exit", 4) && ft_strlen(data->argv[0]) == 4)
+		return (_free(data), exit(0), 1);
+	if (! ft_strncmp(data->argv[0], "clear", 5) && ft_strlen(data->argv[0]) == 5)
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (ft_strncmp(cmd[0], "cd", 2) == 0 && ft_strlen(cmd[0]) == 2)
-		return (cd(cmd[1]), 1);
-	if (ft_strncmp(cmd[0], "echo", 5) == 0 && ft_strlen(cmd[0]) == 5)
-		return (echo(line + ft_strlen(cmd[0])), 1);
-	if (ft_strncmp(cmd[0], "pwd", 3) == 0 && ft_strlen(cmd[0]) == 3)
+	if (! ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
+		return (cd(data->argv[1]), 1);
+	if (! ft_strncmp(data->argv[0], "echo", 5) && ft_strlen(data->argv[0]) == 5)
+		return (echo(data->line + ft_strlen(data->argv[0])), 1);
+	if (! ft_strncmp(data->argv[0], "pwd", 3) && ft_strlen(data->argv[0]) == 3)
 		return (pwd(), 1);
 	return (0);
 }
@@ -46,7 +46,7 @@ int	execute(t_data *data)
 		return (0);
 	add_history(data->line);
 	data->argv = ft_split(data->line, ' ');
-	if (buildins(data->argv, data->line))
+	if (buildins(data))
 		return (1);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{
@@ -57,11 +57,6 @@ int	execute(t_data *data)
 	if (child_pid == 0)
 		execve(data->program_path, data->argv, data->env);
 	return (-1);
-}
-
-void f(int s)
-{
-	(void)s;
 }
 
 int	main(int ac, char **av, char **env)
