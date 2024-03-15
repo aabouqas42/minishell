@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/14 18:05:37 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:09:16 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	execute(t_data *data)
 	add_history(data->line);
 	data->argv = ft_split(data->line, ' ');
 	if (buildins(data))
-		return (1);
+		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{
 		printf("\033[31mCommand not found : %s\033[0m\n", data->line);
@@ -65,6 +65,11 @@ int	main(int ac, char **av, char **env)
 	{
 		execute(&data);
 		waitpid(-1, NULL, 0);
+		// printf("%p\n", data.program_path);
+		free (data.program_path);
+		free (data.line);
+		free_tab(data.argv);
+		data.program_path = NULL;
 	}
 	return (EXIT_SUCCESS);
 }
