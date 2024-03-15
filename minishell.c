@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/14 23:12:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:59:47 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	f()
 
 int	main(int ac, char **av, char **env)
 {
+	goto test;
 	(void)ac;
 	(void)av;
 	t_data	data;
@@ -67,5 +68,7 @@ int	main(int ac, char **av, char **env)
 		execute(&data);
 		waitpid(-1, NULL, 0);
 	}
+	test:
+		ft_printf("%d\n", ft_split_argv_counter("      efirbfiuriufbrw \"    offw   ef \" -n  "));
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/14 22:36:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:15:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,9 @@ char	*get_paths_env(t_data *data);
 int		cd(char *dir_name);
 int		echo(char *args);
 int		pwd();
+
+char	**ft_split_argv(char *line);
+size_t	ft_split_argv_counter(char *rdline);
+
 
 #endif
