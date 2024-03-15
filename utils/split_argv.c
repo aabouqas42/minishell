@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/15 15:17:57 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:38:24 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,9 @@ size_t	ft_split_argv_counter(char *rdline)
 			rdline++;
 		while (*rdline && (*rdline != ' ' || found_dqt))
 		{
-			ft_printf("%c", *rdline);
 			ft_switch_binary(&found_dqt, (*rdline == '\"'));
 			rdline++;
 		}
-		ft_printf("\n");
 		wc += (*rdline != '\0');
 	}
 	return (wc);
@@ -43,5 +41,20 @@ size_t	ft_split_argv_counter(char *rdline)
 
 char	**ft_split_argv(char *rdline)
 {
-	return (NULL);
+	char	**argv;
+	size_t	wc;
+	size_t	i;
+
+	i = 0;
+	wc = ft_split_argv_counter(rdline);
+	while (i < wc)
+	{
+		while (*rdline == ' ')
+			rdline++;
+		printf("%s\n", rdline);
+		while (*rdline && *rdline != ' ')
+			rdline++;
+		i++;
+	}
+	return (argv);
 }
