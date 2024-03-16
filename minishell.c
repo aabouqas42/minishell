@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/16 18:05:58 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/16 22:21:20 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	f()
 	system("leaks minishell");
 }
 
-int	main2(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	char **argv;
 	(void)ac;
@@ -80,37 +80,37 @@ int	main2(int ac, char **av, char **env)
 	return (EXIT_SUCCESS);
 }
 
-void leaks()
-{
-	system("leaks minishell");
-}
+// void leaks()
+// {
+// 	system("leaks minishell");
+// }
 
-int main(int ac, char **av, char **env)
-{
-	t_env *head;
-	int i = 0;
+// int main(int ac, char **av, char **env)
+// {
+// 	t_env *head;
+// 	int i = 0;
 
-	head = NULL;
+// 	head = NULL;
 
-	printf("------------------\n");
-	atexit(leaks);
-	while (env[i])
-	{
-		char *value = (ft_strchr(env[i], '=') + 1);
-		*(value-1) = '\0';
-		char *name = env[i];
-		env_export(name, value, &head);
-		// env_unset(name, &head);
-		i++;
-	}
-	env_print(head);
-	// i = 0;
-	// while (env[i])
-	// {
-	// 	char *value = (ft_strchr(env[i], '=') + 1);
-	// 	*(value-1) = '\0';
-	// 	char *name = env[i];
-	// 	env_export(name, value, &head);
-	// 	i++;
-	// }
-}
+// 	printf("------------------\n");
+// 	atexit(leaks);
+// 	while (env[i])
+// 	{
+// 		char *value = (ft_strchr(env[i], '=') + 1);
+// 		*(value-1) = '\0';
+// 		char *name = env[i];
+// 		env_export(name, value, &head);
+// 		// env_unset(name, &head);
+// 		i++;
+// 	}
+// 	env_print(head);
+// 	// i = 0;
+// 	// while (env[i])
+// 	// {
+// 	// 	char *value = (ft_strchr(env[i], '=') + 1);
+// 	// 	*(value-1) = '\0';
+// 	// 	char *name = env[i];
+// 	// 	env_export(name, value, &head);
+// 	// 	i++;
+// 	// }
+// }
