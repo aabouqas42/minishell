@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/15 17:35:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:51:31 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ void	f()
 	system("leaks minishell");
 }
 
-int	main(int ac, char **av, char **env)
+int	main2(int ac, char **av, char **env)
 {
-	goto test;
 	(void)ac;
 	(void)av;
 	t_data	data;
@@ -68,7 +67,17 @@ int	main(int ac, char **av, char **env)
 		execute(&data);
 		waitpid(-1, NULL, 0);
 	}
-	test:
-		ft_printf("%s\n", ft_split_argv("hello world")[0]);
 	return (EXIT_SUCCESS);
+}
+
+int main()
+{
+	t_env *head;
+
+	head = NULL;
+
+	env_add("key", "value", &head);
+	env_add("key1", "value2", &head);
+	env_add("key2", "value3", &head);
+	env_print(head);
 }

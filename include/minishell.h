@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/15 12:15:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:45:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,17 @@
 # define CMD_INVALID 0
 # define CMD_VALID 1
 
+/*	ENV LIST	*/
 typedef struct s_env
 {
-	char	*var;
-	struct s_env *next;
+	char			*name;
+	char			*value;
+	struct s_env	*next;
 }	t_env;
+
+int		env_add(char *name, char *value, t_env **env);
+void	env_print(t_env	*head);
+/*	END ENV LIST	*/
 
 typedef struct s_data
 {
@@ -40,6 +46,7 @@ typedef struct s_data
 	char	*line;
 	char	*program_path;
 }	t_data;
+
 
 int		is_valid_cmd(t_data *data, char *cmd);
 int		data_init(t_data *data, char **env);
