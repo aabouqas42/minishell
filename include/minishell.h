@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/14 16:48:41 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:30:14 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,15 @@ int		cd(char *dir_name);
 int		echo(char *args);
 int		pwd();
 
+char	**_split(char *line, char c);
+size_t	word_counter(char *rdline);
+
+int	wc(char *s)
+
+
+
+
+
+
+;
 #endif

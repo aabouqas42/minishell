@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/15 17:09:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:48:44 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,26 @@ void	f()
 
 int	main(int ac, char **av, char **env)
 {
+	char **argv;
 	(void)ac;
 	(void)av;
 	t_data	data;
 
 	data_init(&data, env);
+	int i = 0;
 	while (1)
 	{
 		execute(&data);
 		waitpid(-1, NULL, 0);
-		// printf("%p\n", data.program_path);
 		free (data.program_path);
 		free (data.line);
 		free_tab(data.argv);
 		data.program_path = NULL;
 	}
+	// test:
+	// 	printf("%d\n", wc("   hello    hhhh  \"hello :)\" d c c"));
+	// 	// argv = ft_split(readline("> "), ' ');
+	// 	// while (argv[i])
+	// 		// ft_printf("%s\n", argv[i++]);
 	return (EXIT_SUCCESS);
 }
