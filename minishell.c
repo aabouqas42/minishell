@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/16 03:03:01 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:33:58 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	execute(t_data *data)
 	add_history(data->line);
 	data->argv = ft_split(data->line, ' ');
 	if (buildins(data))
-		return (1);
+		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{
 		printf("\033[31mCommand not found : %s\033[0m\n", data->line);
@@ -56,17 +56,27 @@ void	f()
 
 int	main2(int ac, char **av, char **env)
 {
+	char **argv;
 	(void)ac;
 	(void)av;
 	t_data	data;
 
 	data_init(&data, env);
-	atexit(f);
+	int i = 0;
 	while (1)
 	{
 		execute(&data);
 		waitpid(-1, NULL, 0);
+		free (data.program_path);
+		free (data.line);
+		free_tab(data.argv);
+		data.program_path = NULL;
 	}
+	// test:
+	// 	printf("%d\n", wc("   hello    hhhh  \"hello :)\" d c c"));
+	// 	// argv = ft_split(readline("> "), ' ');
+	// 	// while (argv[i])
+	// 		// ft_printf("%s\n", argv[i++]);
 	return (EXIT_SUCCESS);
 }
 

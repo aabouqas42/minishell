@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:35:06 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/14 13:40:29 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:33:02 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int	pwd()
 	if (working_dir == NULL)
 		return (-1);
 	printf("%s\n", working_dir);
+	free(working_dir);
 	return (0);
 }
