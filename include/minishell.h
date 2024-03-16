@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/16 16:30:44 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:08:33 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-int		env_add(char *name, char *value, t_env **env);
+int		env_export(char *name, char *value, t_env **env);
+int		env_unset(char *name, t_env **env);
 void	env_print(t_env	*head);
 /*	END ENV LIST	*/
 

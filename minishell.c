@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/16 17:55:19 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:49:59 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	f()
 
 int	main(int ac, char **av, char **env)
 {
+	char **argv;
 	(void)ac;
 	(void)av;
 	t_data	data;
@@ -72,23 +73,45 @@ int	main(int ac, char **av, char **env)
 		free_tab(data.argv);
 		data.program_path = NULL;
 	}
-	// char **argv;
-	// here:
-	// 	argv = _split("echo -n \"   hello world   \" --static    ", ' ');
-	// 	i = 0;
-	// 	while (argv[i])
-	// 		printf("%s\n", argv[i++]);
+	// test:
+	// 	printf("%d\n", wc("   hello    hhhh  \"hello :)\" d c c"));
+	// 	// argv = ft_split(readline("> "), ' ');
+	// 	// while (argv[i])
+	// 		// ft_printf("%s\n", argv[i++]);
 	return (EXIT_SUCCESS);
 }
 
-// int main()
+void leaks()
+{
+	system("leaks minishell");
+}
+
+// int main(int ac, char **av, char **env)
 // {
 // 	t_env *head;
+// 	int i = 0;
 
-// 	head = NULL;
+// // 	head = NULL;
 
-// 	env_add("key", "value", &head);
-// 	env_add("key1", "value2", &head);
-// 	env_add("key2", "value3", &head);
+// 	printf("------------------\n");
+// 	atexit(leaks);
+// 	while (env[i])
+// 	{
+// 		char *value = (ft_strchr(env[i], '=') + 1);
+// 		*(value-1) = '\0';
+// 		char *name = env[i];
+// 		env_export(name, value, &head);
+// 		// env_unset(name, &head);
+// 		i++;
+// 	}
 // 	env_print(head);
+// 	// i = 0;
+// 	// while (env[i])
+// 	// {
+// 	// 	char *value = (ft_strchr(env[i], '=') + 1);
+// 	// 	*(value-1) = '\0';
+// 	// 	char *name = env[i];
+// 	// 	env_export(name, value, &head);
+// 	// 	i++;
+// 	// }
 // }
