@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/16 02:48:44 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:55:19 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute(t_data *data)
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = ft_split(data->line, ' ');
+	data->argv = _split(data->line, ' ');
 	if (buildins(data))
 		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
@@ -56,11 +56,11 @@ void	f()
 
 int	main(int ac, char **av, char **env)
 {
-	char **argv;
 	(void)ac;
 	(void)av;
 	t_data	data;
 
+	// goto here;
 	data_init(&data, env);
 	int i = 0;
 	while (1)
@@ -72,10 +72,23 @@ int	main(int ac, char **av, char **env)
 		free_tab(data.argv);
 		data.program_path = NULL;
 	}
-	// test:
-	// 	printf("%d\n", wc("   hello    hhhh  \"hello :)\" d c c"));
-	// 	// argv = ft_split(readline("> "), ' ');
-	// 	// while (argv[i])
-	// 		// ft_printf("%s\n", argv[i++]);
+	// char **argv;
+	// here:
+	// 	argv = _split("echo -n \"   hello world   \" --static    ", ' ');
+	// 	i = 0;
+	// 	while (argv[i])
+	// 		printf("%s\n", argv[i++]);
 	return (EXIT_SUCCESS);
 }
+
+// int main()
+// {
+// 	t_env *head;
+
+// 	head = NULL;
+
+// 	env_add("key", "value", &head);
+// 	env_add("key1", "value2", &head);
+// 	env_add("key2", "value3", &head);
+// 	env_print(head);
+// }

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/16 02:30:14 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:30:44 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,17 @@
 # define CMD_INVALID 0
 # define CMD_VALID 1
 
+/*	ENV LIST	*/
 typedef struct s_env
 {
-	char	*var;
-	struct s_env *next;
+	char			*name;
+	char			*value;
+	struct s_env	*next;
 }	t_env;
+
+int		env_add(char *name, char *value, t_env **env);
+void	env_print(t_env	*head);
+/*	END ENV LIST	*/
 
 typedef struct s_data
 {
@@ -41,6 +47,7 @@ typedef struct s_data
 	char	*program_path;
 }	t_data;
 
+
 int		is_valid_cmd(t_data *data, char *cmd);
 int		data_init(t_data *data, char **env);
 void	_free(t_data *data);
@@ -49,16 +56,9 @@ char	*get_paths_env(t_data *data);
 int		cd(char *dir_name);
 int		echo(char *args);
 int		pwd();
-
 char	**_split(char *line, char c);
 size_t	word_counter(char *rdline);
 
-int	wc(char *s)
-
-
-
-
-
-
-;
+char	*get_line(char *str);
+int	wc(char *s);
 #endif
