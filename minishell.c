@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/16 16:33:58 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:05:58 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,37 @@ int	main2(int ac, char **av, char **env)
 	return (EXIT_SUCCESS);
 }
 
-int main()
+void leaks()
+{
+	system("leaks minishell");
+}
+
+int main(int ac, char **av, char **env)
 {
 	t_env *head;
+	int i = 0;
 
 	head = NULL;
 
-	env_add("key", "value", &head);
-	env_add("key1", "value2", &head);
-	env_add("key2", "value3", &head);
+	printf("------------------\n");
+	atexit(leaks);
+	while (env[i])
+	{
+		char *value = (ft_strchr(env[i], '=') + 1);
+		*(value-1) = '\0';
+		char *name = env[i];
+		env_export(name, value, &head);
+		// env_unset(name, &head);
+		i++;
+	}
 	env_print(head);
+	// i = 0;
+	// while (env[i])
+	// {
+	// 	char *value = (ft_strchr(env[i], '=') + 1);
+	// 	*(value-1) = '\0';
+	// 	char *name = env[i];
+	// 	env_export(name, value, &head);
+	// 	i++;
+	// }
 }
