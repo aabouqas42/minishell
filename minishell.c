@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/16 22:58:00 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:41:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute(t_data *data)
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = ft_split(data->line, ' ');
+	data->argv = _split(data->line, ' ');
 	if (buildins(data))
 		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
@@ -54,72 +54,64 @@ void	f()
 	system("leaks minishell");
 }
 
-// int	main(int ac, char **av, char **env)
-// {
-// 	char **argv;
-// 	(void)ac;
-// 	(void)av;
-// 	t_data	data;
+int	main(int ac, char **av, char **env)
+{
+	char **argv;
+	(void)ac;
+	(void)av;
+	t_data	data;
 
-// 	data_init(&data, env);
-// 	int i = 0;
-// 	while (1)
-// 	{
-// 		execute(&data);
-// 		waitpid(-1, NULL, 0);
-// 		free (data.program_path);
-// 		free (data.line);
-// 		free_tab(data.argv);
-// 		data.program_path = NULL;
-// 	}
-// 	// test:
-// 	// 	printf("%d\n", wc("   hello    hhhh  \"hello :)\" d c c"));
-// 	// 	// argv = ft_split(readline("> "), ' ');
-// 	// 	// while (argv[i])
-// 	// 		// ft_printf("%s\n", argv[i++]);
-// 	return (EXIT_SUCCESS);
-// }
+	// goto here;
+	data_init(&data, env);
+	int i = 0;
+	while (1)
+	{
+		execute(&data);
+		waitpid(-1, NULL, 0);
+		free (data.program_path);
+		free (data.line);
+		free_tab(data.argv);
+		data.program_path = NULL;
+	}
+	// test:
+	// 	printf("%d\n", wc("   hello    hhhh  \"hello :)\" d c c"));
+	// 	// argv = ft_split(readline("> "), ' ');
+	// 	// while (argv[i])
+	// 		// ft_printf("%s\n", argv[i++]);
+	return (EXIT_SUCCESS);
+}
 
 void leaks()
 {
 	system("leaks minishell");
 }
 
-int main(int ac, char **av, char **env)
-{
-	t_env *head;
-	int i = 0;
+// int main(int ac, char **av, char **env)
+// {
+// 	t_env *head;
+// 	int i = 0;
 
-	head = NULL;
+// // 	head = NULL;
 
-	printf("------------------\n");
-	atexit(leaks);
-	while (env[i])
-	{
-		char *value = ft_strdup((ft_strchr(env[i], '=') + 1));
-		*(value-1) = '\0';
-		char *name = env[i];
-		env_export(name, value, &head);
-		free(value);
-		i++;
-	}
-	env_print(head);
-	i = 0;
-	while (env[i])
-	{
-		char *value = (ft_strchr(env[i], '=') + 1);
-		*(value-1) = '\0';
-		char *name = env[i];
-		env_unset(name, &head);
-		i++;
-	}
-	// i = 0;
-	// while (env[i])
-	// {
-	// 	char *value = (ft_strchr(env[i], '=') + 1);
-	// 	*(value-1) = '\0';
-	// 	char *name = env[i];
-	// 	env_export(name, value, &head);
-	// 	i++;
-	// }
-}
+// 	printf("------------------\n");
+// 	atexit(leaks);
+// 	while (env[i])
+// 	{
+// 		char *value = (ft_strchr(env[i], '=') + 1);
+// 		*(value-1) = '\0';
+// 		char *name = env[i];
+// 		env_export(name, value, &head);
+// 		// env_unset(name, &head);
+// 		i++;
+// 	}
+// 	env_print(head);
+// 	// i = 0;
+// 	// while (env[i])
+// 	// {
+// 	// 	char *value = (ft_strchr(env[i], '=') + 1);
+// 	// 	*(value-1) = '\0';
+// 	// 	char *name = env[i];
+// 	// 	env_export(name, value, &head);
+// 	// 	i++;
+// 	// }
+// }

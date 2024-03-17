@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/16 22:56:56 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:41:19 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ char	*get_paths_env(t_data *data);
 int		cd(char *dir_name);
 int		echo(char *args);
 int		pwd();
-
 char	**_split(char *line, char c);
 size_t	word_counter(char *rdline);
 
+char	*get_line(char *str);
 int	wc(char *s);
 #endif
