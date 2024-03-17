@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/16 17:37:49 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/16 22:47:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,11 @@ int	env_export(char *name, char *value, t_env **env)
 
 void	env_print(t_env	*head)
 {
-	printf("------------------\n");
 	while (head)
 	{
 		printf("%s=%s\n", head->name, head->value);
 		head = head->next;
 	}
-	printf("------------------\n");
 }
 
 int	env_unset(char *name, t_env **env)
@@ -80,20 +78,16 @@ int	env_unset(char *name, t_env **env)
 		return (1);
 	if (ft_strncmp(tmp->name, name, ft_strlen(name)) == 0)
 	{
-		printf("[ deleting %s ]\n", tmp->name);
 		*env = (*env)->next;
-		env_memfree(tmp);
-		return (1);
+		return (env_memfree(tmp), 1);
 	}
 	while (tmp->next)
 	{
 		if (ft_strncmp(tmp->next->name, name, ft_strlen(name)) == 0)
 		{
-			printf("[ deleting %s ]\n", tmp->name);
 			todelete = tmp->next;
 			tmp->next = tmp->next->next;
-			env_memfree(todelete);
-			return (1);
+			return (env_memfree(todelete), 1);
 		}
 		tmp = tmp->next;
 	}
