@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_sort.c                                         :+:      :+:    :+:   */
+/*   env_list2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 01:25:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 15:22:36 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/03/16 22:47:45 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/03/16 22:56:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	env_sort(t_env *env)
+size_t	env_size(t_env *env_head)
 {
-	t_env	*temp;
-	char	c;
+	size_t	i;
 
-	c = 0;
-	while (c != 127)
+	i = 0;
+	while (env_head)
 	{
-		temp = env;
-		while (temp)
-		{
-			if (*temp->name == c)
-				printf("%s=%s\n", temp->name, temp->value);
-			temp = temp->next;
-		}
-		c++;
+		i++;
+		env_head = env_head->next;
 	}
+	return (i);
+}
+
+void	env_list_sort(t_env	**env)
+{
+	//SORT IT
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 01:52:38 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:55:20 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,8 @@ int	main(int ac, char **av, char **env)
 		waitpid(-1, NULL, 0);
 		free (data.program_path);
 		free (data.line);
-		free_tab(data.argv);
+		// free_tab(data.argv);
 		data.program_path = NULL;
-		
-		
 	}
 	// here:
 	// // 	// argv = ft_split(readline("> "), ' ');

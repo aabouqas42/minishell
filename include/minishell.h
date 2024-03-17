@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 02:35:59 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:23:04 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ typedef struct s_env
 {
 	char			*name;
 	char			*value;
-	int				printed;
 	struct s_env	*next;
 }	t_env;
 
 int		env_export(char *name, char *value, t_env **env);
 int		env_unset(char *name, t_env **env);
+size_t	env_size(t_env *env_head);
 void	env_print(t_env	*head);
 /*	END ENV LIST	*/
 
@@ -62,11 +62,6 @@ int		pwd();
 void	env_sort(t_env *env);
 char	**_split(char *line, char c);
 size_t	word_counter(char *rdline);
-
 char	*get_line(char *str);
-
-
-int	wrdc(char *str);
-
 
 #endif
