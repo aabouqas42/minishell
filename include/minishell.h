@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 03:41:19 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:46:21 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_env
 {
 	char			*name;
 	char			*value;
+	int				printed;
 	struct s_env	*next;
 }	t_env;
 
@@ -41,6 +42,7 @@ void	env_print(t_env	*head);
 
 typedef struct s_data
 {
+	t_env	*_env;
 	char	**env;
 	char	**argv;
 	char	**paths;
@@ -58,9 +60,14 @@ char	*get_paths_env(t_data *data);
 int		cd(char *dir_name);
 int		echo(char *args);
 int		pwd();
+void	env_sort(t_env *env);
 char	**_split(char *line, char c);
 size_t	word_counter(char *rdline);
 
 char	*get_line(char *str);
-int	wc(char *s);
+
+
+int	wrdc(char *str);
+
+
 #endif

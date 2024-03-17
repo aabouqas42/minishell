@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/16 22:47:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:46:14 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static t_env	*env_create(char *name, char *value)
 	if (env->value == NULL)
 		return (free(env->name), NULL);
 	env->next = NULL;
+	env->printed = 0;
 	return (env);
 }
 
@@ -59,11 +60,13 @@ int	env_export(char *name, char *value, t_env **env)
 
 void	env_print(t_env	*head)
 {
+	// printf("------------------\n");
 	while (head)
 	{
 		printf("%s=%s\n", head->name, head->value);
 		head = head->next;
 	}
+	// printf("------------------\n");
 }
 
 int	env_unset(char *name, t_env **env)

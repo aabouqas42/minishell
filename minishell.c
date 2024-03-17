@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 03:41:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:45:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	buildins(t_data *data)
 {
 	if (!ft_strncmp(data->argv[0], "exit", 4) && ft_strlen(data->argv[0]) == 4)
 		return (_free(data), exit(0), 1);
-	if (!ft_strncmp(data->argv[0], "clear", 5) && ft_strlen(data->argv[0]) == 5)
+	if (!ft_strncmp(data->argv[0], "c", 5) && ft_strlen(data->argv[0]) == 1)
 		return (printf("\e[1;1H\e[2J"), 1);
 	if (!ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
 		return (cd(data->argv[1]), 1);
@@ -24,6 +24,8 @@ int	buildins(t_data *data)
 		return (echo(data->line + ft_strlen(data->argv[0])), 1);
 	if (!ft_strncmp(data->argv[0], "pwd", 3) && ft_strlen(data->argv[0]) == 3)
 		return (pwd(), 1);
+	if (!ft_strncmp(data->argv[0], "export", 6) && ft_strlen(data->argv[0]) == 6)
+		return (env_sort(data->_env), 1);
 	return (0);
 }
 
@@ -63,6 +65,7 @@ int	main(int ac, char **av, char **env)
 
 	// goto here;
 	data_init(&data, env);
+	// printf("%s=%s", data._env->name, data._env->name);
 	int i = 0;
 	while (1)
 	{
@@ -72,46 +75,15 @@ int	main(int ac, char **av, char **env)
 		free (data.line);
 		free_tab(data.argv);
 		data.program_path = NULL;
+		
+		
 	}
-	// test:
-	// 	printf("%d\n", wc("   hello    hhhh  \"hello :)\" d c c"));
-	// 	// argv = ft_split(readline("> "), ' ');
-	// 	// while (argv[i])
-	// 		// ft_printf("%s\n", argv[i++]);
+	// here:
+	// // 	// argv = ft_split(readline("> "), ' ');
+	// argv = _split("          hello hhhh \"test hhhhh \":)\"\" hh test \"l\"", ' ');
+	// // printf("[%s]\n", argv[0]); 
+	// 	while (argv[i])
+	// 		ft_printf("%s\n", argv[i++]);
+	// 	// printf("%d\n", wrdc("          hello hhhh \"test hhhhh \":)\"\" hh test \"\""));
 	return (EXIT_SUCCESS);
 }
-
-void leaks()
-{
-	system("leaks minishell");
-}
-
-// int main(int ac, char **av, char **env)
-// {
-// 	t_env *head;
-// 	int i = 0;
-
-// // 	head = NULL;
-
-// 	printf("------------------\n");
-// 	atexit(leaks);
-// 	while (env[i])
-// 	{
-// 		char *value = (ft_strchr(env[i], '=') + 1);
-// 		*(value-1) = '\0';
-// 		char *name = env[i];
-// 		env_export(name, value, &head);
-// 		// env_unset(name, &head);
-// 		i++;
-// 	}
-// 	env_print(head);
-// 	// i = 0;
-// 	// while (env[i])
-// 	// {
-// 	// 	char *value = (ft_strchr(env[i], '=') + 1);
-// 	// 	*(value-1) = '\0';
-// 	// 	char *name = env[i];
-// 	// 	env_export(name, value, &head);
-// 	// 	i++;
-// 	// }
-// }
