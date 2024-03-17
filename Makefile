@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
+#    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/17 15:38:44 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/03/17 17:25:19 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
 SRCS = 	parsing/command_check.c \
-		utils/minishell_utils.c utils/ft_split.c utils/env_list.c utils/env_sort.c utils/split_argv.c \
+		utils/minishell_utils.c utils/ft_split.c utils/env_list.c utils/env_sort.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell

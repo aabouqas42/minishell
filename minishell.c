@@ -6,13 +6,13 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 18:33:35 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:19:19 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	buildins(t_data *data)
+int	builtins(t_data *data)
 {
 	if (!ft_strncmp(data->argv[0], "exit", 4) && ft_strlen(data->argv[0]) == 4)
 		return (_free(data), exit(0), 1);
@@ -37,8 +37,8 @@ int	execute(t_data *data)
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = _split(data->line, ' ');
-	if (buildins(data))
+	data->argv = _split(data->line);
+	if (builtins(data))
 		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{
@@ -63,7 +63,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	t_data	data;
 
-	goto here;
+	// goto here;
 	data_init(&data, env);
 	while (1)
 	{
@@ -74,13 +74,19 @@ int	main(int ac, char **av, char **env)
 		// free_tab(data.argv);
 		data.program_path = NULL;
 	}
-	here:
-		while(1)
-		{
-		// 	int i = 0;
-			argv = ft_split_argv(readline("\n>> "));
-		// 	while (argv[i])
-		// 		ft_printf("%s\n", argv[i++]);
-		}
-	return (EXIT_SUCCESS);
+	// here:
+	// 	// printf("%s\n", ft_strndup("hello \"test\"", 5));
+	// 	while(1)
+	// 	{
+	// 		int i = 0;
+	// 		char	*line = readline("\n>> ");
+	// 		argv = _split(line);
+	// 		add_history(line);
+	// 		free(line);
+	// 		while (argv[i])
+	// 			ft_printf("%s\n", argv[i++]);
+	// 		// sleep(2);
+	// 		// printf("\e[1;1H\e[2J");
+	// 	}
+	// return (EXIT_SUCCESS);
 }

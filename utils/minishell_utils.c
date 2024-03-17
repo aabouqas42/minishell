@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 15:28:10 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:15:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,17 @@ int	data_init(t_data *data, char **env)
 		i++;
 	}
 	return (0);
+}
+
+size_t	env_size(t_env *env_head)
+{
+	size_t	i;
+
+	i = 0;
+	while (env_head)
+	{
+		i++;
+		env_head = env_head->next;
+	}
+	return (i);
 }
