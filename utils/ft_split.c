@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 18:02:54 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:13:26 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,29 @@ size_t	argument_count(char *rdline)
 char	*ft_strndup(const char *str, size_t n)
 {
 	size_t	i;
+	size_t	size;
+	size_t	j;
 	char	*res;
 
 	if (str == NULL)
 		return (NULL);
-	res = malloc(n + 1);
-	if (res == NULL)
-		return (0);
 	i = 0;
+	size = 0;
 	while (str[i] && i < n)
+		size += (str[i++] != '"');
+	res = malloc(size + 1);
+	if (res == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i] && j < size)
 	{
-		res[i] = str[i];
+		if (str[i] != '"')
+			res[j++] = str[i];
 		i++;
 	}
-	res[i] = '\0';
+	res[j] = '\0';
+	printf("str : [%s] res [%s]\n", str, res);
 	return (res);
 }
 
@@ -63,31 +72,27 @@ char	**_split(char *str)
 {
 	int		found_dqt;
 	char	**argv;
+	size_t	size;
 	size_t	wc;
 	size_t	i;
-	size_t	size;
 
 	i = 0;
+	found_dqt = 0;
 	wc = argument_count(str);
 	argv = malloc ((wc + 1) * sizeof(char *));
 	if (argv == NULL)
 		return (NULL);
-	found_dqt = 0;
 	while (i < wc)
 	{
 		size = 0;
 		while (*str == ' ')
 			str++;
-		while (str[size] && (str[size] != ' ' || found_dqt))
-		{
-			ft_switch_binary(&found_dqt, (str[size] == '\"'));
-			size++;
-		}
-		argv[i] = ft_strndup(str, size);	
+		while (str[size] && (str[size] != ' ' || found_dqt == 1))
+			ft_switch_binary(&found_dqt, (str[size++] == '\"'));
+		argv[i++] = ft_strndup(str, size);
 		str += size;
-		// if (found_dqt)
-		// 	(printf("error \n"), exit(0));
-		i++;
+		if (found_dqt)
+			(printf("error \n"), exit(0));
 	}
 	return (argv[i] = NULL, argv);
 }

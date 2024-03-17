@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 17:16:27 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/17 22:16:15 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	env_sort(t_env *env);
 char	**_split(char *str);
 size_t	word_counter(char *rdline);
 char	*get_line(char *str);
+char	*ft_strndup(const char *str, size_t n);
 
 
 char	**ft_split_argv(char *rdline);
