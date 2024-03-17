@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/15 15:00:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/17 01:58:22 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*get_promte()
 int	data_init(t_data *data, char **env)
 {
 	char	*paths;
+	int		i;
 
 	data->argv = NULL;
 	data->line = NULL;
@@ -66,6 +67,16 @@ int	data_init(t_data *data, char **env)
 	{
 		_free(data);
 		exit(-1);
+	}
+	i = 0;
+	while (data->env[i])
+	{
+		char **env = ft_split((const char *)data->env[i], '=');
+		// printf("%s %s\n", env[0], env[1]);
+		env_export(env[0], env[1], &data->_env);
+		free (env[0]);
+		free (env[1]);
+		i++;
 	}
 	return (0);
 }

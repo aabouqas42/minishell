@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/16 17:52:29 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/17 01:25:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,50 +30,31 @@ char	*ft_strndup(const char *s1, int n)
 	return (res);
 }
 
-int	wc(char *s)
+int	wrdc(char *str)
 {
-	int wc;
-	int d;
+	int size;
+	int i;
 
-	wc = 0;
-	d = 0;
-	while (s && *s)
+	size = 0;
+	i = 0;
+	while (str && *str)
 	{
-		while (*s && *s == ' ')
-			s++;
-		if (*s == '"')
-			s = ft_strchr(s + 1, '"');
-		else
-			s = ft_strchr(s, ' ');
-		if (s)
-			wc++;
-	}
-	return (wc);
-}
-
-size_t	word_counter(char *rdline)
-{
-	size_t	wc;
-	int		found_dqt;
-
-	wc = 0;
-	found_dqt = 0;
-	while (rdline && *rdline)
-	{
-		while (*rdline != '\0' && *rdline == ' ')
-			rdline++;
-		wc += (*rdline != '\0');
-		while (*rdline && (*rdline != ' ' || found_dqt == 1))
+		while (*str == ' ')
+			str++;
+		if (*str == '"')
 		{
-			if (*rdline == '\"')
-				found_dqt = (found_dqt == 0);
-			rdline++;
+			str = ft_strchr(str + 1, '"') + 1;
+			size++;
+			continue;
 		}
+		while (str && *str && *str != ' ' && *str != '"')
+			str++;
+		size++;
 	}
-	return (wc);
+	return (size);
 }
 
-char	*get_line(char *str)
+char	*_getline(char *str)
 {
 	char	*line;
 	int		i;
@@ -96,7 +77,7 @@ char	*get_line(char *str)
 	return (line);
 }
 
-char	**_split(char *rdline, char c)
+char	**_split(char *str, char c)
 {
 	char	**argv;
 	size_t	size;
@@ -104,23 +85,23 @@ char	**_split(char *rdline, char c)
 	size_t	i;
 
 	i = 0;
-	wordcount = word_counter(rdline);
+	wordcount = wrdc(str);
 	argv = malloc((wordcount + 1) * sizeof(char *));
 	while (i < wordcount)
 	{
-		while (*rdline && *rdline == c)
-			rdline++;
-		if (*rdline == '"')
+		size = 0;
+		while (*str && *str == c)
+			str++;
+		if (*str == '"')
 		{
-			argv[i] = get_line(rdline);
-			rdline += ft_strlen(argv[i]) + 2;
-		} else if (i < wordcount - 1){
-			argv[i] = ft_strndup(rdline, ft_strchr(rdline, ' ') - rdline);
-			rdline += ft_strlen(argv[i]);
-		} else {
-			argv[i] = ft_strndup(rdline, ft_strlen(rdline));
-			rdline += ft_strlen(argv[i]);
+			argv[i] = _getline(str);
+			str += ft_strlen(argv[i++]);
+			continue;
 		}
+		while (str[size] && str[size] != c)
+			size++;
+		argv[i] = ft_strndup(str, size);
+		str += size;
 		i++;
 	}
 	return (argv[i] = NULL, argv);
