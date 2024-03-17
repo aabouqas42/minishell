@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 03:46:54 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:09:51 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,40 @@ size_t	ft_split_argv_counter(char *rdline)
 	{
 		while (*rdline == ' ')
 			rdline++;
+		wc += (*rdline != '\0');
 		while (*rdline && (*rdline != ' ' || found_dqt))
 		{
 			ft_switch_binary(&found_dqt, (*rdline == '\"'));
 			rdline++;
 		}
-		wc += (*rdline != '\0');
 	}
 	return (wc);
 }
 
 char	**ft_split_argv(char *rdline)
 {
-	char	**argv;
+	int		found_dqt;
+	// char	**argv;
 	size_t	wc;
 	size_t	i;
 
 	i = 0;
 	wc = ft_split_argv_counter(rdline);
-	while (i < wc)
+	found_dqt = 0;
+	while (rdline && *rdline)
 	{
 		while (*rdline == ' ')
 			rdline++;
-		printf("%s\n", rdline);
-		while (*rdline && *rdline != ' ')
+		wc += (*rdline != '\0'); // FOUND ANOTHER WORD
+		while (*rdline && (*rdline != ' ' || found_dqt)) // WHILE *rdline != SPACE OR IM WOKING INSIDE DOUBLE QUOTES vvvv
+		{
+			printf("%c", *rdline);
+			ft_switch_binary(&found_dqt, (*rdline == '\"')); // IF FOUND_DQT == 1 // THEN IM WORKING INSIDE DOUBLE QUOTES LIKE "hello world"
 			rdline++;
-		i++;
+		}
+		if (found_dqt)
+			(printf("error \n"), exit(0)); //FOUND UNCLOSED DOUBLE QUOTES //THEN ERROR
+		if (*rdline != '\0') printf("\n"); //NEW WORD NL
 	}
-	return (argv);
+	return (NULL);
 }

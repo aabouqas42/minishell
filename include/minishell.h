@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 15:24:23 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:37:04 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_data
 	char	**env;
 	char	**argv;
 	char	**paths;
-	char	*promte;
+	char	*prompt;
 	char	*line;
 	char	*program_path;
 }	t_data;
@@ -63,5 +63,8 @@ void	env_sort(t_env *env);
 char	**_split(char *line, char c);
 size_t	word_counter(char *rdline);
 char	*get_line(char *str);
+
+
+char	**ft_split_argv(char *rdline);
 
 #endif

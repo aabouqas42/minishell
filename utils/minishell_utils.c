@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 15:24:58 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:28:10 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@ void	_free(t_data *data)
 	free (data->program_path);
 	free_tab(data->argv);
 	free_tab(data->paths);
-	free (data->promte);
+	free (data->prompt);
 }
 
-char	*get_promte()
+char	*get_prompt()
 {
-	char	*promte;
+	char	*prompt;
 	char	*user;
 
 	user = getenv("USER");
 	if (user == NULL)
 		user = "mait-aabouqas";
-	promte = ft_strjoin(user, "@1337 $ ");
-	if (promte == NULL)
+	prompt = ft_strjoin(user, "@1337 $ ");
+	if (prompt == NULL)
 		return (free (user), NULL);
-	return (promte);
+	return (prompt);
 }
 
 int	data_init(t_data *data, char **env)
@@ -60,7 +60,7 @@ int	data_init(t_data *data, char **env)
 	data->program_path = NULL;
 	data->paths = NULL;
 	data->env = env;
-	data->promte = get_promte();
+	data->prompt = get_prompt();
 	paths = get_paths_env(data);
 	data->paths = ft_split(paths, ':');
 	if (data->paths == NULL)

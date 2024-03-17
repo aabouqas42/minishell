@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:47:45 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/16 22:56:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:35:43 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,4 @@ size_t	env_size(t_env *env_head)
 		env_head = env_head->next;
 	}
 	return (i);
-}
-
-void	env_list_sort(t_env	**env)
-{
-	//SORT IT
 }
