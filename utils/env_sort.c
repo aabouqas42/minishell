@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 01:25:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 03:44:33 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:47:06 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ void	env_sort(t_env *env)
 {
 	t_env	*temp;
 	t_env	*small;
+	t_env	*reset;
 	char	c;
 
+	reset = env;
 	while (all_done(env) == 0)
 	{
 		temp = env;
@@ -51,4 +53,6 @@ void	env_sort(t_env *env)
 			printf("%s=%s\n", small->name, small->value);
 		small->printed = 1;
 	}
+	while (reset && (reset = reset->next))
+		reset->printed = 0;
 }
