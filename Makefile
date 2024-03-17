@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/17 17:25:19 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/17 23:19:48 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,12 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(NAME).c $(SRCS_O) $(INC)$(NAME).h $(LIBFT)
-	$(CC) $(NAME).c $(SRCS_O) $(LIBFT) -lreadline -o $(NAME) 
+	$(CC) $(NAME).c $(SRCS_O) $(LIBFT) -lreadline -o $(NAME)
+	clear
 
 %.o: %.c $(INC)$(NAME).h
-	$(CC) -c $< -o $@ 
+	$(CC) -c $< -o $@
+	clear
 
 $(LIBFT): 
 	make -C libft/

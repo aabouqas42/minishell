@@ -21,8 +21,10 @@ all: $(NAME)
 
 $(NAME) : $(SRC_OBJ)
 	ar rc $(NAME) $(SRC_OBJ)
+	clear
 %.o: %.c libft.h
 	cc $(CFLAGS) -c $<
+	clear
 clean:
 	rm -f $(SRC_OBJ)
 
