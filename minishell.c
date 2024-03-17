@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 03:55:20 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:00:44 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	execute(t_data *data)
 {
 	int	child_pid;
 
-	data->line = readline(data->promte);
+	data->line = readline(data->prompt);
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = _split(data->line, ' ');
+	data->argv = _split(data->line);
 	if (buildins(data))
 		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
@@ -63,10 +63,8 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	t_data	data;
 
-	// goto here;
+	goto here;
 	data_init(&data, env);
-	// printf("%s=%s", data._env->name, data._env->name);
-	int i = 0;
 	while (1)
 	{
 		execute(&data);
@@ -76,12 +74,18 @@ int	main(int ac, char **av, char **env)
 		// free_tab(data.argv);
 		data.program_path = NULL;
 	}
-	// here:
-	// // 	// argv = ft_split(readline("> "), ' ');
-	// argv = _split("          hello hhhh \"test hhhhh \":)\"\" hh test \"l\"", ' ');
-	// // printf("[%s]\n", argv[0]); 
-	// 	while (argv[i])
-	// 		ft_printf("%s\n", argv[i++]);
-	// 	// printf("%d\n", wrdc("          hello hhhh \"test hhhhh \":)\"\" hh test \"\""));
+	here:
+		while(1)
+		{
+			int i = 0;
+			char	*line = readline("\n>> ");
+			argv = _split(line);
+			add_history(line);
+			free(line);
+			while (argv[i])
+				ft_printf("%s\n", argv[i++]);
+			// sleep(2);
+			// printf("\e[1;1H\e[2J");
+		}
 	return (EXIT_SUCCESS);
 }

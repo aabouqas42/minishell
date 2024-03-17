@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 16:13:38 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:15:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@ void	_free(t_data *data)
 	free (data->program_path);
 	free_tab(data->argv);
 	free_tab(data->paths);
-	free (data->promte);
+	free (data->prompt);
 }
 
-char	*get_promte()
+char	*get_prompt()
 {
-	char	*promte;
+	char	*prompt;
 	char	*user;
 
 	user = getenv("USER");
 	if (user == NULL)
 		user = "mait-aabouqas";
-	promte = ft_strjoin(user, "@1337 $ ");
-	if (promte == NULL)
+	prompt = ft_strjoin(user, "@1337 $ ");
+	if (prompt == NULL)
 		return (free (user), NULL);
-	return (promte);
+	return (prompt);
 }
 
 int	data_init(t_data *data, char **env)
@@ -60,7 +60,7 @@ int	data_init(t_data *data, char **env)
 	data->program_path = NULL;
 	data->paths = NULL;
 	data->env = env;
-	data->promte = get_promte();
+	data->prompt = get_prompt();
 	paths = get_paths_env(data);
 	data->paths = ft_split(paths, ':');
 	if (data->paths == NULL)
@@ -78,4 +78,17 @@ int	data_init(t_data *data, char **env)
 		i++;
 	}
 	return (0);
+}
+
+size_t	env_size(t_env *env_head)
+{
+	size_t	i;
+
+	i = 0;
+	while (env_head)
+	{
+		i++;
+		env_head = env_head->next;
+	}
+	return (i);
 }
