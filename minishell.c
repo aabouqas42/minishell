@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/18 02:57:28 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 03:48:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@ int	execute(t_data *data)
 	return (-1);
 }
 
-void	f()
-{
-	system("leaks minishell");
-}
-
 int	main(int ac, char **av, char **env)
 {
 	char **argv;
@@ -69,7 +64,6 @@ int	main(int ac, char **av, char **env)
 	{
 		execute(&data);
 		waitpid(-1, &data.exit_status, 0);
-		printf("%d\n", data.exit_status >> 8);
 		free (data.program_path);
 		free (data.line);
 		free_tab(data.argv);

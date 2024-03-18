@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/18 02:15:02 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 03:27:38 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,13 @@ size_t	get_size(char *str)
 
 	i = 0;
 	size = 0;
-
+	while (str[i])
+	{
+		if (str[i] != '\\' || ft_strchr("\"\'", str[i]) == NULL
+			|| (str[i] == '"' && str[i - 1] == '\\'))
+			size++;
+		i++;
+	}
 	return (size);
 }
 
@@ -60,11 +66,7 @@ char	*ft_strndup(const char *str, size_t n)
 	if (str == NULL)
 		return (NULL);
 	i = 0;
-	size = 0;
-	while (str[i] && i < n)
-		size += (str[i] != '\\' && (!ft_strchr("\"\'", str[i])
-			|| (str[i] == '"' && str[i - 1] == '\\'))), i++;
-	printf("%zu\n", size);
+	size = get_size((char *) str);
 	res = malloc(size + 1);
 	if (res == NULL)
 		return (NULL);
@@ -78,7 +80,6 @@ char	*ft_strndup(const char *str, size_t n)
 		i++;
 	}
 	res[j] = '\0';
-	// printf("str : [%s] res [%s]\n", str, res);
 	return (res);
 }
 

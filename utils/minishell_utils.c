@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 16:15:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 03:40:08 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	data_init(t_data *data, char **env)
 		exit(-1);
 	}
 	i = 0;
-	while (data->env[i])
+	while (env && data->env[i])
 	{
 		char **env = ft_split((const char *)data->env[i], '=');
 		env_export(env[0], env[1], &data->_env);
