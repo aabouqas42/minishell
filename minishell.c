@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/18 02:54:29 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/18 03:05:30 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	builtins(t_data *data)
 		return (_free(data), exit(0), 1);
 	if (!ft_strncmp(data->argv[0], "c", 2))
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (!ft_strncmp(data->argv[0], "cd", 3))
-		return (cd(data->argv[1]), 1);
-	if (!ft_strncmp(data->argv[0], "echo", 5))
-		return (echo(data), 1);
-	if (!ft_strncmp(data->argv[0], "pwd", 4))
+	if (!ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
+		return (cd(data->argv), 1);
+	if (!ft_strncmp(data->argv[0], "echo", 4) && ft_strlen(data->argv[0]) == 4)
+		return (echo(data->line + ft_strlen(data->argv[0])), 1);
+	if (!ft_strncmp(data->argv[0], "pwd", 3) && ft_strlen(data->argv[0]) == 3)
 		return (pwd(), 1);
 	if (!ft_strncmp(data->argv[0], "export", 7))
 		return (env_sort(data->_env), 1);
@@ -43,6 +43,7 @@ int	execute(t_data *data)
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{
 		printf("\033[31mCommand not found : %s\033[0m\n", data->line);
+		data->exit_status = 127;
 		return (-1);
 	}
 	child_pid = fork();
@@ -63,30 +64,17 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	t_data	data;
 
-	// goto here;
 	data_init(&data, env);
 	while (1)
 	{
 		execute(&data);
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &data.exit_status, 0);
+		printf("%d\n", data.exit_status >> 8);
 		free (data.program_path);
 		free (data.line);
-		// free_tab(data.argv);
+		free_tab(data.argv);
+		data.argv = NULL;
 		data.program_path = NULL;
 	}
-	// here:
-	// 	// printf("%s\n", ft_strndup("hello \"test\"", 5));
-	// 	while(1)
-	// 	{
-	// 		int i = 0;
-	// 		char	*line = readline("\n>> ");
-	// 		argv = _split(line);
-	// 		add_history(line);
-	// 		free(line);
-	// 		while (argv[i])
-	// 			ft_printf("%s\n", argv[i++]);
-	// 		// sleep(2);
-	// 		// printf("\e[1;1H\e[2J");
-	// 	}
-	// return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

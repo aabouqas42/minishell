@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/18 02:59:51 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/18 03:05:27 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,17 @@ size_t	env_size(t_env *env_head);
 void	env_print(t_env	*head);
 /*	END ENV LIST	*/
 
+typedef struct s_data
+{
+	t_env	*_env;
+	char	**env;
+	char	**argv;
+	char	**paths;
+	char	*prompt;
+	char	*line;
+	char	*program_path;
+	int		exit_status;
+}	t_data;
 
 
 int		is_valid_cmd(t_data *data, char *cmd);
@@ -60,8 +71,8 @@ int		data_init(t_data *data, char **env);
 void	_free(t_data *data);
 void	free_tab(char **array);
 char	*get_paths_env(t_data *data);
-int		cd(char *dir_name);
-void	echo(t_data *data);
+int		cd(char **argv);
+int		echo(char *args);
 int		pwd();
 void	env_sort(t_env *env);
 char	**_split(char *str);
