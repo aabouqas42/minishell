@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/18 03:48:12 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:32:50 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	execute(t_data *data)
 		return (0);
 	add_history(data->line);
 	data->argv = _split(data->line);
+	if (data->argv == NULL)
+		return 1;
 	if (builtins(data))
 		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
@@ -60,6 +62,7 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 
 	data_init(&data, env);
+	// goto here;
 	while (1)
 	{
 		execute(&data);
@@ -70,5 +73,15 @@ int	main(int ac, char **av, char **env)
 		data.argv = NULL;
 		data.program_path = NULL;
 	}
+	// here :
+	// while (1)
+	// {
+	// 	char *line = readline("$ ");
+	// 	add_history(line);
+	// 	argv = _split(line);
+	// 	int i = 0;
+	// 	while (argv && argv[i])
+	// 		printf("%s\n", argv[i++]);
+	// }
 	return (EXIT_SUCCESS);
 }
