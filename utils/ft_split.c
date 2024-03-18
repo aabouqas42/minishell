@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 23:13:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 02:15:02 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,17 @@ size_t	argument_count(char *rdline)
 	return (wc);
 }
 
+size_t	get_size(char *str)
+{
+	size_t	size;
+	size_t	i;
+
+	i = 0;
+	size = 0;
+
+	return (size);
+}
+
 char	*ft_strndup(const char *str, size_t n)
 {
 	size_t	i;
@@ -51,7 +62,9 @@ char	*ft_strndup(const char *str, size_t n)
 	i = 0;
 	size = 0;
 	while (str[i] && i < n)
-		size += (str[i++] != '"');
+		size += (str[i] != '\\' && (!ft_strchr("\"\'", str[i])
+			|| (str[i] == '"' && str[i - 1] == '\\'))), i++;
+	printf("%zu\n", size);
 	res = malloc(size + 1);
 	if (res == NULL)
 		return (NULL);
@@ -59,12 +72,13 @@ char	*ft_strndup(const char *str, size_t n)
 	j = 0;
 	while (str[i] && j < size)
 	{
-		if (str[i] != '"')
-			res[j++] = str[i];
+		if (str[i] != '\\' && (str[i] != '"'
+			|| (str[i] == '"' && str[i - 1] == '\\')))
+				res[j++] = str[i];
 		i++;
 	}
 	res[j] = '\0';
-	printf("str : [%s] res [%s]\n", str, res);
+	// printf("str : [%s] res [%s]\n", str, res);
 	return (res);
 }
 
@@ -88,7 +102,7 @@ char	**_split(char *str)
 		while (*str == ' ')
 			str++;
 		while (str[size] && (str[size] != ' ' || found_dqt == 1))
-			ft_switch_binary(&found_dqt, (str[size++] == '\"'));
+			ft_switch_binary(&found_dqt, (ft_strchr("\'\"", str[size]) && str[size - 1] != '\\')), size++;
 		argv[i++] = ft_strndup(str, size);
 		str += size;
 		if (found_dqt)

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 22:16:15 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 02:28:35 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	char	*prompt;
 	char	*line;
 	char	*program_path;
+	int		exit_status;
 }	t_data;
 
 
@@ -56,7 +57,7 @@ int		data_init(t_data *data, char **env);
 void	_free(t_data *data);
 void	free_tab(char **array);
 char	*get_paths_env(t_data *data);
-int		cd(char *dir_name);
+int		cd(char **argv);
 int		echo(char *args);
 int		pwd();
 void	env_sort(t_env *env);
