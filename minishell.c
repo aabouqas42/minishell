@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/18 03:05:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:56:54 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	builtins(t_data *data)
 	if (!ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
 		return (cd(data->argv), 1);
 	if (!ft_strncmp(data->argv[0], "echo", 4) && ft_strlen(data->argv[0]) == 4)
-		return (echo(data->line + ft_strlen(data->argv[0])), 1);
+		return (echo(data), 1);
 	if (!ft_strncmp(data->argv[0], "pwd", 3) && ft_strlen(data->argv[0]) == 3)
 		return (pwd(), 1);
 	if (!ft_strncmp(data->argv[0], "export", 7))
@@ -43,7 +43,7 @@ int	execute(t_data *data)
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{
 		printf("\033[31mCommand not found : %s\033[0m\n", data->line);
-		data->exit_status = 127;
+		data->exit_status = 127 << 8;
 		return (-1);
 	}
 	child_pid = fork();
@@ -69,7 +69,7 @@ int	main(int ac, char **av, char **env)
 	{
 		execute(&data);
 		waitpid(-1, &data.exit_status, 0);
-		printf("%d\n", data.exit_status >> 8);
+		// printf("%d\n", data.exit_status >> 8);
 		free (data.program_path);
 		free (data.line);
 		free_tab(data.argv);

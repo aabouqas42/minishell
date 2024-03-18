@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/18 03:05:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:07:51 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,8 @@
 # define CMD_INVALID 0
 # define CMD_VALID 1
 
-typedef struct s_env t_env;
 
-typedef struct s_data
-{
-	t_env	*_env;
-	char	**env;
-	char	**argv;
-	char	**paths;
-	char	*prompt;
-	char	*line;
-	char	*program_path;
-}	t_data;
+typedef struct s_data t_data;
 
 /*	ENV LIST	*/
 typedef struct s_env
@@ -47,7 +37,7 @@ typedef struct s_env
 }	t_env;
 
 int		env_export(char *name, char *value, t_env **env);
-char	*env_valueof(char *name, t_data	*data);
+void	env_prt_valueof(char *name, t_data	*data);
 int		env_unset(char *name, t_env **env);
 size_t	env_size(t_env *env_head);
 void	env_print(t_env	*head);
@@ -72,7 +62,7 @@ void	_free(t_data *data);
 void	free_tab(char **array);
 char	*get_paths_env(t_data *data);
 int		cd(char **argv);
-int		echo(char *args);
+void	echo(t_data *data);
 int		pwd();
 void	env_sort(t_env *env);
 char	**_split(char *str);

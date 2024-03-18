@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/18 03:04:44 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:57:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	echo(t_data *data)
 		while (argv[i])
 		{
 			if (argv[i][0] == '$')
-				ft_printf("%s", (env_valueof(argv[i], data)) ? env_valueof(argv[i], data) : "");
+				env_prt_valueof(argv[i], data);
 			else
 				printf("%s", argv[i]);
 			i++;

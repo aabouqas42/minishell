@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/18 03:05:15 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:11:14 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_strndup(const char *str, size_t n)
 	while (str[i] && i < n)
 		size += (str[i] != '\\' && (!ft_strchr("\"\'", str[i])
 			|| (str[i] == '"' && str[i - 1] == '\\'))), i++;
-	printf("%zu\n", size);
+	// printf("%zu\n", size);
 	res = malloc(size + 1);
 	if (res == NULL)
 		return (NULL);
