@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/17 23:19:19 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/18 02:54:29 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	builtins(t_data *data)
 {
-	if (!ft_strncmp(data->argv[0], "exit", 4) && ft_strlen(data->argv[0]) == 4)
+	if (!ft_strncmp(data->argv[0], "exit", 5))
 		return (_free(data), exit(0), 1);
-	if (!ft_strncmp(data->argv[0], "c", 5) && ft_strlen(data->argv[0]) == 1)
+	if (!ft_strncmp(data->argv[0], "c", 2))
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (!ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
+	if (!ft_strncmp(data->argv[0], "cd", 3))
 		return (cd(data->argv[1]), 1);
-	if (!ft_strncmp(data->argv[0], "echo", 4) && ft_strlen(data->argv[0]) == 4)
-		return (echo(data->line + ft_strlen(data->argv[0])), 1);
-	if (!ft_strncmp(data->argv[0], "pwd", 3) && ft_strlen(data->argv[0]) == 3)
+	if (!ft_strncmp(data->argv[0], "echo", 5))
+		return (echo(data), 1);
+	if (!ft_strncmp(data->argv[0], "pwd", 4))
 		return (pwd(), 1);
-	if (!ft_strncmp(data->argv[0], "export", 6) && ft_strlen(data->argv[0]) == 6)
+	if (!ft_strncmp(data->argv[0], "export", 7))
 		return (env_sort(data->_env), 1);
 	return (0);
 }

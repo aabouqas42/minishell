@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 23:13:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 01:21:32 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_strndup(const char *str, size_t n)
 		i++;
 	}
 	res[j] = '\0';
-	printf("str : [%s] res [%s]\n", str, res);
+	// printf("str : [%s] res [%s]\n", str, res);
 	return (res);
 }
 

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 16:14:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 02:45:31 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 static t_env	*env_create(char *name, char *value)
 {
@@ -78,14 +77,14 @@ int	env_unset(char *name, t_env **env)
 	tmp = *env;
 	if (tmp == NULL)
 		return (1);
-	if (ft_strncmp(tmp->name, name, ft_strlen(name)) == 0)
+	if (ft_strncmp(tmp->name, name, ft_strlen(name) +1) == 0)
 	{
 		*env = (*env)->next;
 		return (env_memfree(tmp), 1);
 	}
 	while (tmp->next)
 	{
-		if (ft_strncmp(tmp->next->name, name, ft_strlen(name)) == 0)
+		if (ft_strncmp(tmp->next->name, name, ft_strlen(name) +1) == 0)
 		{
 			todelete = tmp->next;
 			tmp->next = tmp->next->next;

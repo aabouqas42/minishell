@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env_list_read.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/18 02:59:59 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/03/18 02:17:22 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/03/18 02:59:56 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	echo(t_data *data)
+char	*env_valueof(char *name, t_data	*data)
 {
-	char	**argv;
-	int		i;
-	int		nl;
+	t_env	*i;
 
-	i = 1;
-	nl = 1;
-	argv = data->argv;
-	if (argv && argv[i])
+	if (name && data)
 	{
-		if (ft_strncmp(argv[i], "-n", 2) == 0 && ft_strlen(argv[i]) == 2)
-			(nl = 0, i++);
-		while (argv[i])
+		name++;
+		i = data->_env;
+		// if (*name == '?')
+		// 	return (printf("%d", data->exit_status));
+		while (i)
 		{
-			if (argv[i][0] == '$')
-				ft_printf("%s", (env_valueof(argv[i], data)) ? env_valueof(argv[i], data) : "");
-			else
-				printf("%s", argv[i]);
-			i++;
+			if (!ft_strncmp(i->name, name, ft_strlen(name) +1))
+				return (i->value);
+			i = i->next;
 		}
 	}
-	if (nl)
-		printf("\n");
+	return (NULL);
 }
