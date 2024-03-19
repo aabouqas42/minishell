@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/18 18:32:50 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:44:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	builtins(t_data *data)
 {
-	if (!ft_strncmp(data->argv[0], "exit", 4) && ft_strlen(data->argv[0]) == 4)
+	if (!ft_strncmp(data->argv[0], "exit", 4 + 1))
 		return (_free(data), exit(0), 1);
-	if (!ft_strncmp(data->argv[0], "c", 5) && ft_strlen(data->argv[0]) == 1)
+	if (!ft_strncmp(data->argv[0], "c", 5 + 1))
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (!ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
+	if (!ft_strncmp(data->argv[0], "cd", 2 + 1))
 		return (cd(data->argv), 1);
-	if (!ft_strncmp(data->argv[0], "echo", 4) && ft_strlen(data->argv[0]) == 4)
+	if (!ft_strncmp(data->argv[0], "echo", 4 + 1))
 		return (echo(data->line + ft_strlen(data->argv[0])), 1);
-	if (!ft_strncmp(data->argv[0], "pwd", 3) && ft_strlen(data->argv[0]) == 3)
+	if (!ft_strncmp(data->argv[0], "pwd", 3 + 1))
 		return (pwd(), 1);
-	if (!ft_strncmp(data->argv[0], "export", 6) && ft_strlen(data->argv[0]) == 6)
+	if (!ft_strncmp(data->argv[0], "export", 6 + 1))
 		return (env_sort(data->_env), 1);
 	return (0);
 }
@@ -62,7 +62,6 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 
 	data_init(&data, env);
-	// goto here;
 	while (1)
 	{
 		execute(&data);
@@ -73,15 +72,5 @@ int	main(int ac, char **av, char **env)
 		data.argv = NULL;
 		data.program_path = NULL;
 	}
-	// here :
-	// while (1)
-	// {
-	// 	char *line = readline("$ ");
-	// 	add_history(line);
-	// 	argv = _split(line);
-	// 	int i = 0;
-	// 	while (argv && argv[i])
-	// 		printf("%s\n", argv[i++]);
-	// }
 	return (EXIT_SUCCESS);
 }
