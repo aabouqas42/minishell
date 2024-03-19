@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/19 23:04:57 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:08:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	builtins(t_data *data)
 		return (_free(data), exit(0), 1);
 	if (!ft_strncmp(data->argv[0], "clear", 6))
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (!ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
+	if (!ft_strncmp(data->argv[0], "cd", 3))
 		return (cd(data->argv), 1);
-	if (!ft_strncmp(data->argv[0], "echo", 4) && ft_strlen(data->argv[0]) == 4)
+	if (!ft_strncmp(data->argv[0], "echo", 5))
 		return (echo(data), 1);
-	if (!ft_strncmp(data->argv[0], "pwd", 3) && ft_strlen(data->argv[0]) == 3)
+	if (!ft_strncmp(data->argv[0], "pwd", 4))
 		return (pwd(), 1);
 	if (!ft_strncmp(data->argv[0], "export", 7))
 		return (env_sort(data->_env), 1);
@@ -38,6 +38,8 @@ int	execute(t_data *data)
 		return (0);
 	add_history(data->line);
 	data->argv = _split(data->line);
+	if (data->argv == NULL)
+		return 1;
 	if (builtins(data))
 		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
@@ -52,12 +54,7 @@ int	execute(t_data *data)
 	return (-1);
 }
 
-void	f()
-{
-	system("leaks minishell");
-}
-
-int	main(int ac, char **av, char *env[])
+int	main(int ac, char **av, char **env)
 {
 	char **argv;
 	(void)ac;
@@ -70,7 +67,6 @@ int	main(int ac, char **av, char *env[])
 	{
 		execute(&data);
 		waitpid(-1, &data.exit_status, 0);
-		// printf("%d\n", data.exit_status >> 8);
 		free (data.program_path);
 		free (data.line);
 		free_tab(data.argv);

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/18 02:29:37 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:35:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ int	cd(char **argv)
 {
 	if (argv[1] == NULL)
 		return (chdir(getenv("HOME")));
-	return (chdir(argv[1]));
+	return (chdir(argv[1]), 1);
 }

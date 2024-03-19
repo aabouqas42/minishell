@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/19 23:00:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:09:06 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	data_init(t_data *data, char **env)
 		exit(-1);
 	}
 	i = 0;
-	while (data->env[i])
+	while (env && data->env[i])
 	{
 		char	*value;
 

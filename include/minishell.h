@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/19 22:17:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:09:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	env_sort(t_env *env);
 char	**_split(char *str);
 size_t	word_counter(char *rdline);
 char	*get_line(char *str);
-char	*ft_strndup(const char *str, size_t n);
+char	*ft_strndup(char *str, size_t n);
 
 
 char	**ft_split_argv(char *rdline);
