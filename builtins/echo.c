@@ -3,38 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/17 23:16:29 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:57:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	echo(char *line)
+void	echo(t_data *data)
 {
-	int	i;
-	int j;
+	char	**argv;
+	int		i;
+	int		nl;
 
-	i = 0;
-	j = 1;
-	while (*line == ' ')
-		line++;
-	if (*line == '-')
-		if (ft_strnstr(line, "-n", ft_strlen(line)))
-			(j = 0, line += 2);
-	while (*line == ' ')
-		line++;
-	while (line[i])
+	i = 1;
+	nl = 1;
+	argv = data->argv;
+	if (argv && argv[i])
 	{
-		if (line[i] == '\\' && line[i+1] != '\0')
-			printf("%c", line[i+1]);
-		else if (line[i] != '\"' && line[i] != '\'')
-			printf("%c", line[i]);
-		i++;
+		if (ft_strncmp(argv[i], "-n", 2) == 0 && ft_strlen(argv[i]) == 2)
+			(nl = 0, i++);
+		while (argv[i])
+		{
+			if (argv[i][0] == '$')
+				env_prt_valueof(argv[i], data);
+			else
+				printf("%s", argv[i]);
+			i++;
+		}
 	}
-	if (j)
+	if (nl)
 		printf("\n");
-	return (0);
 }

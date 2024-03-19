@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/18 18:35:22 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:05:42 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,21 @@ int	argument_count(char *str)
 	return (wc);
 }
 
+char	*get_var(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			if (ft_strchr(&str[i] , ' ') != NULL);
+		}
+		i++;
+	}
+}
+
 size_t	get_size(char *str, int n)
 {
 	size_t	size;
@@ -59,13 +74,16 @@ size_t	get_size(char *str, int n)
 		if (!ft_strchr("\"\'\\", c)
 			|| (ft_strchr("\"\'\\", c) && str[i - 1] == '\\'))
 			size++;
+		// ipepriprgrpir $PATH 
+		if (c == '$')
+			
 		i += (str[i - 1] == '\\');
 		i++;
 	}
 	return (size);
 }
 
-char	*ft_strndup(const char *str, size_t n)
+char	*ft_strndup(char *str, size_t n)
 {
 	size_t	i;
 	size_t	size;
@@ -76,7 +94,7 @@ char	*ft_strndup(const char *str, size_t n)
 	if (str == NULL)
 		return (NULL);
 	i = 0;
-	size = get_size((char *) str, n);
+	size = get_size(str, n);
 	res = malloc(size + 1);
 	if (res == NULL)
 		return (NULL);

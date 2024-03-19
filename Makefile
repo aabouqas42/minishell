@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/18 16:44:53 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/19 23:06:02 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
 SRCS = 	parsing/command_check.c \
-		utils/minishell_utils.c utils/ft_split.c utils/env_list.c utils/env_sort.c \
+		utils/minishell_utils.c utils/ft_split.c utils/env_list.c utils/env_sort.c  utils/env_list_read.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
@@ -23,12 +23,10 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(NAME).c $(SRCS_O) $(INC)$(NAME).h $(LIBFT)
-	@$(CC) $(NAME).c $(SRCS_O) $(LIBFT) -lreadline -o $(NAME)
-	clear
+	$(CC) $(NAME).c $(SRCS_O) $(LIBFT) -lreadline -o $(NAME)
 
 %.o: %.c $(INC)$(NAME).h
 	$(CC) -c $< -o $@
-	clear
 
 $(LIBFT): 
 	make -C libft/

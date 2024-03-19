@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/19 22:44:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:46:38 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	builtins(t_data *data)
 {
-	if (!ft_strncmp(data->argv[0], "exit", 4 + 1))
+	if (!ft_strncmp(data->argv[0], "exit", 5))
 		return (_free(data), exit(0), 1);
-	if (!ft_strncmp(data->argv[0], "c", 5 + 1))
+	if (!ft_strncmp(data->argv[0], "c", 2))
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (!ft_strncmp(data->argv[0], "cd", 2 + 1))
+	if (!ft_strncmp(data->argv[0], "cd", 3))
 		return (cd(data->argv), 1);
-	if (!ft_strncmp(data->argv[0], "echo", 4 + 1))
-		return (echo(data->line + ft_strlen(data->argv[0])), 1);
-	if (!ft_strncmp(data->argv[0], "pwd", 3 + 1))
+	if (!ft_strncmp(data->argv[0], "echo", 5))
+		return (echo(data), 1);
+	if (!ft_strncmp(data->argv[0], "pwd", 4))
 		return (pwd(), 1);
-	if (!ft_strncmp(data->argv[0], "export", 6 + 1))
+	if (!ft_strncmp(data->argv[0], "export", 7))
 		return (env_sort(data->_env), 1);
 	return (0);
 }
@@ -45,7 +45,7 @@ int	execute(t_data *data)
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{
 		printf("\033[31mCommand not found : %s\033[0m\n", data->line);
-		data->exit_status = 127;
+		data->exit_status = 127 << 8;
 		return (-1);
 	}
 	child_pid = fork();
