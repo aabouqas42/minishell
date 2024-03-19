@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/18 17:11:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:20:46 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 static void ft_switch_binary(int *b, int condition)
 {
 	if (condition)
-		*b = (*b == 0);
+	{
+		if (*b == 0)
+			*b = 1;
+		else
+			*b = 0;
+	}
 }
 
 size_t	argument_count(char *rdline)

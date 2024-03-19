@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/18 21:56:54 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:04:57 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	builtins(t_data *data)
 {
 	if (!ft_strncmp(data->argv[0], "exit", 5))
 		return (_free(data), exit(0), 1);
-	if (!ft_strncmp(data->argv[0], "c", 2))
+	if (!ft_strncmp(data->argv[0], "clear", 6))
 		return (printf("\e[1;1H\e[2J"), 1);
 	if (!ft_strncmp(data->argv[0], "cd", 2) && ft_strlen(data->argv[0]) == 2)
 		return (cd(data->argv), 1);
@@ -42,7 +42,7 @@ int	execute(t_data *data)
 		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{
-		printf("\033[31mCommand not found : %s\033[0m\n", data->line);
+		printf("\e[31mminishell : %s Command not found\e[0m\n", data->line);
 		data->exit_status = 127 << 8;
 		return (-1);
 	}
@@ -57,13 +57,14 @@ void	f()
 	system("leaks minishell");
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char *env[])
 {
 	char **argv;
 	(void)ac;
 	(void)av;
 	t_data	data;
 
+	printf("\e[1;1H\e[2J");
 	data_init(&data, env);
 	while (1)
 	{

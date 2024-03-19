@@ -6,37 +6,13 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 02:17:22 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/18 22:21:48 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:16:02 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int mini_api(t_env	*env_item, char *name)
-{
-	size_t	i;
-	char	save_c;
-
-	i = 0;
-	while (*name)
-	{
-		while (name[i] && name[i] != '$')
-			i++;
-		save_c = name[i];
-		name[i] = '\0';
-		printf("<%s>", name);
-		name[i] = save_c;
-		// if (ft_strncmp(env_item->name, name, ft_strlen(name) +1) == 0)
-		// {
-		// 	printf("%s ", env_item->value);
-		// 	return (1);
-		// }
-	}
-	printf("%c", '\n');
-	return (0);
-}
-
-void	env_prt_valueof(char *name, t_data	*data)
+char	*env_prt_valueof(char *name, t_data	*data)
 {
 	t_env	*i;
 
@@ -50,11 +26,15 @@ void	env_prt_valueof(char *name, t_data	*data)
 		// 	data->exit_status = 0;
 		// 	return ;
 		// }
-		// while (i)
-		// {
-			if (mini_api(i, name));
-				// break;
-		// 	i = i->next;
-		// }
+		while (i)
+		{
+			if (ft_strncmp(i->name, name, ft_strlen(name) +1) == 0)
+			{
+				printf("%s ", i->value);
+				return (i->value);
+			}
+			i = i->next;
+		}
 	}
+	return (NULL);
 }

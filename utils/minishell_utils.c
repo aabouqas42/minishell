@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/18 02:45:55 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:00:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,13 @@ char	*get_prompt()
 	user = getenv("USER");
 	if (user == NULL)
 		user = "mait-aabouqas";
-	prompt = ft_strjoin(user, "@1337 $ ");
+	user = ft_strjoin("\e[34m┌「 ", user);
+	if (user == NULL)
+		return (NULL);
+	prompt = ft_strjoin(user, " ⫸ 1337.ma 」 \n└─$  \e[0m");
+	free(user);
 	if (prompt == NULL)
-		return (free (user), NULL);
+		return (NULL);
 	return (prompt);
 }
 
@@ -71,24 +75,12 @@ int	data_init(t_data *data, char **env)
 	i = 0;
 	while (data->env[i])
 	{
-		char **env = ft_split((const char *)data->env[i], '=');
-		env_export(env[0], env[1], &data->_env);
-		free (env[0]);
-		free (env[1]);
+		char	*value;
+
+		value = ft_strchr(data->env[i], '=') + 1;
+		*(value -1) = '\0';
+		env_export(data->env[i], value, &data->_env);
 		i++;
 	}
 	return (0);
-}
-
-size_t	env_size(t_env *env_head)
-{
-	size_t	i;
-
-	i = 0;
-	while (env_head)
-	{
-		i++;
-		env_head = env_head->next;
-	}
-	return (i);
 }
