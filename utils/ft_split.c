@@ -6,11 +6,14 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/20 18:46:54 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:53:14 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+
+char	*_strjoin(char *str1, char *str2);
 
 static void ft_switcher(int *b, char *str, int size)
 {
@@ -45,21 +48,126 @@ int	argument_count(char *str)
 	return (wc);
 }
 
-char	*get_var(char *str)
+char	**get_var(char **argv)
 {
-	int	i;
+	char	*vars;
+	char	*str;
+	int		i;
+	int		j;
+	char	c;
 
 	i = 0;
-	while (str[i])
+	while (argv[i])
 	{
-		if (str[i] == '$')
+		str = NULL;
+		if (ft_strchr(argv[i], '$'))
 		{
-			// if (ft_strchr(&str[i] , ' ') != NULL);
+			vars = argv[i];
+			j = 0;
+			while (vars && *vars)
+			{
+				if (vars[j] == '$')
+				{
+					j++;
+					while (vars[j] && ft_isalnum(vars[j]))
+						j++;
+					c = vars[j];
+					vars[j] = '\0';
+					str = _strjoin(str, getenv(vars + 1));
+				}
+				else
+				{
+					while (vars[j] && vars[j] != '$')
+						j++;
+					c = vars[j];
+					vars[j] = '\0';
+					str = _strjoin(str, vars);
+				}
+				vars[j] = c;
+				vars += j;
+			}
+			free (argv[i]);
+			argv[i] = str;
 		}
 		i++;
 	}
-	return (NULL);
+	return (argv);
 }
+
+size_t	_strlen(char *str)
+{
+	size_t	size;
+
+	size = 0;
+	while (str && str[size])
+		size++;
+	return (size);
+}
+
+char	*_strjoin(char *str1, char *str2)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	if (str1 == NULL && str2 == NULL)
+		return (NULL);
+	len = _strlen(str1) + _strlen(str2);
+	str = malloc (len + 1);
+	if (str == NULL)
+		return (free (str1), NULL);
+	i = 0;
+	while (str1 && str1[i])
+	{
+		str[i] = str1[i];
+		i++;
+	}
+	while (str2 && *str2)
+	{
+		str[i] = *str2;
+		i++;
+		str2++;
+	}
+	str[i] = '\0';
+	return (free (str1), str);
+}
+
+// char	**get_var(char **argv)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	c;
+// 	char	*str;
+// 	char	*s;
+
+// 	i = 0;
+// 	while (argv[i])
+// 	{
+// 		str = NULL;
+// 		if (ft_strchr(argv[i], '$') != NULL)
+// 		{
+// 			s = argv[i];
+// 			while (*s)
+// 			{
+// 				j = 0;
+// 				// rpfr rgterg      $PATH tgrt
+// 				while (s[j] && ft_strchr("$ ", s[j]) == NULL)
+// 					j++;
+// 				// printf("%c", s[j]);
+// 				// j += s[j] = ' ';
+// 				// c = s[j];
+// 				s[j] = '\0';
+// 				// // printf("[%s]\n", s);
+// 				str = _strjoin(str, s);
+// 				// s[j] = c;
+// 				s += j + 1;
+// 			}
+// 			printf("%s\n", str);
+// 		}
+// 		i++;
+// 	}
+// 	return (argv);
+// }
 
 size_t	get_size(char *str, int n)
 {
@@ -75,18 +183,10 @@ size_t	get_size(char *str, int n)
 		if (!ft_strchr("\"\'\\", c)
 			|| (ft_strchr("\"\'\\", c) && str[i - 1] == '\\'))
 			size++;
-		// ipepriprgrpir $PATH 
-		if (c == '$')
-			
 		i += (str[i - 1] == '\\');
 		i++;
 	}
 	return (size);
-}
-
-char	*ft_strndup(char *str, size_t n)
-{
-
 }
 
 char	*ft_strndup(char *str, size_t n)
@@ -142,10 +242,10 @@ char	**_split(char *str)
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 			ft_switcher(&dqt,  str, size++);
 		// argv[i] = ft_strndup(str, size);
-		argv[i] = ft_get_arg(str, size);
+		argv[i] = ft_strndup(str, size);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);
 		str += size;
 	}
-	return (argv[i] = NULL, argv);
+	return (argv[i] = NULL, get_var(argv));
 }

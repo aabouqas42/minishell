@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/20 22:51:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:52:30 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	execute(t_data *data)
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = _split(data->line);
+	data->argv = _split("ls $PWD");
+	// printf("%s | %s\n", data->argv[0], getenv("PWD"));
 	if (data->argv == NULL)
 		return 1;
 	if (builtins(data))
@@ -72,20 +73,21 @@ int	main(int ac, char **av, char **env)
 		waitpid(-1, &data.exit_status, 0);
 		free (data.program_path);
 		free (data.line);
-		free_tab(data.argv);
-		data.argv = NULL;
+		// free_tab(data.argv);
+		// data.argv = NULL;
 		data.program_path = NULL;
 	}
-	// hh:
-		// printf("%s -> %d\n", "PATH", env_valid_name("PATH"));        // Valid Name
-		// printf("%s -> %d\n",  "my var", env_valid_name("my var"));      // Invalid Name - Contains Space
-		// printf("%s -> %d\n", "1variable", env_valid_name("1variable"));   // Invalid Name - Starts with Digit
-		// printf("%s -> %d\n", "my-var", env_valid_name("my-var"));      // Invalid Name - Contains Special Characters
-		// printf("%s -> %d\n", "if", env_valid_name("if"));          // Invalid Name - Reserved Word
-		// printf("%s -> %d\n", "PATH", env_valid_name("PATH"));        // Invalid Name - Shell Built-in Variable
-		// printf("%s -> %d\n", "MY_VARIABLE", env_valid_name("MY_VARIABLE")); // Valid Name - Uppercase
-		// printf("%s -> %d\n", "My_Variable", env_valid_name("My_Variable")); // Valid Name - Mixed Case
-		// printf("%s -> %d\n", "my_variable", env_valid_name("my_variable")); // Valid Name - Underscore
-		// printf("%s -> %d\n", "a", env_valid_name("a")); 
+	// int i = 0;
+	// char *line;
+	// here:
+	// while (1)
+	// {
+	// 	i = 0;
+	// 	line = readline(">> ");
+	// 	argv = _split(line);
+	// 	while (argv && argv[i])
+	// 		printf("%s\n", argv[i++]);
+	// 	// free (line);
+	// }
 	return (EXIT_SUCCESS);
 }

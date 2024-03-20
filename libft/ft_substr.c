@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 22:28:04 by mait-elk          #+#    #+#             */
-/*   Updated: 2023/11/14 10:07:00 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:35:17 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	unsigned int		i;
-	size_t				slen;
-	char				*str;
+	unsigned int	i;
+	size_t			slen;
+	char			*str;
 
 	if (!s)
 		return (0);
