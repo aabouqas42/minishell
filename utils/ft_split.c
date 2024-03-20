@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/20 17:50:38 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:46:54 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ size_t	get_size(char *str, int n)
 
 char	*ft_strndup(char *str, size_t n)
 {
+
+}
+
+char	*ft_strndup(char *str, size_t n)
+{
 	size_t	i;
 	size_t	size;
 	size_t	j;
@@ -136,7 +141,8 @@ char	**_split(char *str)
 			str++;
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 			ft_switcher(&dqt,  str, size++);
-		argv[i] = ft_strndup(str, size);
+		// argv[i] = ft_strndup(str, size);
+		argv[i] = ft_get_arg(str, size);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);
 		str += size;
