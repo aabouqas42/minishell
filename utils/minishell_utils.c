@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/19 23:09:06 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/20 01:26:02 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	data_init(t_data *data, char **env)
 
 		value = ft_strchr(data->env[i], '=') + 1;
 		*(value -1) = '\0';
-		env_export(data->env[i], value, &data->_env);
+		env_export(data->env[i], value, data);
 		i++;
 	}
 	return (0);

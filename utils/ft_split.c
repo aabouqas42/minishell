@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/19 23:09:23 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/20 00:13:31 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ char	*get_var(char *str)
 	{
 		if (str[i] == '$')
 		{
-			if (ft_strchr(&str[i] , ' ') != NULL);
+			// if (ft_strchr(&str[i] , ' ') != NULL);
 		}
 		i++;
 	}
+	return (NULL);
 }
 
 size_t	get_size(char *str, int n)

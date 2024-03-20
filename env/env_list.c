@@ -6,38 +6,53 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/19 18:35:09 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:13:56 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	env_export(char *name, char *value, t_env **env)
+int	env_valid_name(char *name)
+{
+	if (name == NULL)
+		return (0);
+	if (ft_strnstr("if then else elif fi case esac for while \
+		until do done in function select", name, ft_strlen(name)))
+		return (0);
+	if (ft_isdigit(name[0]))
+		return (0);
+	while (*name)
+	{
+		if (!ft_isalnum(*name) && *name != '_')
+			return (0);
+		name++;
+	}
+	return (1);
+}
+
+int	env_export(char *name, char *value, t_data *data)
 {
 	t_env	*tmp;
 
-	if (name == NULL || value == NULL || env == NULL)
+	if (name == NULL || value == NULL || data->env == NULL)
 		return (ENV_NOT_CREATED);
-	if (*env == NULL)
+	if (data->_env == NULL)
 	{
-		*env = env_create(name, value);
-		if (*env == NULL)
+		data->_env = env_create(name, value);
+		if (data->env == NULL)
 			return (ENV_FAILURE);
 		return (ENV_CREATED);
 	}
-	tmp = *env;
-	while (tmp->next)
+	tmp = env_get(name, data);
+	if (tmp != NULL)
 	{
-		if (ft_strncmp(tmp->name, name, ft_strlen(name) +1) == 0)
-		{
-			free(tmp->value);
-			tmp->value = ft_strdup((const char *)value);
-			if (tmp->value == NULL)
-				return (ENV_FAILURE);
-			return (ENV_CREATED);
-		}
-		tmp = tmp->next;
+		free(tmp->value);
+		tmp->value = ft_strdup((const char *)value);
+		if (tmp->value == NULL)
+			return (ENV_FAILURE);
+		return (ENV_CREATED);
 	}
+	tmp = env_get_last(data->_env);
 	tmp->next = env_create(name, value);
 	if (tmp->next == NULL)
 		return (ENV_FAILURE);

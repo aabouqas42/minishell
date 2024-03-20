@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/19 23:09:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/20 02:45:54 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ typedef struct s_env
 #define ENV_FAILURE 0
 #define ENV_CREATED 1
 
-int		env_export(char *name, char *value, t_env **env);
-char	*env_prt_valueof(char *name, t_data	*data);
+int		env_export(char *name, char *value, t_data *data);
 t_env	*env_create(char *name, char *value);
+t_env	*env_get(char *name, t_data	*data);
 int		env_unset(char *name, t_env **env);
-size_t	env_size(t_env *env_head);
+void	env_print_valueof(t_env *env);
+t_env	*env_get_last(t_env	*env);
+int	env_valid_name(char *name);
 void	env_print(t_env	*head);
 size_t	env_size(t_env *env);
 void	env_free(t_env *env);
