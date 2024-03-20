@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/20 03:44:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:44:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	execute(t_data *data)
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = _split(data->line);
+	data->argv = _split("ls $PWD");
+	// printf("%s | %s\n", data->argv[0], getenv("PWD"));
 	if (data->argv == NULL)
 		return 1;
 	if (builtins(data))
@@ -67,7 +68,7 @@ int	main(int ac, char **av, char *env[])
 	t_data	data;
 
 	// printf("\e[1;1H\e[2J");
-	goto here;
+	// goto here;
 	data_init(&data, env);
 	while (1)
 	{
@@ -75,14 +76,21 @@ int	main(int ac, char **av, char *env[])
 		waitpid(-1, &data.exit_status, 0);
 		free (data.program_path);
 		free (data.line);
-		free_tab(data.argv);
-		data.argv = NULL;
+		// free_tab(data.argv);
+		// data.argv = NULL;
 		data.program_path = NULL;
 	}
-	int i = 0;
-	here:
-		argv = _split("make -C \"$PATH  $$$$$     hello $USER\" fclean");
-		while (argv[i])
-			printf("%s\n", argv[i++]);
+	// int i = 0;
+	// char *line;
+	// here:
+	// while (1)
+	// {
+	// 	i = 0;
+	// 	line = readline(">> ");
+	// 	argv = _split(line);
+	// 	while (argv && argv[i])
+	// 		printf("%s\n", argv[i++]);
+	// 	// free (line);
+	// }
 	return (EXIT_SUCCESS);
 }
