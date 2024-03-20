@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/19 23:05:42 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:43:43 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,57 @@ int	argument_count(char *str)
 	return (wc);
 }
 
-char	*get_var(char *str)
+char	**get_var(char **argv)
 {
-	int	i;
+	char	*vars;
+	char	*str;
+	char	*tmp;
+	int		i;
+	int		j;
+	char	c;
 
 	i = 0;
-	while (str[i])
+	while (argv[i])
 	{
-		if (str[i] == '$')
+		str = NULL;
+		if (ft_strchr(argv[i], '$'))
 		{
-			if (ft_strchr(&str[i] , ' ') != NULL);
+			vars = argv[i];
+			printf("[%s]\n", vars);
+			vars++;
+			while (vars && *vars)
+			{
+				j = 0;
+				while (vars[j] && ft_strchr("$ ", vars[j]) == NULL)
+					j++;
+				c = vars[j];
+				vars[j] = '\0';
+				// printf("[%s]\n", vars);
+				tmp = ft_strjoin(str, getenv(vars));
+				free(str);
+				str = ft_strdup(tmp);
+				free(tmp);
+				vars[j] = c;
+				vars += j;
+				j = 0;
+				while (vars[j] && ft_strchr("$", vars[j]) == NULL)
+					j++;
+				c = vars[j];
+				vars[j] = '\0';
+				tmp = ft_strjoin(str, vars);
+				free(str);
+				str = ft_strdup(tmp);
+				free(tmp);
+				vars[j] = c;
+				vars += j + 1;
+				// printf(">%s>\n", vars);
+			}
+			free (argv[i]);
+			argv[i] = str;
 		}
 		i++;
 	}
+	return (argv);
 }
 
 size_t	get_size(char *str, int n)
@@ -74,9 +112,6 @@ size_t	get_size(char *str, int n)
 		if (!ft_strchr("\"\'\\", c)
 			|| (ft_strchr("\"\'\\", c) && str[i - 1] == '\\'))
 			size++;
-		// ipepriprgrpir $PATH 
-		if (c == '$')
-			
 		i += (str[i - 1] == '\\');
 		i++;
 	}
@@ -140,5 +175,5 @@ char	**_split(char *str)
 			return (argv[size] = NULL, NULL);
 		str += size;
 	}
-	return (argv[i] = NULL, argv);
+	return (argv[i] = NULL, get_var(argv));
 }

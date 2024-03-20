@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/19 22:46:38 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:44:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	builtins(t_data *data)
 {
 	if (!ft_strncmp(data->argv[0], "exit", 5))
 		return (_free(data), exit(0), 1);
-	if (!ft_strncmp(data->argv[0], "c", 2))
+	if (!ft_strncmp(data->argv[0], "clear", 6))
 		return (printf("\e[1;1H\e[2J"), 1);
 	if (!ft_strncmp(data->argv[0], "cd", 3))
 		return (cd(data->argv), 1);
@@ -44,7 +44,7 @@ int	execute(t_data *data)
 		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{
-		printf("\033[31mCommand not found : %s\033[0m\n", data->line);
+		printf("\e[31mminishell : %s Command not found\e[0m\n", data->line);
 		data->exit_status = 127 << 8;
 		return (-1);
 	}
@@ -54,13 +54,20 @@ int	execute(t_data *data)
 	return (-1);
 }
 
-int	main(int ac, char **av, char **env)
+void	f()
+{
+	system("leaks minishell");
+}
+
+int	main(int ac, char **av, char *env[])
 {
 	char **argv;
 	(void)ac;
 	(void)av;
 	t_data	data;
 
+	// printf("\e[1;1H\e[2J");
+	goto here;
 	data_init(&data, env);
 	while (1)
 	{
@@ -72,5 +79,10 @@ int	main(int ac, char **av, char **env)
 		data.argv = NULL;
 		data.program_path = NULL;
 	}
+	int i = 0;
+	here:
+		argv = _split("make -C \"$PATH  $$$$$     hello $USER\" fclean");
+		while (argv[i])
+			printf("%s\n", argv[i++]);
 	return (EXIT_SUCCESS);
 }
