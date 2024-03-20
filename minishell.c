@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/20 22:54:42 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:14:52 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int	execute(t_data *data)
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = _split(data->line);
-	// printf("%s | %s\n", data->argv[0], getenv("PWD"));
+	data->argv = _split(data->line, data);
 	if (data->argv == NULL)
 		return 1;
 	if (builtins(data))

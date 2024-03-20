@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/20 22:53:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:15:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	argument_count(char *str)
 	return (wc);
 }
 
-char	**get_var(char **argv)
+char	**get_var(char **argv, t_data *data)
 {
 	char	*vars;
 	char	*str;
@@ -69,6 +69,8 @@ char	**get_var(char **argv)
 				if (vars[j] == '$')
 				{
 					j++;
+					if (vars[j] == '?')
+						str = _strjoin(str, ft_itoa(data->exit_status >> 8)), j++;
 					while (vars[j] && ft_isalnum(vars[j]))
 						j++;
 					c = vars[j];
@@ -132,43 +134,6 @@ char	*_strjoin(char *str1, char *str2)
 	return (free (str1), str);
 }
 
-// char	**get_var(char **argv)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	c;
-// 	char	*str;
-// 	char	*s;
-
-// 	i = 0;
-// 	while (argv[i])
-// 	{
-// 		str = NULL;
-// 		if (ft_strchr(argv[i], '$') != NULL)
-// 		{
-// 			s = argv[i];
-// 			while (*s)
-// 			{
-// 				j = 0;
-// 				// rpfr rgterg      $PATH tgrt
-// 				while (s[j] && ft_strchr("$ ", s[j]) == NULL)
-// 					j++;
-// 				// printf("%c", s[j]);
-// 				// j += s[j] = ' ';
-// 				// c = s[j];
-// 				s[j] = '\0';
-// 				// // printf("[%s]\n", s);
-// 				str = _strjoin(str, s);
-// 				// s[j] = c;
-// 				s += j + 1;
-// 			}
-// 			printf("%s\n", str);
-// 		}
-// 		i++;
-// 	}
-// 	return (argv);
-// }
-
 size_t	get_size(char *str, int n)
 {
 	size_t	size;
@@ -218,7 +183,7 @@ char	*ft_strndup(char *str, size_t n)
 	return (res[j] = '\0', res);
 }
 
-char	**_split(char *str)
+char	**_split(char *str, t_data *data)
 {
 	char	**argv;
 	int		dqt;
@@ -247,5 +212,5 @@ char	**_split(char *str)
 			return (argv[size] = NULL, NULL);
 		str += size;
 	}
-	return (argv[i] = NULL, get_var(argv));
+	return (argv[i] = NULL, get_var(argv, data));
 }

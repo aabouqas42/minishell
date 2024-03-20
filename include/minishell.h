@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/20 22:50:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:14:36 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ int		cd(char **argv);
 void	echo(t_data *data);
 int		pwd();
 void	env_sort(t_env *env);
-char	**_split(char *str);
+char	**_split(char *str, t_data *data);
 size_t	word_counter(char *rdline);
 char	*get_line(char *str);
 char	*ft_strndup(char *str, size_t n);
 
 
-char	**ft_split_argv(char *rdline);
 
 #endif

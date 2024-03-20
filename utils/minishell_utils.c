@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/20 22:52:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:58:31 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,12 @@ int	data_init(t_data *data, char **env)
 	while (env && data->env[i])
 	{
 		char	*value;
-		char	c;
 
 		value = ft_strchr(data->env[i], '=') + 1;
-		c = *value;
-		// printf("|%s|\n", getenv("PWD"));
+		// printf("|%s >> %s|\n", getenv("PWD"), data->env[i]);
 		*(value - 1) = '\0';
 		env_export(data->env[i], value, data);
-		*(value - 1) = c;
+		*(value - 1) = '=';
 		i++;
 	}
 	return (0);
