@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/20 22:44:53 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:50:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	builtins(t_data *data)
 {
 	if (!ft_strncmp(data->argv[0], "exit", 5))
 		return (_free(data), exit(0), 1);
+	if (!ft_strncmp(data->argv[0], "c", 2))
+		return (printf("\e[1;1H\e[2J"), 1);
 	if (!ft_strncmp(data->argv[0], "clear", 6))
 		return (printf("\e[1;1H\e[2J"), 1);
 	if (!ft_strncmp(data->argv[0], "cd", 3))
@@ -55,20 +57,15 @@ int	execute(t_data *data)
 	return (-1);
 }
 
-void	f()
-{
-	system("leaks minishell");
-}
-
-int	main(int ac, char **av, char *env[])
+int	main(int ac, char **av, char **env)
 {
 	char **argv;
 	(void)ac;
 	(void)av;
 	t_data	data;
 
-	// printf("\e[1;1H\e[2J");
-	// goto here;
+	// goto hh;
+	printf("\e[1;1H\e[2J");
 	data_init(&data, env);
 	while (1)
 	{
