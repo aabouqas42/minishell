@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/20 23:14:52 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/21 02:40:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ int	execute(t_data *data)
 
 int	main(int ac, char **av, char **env)
 {
-	char **argv;
+	char	**argv;
+	int		i;
 	(void)ac;
 	(void)av;
 	t_data	data;
 
-	// goto hh;
+	// goto here;
 	printf("\e[1;1H\e[2J");
 	data_init(&data, env);
 	while (1)
@@ -72,21 +73,14 @@ int	main(int ac, char **av, char **env)
 		waitpid(-1, &data.exit_status, 0);
 		free (data.program_path);
 		free (data.line);
-		// free_tab(data.argv);
-		// data.argv = NULL;
+		free_tab(data.argv);
+		data.argv = NULL;
 		data.program_path = NULL;
 	}
-	// int i = 0;
-	// char *line;
-	// here:
-	// while (1)
-	// {
+	// here :
+	// 	argv = _split("ls $? hhhh $PATH", &data);
 	// 	i = 0;
-	// 	line = readline(">> ");
-	// 	argv = _split(line);
-	// 	while (argv && argv[i])
+	// 	while (argv[i])
 	// 		printf("%s\n", argv[i++]);
-	// 	// free (line);
-	// }
 	return (EXIT_SUCCESS);
 }
