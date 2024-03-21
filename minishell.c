@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 17:01:12 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:05:00 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 int	builtins(t_data *data)
 {
-	if (!ft_strncmp(data->argv[0], "exit", 5))
+	if (ft_strncmp(data->argv[0], "exit", 5) == 0)
 		return (_free(data), exit(0), 1);
-	if (!ft_strncmp(data->argv[0], "c", 2))
+	if (ft_strncmp(data->argv[0], "c", 2) == 0)
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (!ft_strncmp(data->argv[0], "clear", 6))
+	if (ft_strncmp(data->argv[0], "clear", 6) == 0)
 		return (printf("\e[1;1H\e[2J"), 1);
-	if (!ft_strncmp(data->argv[0], "cd", 3))
-		return (cd(data->argv), 1);
-	if (!ft_strncmp(data->argv[0], "echo", 5))
+	if (ft_strncmp(data->argv[0], "cd", 3) == 0)
+		return (cd(data), 1);
+	if (ft_strncmp(data->argv[0], "echo", 5) == 0)
 		return (echo(data), 1);
-	if (!ft_strncmp(data->argv[0], "pwd", 4))
+	if (ft_strncmp(data->argv[0], "pwd", 4) == 0)
 		return (pwd(), 1);
-	if (!ft_strncmp(data->argv[0], "env", 4))
+	if (ft_strncmp(data->argv[0], "env", 4) == 0)
 		return (env_print(data->_env), 1);
-	if (!ft_strncmp(data->argv[0], "export", 7))
-		return (export(data), 1);
+	if (ft_strncmp(data->argv[0], "export", 7) == 0)
+		return (_export(data), 1);
 	return (0);
 }
 
@@ -83,6 +83,11 @@ int	data_init(t_data *data, char **env)
 	return (0);
 }
 
+void ex()
+{
+	system("leaks minishell");
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	**argv;
@@ -91,6 +96,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	t_data	data;
 
+	atexit(ex);
 	// goto here;
 	printf("\e[1;1H\e[2J");
 	data_init(&data, env);

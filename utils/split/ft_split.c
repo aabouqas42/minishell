@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 14:14:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:40:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ char	**_split(char *str, t_data *data)
 			str++;
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 			ft_switcher(&dqt,  str, size++);
+		printf("%d\n", dqt);
 		argv[i] = ft_strndup(str, size);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);

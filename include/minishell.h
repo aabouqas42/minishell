@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 16:08:52 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:32:55 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	env_print(t_env	*head);
 size_t	env_size(t_env *env);
 void	env_free(t_env *env);
 
-char *env_grepvalue(char *name, t_data *data);
+char *env_grep_value(char *name, t_data *data);
 /*	END ENV LIST	*/
 
 
@@ -75,10 +75,9 @@ char	*_strjoin(char *str1, char *str2);
 void	ft_switcher(int *b, char *str, int size);
 int		argument_count(char *str);
 
-int		cd(char **argv);
+int		cd(t_data *data);
 void	echo(t_data *data);
 int		pwd();
-int		export(t_data *data);
-
+int		_export(t_data *data);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 16:59:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:08:17 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 	tmp = ft_strjoin("/", cmd);
 	if (tmp == NULL)
 		return (_free(data), exit(-1), CMD_FAIL);
-	paths = env_grepvalue("PATH", data);
+	paths = env_grep_value("PATH", data);
 	while (paths && *paths)
 	{
 		i = 0;
@@ -65,5 +65,5 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		paths[i] = ':';
 		paths += i + (paths[i] == ':');
 	}
-	return (CMD_INVALID);
+	return (free(tmp), CMD_INVALID);
 }

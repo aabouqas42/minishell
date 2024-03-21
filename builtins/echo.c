@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 15:00:41 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:37:51 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	echo(t_data *data)
 	
 	i = 1;
 	nl = 1;
-	if (ft_strncmp(data->argv[i], "-n", 3) == 0)
+	if (data->argv[i] && ft_strncmp(data->argv[i], "-n", 3) == 0)
 		(nl = 0, i++);
 	while (data->argv[i])
 	{
@@ -29,7 +29,7 @@ void	echo(t_data *data)
 			printf(" ");
 	}
 	if (nl)
-		printf("%%\n");
-	else
 		printf("\n");
+	else
+		printf("%%\n");
 }

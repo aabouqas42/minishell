@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 16:41:44 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:25:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char *env_grepvalue(char *name, t_data *data)
+char *env_grep_value(char *name, t_data *data)
 {
 	t_env	*env;
 
