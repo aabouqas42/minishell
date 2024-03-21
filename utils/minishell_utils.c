@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/20 22:52:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/21 02:31:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*get_prompt()
 int	data_init(t_data *data, char **env)
 {
 	char	*paths;
+	char	*value;
 	int		i;
 
 	data->argv = NULL;
@@ -64,27 +65,30 @@ int	data_init(t_data *data, char **env)
 	data->program_path = NULL;
 	data->paths = NULL;
 	data->env = env;
+	data->exit_status = 0;
 	data->prompt = get_prompt();
 	paths = get_paths_env(data);
 	data->paths = ft_split(paths, ':');
 	if (data->paths == NULL)
-	{
-		_free(data);
-		exit(-1);
-	}
+		(_free(data), exit(-1));
 	i = 0;
 	while (env && data->env[i])
 	{
-		char	*value;
-		char	c;
-
 		value = ft_strchr(data->env[i], '=') + 1;
-		c = *value;
-		// printf("|%s|\n", getenv("PWD"));
 		*(value - 1) = '\0';
 		env_export(data->env[i], value, data);
-		*(value - 1) = c;
+		*(value - 1) = '=';
 		i++;
 	}
 	return (0);
+}
+
+size_t	_strlen(char *str)
+{
+	size_t	size;
+
+	size = 0;
+	while (str && str[size])
+		size++;
+	return (size);
 }

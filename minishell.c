@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 13:59:51 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:06:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int	execute(t_data *data)
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = _split(data->line);
-	// printf("%s | %s\n", data->argv[0], getenv("PWD"));
+	data->argv = _split(data->line, data);
 	if (data->argv == NULL)
 		return 1;
 	if (builtins(data))
@@ -59,12 +58,13 @@ int	execute(t_data *data)
 
 int	main(int ac, char **av, char **env)
 {
-	char **argv;
+	char	**argv;
+	int		i;
 	(void)ac;
 	(void)av;
 	t_data	data;
 
-	// goto hh;
+	// goto here;
 	printf("\e[1;1H\e[2J");
 	data_init(&data, env);
 	while (1)
@@ -73,21 +73,14 @@ int	main(int ac, char **av, char **env)
 		waitpid(-1, &data.exit_status, 0);
 		free (data.program_path);
 		free (data.line);
-		// free_tab(data.argv);
-		// data.argv = NULL;
+		free_tab(data.argv);
+		data.argv = NULL;
 		data.program_path = NULL;
 	}
-	// int i = 0;
-	// char *line;
-	// here:
-	// while (1)
-	// {
+	// here :
+	// 	argv = _split("ls $? hhhh $PATH", &data);
 	// 	i = 0;
-	// 	line = readline(">> ");
-	// 	argv = _split(line);
-	// 	while (argv && argv[i])
+	// 	while (argv[i])
 	// 		printf("%s\n", argv[i++]);
-	// 	// free (line);
-	// }
 	return (EXIT_SUCCESS);
 }

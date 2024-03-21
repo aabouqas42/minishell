@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
+#    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/20 22:52:34 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/03/21 01:16:00 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
 SRCS = 	parsing/command_check.c \
-		utils/minishell_utils.c utils/ft_split.c \
+		utils/minishell_utils.c utils/split/ft_split.c utils/split/ft_split_utils.c\
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c
 SRCS_O = $(SRCS:.c=.o)

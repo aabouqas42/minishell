@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 14:02:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:09:49 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 
 void	echo(t_data *data)
 {
-	char	**argv;
-	int		i;
-	int		nl;
-
+	int	i;
+	int	nl;
+	
 	i = 1;
 	nl = 1;
-	argv = data->argv;
-	if (argv && ft_strncmp(argv[i], "-n", 3))
+	if (ft_strncmp(data->argv[i], "-n", 3) == 0)
 		(nl = 0, i++);
-	if (argv && argv[i])
+	while (data->argv[i])
 	{
-		while (argv[i])
-		{
-			printf("%s", argv[i]);
-			i++;
-		}
+		printf("%s", data->argv[i]);
+		i++;
+		if (data->argv[i])
+			printf(" ");
 	}
 	if (nl)
+		printf("%%\n");
+	else
 		printf("\n");
 }
