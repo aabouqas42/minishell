@@ -6,11 +6,28 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/20 03:13:56 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:05:48 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char *env_grepvalue(char *name, t_data *data)
+{
+	t_env	*env;
+
+	if (name != NULL && data != NULL)
+	{
+		env = data->_env;
+		while (env)
+		{
+			if (ft_strncmp(env->name, name, ft_strlen(name) + 1) == 0)
+				return (env->value);
+			env = env->next;
+		}
+	}
+	return (NULL);
+}
 
 int	env_valid_name(char *name)
 {
@@ -34,12 +51,12 @@ int	env_export(char *name, char *value, t_data *data)
 {
 	t_env	*tmp;
 
-	if (name == NULL || value == NULL || data->env == NULL)
+	if (env_valid_name(name) == 0)
 		return (ENV_NOT_CREATED);
 	if (data->_env == NULL)
 	{
 		data->_env = env_create(name, value);
-		if (data->env == NULL)
+		if (data->_env == NULL)
 			return (ENV_FAILURE);
 		return (ENV_CREATED);
 	}

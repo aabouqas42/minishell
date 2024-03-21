@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 02:31:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:20:10 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	_free(t_data *data)
 	free (data->line);
 	free (data->program_path);
 	free_tab(data->argv);
-	free_tab(data->paths);
+	// free_tab(data->paths);
 	free (data->prompt);
 }
 
@@ -52,43 +52,4 @@ char	*get_prompt()
 	if (prompt == NULL)
 		return (NULL);
 	return (prompt);
-}
-
-int	data_init(t_data *data, char **env)
-{
-	char	*paths;
-	char	*value;
-	int		i;
-
-	data->argv = NULL;
-	data->line = NULL;
-	data->program_path = NULL;
-	data->paths = NULL;
-	data->env = env;
-	data->exit_status = 0;
-	data->prompt = get_prompt();
-	paths = get_paths_env(data);
-	data->paths = ft_split(paths, ':');
-	if (data->paths == NULL)
-		(_free(data), exit(-1));
-	i = 0;
-	while (env && data->env[i])
-	{
-		value = ft_strchr(data->env[i], '=') + 1;
-		*(value - 1) = '\0';
-		env_export(data->env[i], value, data);
-		*(value - 1) = '=';
-		i++;
-	}
-	return (0);
-}
-
-size_t	_strlen(char *str)
-{
-	size_t	size;
-
-	size = 0;
-	while (str && str[size])
-		size++;
-	return (size);
 }

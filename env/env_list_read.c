@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 02:17:22 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/20 01:25:57 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:47:06 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,8 @@ t_env	*env_get(char *name, t_data	*data)
 
 	if (name && data && *name != '\0')
 	{
-		name++;
+		// name++; COMMENTED CAUSE I HAVE PROBLEM IN EXPORT COMMAND TO CREATE ANOTHER ENV WITH SAME NAME HE CANNOT FOUND THE NAME BECAUSE THIS LINE SKIPPED FIRST CHARACTER !
 		i = data->_env;
-		// if (*name == '?')
-		// {
-		// 	printf("%d", data->exit_status >> 8);
-		// 	data->exit_status = 0;
-		// 	return ;
-		// }
 		while (i)
 		{
 			if (ft_strncmp(i->name, name, ft_strlen(name) +1) == 0)

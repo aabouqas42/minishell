@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 14:06:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:08:52 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-# include "dirent.h"
+// # include "dirent.h" ?? 
 
 # define CMD_FAIL -1
 # define CMD_INVALID 0
@@ -36,9 +36,8 @@ typedef struct s_env
 typedef struct s_data
 {
 	t_env	*_env;
-	char	**env;
+	// char	**env;  //USELESS BECAUSE WE USE LINKED LIST AS OUR ENVS
 	char	**argv;
-	char	**paths;
 	char	*prompt;
 	char	*line;
 	char	*program_path;
@@ -53,32 +52,33 @@ int		env_export(char *name, char *value, t_data *data);
 t_env	*env_create(char *name, char *value);
 t_env	*env_get(char *name, t_data	*data);
 int		env_unset(char *name, t_env **env);
-void	env_print_valueof(t_env *env);
 t_env	*env_get_last(t_env	*env);
 void	env_sort(t_env *env);
 int		env_valid_name(char *name);
 void	env_print(t_env	*head);
 size_t	env_size(t_env *env);
 void	env_free(t_env *env);
+
+char *env_grepvalue(char *name, t_data *data);
 /*	END ENV LIST	*/
 
 
-int		data_init(t_data *data, char **env);
+char	*get_prompt();
+
 int		is_valid_cmd(t_data *data, char *cmd);
 void	_free(t_data *data);
 void	free_tab(char **array);
 char	*get_paths_env(t_data *data);
 char	**_split(char *str, t_data *data);
-char	*get_line(char *str);
 char	*ft_strndup(char *str, size_t n);
 char	*_strjoin(char *str1, char *str2);
 void	ft_switcher(int *b, char *str, int size);
 int		argument_count(char *str);
-size_t	_strlen(char *str);
 
 int		cd(char **argv);
 void	echo(t_data *data);
 int		pwd();
+int		export(t_data *data);
 
 
 #endif

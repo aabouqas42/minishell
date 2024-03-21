@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 02:33:20 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:25:46 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*_strjoin(char *str1, char *str2)
 
 	if (str1 == NULL && str2 == NULL)
 		return (NULL);
-	len = _strlen(str1) + _strlen(str2);
+	len = _nsx_strlen(str1) + _nsx_strlen(str2);
 	str = malloc (len + 1);
 	if (str == NULL)
 		return (free (str1), NULL);

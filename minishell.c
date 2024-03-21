@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 14:06:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:09:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ int	builtins(t_data *data)
 		return (echo(data), 1);
 	if (!ft_strncmp(data->argv[0], "pwd", 4))
 		return (pwd(), 1);
+	if (!ft_strncmp(data->argv[0], "env", 4))
+		return (env_print(data->_env), 1);
 	if (!ft_strncmp(data->argv[0], "export", 7))
-		return (env_sort(data->_env), 1);
+		return (export(data), 1);
 	return (0);
 }
 
@@ -52,8 +54,33 @@ int	execute(t_data *data)
 	}
 	child_pid = fork();
 	if (child_pid == 0)
-		execve(data->program_path, data->argv, data->env);
+		execve(data->program_path, data->argv, NULL);
 	return (-1);
+}
+
+int	data_init(t_data *data, char **env)
+{
+	char	*paths;
+	char	*value;
+	int		i;
+
+	data->argv = NULL;
+	data->line = NULL;
+	data->program_path = NULL;
+	// data->env = env;
+	data->exit_status = 0;
+	data->prompt = get_prompt();
+	paths = get_paths_env(data);
+	(env_export("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki", data), i = 0);
+	while (env && env[i])
+	{
+		value = ft_strchr(env[i], '=') + 1;
+		*(value - 1) = '\0';
+		env_export(env[i], value, data);
+		*(value - 1) = '=';
+		i++;
+	}
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
