@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 16:09:37 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:01:12 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	data_init(t_data *data, char **env)
 	data->exit_status = 0;
 	data->prompt = get_prompt();
 	paths = get_paths_env(data);
-	(env_export("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki", data), i = 0);
+	(env_export("PATH", paths, data), i = 0);
 	while (env && env[i])
 	{
 		value = ft_strchr(env[i], '=') + 1;

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 16:05:48 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:41:44 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	env_export(char *name, char *value, t_data *data)
 {
 	t_env	*tmp;
 
-	if (env_valid_name(name) == 0)
+	if (env_valid_name(name) == 0 || value == NULL)
 		return (ENV_NOT_CREATED);
 	if (data->_env == NULL)
 	{
