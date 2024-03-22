@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 14:25:46 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/22 05:26:29 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	argument_count(char *str)
 size_t	get_size(char *str, int n)
 {
 	size_t	size;
-	size_t	i;
+	int		i;
 	char	c;
 
 	i = 0;

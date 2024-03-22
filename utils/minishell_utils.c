@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 15:20:10 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/22 05:59:09 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,14 @@ char	*get_prompt()
 	if (prompt == NULL)
 		return (NULL);
 	return (prompt);
+}
+
+size_t	p_strlen(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s && s[i])
+		i++;
+	return (i);
 }

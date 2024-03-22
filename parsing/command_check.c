@@ -6,20 +6,20 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 16:59:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/22 05:42:54 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*get_paths_env(t_data *data)
+char	*get_paths_env()
 {
 	char	*paths;
 
 	paths = getenv("PATH");
 	if (_nsx_strlen(paths) > 0)
 		return (paths);
-	return ("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki");
+	return ("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
 }
 
 char	*get_program_path(t_data *data, char *cmd)

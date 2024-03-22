@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 17:01:12 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/22 06:00:39 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,17 @@ int	execute(t_data *data)
 
 int	data_init(t_data *data, char **env)
 {
-	char	*paths;
 	char	*value;
 	int		i;
 
 	data->argv = NULL;
 	data->line = NULL;
+	data->_env = NULL;
 	data->program_path = NULL;
 	// data->env = env;
 	data->exit_status = 0;
 	data->prompt = get_prompt();
-	paths = get_paths_env(data);
-	(env_export("PATH", paths, data), i = 0);
+	i = 0;
 	while (env && env[i])
 	{
 		value = ft_strchr(env[i], '=') + 1;
@@ -80,16 +79,16 @@ int	data_init(t_data *data, char **env)
 		*(value - 1) = '=';
 		i++;
 	}
+	if (p_strlen(env_grepvalue("PATH", data)) == 0)
+		env_export("PATH", get_paths_env(), data);
 	return (0);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	char	**argv;
-	int		i;
+	t_data	data;
 	(void)ac;
 	(void)av;
-	t_data	data;
 
 	// goto here;
 	printf("\e[1;1H\e[2J");

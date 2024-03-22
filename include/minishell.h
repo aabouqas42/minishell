@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 16:08:52 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/22 05:59:18 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ char *env_grepvalue(char *name, t_data *data);
 
 
 char	*get_prompt();
+size_t	p_strlen(char *s);
 
 int		is_valid_cmd(t_data *data, char *cmd);
 void	_free(t_data *data);
 void	free_tab(char **array);
-char	*get_paths_env(t_data *data);
+char	*get_paths_env();
 char	**_split(char *str, t_data *data);
 char	*ft_strndup(char *str, size_t n);
 char	*_strjoin(char *str1, char *str2);

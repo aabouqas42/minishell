@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 14:14:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/22 05:28:12 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	**_split(char *str, t_data *data)
 	argv = malloc ((wc + 1) * sizeof(char *));
 	if (argv == NULL)
 		return (NULL);
-	while (i < wc)
+	while (i < (size_t)wc)
 	{
 		size = 0;
 		while (*str == ' ')
