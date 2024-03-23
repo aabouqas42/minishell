@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:33:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:45:26 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	echo(t_data *data)
 		if (data->argv[i])
 			printf(" ");
 	}
-	if (nl)
-		printf("\n");
-	else
-		printf("%%\n");
+	if (nl == 0)
+		printf("%%");
+	printf("\n");
 }

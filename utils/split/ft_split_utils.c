@@ -6,20 +6,13 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 15:03:55 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:44:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void ft_switcher(int *b, char *str, int size)
-{
-	if ((ft_strchr("\"\'", str[size]) && str[size - 1] != '\\')
-		|| str[size] == '\\')
-		*b = (*b == 0);
-}
-
-int	argument_count(char *str)
+size_t	argument_count(char *str)
 {
 	size_t	wc;
 	int		size;
@@ -35,11 +28,12 @@ int	argument_count(char *str)
 		wc += (*str != '\0');
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 		{
-			ft_switcher(&dqt, str, size);
+			if (str[size] == '\"')
+				dqt = (dqt == 0);
 			size++;
 		}
 		if (dqt)
-			return (printf("Error\n"), -1);
+			return (0);
 		str += size;
 	}
 	return (wc);
@@ -56,9 +50,8 @@ size_t	get_size(char *str, int n)
 	while (str[i] && i < n)
 	{
 		c = str[i];
-		if (!ft_strchr("\"\\", c) || (ft_strchr("\"\\", c) && str[i - 1] == '\\'))
+		if (str[i] != '\"')
 			size++;
-		i += (str[i - 1] == '\\');
 		i++;
 	}
 	return (size);
@@ -112,10 +105,10 @@ char	*_strndup(char *str, size_t n)
 	while (str[i] && j < size)
 	{
 		c = str[i];
-		if (!ft_strchr("\"\\", c) || (ft_strchr("\"\\", c) && str[i - 1] == '\\'))
-				res[j++] = c;
-		i += (str[i - 1] == '\\');
+		if (str[i] != '\"')
+			res[j++] = c;
 		i++;
 	}
-	return (res[j] = '\0', res);
+	res[j] = '\0';
+	return (res);
 }

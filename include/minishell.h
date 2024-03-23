@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:22:02 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:44:46 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ char	*_strjoin(char *str1, char *str2);
 int		_strcmp(char *s1, char *s2);
 size_t	_strlen(char *str);
 char	*_strdup(char *s1);
-void ft_switcher(int *b, char *str, int size);
-int		argument_count(char *str);
+size_t	argument_count(char *str);
 
 int		cd(t_data *data);
 void	echo(t_data *data);

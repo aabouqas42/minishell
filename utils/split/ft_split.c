@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:04:00 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:44:16 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	set_var(char *argv_str, char **str, t_data *data)
 	char	*tmp;
 
 	i = 0;
+	if (*argv_str == '\0')
+		return (0);
 	if (*argv_str == '?')
 		return (set_last_exit(str, data), 1);
 	if (*argv_str == '$')
@@ -101,23 +103,27 @@ char	**_split(char *str, t_data *data)
 	size_t	size;
 	size_t	i;
 	int		dqt;
-	int		wc;
+	size_t	wc;
 
 	i = 0;
 	dqt = 0;
 	wc = argument_count(str);
-	if (wc == -1)
-		return (NULL);
-	argv = malloc ((wc + 1) * sizeof(char *));
+	if (wc == 0)
+		return (printf("Invalid Args\n"), NULL);
+	argv = malloc (sizeof(char *) * (wc + 1));
 	if (argv == NULL)
-		return (NULL);
+		safe_exit(-1);
 	while (i < (size_t)wc)
 	{
 		size = 0;
 		while (*str == ' ')
 			str++;
 		while (str[size] && (str[size] != ' ' || dqt == 1))
-			ft_switcher(&dqt,  str, size++);
+		{
+			if (str[size] == '\"')
+				dqt = (dqt == 0);
+			size++;
+		}
 		argv[i] = _strndup(str, size);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);
