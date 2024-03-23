@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 08:20:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:23:46 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	builtins(t_data *data)
 	if (!ft_strncmp(data->argv[0], "pwd", 4))
 		return (pwd(), 1);
 	if (!ft_strncmp(data->argv[0], "env", 4))
-		return (env_print(data->_env), 1);
+		return (env_print(data->env), 1);
 	if (!ft_strncmp(data->argv[0], "export", 7))
 		return (export(data), 1);
 	return (0);
@@ -60,7 +60,7 @@ int	execute()
 	return (-1);
 }
 
-int	data_init(char **env)
+void	data_init(char **base_env)
 {
 	t_data	*data;
 	char	*value;
@@ -69,22 +69,21 @@ int	data_init(char **env)
 	data = data_hook(NULL, 1);
 	data->argv = NULL;
 	data->line = NULL;
-	data->_env = NULL;
+	data->env = NULL;
 	data->program_path = NULL;
 	data->exit_status = 0;
 	data->prompt = get_prompt();
 	i = 0;
-	while (env && env[i])
+	while (base_env && base_env[i])
 	{
-		value = ft_strchr(env[i], '=') + 1;
+		value = ft_strchr(base_env[i], '=') + 1;
 		*(value - 1) = '\0';
-		env_export(env[i], value, data);
+		env_export(base_env[i], value, data);
 		*(value - 1) = '=';
 		i++;
 	}
-	if ( (env_grepvalue("PATH", data)) == 0)
+	if (env_grepvalue("PATH") == 0)
 		env_export("PATH", get_paths_env(), data);
-	return (0);
 }
 
 int	main(int ac, char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:23:26 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/22 05:59:21 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:16:46 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	export(t_data *data)
 	if (data == NULL || data->argv == NULL)
 		return (0);
 	if (data->argv[1] == NULL)
-		return (env_print(data->_env), 1);
+		return (env_print(data->env), 1);
 	name = data->argv[1];
 	value = "";
 	i = 0;

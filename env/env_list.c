@@ -6,19 +6,21 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/22 05:40:46 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:17:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char *env_grepvalue(char *name, t_data *data)
+char *env_grepvalue(char *name)
 {
+	t_data	*data;
 	t_env	*env;
 
+	data = data_hook(NULL, 1);
 	if (name != NULL && data != NULL)
 	{
-		env = data->_env;
+		env = data->env;
 		while (env)
 		{
 			if (ft_strncmp(env->name, name, ft_strlen(name) + 1) == 0)
@@ -53,10 +55,10 @@ int	env_export(char *name, char *value, t_data *data)
 
 	if (env_valid_name(name) == 0)
 		return (ENV_NOT_CREATED);
-	if (data->_env == NULL)
+	if (data->env == NULL)
 	{
-		data->_env = env_create(name, value);
-		if (data->_env == NULL)
+		data->env = env_create(name, value);
+		if (data->env == NULL)
 			return (ENV_FAILURE);
 		return (ENV_CREATED);
 	}
@@ -69,7 +71,7 @@ int	env_export(char *name, char *value, t_data *data)
 			return (ENV_FAILURE);
 		return (ENV_CREATED);
 	}
-	tmp = env_get_last(data->_env);
+	tmp = env_get_last(data->env);
 	tmp->next = env_create(name, value);
 	if (tmp->next == NULL)
 		return (ENV_FAILURE);

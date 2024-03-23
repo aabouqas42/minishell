@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 08:16:55 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:10:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ char	*get_prompt()
 	char	*user;
 
 	user = getenv("USER");
-	if (user == NULL)
-		user = "mait-aabouqas";
+	if (user == NULL || *user == '\0')
+		user = "unknown";
 	user = ft_strjoin("\e[34m┌「 ", user);
 	if (user == NULL)
-		return (NULL);
-	prompt = ft_strjoin(user, " ⫸ 1337.ma 」 \n└─$  \e[0m");
+		safe_exit(-1);
+	prompt = ft_strjoin(user, " ⫸  1337.ma 」 \n└─$  \e[0m");
 	free(user);
 	if (prompt == NULL)
-		return (NULL);
+		safe_exit(-1);
 	return (prompt);
 }
 

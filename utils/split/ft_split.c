@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 08:19:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:23:48 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,23 @@ int	set_var(char *argv_str, char **str, t_data *data)
 {
 	int		i;
 	char	c;
+	char	*tmp;
 
 	i = 0;
 	if (*argv_str == '?')
-	{
-		argv_str++;
-		set_last_exit(str, data);
-		return (1);
-	}
-	while (argv_str[i] && ft_isalnum(argv_str[i]))
+		return (set_last_exit(str, data), 1);
+	if (*argv_str == '$')
+		return (*str = _strjoin(*str, ft_itoa(getpid())), 1);
+	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
 		i++;
+	if (i == 0)
+		return (1);
 	c = argv_str[i];
 	argv_str[i] = '\0';
-	*str = _strjoin(*str, getenv(argv_str));
+	tmp = env_grepvalue(argv_str);
+	if (tmp == NULL)
+		tmp = "";
+	*str = _strjoin(*str, tmp);
 	if (*str == NULL)
 		safe_exit(-1);
 	argv_str[i] = c;
@@ -73,15 +77,17 @@ char	**get_var(char **argv, t_data *data)
 	while (argv[i])
 	{
 		str = NULL;
-		if (ft_strchr(argv[i], '$'))
+		vars = argv[i];
+		if (ft_strchr(vars, '$'))
 		{
-			vars = argv[i];
 			while (vars && *vars)
 			{
-				if (*vars == '$')
-					vars += set_var(vars + 1, &str, data), vars++;
-				else
-					vars += set_word(vars, &str);
+				{
+					if (*vars == '$')
+						vars += set_var(vars + 1, &str, data), vars++;
+					else
+						vars += set_word(vars, &str);
+				}
 			}
 			free (argv[i]);
 			argv[i] = str;

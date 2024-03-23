@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 08:19:03 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:53:15 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 	tmp = ft_strjoin("/", cmd);
 	if (tmp == NULL)
 		safe_exit(-1);
-	paths = env_grepvalue("PATH", data);
+	paths = env_grepvalue("PATH");
 	while (paths && *paths)
 	{
 		i = 0;

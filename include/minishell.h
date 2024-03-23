@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 08:17:16 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:16:29 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	t_env	*_env;
-	// char	**env;  //USELESS BECAUSE WE USE LINKED LIST AS OUR ENVS
+	t_env	*env;
 	char	**argv;
 	char	*prompt;
 	char	*line;
@@ -59,9 +58,10 @@ int		env_valid_name(char *name);
 void	env_print(t_env	*head);
 size_t	env_size(t_env *env);
 void	env_free(t_env *env);
+char	*env_grepvalue(char *name);
+
 t_data	*data_hook(t_data *data, int read_only);
 
-char *env_grepvalue(char *name, t_data *data);
 /*	END ENV LIST	*/
 
 
