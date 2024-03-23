@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 08:53:15 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:32:01 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 	char	*tmp;
 	char	*paths;
 	char	*program_path;
+	char	c;
 	size_t	i;
 
 	if (cmd == NULL)
@@ -53,8 +54,10 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		i = 0;
 		while (paths[i] && paths[i] != ':')
 			i++;
+		c = paths[i];
 		paths[i] = '\0';
 		program_path = ft_strjoin(paths, tmp);
+		paths[i] = c;
 		if (program_path == NULL)
 			(free(tmp), safe_exit(-1));
 		if (access(program_path, X_OK) == 0)
@@ -63,5 +66,6 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		paths[i] = ':';
 		paths += i + (paths[i] == ':');
 	}
+	free(tmp);
 	return (CMD_INVALID);
 }

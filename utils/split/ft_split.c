@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 14:25:04 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:05:07 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ char	**_split(char *str, t_data *data)
 	wc = argument_count(str);
 	if (wc == 0)
 		return (printf("Invalid Args\n"), NULL);
-	// printf("<%zu>\n", wc);
 	argv = malloc (sizeof(char *) * (wc + 1));
 	if (argv == NULL)
 		safe_exit(-1);
@@ -121,15 +120,11 @@ char	**_split(char *str, t_data *data)
 			str++;
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 		{
-			// ft_switcher(&dqt,  str, size++);
-			if (str[size] == '\"' && str[size -1] != '\\')
+			if (str[size] == '\"')
 				dqt = (dqt == 0);
-			// printf("%c>%d>\n", str[size], dqt);
 			size++;
 		}
-		//FIXING WRONG RETURN OF FUNC V
 		argv[i] = ft_strndup(str, size);
-		// printf("%s>>\n", argv[i]);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);
 		str += size;

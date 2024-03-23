@@ -6,17 +6,11 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 12:55:59 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:05:04 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void ft_switcher(int *b, char *str, int size)
-{
-	if (ft_strchr("\"\'\\", str[size]) && str[size - 1] != '\\')
-		*b = (*b == 0);
-}
 
 size_t	argument_count(char *str)
 {
@@ -34,7 +28,7 @@ size_t	argument_count(char *str)
 		wc += (*str != '\0');
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 		{
-			if (str[size] == '\"' && str[size -1] != '\\')
+			if (str[size] == '\"')
 				dqt = (dqt == 0);
 			size++;
 		}
@@ -56,8 +50,6 @@ size_t	get_size(char *str, int n)
 	while (str[i] && i < n)
 	{
 		c = str[i];
-		if (str[i] == '\\' && str[i +1] == '\"')
-			(i++, size++);
 		if (str[i] != '\"')
 			size++;
 		i++;
@@ -93,7 +85,6 @@ char	*_strjoin(char *str1, char *str2)
 	return (free (str1), str);
 }
 
-//HERE >>
 char	*ft_strndup(char *str, size_t n)
 {
 	size_t	i;
@@ -114,11 +105,10 @@ char	*ft_strndup(char *str, size_t n)
 	while (str[i] && j < size)
 	{
 		c = str[i];
-		if (!ft_strchr("\"\'\\", c)
-			|| (ft_strchr("\"\'\\", c) && str[i - 1] == '\\') )
-				res[j++] = c;
-		i += (str[i - 1] == '\\');
+		if (str[i] != '\"')
+			res[j++] = c;
 		i++;
 	}
-	return (res[j] = '\0', res);
+	res[j] = '\0';
+	return (res);
 }
