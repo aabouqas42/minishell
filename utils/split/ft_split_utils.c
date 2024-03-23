@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 14:25:46 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/22 05:25:17 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void ft_switcher(int *b, char *str, int size)
 {
-	if ((ft_strchr("\'\"", str[size]) && str[size - 1] != '\\')
-		|| str[size] == '\\')
+	if ((ft_strchr("\"", str[size]) && str[size - 1] != '\\') || str[size] == '\\')
 		*b = (*b == 0);
 }
 
@@ -39,7 +38,7 @@ int	argument_count(char *str)
 			size++;
 		}
 		if (dqt)
-			return (-1);
+			return (printf("Error\n"), -1);
 		str += size;
 	}
 	return (wc);
@@ -56,8 +55,7 @@ size_t	get_size(char *str, int n)
 	while (str[i] && i < n)
 	{
 		c = str[i];
-		if (!ft_strchr("\"\'\\", c)
-			|| (ft_strchr("\"\'\\", c) && str[i - 1] == '\\'))
+		if (!ft_strchr("\"\\", c) || (ft_strchr("\"\\", c) && str[i - 1] == '\\'))
 			size++;
 		i += (str[i - 1] == '\\');
 		i++;
@@ -113,8 +111,7 @@ char	*ft_strndup(char *str, size_t n)
 	while (str[i] && j < size)
 	{
 		c = str[i];
-		if (!ft_strchr("\"\'\\", c)
-			|| (ft_strchr("\"\'\\", c) && str[i - 1] == '\\') )
+		if (!ft_strchr("\"\\", c) || (ft_strchr("\"\\", c) && str[i - 1] == '\\'))
 				res[j++] = c;
 		i += (str[i - 1] == '\\');
 		i++;

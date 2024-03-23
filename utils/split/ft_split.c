@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 18:40:25 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/22 22:23:36 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ int	set_word(char *argv_str, char **str, t_data *data)
 	c = argv_str[i];
 	argv_str[i] = '\0';
 	*str = _strjoin(*str, argv_str);
+	printf("[%s]\n", *str);
 	if (*str == NULL)
 		(_free(data), exit(-1));
 	argv_str[i] = c;
 	return (i);
 }
 
-char	**get_var(char **argv, t_data *data)
+void	get_var(char **argv, t_data *data)
 {
 	char	*vars;
 	char	*str;
@@ -76,10 +77,10 @@ char	**get_var(char **argv, t_data *data)
 		if (ft_strchr(argv[i], '$'))
 		{
 			vars = argv[i];
-			while (vars && *vars)
+			while (*vars)
 			{
 				if (*vars == '$')
-					vars += set_var(vars + 1, &str, data), vars++;
+					(vars++, vars += set_var(vars, &str, data));
 				else
 					vars += set_word(vars, &str, data);
 			}
@@ -88,16 +89,15 @@ char	**get_var(char **argv, t_data *data)
 		}
 		i++;
 	}
-	return (argv);
 }
 
 char	**_split(char *str, t_data *data)
 {
 	char	**argv;
-	int		dqt;
 	size_t	size;
-	int		wc;
 	size_t	i;
+	int		dqt;
+	int		wc;
 
 	i = 0;
 	dqt = 0;
@@ -114,11 +114,11 @@ char	**_split(char *str, t_data *data)
 			str++;
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 			ft_switcher(&dqt,  str, size++);
-		printf("%d\n", dqt);
 		argv[i] = ft_strndup(str, size);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);
 		str += size;
 	}
-	return (argv[i] = NULL, get_var(argv, data));
+	get_var(argv, data);
+	return (argv[i] = NULL, argv);
 }
