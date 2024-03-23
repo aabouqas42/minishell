@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 17:32:55 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:22:02 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+
 // # include "dirent.h" ?? 
 
 # define CMD_FAIL -1
@@ -35,8 +36,7 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	t_env	*_env;
-	// char	**env;  //USELESS BECAUSE WE USE LINKED LIST AS OUR ENVS
+	t_env	*env;
 	char	**argv;
 	char	*prompt;
 	char	*line;
@@ -58,21 +58,27 @@ int		env_valid_name(char *name);
 void	env_print(t_env	*head);
 size_t	env_size(t_env *env);
 void	env_free(t_env *env);
+char	*env_grepvalue(char *name);
 
-char *env_grep_value(char *name, t_data *data);
+t_data	*data_hook(t_data *data);
+
 /*	END ENV LIST	*/
 
 
 char	*get_prompt();
+size_t	p_strlen(char *s);
 
 int		is_valid_cmd(t_data *data, char *cmd);
-void	_free(t_data *data);
+void	safe_exit(int status);
 void	free_tab(char **array);
-char	*get_paths_env(t_data *data);
+char	*get_paths_env();
 char	**_split(char *str, t_data *data);
-char	*ft_strndup(char *str, size_t n);
+char	*_strndup(char *str, size_t n);
 char	*_strjoin(char *str1, char *str2);
-void	ft_switcher(int *b, char *str, int size);
+int		_strcmp(char *s1, char *s2);
+size_t	_strlen(char *str);
+char	*_strdup(char *s1);
+void ft_switcher(int *b, char *str, int size);
 int		argument_count(char *str);
 
 int		cd(t_data *data);

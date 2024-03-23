@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   strdup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:35:06 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 14:21:04 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/03/23 15:19:23 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/03/23 15:24:27 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	pwd()
+char	*_strdup(char *str)
 {
-	char	*working_dir;
+	size_t	i;
+	char	*res;
 
-	t_data *data = data_hook(NULL);
-
-	printf("<<%s>>\n", data->line);
-	working_dir = getcwd(NULL, 0);
-	printf("%s\n", working_dir);
-	if (working_dir == NULL)
-		return (-1);
-	free(working_dir);
-	return (0);
+	if (str == NULL)
+		return (NULL);
+	res = malloc(_strlen(str) + 1);
+	if (res == NULL)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		res[i] = str[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }

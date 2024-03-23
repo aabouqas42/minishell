@@ -6,11 +6,20 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/21 18:04:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:24:47 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/minishell.h"
+
+t_data	*data_hook(t_data *data)
+{
+	static t_data	*data_saved;
+
+	if (data != NULL)
+		data_saved = data;
+	return (data_saved);
+}
 
 void	free_tab(char **array)
 {
@@ -27,12 +36,18 @@ void	free_tab(char **array)
 	free(array);
 }
 
-void	_free(t_data *data)
+void	safe_exit(int status)
 {
+	t_data *data;
+
+	data = data_hook(NULL);
 	free (data->line);
+	data->line = NULL;
 	free (data->program_path);
+	data->program_path = NULL;
 	free_tab(data->argv);
 	free (data->prompt);
+	exit(status);
 }
 
 char	*get_prompt()
@@ -41,14 +56,14 @@ char	*get_prompt()
 	char	*user;
 
 	user = getenv("USER");
-	if (user == NULL)
-		user = "mait-aabouqas";
+	if (user == NULL || *user == '\0')
+		user = "unknown";
 	user = ft_strjoin("\e[34m┌「 ", user);
 	if (user == NULL)
-		return (NULL);
-	prompt = ft_strjoin(user, " ⫸ 1337.ma 」 \n└─$  \e[0m");
+		safe_exit(-1);
+	prompt = ft_strjoin(user, " ⫸  1337.ma 」 \n└─$  \e[0m");
 	free(user);
 	if (prompt == NULL)
-		return (NULL);
+		safe_exit(-1);
 	return (prompt);
 }

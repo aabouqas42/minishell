@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 18:37:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:33:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	echo(t_data *data)
 	
 	i = 1;
 	nl = 1;
-	if (data->argv[i] && ft_strncmp(data->argv[i], "-n", 3) == 0)
+	if (data->argv[i] && _strcmp(data->argv[i], "-n") == 0)
 		(nl = 0, i++);
 	while (data->argv[i])
 	{

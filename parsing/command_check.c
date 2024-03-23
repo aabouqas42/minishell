@@ -6,32 +6,30 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 18:08:17 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:06:52 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*get_paths_env(t_data *data)
+char	*get_paths_env()
 {
 	char	*paths;
 
 	paths = getenv("PATH");
 	if (_nsx_strlen(paths) > 0)
 		return (paths);
-	return ("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki");
+	return ("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
 }
 
 char	*get_program_path(t_data *data, char *cmd)
 {
 	char	*program_path;
 
+	(void)data;
 	program_path = ft_strdup(cmd);
 	if (program_path == NULL)
-	{
-		_free(data);
-		exit(-1);
-	}
+		safe_exit(-1);
 	return (program_path);
 }
 
@@ -48,8 +46,8 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		return (data->program_path = get_program_path(data, cmd), 1);
 	tmp = ft_strjoin("/", cmd);
 	if (tmp == NULL)
-		return (_free(data), exit(-1), CMD_FAIL);
-	paths = env_grep_value("PATH", data);
+		safe_exit(-1);
+	paths = env_grepvalue("PATH");
 	while (paths && *paths)
 	{
 		i = 0;
@@ -58,7 +56,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		paths[i] = '\0';
 		program_path = ft_strjoin(paths, tmp);
 		if (program_path == NULL)
-			return (free(tmp), _free(data), exit(-1), CMD_FAIL);
+			(free(tmp), safe_exit(-1));
 		if (access(program_path, X_OK) == 0)
 			return (data->program_path = program_path, free(tmp), CMD_VALID);
 		free(program_path);

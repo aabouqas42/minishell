@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/22 05:25:17 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:03:55 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void ft_switcher(int *b, char *str, int size)
 {
-	if ((ft_strchr("\"", str[size]) && str[size - 1] != '\\') || str[size] == '\\')
+	if ((ft_strchr("\"\'", str[size]) && str[size - 1] != '\\')
+		|| str[size] == '\\')
 		*b = (*b == 0);
 }
 
@@ -47,7 +48,7 @@ int	argument_count(char *str)
 size_t	get_size(char *str, int n)
 {
 	size_t	size;
-	size_t	i;
+	int		i;
 	char	c;
 
 	i = 0;
@@ -91,7 +92,7 @@ char	*_strjoin(char *str1, char *str2)
 	return (free (str1), str);
 }
 
-char	*ft_strndup(char *str, size_t n)
+char	*_strndup(char *str, size_t n)
 {
 	size_t	i;
 	size_t	size;

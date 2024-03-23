@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:23:26 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/21 17:33:18 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:16:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	_export(t_data *data)
 	if (data == NULL || data->argv == NULL)
 		return (0);
 	if (data->argv[1] == NULL)
-		return (env_sort(data->_env), 1);
+		return (env_print(data->env), 1);
 	name = data->argv[1];
-	value = NULL;
+	value = "";
 	i = 0;
 	while (name[i] && name[i] != '=')
 		i++;

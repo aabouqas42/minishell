@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/22 22:23:36 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:04:00 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	set_last_exit(char **str, t_data *data)
 
 	exit_status = ft_itoa(data->exit_status >> 8);
 	if (exit_status == NULL)
-		return (_free(data), exit(-1), -1);
+		safe_exit(-1);
 	*str = _strjoin(*str, exit_status);
 	return (0);
 }
@@ -27,26 +27,30 @@ int	set_var(char *argv_str, char **str, t_data *data)
 {
 	int		i;
 	char	c;
+	char	*tmp;
 
 	i = 0;
 	if (*argv_str == '?')
-	{
-		argv_str++;
-		set_last_exit(str, data);
-		return (1);
-	}
-	while (argv_str[i] && ft_isalnum(argv_str[i]))
+		return (set_last_exit(str, data), 1);
+	if (*argv_str == '$')
+		return (*str = _strjoin(*str, ft_itoa(getpid())), 1);
+	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
 		i++;
+	if (i == 0)
+		return (1);
 	c = argv_str[i];
 	argv_str[i] = '\0';
-	*str = _strjoin(*str, getenv(argv_str));
+	tmp = env_grepvalue(argv_str);
+	if (tmp == NULL)
+		tmp = "";
+	*str = _strjoin(*str, tmp);
 	if (*str == NULL)
-		(_free(data), exit(-1));
+		safe_exit(-1);
 	argv_str[i] = c;
 	return (i);
 }
 
-int	set_word(char *argv_str, char **str, t_data *data)
+int	set_word(char *argv_str, char **str)
 {
 	int		i;
 	char	c;
@@ -59,7 +63,7 @@ int	set_word(char *argv_str, char **str, t_data *data)
 	*str = _strjoin(*str, argv_str);
 	printf("[%s]\n", *str);
 	if (*str == NULL)
-		(_free(data), exit(-1));
+		safe_exit(-1);
 	argv_str[i] = c;
 	return (i);
 }
@@ -74,15 +78,15 @@ void	get_var(char **argv, t_data *data)
 	while (argv[i])
 	{
 		str = NULL;
-		if (ft_strchr(argv[i], '$'))
+		vars = argv[i];
+		if (ft_strchr(vars, '$'))
 		{
-			vars = argv[i];
-			while (*vars)
+			while (vars && *vars)
 			{
 				if (*vars == '$')
 					(vars++, vars += set_var(vars, &str, data));
 				else
-					vars += set_word(vars, &str, data);
+					vars += set_word(vars, &str);
 			}
 			free (argv[i]);
 			argv[i] = str;
@@ -107,18 +111,17 @@ char	**_split(char *str, t_data *data)
 	argv = malloc ((wc + 1) * sizeof(char *));
 	if (argv == NULL)
 		return (NULL);
-	while (i < wc)
+	while (i < (size_t)wc)
 	{
 		size = 0;
 		while (*str == ' ')
 			str++;
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 			ft_switcher(&dqt,  str, size++);
-		argv[i] = ft_strndup(str, size);
+		argv[i] = _strndup(str, size);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);
 		str += size;
 	}
-	get_var(argv, data);
-	return (argv[i] = NULL, argv);
+	return (argv[i] = NULL, get_var(argv, data), argv);
 }

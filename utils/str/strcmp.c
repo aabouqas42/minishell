@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   strcmp.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:35:06 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 14:21:04 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/03/23 14:57:39 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/03/23 15:31:45 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	pwd()
+int	_strcmp(char *s1, char *s2)
 {
-	char	*working_dir;
+	int	i;
 
-	t_data *data = data_hook(NULL);
-
-	printf("<<%s>>\n", data->line);
-	working_dir = getcwd(NULL, 0);
-	printf("%s\n", working_dir);
-	if (working_dir == NULL)
-		return (-1);
-	free(working_dir);
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
 	return (0);
 }
