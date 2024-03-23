@@ -6,14 +6,17 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 09:23:46 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:02:33 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	builtins(t_data *data)
+int	builtins()
 {
+	t_data *data;
+
+	data = data_hook(NULL, 1);
 	if (!ft_strncmp(data->argv[0], "exit", 5))
 		safe_exit(0);
 	if (!ft_strncmp(data->argv[0], "c", 2))
@@ -46,7 +49,7 @@ int	execute()
 	data->argv = _split(data->line, data);
 	if (data->argv == NULL)
 		return 1;
-	if (builtins(data))
+	if (builtins())
 		return (0);
 	if (is_valid_cmd(data, data->argv[0]) != 1)
 	{

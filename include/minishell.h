@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 09:16:29 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:29:17 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ size_t	env_size(t_env *env);
 void	env_free(t_env *env);
 char	*env_grepvalue(char *name);
 
-t_data	*data_hook(t_data *data, int read_only);
+t_data	*data_hook(t_data *data, int just_read);
 
 /*	END ENV LIST	*/
 
@@ -75,8 +75,8 @@ char	*get_paths_env();
 char	**_split(char *str, t_data *data);
 char	*ft_strndup(char *str, size_t n);
 char	*_strjoin(char *str1, char *str2);
-void ft_switcher(int *b, char *str, int size);
-int		argument_count(char *str);
+void	ft_switcher(int *b, char *str, int size);
+size_t	argument_count(char *str);
 
 int		cd(char **argv);
 void	echo(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 09:50:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:55:59 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 void ft_switcher(int *b, char *str, int size)
 {
-	if ((ft_strchr("\"\'", str[size]) && str[size - 1] != '\\')
-		|| str[size] == '\\')
+	if (ft_strchr("\"\'\\", str[size]) && str[size - 1] != '\\')
 		*b = (*b == 0);
 }
 
-int	argument_count(char *str)
+size_t	argument_count(char *str)
 {
 	size_t	wc;
 	int		size;
@@ -35,11 +34,12 @@ int	argument_count(char *str)
 		wc += (*str != '\0');
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 		{
-			ft_switcher(&dqt, str, size);
+			if (str[size] == '\"' && str[size -1] != '\\')
+				dqt = (dqt == 0);
 			size++;
 		}
 		if (dqt)
-			return (-1);
+			return (0);
 		str += size;
 	}
 	return (wc);
@@ -56,10 +56,10 @@ size_t	get_size(char *str, int n)
 	while (str[i] && i < n)
 	{
 		c = str[i];
-		if (!ft_strchr("\"\'\\", c)
-			|| (ft_strchr("\"\'\\", c) && str[i - 1] == '\\'))
+		if (str[i] == '\\' && str[i +1] == '\"')
+			(i++, size++);
+		if (str[i] != '\"')
 			size++;
-		i += (str[i - 1] == '\\');
 		i++;
 	}
 	return (size);
@@ -93,6 +93,7 @@ char	*_strjoin(char *str1, char *str2)
 	return (free (str1), str);
 }
 
+//HERE >>
 char	*ft_strndup(char *str, size_t n)
 {
 	size_t	i;

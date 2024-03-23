@@ -6,17 +6,17 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 09:10:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:10:27 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/minishell.h"
 
-t_data	*data_hook(t_data *data, int read_only)
+t_data	*data_hook(t_data *data, int just_read)
 {
 	static t_data	*data_saved;
 
-	if (!read_only)
+	if (!just_read)
 		data_saved = data;
 	return (data_saved);
 }

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 10:23:48 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:02:43 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	set_var(char *argv_str, char **str, t_data *data)
 	char	*tmp;
 
 	i = 0;
+	if (*argv_str == '\0')
+		return (0);
 	if (*argv_str == '?')
 		return (set_last_exit(str, data), 1);
 	if (*argv_str == '$')
@@ -82,12 +84,10 @@ char	**get_var(char **argv, t_data *data)
 		{
 			while (vars && *vars)
 			{
-				{
-					if (*vars == '$')
-						vars += set_var(vars + 1, &str, data), vars++;
-					else
-						vars += set_word(vars, &str);
-				}
+				if (*vars == '$')
+					vars += set_var(vars + 1, &str, data), vars++;
+				else
+					vars += set_word(vars, &str);
 			}
 			free (argv[i]);
 			argv[i] = str;
@@ -100,27 +100,36 @@ char	**get_var(char **argv, t_data *data)
 char	**_split(char *str, t_data *data)
 {
 	char	**argv;
-	int		dqt;
 	size_t	size;
-	int		wc;
 	size_t	i;
+	int		dqt;
+	size_t	wc;
 
 	i = 0;
 	dqt = 0;
 	wc = argument_count(str);
-	if (wc == -1)
-		return (NULL);
-	argv = malloc ((wc + 1) * sizeof(char *));
+	if (wc == 0)
+		return (printf("Invalid Args\n"), NULL);
+	// printf("<%zu>\n", wc);
+	argv = malloc (sizeof(char *) * (wc + 1));
 	if (argv == NULL)
-		return (NULL);
+		safe_exit(-1);
 	while (i < (size_t)wc)
 	{
 		size = 0;
 		while (*str == ' ')
 			str++;
 		while (str[size] && (str[size] != ' ' || dqt == 1))
-			ft_switcher(&dqt,  str, size++);
+		{
+			// ft_switcher(&dqt,  str, size++);
+			if (str[size] == '\"' && str[size -1] != '\\')
+				dqt = (dqt == 0);
+			// printf("%c>%d>\n", str[size], dqt);
+			size++;
+		}
+		//FIXING WRONG RETURN OF FUNC V
 		argv[i] = ft_strndup(str, size);
+		// printf("%s>>\n", argv[i]);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);
 		str += size;
