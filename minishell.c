@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/22 06:00:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:20:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	builtins(t_data *data)
 {
 	if (!ft_strncmp(data->argv[0], "exit", 5))
-		return (_free(data), exit(0), 1);
+		safe_exit(0);
 	if (!ft_strncmp(data->argv[0], "c", 2))
 		return (printf("\e[1;1H\e[2J"), 1);
 	if (!ft_strncmp(data->argv[0], "clear", 6))
@@ -33,10 +33,12 @@ int	builtins(t_data *data)
 	return (0);
 }
 
-int	execute(t_data *data)
+int	execute()
 {
+	t_data *data;
 	int	child_pid;
 
+	data = data_hook(NULL, 1);
 	data->line = readline(data->prompt);
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
@@ -58,16 +60,17 @@ int	execute(t_data *data)
 	return (-1);
 }
 
-int	data_init(t_data *data, char **env)
+int	data_init(char **env)
 {
+	t_data	*data;
 	char	*value;
 	int		i;
 
+	data = data_hook(NULL, 1);
 	data->argv = NULL;
 	data->line = NULL;
 	data->_env = NULL;
 	data->program_path = NULL;
-	// data->env = env;
 	data->exit_status = 0;
 	data->prompt = get_prompt();
 	i = 0;
@@ -79,7 +82,7 @@ int	data_init(t_data *data, char **env)
 		*(value - 1) = '=';
 		i++;
 	}
-	if (p_strlen(env_grepvalue("PATH", data)) == 0)
+	if ( (env_grepvalue("PATH", data)) == 0)
 		env_export("PATH", get_paths_env(), data);
 	return (0);
 }
@@ -92,10 +95,11 @@ int	main(int ac, char **av, char **env)
 
 	// goto here;
 	printf("\e[1;1H\e[2J");
-	data_init(&data, env);
+	data_hook(&data, 0);
+	data_init(env);
 	while (1)
 	{
-		execute(&data);
+		execute();
 		waitpid(-1, &data.exit_status, 0);
 		free (data.program_path);
 		free (data.line);

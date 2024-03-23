@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/22 05:26:29 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:03:32 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void ft_switcher(int *b, char *str, int size)
 {
-	if ((ft_strchr("\'\"", str[size]) && str[size - 1] != '\\')
+	if ((ft_strchr("\"\'", str[size]) && str[size - 1] != '\\')
 		|| str[size] == '\\')
 		*b = (*b == 0);
 }

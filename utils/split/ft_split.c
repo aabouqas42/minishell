@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/22 05:28:12 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:19:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	set_last_exit(char **str, t_data *data)
 
 	exit_status = ft_itoa(data->exit_status >> 8);
 	if (exit_status == NULL)
-		return (_free(data), exit(-1), -1);
+		safe_exit(-1);
 	*str = _strjoin(*str, exit_status);
 	return (0);
 }
@@ -41,12 +41,12 @@ int	set_var(char *argv_str, char **str, t_data *data)
 	argv_str[i] = '\0';
 	*str = _strjoin(*str, getenv(argv_str));
 	if (*str == NULL)
-		(_free(data), exit(-1));
+		safe_exit(-1);
 	argv_str[i] = c;
 	return (i);
 }
 
-int	set_word(char *argv_str, char **str, t_data *data)
+int	set_word(char *argv_str, char **str)
 {
 	int		i;
 	char	c;
@@ -58,7 +58,7 @@ int	set_word(char *argv_str, char **str, t_data *data)
 	argv_str[i] = '\0';
 	*str = _strjoin(*str, argv_str);
 	if (*str == NULL)
-		(_free(data), exit(-1));
+		safe_exit(-1);
 	argv_str[i] = c;
 	return (i);
 }
@@ -81,7 +81,7 @@ char	**get_var(char **argv, t_data *data)
 				if (*vars == '$')
 					vars += set_var(vars + 1, &str, data), vars++;
 				else
-					vars += set_word(vars, &str, data);
+					vars += set_word(vars, &str);
 			}
 			free (argv[i]);
 			argv[i] = str;

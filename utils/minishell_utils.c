@@ -6,11 +6,20 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/22 05:59:09 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:16:55 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/minishell.h"
+
+t_data	*data_hook(t_data *data, int read_only)
+{
+	static t_data	*data_saved;
+
+	if (!read_only)
+		data_saved = data;
+	return (data_saved);
+}
 
 void	free_tab(char **array)
 {
@@ -27,13 +36,17 @@ void	free_tab(char **array)
 	free(array);
 }
 
-void	_free(t_data *data)
+void	safe_exit(int status)
 {
+	t_data *data;
+
+	data = data_hook(NULL, 1);
 	free (data->line);
 	free (data->program_path);
 	free_tab(data->argv);
 	// free_tab(data->paths);
 	free (data->prompt);
+	exit(status);
 }
 
 char	*get_prompt()

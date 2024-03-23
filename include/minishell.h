@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/22 05:59:18 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:17:16 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+
 // # include "dirent.h" ?? 
 
 # define CMD_FAIL -1
@@ -58,6 +59,7 @@ int		env_valid_name(char *name);
 void	env_print(t_env	*head);
 size_t	env_size(t_env *env);
 void	env_free(t_env *env);
+t_data	*data_hook(t_data *data, int read_only);
 
 char *env_grepvalue(char *name, t_data *data);
 /*	END ENV LIST	*/
@@ -67,13 +69,13 @@ char	*get_prompt();
 size_t	p_strlen(char *s);
 
 int		is_valid_cmd(t_data *data, char *cmd);
-void	_free(t_data *data);
+void	safe_exit(int status);
 void	free_tab(char **array);
 char	*get_paths_env();
 char	**_split(char *str, t_data *data);
 char	*ft_strndup(char *str, size_t n);
 char	*_strjoin(char *str1, char *str2);
-void	ft_switcher(int *b, char *str, int size);
+void ft_switcher(int *b, char *str, int size);
 int		argument_count(char *str);
 
 int		cd(char **argv);
