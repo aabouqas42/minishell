@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/24 15:31:32 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:58:32 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,14 @@ char	**_split(char *str, t_data *data)
 	while (i < wc)
 	{
 		size = 0;
-		str = ft_strskps(str, " ");
+		while (*str && *str == ' ')
+			str++;
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 		{
-			if (str[size] != '\\' && str[size +1] == '\"')
+			if (str[size] == '\"')
 				dqt = (dqt == 0);
 			size++;
 		}
-		printf("<$%zu$>\n", size);
 		argv[i] = _strndup(str, size);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);

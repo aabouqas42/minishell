@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:59:07 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/24 15:06:24 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:53:45 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,20 @@
 
 char	*ft_strskps(char *str, char *to_skip)
 {
-	while (str && ft_strchr(to_skip, *str))
+	size_t i;
+
+	while (str && *str)
+	{
+		i = 0;
+		while (to_skip[i])
+		{
+			if (*str == to_skip[i])
+				return (str);
+			i++;
+		}
 		str++;
-	return (str);
+	}
+	return (NULL);
 }
 
 int	ft_strskpi(char *str, char *to_skip)

@@ -6,12 +6,16 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/24 14:57:23 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/24 22:02:32 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+
+/*
+	NEED TO REMOVE EMPTY STRINGS , DON'T ALLOCATE IT <IF ITS EMPTY STRING ONLY>
+*/
 size_t	argument_count(char *str)
 {
 	size_t	wc;
@@ -23,17 +27,12 @@ size_t	argument_count(char *str)
 	while (str && *str)
 	{
 		i = 0;
-		while (*str == ' ')
+		while (*str && *str == ' ')
 			str++;
 		wc += (*str != '\0');
 		while (str[i] && (str[i] != ' ' || dqt == 1))
 		{
-			if (str[i] == '\\')
-			{
-				i++;
-				if (str[i] == '\0')
-					return (0);
-			}else if (str[i] == '\"')
+			if (str[i] == '\"')
 				dqt = (dqt == 0);
 			i++;
 		}
@@ -41,7 +40,6 @@ size_t	argument_count(char *str)
 			return (0);
 		str += i;
 	}
-	printf("[wc : %zu]\n", wc);
 	return (wc);
 }
 
@@ -49,13 +47,11 @@ size_t	get_size(char *str, int n)
 {
 	size_t	size;
 	int		i;
-	char	c;
 
 	i = 0;
 	size = 0;
 	while (str[i] && i < n)
 	{
-		c = str[i];
 		if (str[i] != '\"')
 			size++;
 		i++;
@@ -103,6 +99,7 @@ char	*_strndup(char *str, size_t n)
 		return (NULL);
 	i = 0;
 	size = get_size(str, n);
+	printf("size to allocating : <%zu>, string :<%s>\n", size, str);
 	res = malloc(size + 1);
 	if (res == NULL)
 		return (NULL);

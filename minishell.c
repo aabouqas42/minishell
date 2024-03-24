@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/24 12:48:02 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:36:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 
-	atexit(ex);
+	// atexit(ex);
 	// char **argv;
 	// int i = 0;
 	// goto here;
