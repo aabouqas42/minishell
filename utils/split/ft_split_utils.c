@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 15:44:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:57:23 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,33 @@
 size_t	argument_count(char *str)
 {
 	size_t	wc;
-	int		size;
+	int		i;
 	int		dqt;
 
 	wc = 0;
 	dqt = 0;
 	while (str && *str)
 	{
-		size = 0;
+		i = 0;
 		while (*str == ' ')
 			str++;
 		wc += (*str != '\0');
-		while (str[size] && (str[size] != ' ' || dqt == 1))
+		while (str[i] && (str[i] != ' ' || dqt == 1))
 		{
-			if (str[size] == '\"')
+			if (str[i] == '\\')
+			{
+				i++;
+				if (str[i] == '\0')
+					return (0);
+			}else if (str[i] == '\"')
 				dqt = (dqt == 0);
-			size++;
+			i++;
 		}
 		if (dqt)
 			return (0);
-		str += size;
+		str += i;
 	}
+	printf("[wc : %zu]\n", wc);
 	return (wc);
 }
 

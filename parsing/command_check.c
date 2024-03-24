@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:41:32 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:49:47 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		if (access(program_path, X_OK) == 0)
 			return (data->program_path = program_path, free(tmp), CMD_VALID);
 		free(program_path);
-		paths[i] = ':';
 		paths += i + (paths[i] == ':');
 	}
 	free(tmp);

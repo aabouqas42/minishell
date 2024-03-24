@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:44:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:05:07 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,9 @@ int		cd(t_data *data);
 void	echo(t_data *data);
 int		pwd();
 int		_export(t_data *data);
+
+char	*ft_strskps(char *str, char *to_skip);
+size_t	ft_strskpul(char *str, char *to_skip);
+int		ft_strskpi(char *str, char *to_skip);
 
 #endif

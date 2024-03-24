@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:44:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:31:32 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,21 +109,21 @@ char	**_split(char *str, t_data *data)
 	dqt = 0;
 	wc = argument_count(str);
 	if (wc == 0)
-		return (printf("Invalid Args\n"), NULL);
+		return (printf("Invalid Args..\n"), NULL);
 	argv = malloc (sizeof(char *) * (wc + 1));
 	if (argv == NULL)
 		safe_exit(-1);
-	while (i < (size_t)wc)
+	while (i < wc)
 	{
 		size = 0;
-		while (*str == ' ')
-			str++;
+		str = ft_strskps(str, " ");
 		while (str[size] && (str[size] != ' ' || dqt == 1))
 		{
-			if (str[size] == '\"')
+			if (str[size] != '\\' && str[size +1] == '\"')
 				dqt = (dqt == 0);
 			size++;
 		}
+		printf("<$%zu$>\n", size);
 		argv[i] = _strndup(str, size);
 		if (argv[i++] == NULL)
 			return (argv[size] = NULL, NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 15:40:42 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:09:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,19 @@ void	safe_exit(int status)
 
 char	*get_prompt()
 {
-	char	*prompt;
-	char	*user;
+	// char	*prompt;
+	// char	*user;
 
-	user = getenv("USER");
-	if (user == NULL || *user == '\0')
-		user = "unknown";
-	user = ft_strjoin("\e[34m┌「 ", user);
-	if (user == NULL)
-		safe_exit(-1);
-	prompt = ft_strjoin(user, " ⫸  1337.ma 」 \n└─$  \e[0m");
-	free(user);
-	if (prompt == NULL)
-		safe_exit(-1);
-	return (prompt);
+	// user = getenv("USER");
+	// if (user == NULL || *user == '\0')
+	// 	user = "unknown";
+	// user = ft_strjoin("\e[34m┌「 ", user);
+	// if (user == NULL)
+	// 	safe_exit(-1);
+	// prompt = ft_strjoin(user, " ⫸  1337.ma 」 \n└─$  \e[0m");
+	// free(user);
+	// if (prompt == NULL)
+	// 	safe_exit(-1);
+	// return (prompt);
+	return ("$>> ");
 }
