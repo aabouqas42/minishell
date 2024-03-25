@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/24 15:05:07 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:55:04 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	t_env	*env;
-	char	**argv;
-	char	*prompt;
-	char	*line;
-	char	*program_path;
-	int		exit_status;
+	t_env		*env;
+	char		**argv;
+	char		*prompt;
+	char		*line;
+	char		*program_path;
+	int			exit_status;
 }	t_data;
 
 #define ENV_NOT_CREATED -1
@@ -85,8 +85,7 @@ void	echo(t_data *data);
 int		pwd();
 int		_export(t_data *data);
 
-char	*ft_strskps(char *str, char *to_skip);
-size_t	ft_strskpul(char *str, char *to_skip);
-int		ft_strskpi(char *str, char *to_skip);
+
+void	*p_calloc(size_t size);
 
 #endif

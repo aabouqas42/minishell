@@ -6,16 +6,12 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/24 22:02:32 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:42:24 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-
-/*
-	NEED TO REMOVE EMPTY STRINGS , DON'T ALLOCATE IT <IF ITS EMPTY STRING ONLY>
-*/
 size_t	argument_count(char *str)
 {
 	size_t	wc;
@@ -52,8 +48,7 @@ size_t	get_size(char *str, int n)
 	size = 0;
 	while (str[i] && i < n)
 	{
-		if (str[i] != '\"')
-			size++;
+		size++;
 		i++;
 	}
 	return (size);
@@ -87,11 +82,54 @@ char	*_strjoin(char *str1, char *str2)
 	return (free (str1), str);
 }
 
+int	set_var(char *argv_str, char **str)
+{
+	int		i;
+	char	c;
+	char	*tmp;
+
+	i = 0;
+	if (*argv_str == '\0')
+		return (0);
+	// if (*argv_str == '?')
+	// 	return (set_last_exit(str, data), 1);
+	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
+		i++;
+	if (i == 0)
+		return (1);
+	c = argv_str[i];
+	argv_str[i] = '\0';
+	tmp = env_grepvalue(argv_str);
+	if (tmp == NULL)
+		tmp = "";
+	*str = _strjoin(*str, tmp);
+	if (*str == NULL)
+		safe_exit(-1);
+	argv_str[i] = c;
+	return (i);
+}
+
+int	set_word(char *argv_str, char **str)
+{
+	int		i;
+	char	c;
+
+	i = 0;
+	while (argv_str[i] && argv_str[i] != '$')
+		i++;
+	c = argv_str[i];
+	argv_str[i] = '\0';
+	*str = _strjoin(*str, argv_str);
+	if (*str == NULL)
+		safe_exit(-1);
+	argv_str[i] = c;
+	return (i);
+}
+
 char	*_strndup(char *str, size_t n)
 {
 	size_t	i;
 	size_t	size;
-	size_t	j;
 	char	c;
 	char	*res;
 
@@ -99,19 +137,18 @@ char	*_strndup(char *str, size_t n)
 		return (NULL);
 	i = 0;
 	size = get_size(str, n);
-	printf("size to allocating : <%zu>, string :<%s>\n", size, str);
-	res = malloc(size + 1);
-	if (res == NULL)
-		return (NULL);
+	res = NULL;
 	i = 0;
-	j = 0;
-	while (str[i] && j < size)
+	c = str[size];
+	str[size] = '\0';
+	printf("%s given < \n", str);
+	while (str[i])
 	{
-		c = str[i];
-		if (str[i] != '\"')
-			res[j++] = c;
-		i++;
+		if (str[i] == '$')
+			(i++, i += set_var(&str[i], &res));
+		else
+			i += set_word(&str[i], &res);
 	}
-	res[j] = '\0';
+	str[size] = c;
 	return (res);
 }
