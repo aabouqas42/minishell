@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/26 01:43:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:23:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,24 @@ size_t	argument_count(char *str)
 	size_t	wc;
 	int		i;
 	int		dqt;
+	int		sqt;
 
 	wc = 0;
 	dqt = 0;
+	sqt = 0;
 	while (str && *str)
 	{
 		i = 0;
 		while (*str && *str == ' ')
 			str++;
 		wc += (*str != '\0');
-		while (str[i] && (str[i] != ' ' || dqt == 1))
+		while (str[i] && (str[i] != ' ' || dqt || sqt))
 		{
-			if (str[i] == '\"')
-				dqt = (dqt == 0);
+			(str[i] == '\"' && !sqt) && (dqt = !dqt);
+			(str[i] == '\'' && !dqt) && (sqt = !sqt);
 			i++;
 		}
-		if (dqt)
+		if (dqt || sqt)
 			return (0);
 		str += i;
 	}
@@ -92,14 +94,16 @@ int	set_var(char *argv_str, char **str)
 	return (i);
 }
 
-int	set_word(char *argv_str, char **str)
+int	set_word(char *argv_str, char **str, int sqt)
 {
 	int		i;
 	char	c;
 
 	i = 0;
-	while (argv_str[i] && argv_str[i] != '$')
+	while (argv_str[i] && (argv_str[i] != '$' || sqt))
+	{
 		i++;
+	}
 	c = argv_str[i];
 	argv_str[i] = '\0';
 	*str = _strjoin(*str, argv_str);
@@ -112,17 +116,29 @@ int	set_word(char *argv_str, char **str)
 char	*_strndup(char *str)
 {
 	char	*res;
+	int		dqt;
+	int		sqt;
 
 	if (str == NULL)
 		return (NULL);
 	res = NULL;
-	printf("((%s))\n", str);
+	sqt = 0;
+	dqt = 0;
+	// printf("((%s))\n", str);
 	while (*str)
 	{
-		if (*str == '$')
+		if (*str == '\"' && !sqt) 
+		{
+			(dqt = !dqt);
+		}
+		if (*str == '\'' && !dqt) 
+		{
+			(sqt = !sqt);
+		}
+		if (*str == '$' && (dqt || (!dqt && !sqt)))
 			(str++, str += set_var(str, &res));
 		else
-			str += set_word(str, &res);
+			str += set_word(str, &res, sqt);
 	}
 	return (res);
 }

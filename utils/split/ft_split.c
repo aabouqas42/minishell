@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/26 01:41:49 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:20:14 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ char	**_split(char *str)
 	size_t	size;
 	size_t	i;
 	int		dqt;
+	int		sqt;
 	size_t	wc;
 
 	i = 0;
 	dqt = 0;
+	sqt = 0;
 	wc = argument_count(str);
 	if (wc == 0)
 		return (printf("Invalid Args..\n"), NULL);
@@ -42,15 +44,13 @@ char	**_split(char *str)
 		size = 0;
 		while (*str && *str == ' ')
 			str++;
-		while (str[size] && (str[size] != ' ' || dqt))
-		{
-			if (str[size] == '\"')
-				dqt = (dqt == 0);
-			size++;
-		}
+		while (str[size] && (str[size] != ' ' || dqt || sqt))
+			(str[size] == '\"' && !sqt) && (dqt = (dqt == 0)),
+			(str[size] == '\'' && !dqt) && (sqt = (sqt == 0)), size++;
 		str[size] = '\0';
-		argv[i++] = _strndup(str);
+		argv[i] = _strndup(str);
 		str += size + 1;
+		i++;
 	}
 	return (argv);
 }
