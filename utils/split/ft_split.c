@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/25 16:41:44 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/26 01:41:49 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	set_last_exit(char **str, t_data *data)
 	return (0);
 }
 
-char	**_split(char *str, t_data *data)
+char	**_split(char *str)
 {
 	char	**argv;
 	size_t	size;
@@ -31,7 +31,6 @@ char	**_split(char *str, t_data *data)
 	int		dqt;
 	size_t	wc;
 
-	(void)data;
 	i = 0;
 	dqt = 0;
 	wc = argument_count(str);
@@ -49,10 +48,9 @@ char	**_split(char *str, t_data *data)
 				dqt = (dqt == 0);
 			size++;
 		}
-		argv[i] = _strndup(str, size);
-		if (argv[i++] == NULL)
-			return (argv[size] = NULL, NULL);
-		str += size;
+		str[size] = '\0';
+		argv[i++] = _strndup(str);
+		str += size + 1;
 	}
 	return (argv);
 }

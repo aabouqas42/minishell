@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/25 14:08:02 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/26 01:30:21 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	execute()
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = _split(data->line, data);
+	data->argv = _split(data->line);
 	if (data->argv == NULL)
 		return 1;
 	if (builtins())

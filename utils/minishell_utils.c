@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/24 14:09:53 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:08:03 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	safe_exit(int status)
 	free (data->program_path);
 	data->program_path = NULL;
 	free_tab(data->argv);
-	free (data->prompt);
+	// free (data->prompt); #BUS ERROR ? 
 	exit(status);
 }
 

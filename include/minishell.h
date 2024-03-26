@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/25 15:55:04 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:57:42 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	free_tab(char **array);
 char	*get_paths_env();
-char	**_split(char *str, t_data *data);
-char	*_strndup(char *str, size_t n);
+char	**_split(char *str);
+char	*_strndup(char *str);
 char	*_strjoin(char *str1, char *str2);
 int		_strcmp(char *s1, char *s2);
 size_t	_strlen(char *str);

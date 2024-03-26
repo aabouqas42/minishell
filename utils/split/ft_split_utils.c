@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/25 16:42:24 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/26 01:43:33 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,6 @@ size_t	argument_count(char *str)
 		str += i;
 	}
 	return (wc);
-}
-
-size_t	get_size(char *str, int n)
-{
-	size_t	size;
-	int		i;
-
-	i = 0;
-	size = 0;
-	while (str[i] && i < n)
-	{
-		size++;
-		i++;
-	}
-	return (size);
 }
 
 char	*_strjoin(char *str1, char *str2)
@@ -95,8 +80,6 @@ int	set_var(char *argv_str, char **str)
 	// 	return (set_last_exit(str, data), 1);
 	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
 		i++;
-	if (i == 0)
-		return (1);
 	c = argv_str[i];
 	argv_str[i] = '\0';
 	tmp = env_grepvalue(argv_str);
@@ -126,29 +109,20 @@ int	set_word(char *argv_str, char **str)
 	return (i);
 }
 
-char	*_strndup(char *str, size_t n)
+char	*_strndup(char *str)
 {
-	size_t	i;
-	size_t	size;
-	char	c;
 	char	*res;
 
 	if (str == NULL)
 		return (NULL);
-	i = 0;
-	size = get_size(str, n);
 	res = NULL;
-	i = 0;
-	c = str[size];
-	str[size] = '\0';
-	printf("%s given < \n", str);
-	while (str[i])
+	printf("((%s))\n", str);
+	while (*str)
 	{
-		if (str[i] == '$')
-			(i++, i += set_var(&str[i], &res));
+		if (*str == '$')
+			(str++, str += set_var(str, &res));
 		else
-			i += set_word(&str[i], &res);
+			str += set_word(str, &res);
 	}
-	str[size] = c;
 	return (res);
 }

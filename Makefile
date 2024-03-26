@@ -6,11 +6,11 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/25 15:55:17 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/03/26 00:07:03 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
