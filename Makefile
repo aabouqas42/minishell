@@ -6,17 +6,17 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/26 00:07:14 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/26 02:18:49 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
 SRCS = 	parsing/command_check.c \
 		utils/minishell_utils.c utils/split/ft_split.c utils/split/ft_split_utils.c\
-		utils/str/strlen.c utils/str/strdup.c utils/str/strcmp.c utils/str/strjoin.c\
+		utils/str/strlen.c utils/str/strdup.c utils/str/strcmp.c utils/str/strjoin.c utils/protected/p_calloc.c\
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c
 SRCS_O = $(SRCS:.c=.o)

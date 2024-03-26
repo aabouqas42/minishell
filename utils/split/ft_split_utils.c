@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/26 00:07:59 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/26 03:55:03 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,75 +15,95 @@
 size_t	argument_count(char *str)
 {
 	size_t	wc;
-	int		size;
-	int		dqt;
+	int		i;
+	char	dqt;
 
 	wc = 0;
 	dqt = 0;
 	while (str && *str)
 	{
-		size = 0;
-		while (*str == ' ')
+		i = 0;
+		while (*str && *str == ' ')
 			str++;
 		wc += (*str != '\0');
-		while (str[size] && (str[size] != ' ' || dqt == 1))
+		while (str[i] && (str[i] != ' ' || dqt))
 		{
-			if (str[size] == '\"')
-				dqt = (dqt == 0);
-			size++;
+			if (ft_strchr("\"\'", str[i]))
+			{
+				if (str[i] == '\"')
+					dqt |= (dqt & 0b10000000);
+				else
+					dqt |= (dqt & 0b01000000);
+			}
+			i++;
 		}
 		if (dqt)
 			return (0);
-		str += size;
+		str += i;
 	}
 	return (wc);
 }
 
-size_t	get_size(char *str, int n)
+int	set_var(char *argv_str, char **str)
 {
-	size_t	size;
+	int		i;
+	char	c;
+	char	*tmp;
+
+	i = 0;
+	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
+		i++;
+	c = argv_str[i];
+	argv_str[i] = '\0';
+	tmp = env_grepvalue(argv_str);
+	if (tmp == NULL)
+		tmp = "";
+	*str = _strjoin(*str, tmp);
+	if (*str == NULL)
+		safe_exit(-1);
+	argv_str[i] = c;
+	return (i);
+}
+
+int	set_word(char *argv_str, char **str, int cond)
+{
 	int		i;
 	char	c;
 
 	i = 0;
-	size = 0;
-	while (str[i] && i < n)
-	{
-		c = str[i];
-		if (str[i] != '\"')
-			size++;
+	while (argv_str[i] && (argv_str[i] != '$' || cond))
 		i++;
-	}
-	return (size);
+	c = argv_str[i];
+	argv_str[i] = '\0';
+	*str = _strjoin(*str, argv_str);
+	if (*str == NULL)
+		safe_exit(-1);
+	argv_str[i] = c;
+	return (i);
 }
 
-char	*_strndup(char *str, size_t n)
+char	*_strndup(char *str)
 {
-	size_t	i;
-	size_t	size;
-	size_t	j;
-	char	c;
 	char	*res;
+	int		qt;
 
+	qt = 0;
 	if (str == NULL)
 		return (NULL);
-	i = 0;
-	size = get_size(str, n);
 	res = NULL;
-	i = 0;
-	j = 0;
-	printf("%zu\n", size);
-	while (str[i])
+	while (ft_strchr(str, '\"'))
+		*ft_strchr(str, '\"') = 127;
+	// printf("%s\n", str);
+	while (*str)
 	{
-		c = str[i];
-		if (ft_strchr( "\"\'", str[i]) == NULL)
-		{
-			if (str[i] == '$')
-				i += set_var(&str[i + 1], &res, NULL);
-			else
-				i += set_word(&str[i], &res);
-		}
-		i++;
+		if (*str == '\'')
+			qt = (qt == 0);
+		if (*str == '$' && qt == 0)
+			(str++, str += set_var(str, &res));
+		else
+			str += set_word(str, &res, qt);
 	}
+	while (ft_strchr(res, '\''))
+		*ft_strchr(res, '\'') = 127;
 	return (res);
 }

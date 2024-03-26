@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   p_calloc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/26 01:31:03 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/03/25 15:48:03 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/03/25 15:54:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-void	echo()
+void	*p_calloc(size_t size)
 {
-	int	i;
-	int	nl;
-	t_data *data;
-	
-	i = 1;
-	nl = 1;
-	data = data_hook(NULL);
-	if (data->argv[i] && _strcmp(data->argv[i], "-n") == 0)
-		(nl = 0, i++);
-	while (data->argv[i])
-	{
-		printf("%s", data->argv[i]);
-		i++;
-		if (data->argv[i])
-			printf(" ");
-	}
-	if (nl == 0)
-		printf("%%");
-	printf("\n");
+	char	*res;
+
+	res = malloc(size);
+	if (res == NULL)
+		safe_exit(-1);
+	while (size--)
+		res[size] = '\0';
+	return ((void *)res);
 }

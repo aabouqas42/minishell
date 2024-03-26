@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/25 14:18:45 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/26 03:50:03 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	builtins()
 	if (!_strcmp(data->argv[0], "cd"))
 		return (cd(data), 1);
 	if (!_strcmp(data->argv[0], "echo"))
-		return (echo(data), 1);
+		return (echo(), 1);
 	if (!_strcmp(data->argv[0], "pwd"))
 		return (pwd(), 1);
 	if (!_strcmp(data->argv[0], "env"))
@@ -46,7 +46,7 @@ int	execute()
 	if (data->line == NULL || *data->line == '\0')
 		return (0);
 	add_history(data->line);
-	data->argv = _split(data->line, data);
+	data->argv = _split(data->line);
 	if (data->argv == NULL)
 		return 1;
 	if (builtins())
