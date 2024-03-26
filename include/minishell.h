@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:44:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:01:21 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	free_tab(char **array);
 char	*get_paths_env();
 char	**_split(char *str, t_data *data);
 char	*_strndup(char *str, size_t n);
-char	*_strjoin(char *str1, char *str2);
+char	*_strnjoin(char *str1, char *str2, size_t size);
 int		_strcmp(char *s1, char *s2);
-size_t	_strlen(char *str);
+size_t	_strlen(char *str, char c);
 char	*_strdup(char *s1);
 size_t	argument_count(char *str);
 
@@ -84,5 +84,8 @@ int		cd(t_data *data);
 void	echo(t_data *data);
 int		pwd();
 int		_export(t_data *data);
+
+int	set_var(char *argv_str, char **str, t_data *data);
+int	set_word(char *argv_str, char **str);
 
 #endif

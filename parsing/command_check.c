@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:41:32 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:51:09 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 	paths = env_grepvalue("PATH");
 	while (paths && *paths)
 	{
-		i = 0;
-		while (paths[i] && paths[i] != ':')
-			i++;
+		i = _strlen(paths, ':');
 		c = paths[i];
 		paths[i] = '\0';
 		program_path = ft_strjoin(paths, tmp);
@@ -63,9 +61,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		if (access(program_path, X_OK) == 0)
 			return (data->program_path = program_path, free(tmp), CMD_VALID);
 		free(program_path);
-		paths[i] = ':';
 		paths += i + (paths[i] == ':');
 	}
-	free(tmp);
-	return (CMD_INVALID);
+	return (free(tmp), CMD_INVALID);
 }

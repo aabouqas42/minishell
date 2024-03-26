@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 15:44:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:07:59 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,6 @@ size_t	get_size(char *str, int n)
 	return (size);
 }
 
-char	*_strjoin(char *str1, char *str2)
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	if (str1 == NULL && str2 == NULL)
-		return (NULL);
-	len = _nsx_strlen(str1) + _nsx_strlen(str2);
-	str = malloc (len + 1);
-	if (str == NULL)
-		return (free (str1), NULL);
-	i = 0;
-	while (str1 && str1[i])
-	{
-		str[i] = str1[i];
-		i++;
-	}
-	while (str2 && *str2)
-	{
-		str[i] = *str2;
-		i++;
-		str2++;
-	}
-	str[i] = '\0';
-	return (free (str1), str);
-}
-
 char	*_strndup(char *str, size_t n)
 {
 	size_t	i;
@@ -97,18 +69,21 @@ char	*_strndup(char *str, size_t n)
 		return (NULL);
 	i = 0;
 	size = get_size(str, n);
-	res = malloc(size + 1);
-	if (res == NULL)
-		return (NULL);
+	res = NULL;
 	i = 0;
 	j = 0;
-	while (str[i] && j < size)
+	printf("%zu\n", size);
+	while (str[i])
 	{
 		c = str[i];
-		if (str[i] != '\"')
-			res[j++] = c;
+		if (ft_strchr( "\"\'", str[i]) == NULL)
+		{
+			if (str[i] == '$')
+				i += set_var(&str[i + 1], &res, NULL);
+			else
+				i += set_word(&str[i], &res);
+		}
 		i++;
 	}
-	res[j] = '\0';
 	return (res);
 }

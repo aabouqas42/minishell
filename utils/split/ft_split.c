@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:44:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:41:04 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,54 +19,51 @@ int	set_last_exit(char **str, t_data *data)
 	exit_status = ft_itoa(data->exit_status >> 8);
 	if (exit_status == NULL)
 		safe_exit(-1);
-	*str = _strjoin(*str, exit_status);
+	*str = _strnjoin(*str, exit_status, _strlen(exit_status, '\0'));
 	return (0);
 }
 
 int	set_var(char *argv_str, char **str, t_data *data)
 {
-	int		i;
-	char	c;
+	int		size;
 	char	*tmp;
+	char	*pid;
 
-	i = 0;
+	(void)data;
+	printf("%s\n", argv_str);
+	size = 0;
 	if (*argv_str == '\0')
 		return (0);
-	if (*argv_str == '?')
-		return (set_last_exit(str, data), 1);
+	// if (*argv_str == '?')
+	// 	return (set_last_exit(str, data), 1);
 	if (*argv_str == '$')
-		return (*str = _strjoin(*str, ft_itoa(getpid())), 1);
-	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
-		i++;
-	if (i == 0)
+	{
+		pid = ft_itoa(getpid());
+		*str = _strnjoin(*str, pid, _strlen(pid, '\0'));
+		return (free(pid), 1);
+	}
+	while (argv_str[size] && (ft_isalnum(argv_str[size]) || argv_str[size] == '_'))
+		size++;
+	if (size == 0)
 		return (1);
-	c = argv_str[i];
-	argv_str[i] = '\0';
-	tmp = env_grepvalue(argv_str);
-	if (tmp == NULL)
-		tmp = "";
-	*str = _strjoin(*str, tmp);
+	tmp = env_grepvalue(argv_str); 
+	printf("%d\n", size);
+	*str = _strnjoin(*str, tmp, size);
 	if (*str == NULL)
 		safe_exit(-1);
-	argv_str[i] = c;
-	return (i);
+	return (size);
 }
 
 int	set_word(char *argv_str, char **str)
 {
 	int		i;
-	char	c;
 
 	i = 0;
 	while (argv_str[i] && argv_str[i] != '$')
 		i++;
-	c = argv_str[i];
-	argv_str[i] = '\0';
-	*str = _strjoin(*str, argv_str);
-	printf("[%s]\n", *str);
+	*str = _strnjoin(*str, argv_str, i);
 	if (*str == NULL)
 		safe_exit(-1);
-	argv_str[i] = c;
 	return (i);
 }
 
@@ -74,9 +71,11 @@ void	get_var(char **argv, t_data *data)
 {
 	char	*vars;
 	char	*str;
+	int		inRange;
 	int		i;
 
 	i = 0;
+	inRange = 0;
 	while (argv[i])
 	{
 		str = NULL;
@@ -85,8 +84,8 @@ void	get_var(char **argv, t_data *data)
 		{
 			while (vars && *vars)
 			{
-				if (*vars == '$')
-					(vars++, vars += set_var(vars, &str, data));
+				if (*vars == '$' && !inRange)
+					(vars += set_var(vars + 1, &str, data), vars++);
 				else
 					vars += set_word(vars, &str);
 			}
@@ -113,7 +112,7 @@ char	**_split(char *str, t_data *data)
 	argv = malloc (sizeof(char *) * (wc + 1));
 	if (argv == NULL)
 		safe_exit(-1);
-	while (i < (size_t)wc)
+	while (i < wc)
 	{
 		size = 0;
 		while (*str == ' ')
@@ -129,5 +128,6 @@ char	**_split(char *str, t_data *data)
 			return (argv[size] = NULL, NULL);
 		str += size;
 	}
-	return (argv[i] = NULL, get_var(argv, data), argv);
+	(void)data;
+	return (argv[i] = NULL, /*get_var(argv, data),*/ argv);
 }

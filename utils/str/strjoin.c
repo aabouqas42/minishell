@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strdup.c                                           :+:      :+:    :+:   */
+/*   strjoin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/23 15:19:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 15:49:48 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/03/25 23:51:43 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/03/25 23:53:55 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*_strdup(char *str)
+char	*_strnjoin(char *str1, char *str2, size_t size)
 {
-	size_t	i;
-	char	*res;
+	char	*str;
+	int		len;
+	int		i;
 
-	if (str == NULL)
+	if (str1 == NULL && str2 == NULL)
 		return (NULL);
-	res = malloc(_strlen(str, '\0') + 1);
-	if (res == NULL)
-		return (0);
+	len = _nsx_strlen(str1) + size;
+	str = malloc (len + 1);
+	if (str == NULL)
+		return (free (str1), NULL);
 	i = 0;
-	while (str[i])
+	while (str1 && str1[i])
 	{
-		res[i] = str[i];
+		str[i] = str1[i];
 		i++;
 	}
-	res[i] = '\0';
-	return (res);
+	while (str2 && *str2 && size)
+	{
+		str[i] = *str2;
+		i++;
+		str2++;
+		size--;
+	}
+	str[i] = '\0';
+	return (free (str1), str);
 }
