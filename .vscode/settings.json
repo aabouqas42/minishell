@@ -6,6 +6,7 @@
 		"string": "c",
 		"string_view": "c",
 		"vector": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"sstream": "c"
 	}
 }

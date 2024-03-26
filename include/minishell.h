@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/26 02:26:13 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:30:31 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_data	*data_hook(t_data *data);
 
 
 char	*get_prompt();
-size_t	p_strlen(char *s);
 
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
@@ -85,7 +84,6 @@ int		cd(t_data *data);
 void	echo();
 int		pwd();
 int		_export(t_data *data);
-
 
 void	*p_calloc(size_t size);
 
