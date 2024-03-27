@@ -6,22 +6,11 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/26 17:20:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/27 20:02:47 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	set_last_exit(char **str, t_data *data)
-{
-	char	*exit_status;
-
-	exit_status = ft_itoa(data->exit_status >> 8);
-	if (exit_status == NULL)
-		safe_exit(-1);
-	*str = _strjoin(*str, exit_status);
-	return (0);
-}
 
 char	**_split(char *str)
 {
@@ -45,8 +34,13 @@ char	**_split(char *str)
 		while (*str && *str == ' ')
 			str++;
 		while (str[size] && (str[size] != ' ' || dqt || sqt))
-			(str[size] == '\"' && !sqt) && (dqt = (dqt == 0)),
-			(str[size] == '\'' && !dqt) && (sqt = (sqt == 0)), size++;
+		{
+			if (str[size] == '\"' && !sqt)
+				(dqt = (dqt == 0)), str[size] = 2;
+			if (str[size] == '\'' && !dqt)
+				(sqt = (sqt == 0)), str[size] = 1;
+			size++;
+		}
 		str[size] = '\0';
 		argv[i] = _strndup(str);
 		str += size + 1;

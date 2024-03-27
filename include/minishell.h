@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/26 14:49:15 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/27 03:09:05 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+
+typedef struct s_qutoes
+{
+	int	_single;
+	int	_double;
+}	t_qutoes;
 
 // # include "dirent.h" ?? 
 

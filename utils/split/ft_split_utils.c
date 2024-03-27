@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/26 17:23:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/27 20:11:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,22 @@ char	*_strjoin(char *str1, char *str2)
 	return (free (str1), str);
 }
 
+int	set_last_exit(char **str)
+{
+	t_data *data;
+	char	*exit_status;
+
+	data = data_hook(NULL);
+	exit_status = ft_itoa(data->exit_status >> 8);
+	if (exit_status == NULL)
+		safe_exit(-1);
+	*str = _strjoin(*str, exit_status);
+	if (*str == NULL)
+		safe_exit(-1);
+	data->exit_status = 0;
+	return (0);
+}
+
 int	set_var(char *argv_str, char **str)
 {
 	int		i;
@@ -78,8 +94,8 @@ int	set_var(char *argv_str, char **str)
 	i = 0;
 	if (*argv_str == '\0')
 		return (0);
-	// if (*argv_str == '?')
-	// 	return (set_last_exit(str, data), 1);
+	if (*argv_str == '?')
+		return (set_last_exit(str), 1);
 	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
 		i++;
 	c = argv_str[i];
@@ -94,51 +110,58 @@ int	set_var(char *argv_str, char **str)
 	return (i);
 }
 
-int	set_word(char *argv_str, char **str, int sqt)
+char	*init_res(char *res)
 {
-	int		i;
-	char	c;
+	char	*r;
+	size_t	size;
+	size_t	i;
 
 	i = 0;
-	while (argv_str[i] && (argv_str[i] != '$' || sqt))
+	size = 0;
+	while (res && res[i])
 	{
+		if (ft_isprint(res[i]))
+			size++;
 		i++;
 	}
-	c = argv_str[i];
-	argv_str[i] = '\0';
-	*str = _strjoin(*str, argv_str);
-	if (*str == NULL)
-		safe_exit(-1);
-	argv_str[i] = c;
-	return (i);
+	r = p_calloc(size + 1);
+	i = 0;
+	size = 0;
+	while (res && res[i])
+	{
+		if (ft_isprint(res[i]))
+			r[size++] = res[i];
+		i++;
+	}
+	free(res);
+	return (r);
 }
 
 char	*_strndup(char *str)
 {
 	char	*res;
-	int		dqt;
 	int		sqt;
+	char	c;
 
 	if (str == NULL)
 		return (NULL);
 	res = NULL;
 	sqt = 0;
-	dqt = 0;
-	// printf("((%s))\n", str);
 	while (*str)
 	{
-		if (*str == '\"' && !sqt) 
-		{
-			(dqt = !dqt);
-		}
-		if (*str == '\'' && !dqt) 
-		{
-			(sqt = !sqt);
-		}
-		if (*str == '$' && (dqt || (!dqt && !sqt)))
+		if (*str == 1)
+			sqt = (sqt == 0);
+		if (*str == '$' && *(str +1) != '\0' && sqt == 0)
 			(str++, str += set_var(str, &res));
 		else
-			str += set_word(str, &res, sqt);
+		{
+			c = *(str + 1);
+			*(str + 1) = '\0';
+			res = _strjoin(res, str);
+			*(str + 1) = c;
+			str++;
+		}
 	}
+	res = init_res(res);
 	return (res);
 }

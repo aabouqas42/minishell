@@ -6,11 +6,12 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/26 14:07:06 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:36:39 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+#include <mlx.h>
 
 int	builtins()
 {
@@ -57,7 +58,7 @@ int	execute()
 		data->exit_status = 127 << 8;
 		return (-1);
 	}
-	child_pid = fork();
+	child_pid = fork(); 
 	if (child_pid == 0)
 		execve(data->program_path, data->argv, NULL);
 	return (-1);
@@ -67,7 +68,6 @@ void	data_init(char **base_env)
 {
 	t_data	*data;
 	char	*value;
-	int		i;
 
 	data = data_hook(NULL);
 	data->argv = NULL;
@@ -76,14 +76,13 @@ void	data_init(char **base_env)
 	data->program_path = NULL;
 	data->exit_status = 0;
 	data->prompt = get_prompt();
-	i = 0;
-	while (base_env && base_env[i])
+	while (base_env && *base_env)
 	{
-		value = ft_strchr(base_env[i], '=') + 1;
+		value = ft_strchr(*base_env, '=') + 1;
 		*(value - 1) = '\0';
-		env_export(base_env[i], value, data);
+		env_export(*base_env, value, data);
 		*(value - 1) = '=';
-		i++;
+		base_env++;
 	}
 	if (env_grepvalue("PATH") == 0)
 		env_export("PATH", get_paths_env(), data);
@@ -96,16 +95,13 @@ void ex()
 
 int	main(int ac, char **av, char **env)
 {
-	t_data	data;
 	(void)ac;
 	(void)av;
+	t_data	data;
 
 	// atexit(ex);
-	// char **argv;
-	// int i = 0;
-	// goto here;
-	printf("\e[1;1H\e[2J");
 	data_hook(&data);
+	printf("\e[1;1H\e[2J");
 	data_init(env);
 	while (1)
 	{
@@ -116,11 +112,6 @@ int	main(int ac, char **av, char **env)
 		free_tab(data.argv);
 		data.argv = NULL;
 		data.program_path = NULL;
-	}
-	// here :
-	// 	argv = _split("ls $? '$PATH' $PATH", &data);
-	// 	i = 0;
-	// 	while (argv[i])
-	// 		printf("%s\n", argv[i++]);
+	}	
 	return (EXIT_SUCCESS);
 }
