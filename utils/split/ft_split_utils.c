@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/26 18:50:29 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/27 03:44:16 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	set_word(char *argv_str, char **str, int sqt)
 	char	c;
 
 	i = 0;
-	while (argv_str[i] && (argv_str[i] != '$' || sqt))
+	while ((argv_str[i] && argv_str[i] != '$' ) || sqt)
 		i++;
 	c = argv_str[i];
 	argv_str[i] = '\0';
@@ -77,43 +77,6 @@ int	set_word(char *argv_str, char **str, int sqt)
 		safe_exit(-1);
 	argv_str[i] = c;
 	return (i);
-}
-
-void	*remve_qts(char *str)
-{
-	char	*tmp;
-	size_t	size;
-	size_t	i;
-	char	*s;
-	char	*ss;
-
-	size = 0;
-	tmp = str;
-	while (*tmp)
-		size += *tmp++ != '\"';
-	s = p_calloc(size + 1);
-	ss = &s[0];
-	if (s == NULL)
-		return (NULL);
-	i = -1;
-	if (ft_strchr(str, '\"') < ft_strchr(str, '\'')
-		|| ( ft_strchr(str, '\"') && !ft_strchr(str, '\''))
-		|| (!ft_strchr(str, '\"') && ft_strchr(str, '\'')))
-	{
-		if (!ft_strchr(str, '\"') && ft_strchr(str, '\''))
-		{
-			while (str[++i])
-				if (str[i] != '\'')
-					*s++ = str[i];
-		} else if (ft_strchr(str, '\"') && !ft_strchr(str, '\''))
-			while (str[++i])
-				if (str[i] != '"')
-					*s++ = str[i];
-	} else {
-		return (str);
-	}
-	free(str);
-	return (ss);
 }
 
 char	*_strndup(char *str)
@@ -129,23 +92,17 @@ char	*_strndup(char *str)
 	dqt = 0;
 	while (*str)
 	{
-		if (*str == '\"' && !sqt) 
+		if (*str == '\"' && !sqt)
 			(dqt = !dqt);
-		if (*str == '\'' && !dqt) 
+		if (*str == '\'' && !dqt)
 			(sqt = !sqt);
+		printf("<%d %d -- %c>\n", sqt, dqt, *str);
 		if (*str == '$' && (dqt || (!dqt && !sqt)))
 			(str++, str += set_var(str, &res));
 		else
 			str += set_word(str, &res, sqt);
 	}
-	printf("single q:%d , double q:%d \n", sqt, dqt);
-	// printf("\":%zu\n\':%zu\n", (size_t) ft_strchr(res, '\"'), (size_t)ft_strchr(res, '\''));
-	// if (ft_strchr(res, '\"') < ft_strchr(res, '\'')
-	// 	||( ft_strchr(res, '\"') && !ft_strchr(res, '\'')))
-	// {
-	// 	while (ft_strchr(res, '\"'))
-	// 		*ft_strchr(res, '\"') = 1;
-	// }
-	res = remve_qts(res);
+	printf("@@%s>>\n", res);
+	res = handle_dqt_sqt(res);
 	return (res);
 }
