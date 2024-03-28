@@ -6,11 +6,41 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/27 20:02:47 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 02:05:15 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+// char	**realloc_2d(char **origin, char *to_append)
+// {
+// 	size_t	size;
+// 	size_t	i;
+// 	char	**res;
+
+// 	if (origin == NULL)
+// 	{
+// 		res = malloc(sizeof(char *) * 2);
+// 		res[0] = to_append;
+// 		res[1] = NULL;
+// 		return (res);
+// 	}
+// 	size = 0;
+// 	i = 0;
+// 	while (origin && origin[size])
+// 		size++;
+// 	size++;
+// 	res = malloc(sizeof(char *) * (size + 1));
+// 	while (origin[i])
+// 	{
+// 		res[i] = origin[i];
+// 		i++;
+// 	}
+// 	res[i++] =  to_append;
+// 	res[i] = NULL;
+// 	free(origin);
+// 	return (res);
+// }
 
 char	**_split(char *str)
 {
@@ -19,16 +49,17 @@ char	**_split(char *str)
 	size_t	i;
 	int		dqt;
 	int		sqt;
-	size_t	wc;
+	// size_t	wc;
 
 	i = 0;
 	dqt = 0;
 	sqt = 0;
-	wc = argument_count(str);
-	if (wc == 0)
-		return (printf("Invalid Args..\n"), NULL);
-	argv = p_calloc (sizeof(char *) * (wc + 1));
-	while (i < wc)
+	// wc = argument_count(str);
+	// if (wc == 0)
+	// 	return (printf("Invalid Args..\n"), NULL);
+	// argv = p_calloc (sizeof(char *) * (wc + 1));
+	argv = NULL;
+	while (*str)
 	{
 		size = 0;
 		while (*str && *str == ' ')
@@ -42,7 +73,7 @@ char	**_split(char *str)
 			size++;
 		}
 		str[size] = '\0';
-		argv[i] = _strndup(str);
+		argv = realloc_2d(argv, _strndup(str));
 		str += size + 1;
 		i++;
 	}

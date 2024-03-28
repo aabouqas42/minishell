@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/27 18:36:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 02:01:22 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	t_data	data;
 
-	// atexit(ex);
+	atexit(ex);
+	// char **argv = NULL;
+	// int i = 0;
+	// goto hh;
 	data_hook(&data);
 	printf("\e[1;1H\e[2J");
 	data_init(env);
@@ -112,6 +115,16 @@ int	main(int ac, char **av, char **env)
 		free_tab(data.argv);
 		data.argv = NULL;
 		data.program_path = NULL;
-	}	
+	}
+	// hh:
+	// 	argv = realloc_2d(argv, ft_strdup("test1"));
+	// 	argv = realloc_2d(argv, ft_strdup("test2"));
+	// 	while (argv[i])
+	// 	{
+	// 		printf("%s\n", argv[i]);
+	// 		free(argv[i]);
+	// 		i++;
+	// 	}
+	// 	free(argv);
 	return (EXIT_SUCCESS);
 }
