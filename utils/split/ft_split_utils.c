@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/28 01:44:42 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/28 03:48:19 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char	*_expander(char *str)
 	{
 		if (*str == 1)
 			sqt = (sqt == 0);
-		if (*str == '$' && *(str + 1) != '\0' && sqt == 0)
+		if (*str == '$' && *(str + 1) != '\0' && *(str + 1) != '\'' && sqt == 0)
 			(str++, str += set_var(str, &res));
 		else
 			res = _strnjoin(res, str++, 1);

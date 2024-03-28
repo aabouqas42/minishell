@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 02:15:20 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 03:42:22 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ char	**_split(char *str)
 	size_t	i;
 	int		dqt;
 	int		sqt;
-	// size_t	wc;
+	size_t	wc;
 
 	i = 0;
 	dqt = 0;
 	sqt = 0;
-	// wc = argument_count(str);
-	// if (wc == 0)
-	// 	return (printf("Invalid Args..\n"), NULL);
+	wc = argument_count(str);
+	if (wc == 0)
+		return (printf("Err [Invalid args]\n"), NULL);
 	// argv = p_calloc (sizeof(char *) * (wc + 1));
 	argv = NULL;
 	while (*str)
