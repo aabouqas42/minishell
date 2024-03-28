@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/28 02:13:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:05:34 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	t_data	data;
 
-	atexit(ex);
-	// char **argv = NULL;
-	// int i = 0;
-	// goto hh;
+	// atexit(ex);
 	printf("\e[1;1H\e[2J");
 	data_hook(&data);
 	data_init(env);
@@ -115,15 +112,5 @@ int	main(int ac, char **av, char **env)
 		data.argv = NULL;
 		data.program_path = NULL;
 	}
-	// hh:
-	// 	argv = realloc_2d(argv, ft_strdup("test1"));
-	// 	argv = realloc_2d(argv, ft_strdup("test2"));
-	// 	while (argv[i])
-	// 	{
-	// 		printf("%s\n", argv[i]);
-	// 		free(argv[i]);
-	// 		i++;
-	// 	}
-	// 	free(argv);
 	return (EXIT_SUCCESS);
 }
