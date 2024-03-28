@@ -6,15 +6,26 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 18:09:13 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/28 23:09:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+int	is_white_spaces(int c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
+}
+
+char	*skiper(char *str)
+{
+	while (str && *str && is_white_spaces(*str))
+		str++;
+	return (str);
+}
+
 size_t	args_is_valid(char *str)
 {
-	int		i;
 	int		dqt;
 	int		sqt;
 
@@ -22,18 +33,15 @@ size_t	args_is_valid(char *str)
 	sqt = 0;
 	while (str && *str)
 	{
-		i = 0;
-		while (*str && *str == ' ')
-			str++;
-		while (str[i] && (str[i] != ' ' || dqt || sqt))
+		str = skiper(str);
+		while (*str && (!is_white_spaces(*str) || dqt || sqt))
 		{
-			(str[i] == '\"' && !sqt) && (dqt = !dqt);
-			(str[i] == '\'' && !dqt) && (sqt = !sqt);
-			i++;
+			(*str == '\"' && !sqt) && (dqt = !dqt);
+			(*str == '\'' && !dqt) && (sqt = !sqt);
+			str++;
 		}
 		if (dqt || sqt)
 			return (0);
-		str += i;
 	}
 	return (1);
 }
@@ -42,23 +50,19 @@ char	**_split(char *str)
 {
 	char	**argv;
 	size_t	size;
-	size_t	i;
 	int		dqt;
 	int		sqt;
-	// size_t	wc;
 
-	i = 0;
 	dqt = 0;
 	sqt = 0;
+	argv = NULL;
 	if (!args_is_valid(str))
 		return (printf("Invalid Args..\n"), NULL);
-	argv = NULL;
 	while (*str)
 	{
 		size = 0;
-		while (*str && *str == ' ')
-			str++;
-		while (str[size] && (str[size] != ' ' || dqt || sqt))
+		str = skiper(str);
+		while (str[size] && (!is_white_spaces(str[size]) || dqt || sqt))
 		{
 			if (str[size] == '\"' && !sqt)
 				(dqt = (dqt == 0)), str[size] = 2;
@@ -69,7 +73,6 @@ char	**_split(char *str)
 		str[size] = '\0';
 		argv = _realloc(argv, _expander(str));
 		str += size + 1;
-		i++;
 	}
 	return (argv);
 }
