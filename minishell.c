@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/28 02:08:00 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 02:13:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,9 @@ int	main(int ac, char **av, char **env)
 	// char **argv = NULL;
 	// int i = 0;
 	// goto hh;
+	printf("\e[1;1H\e[2J");
 	data_hook(&data);
-	printf("\e[1;1H\e[2J");
 	data_init(env);
-	// goto here;
-	printf("\e[1;1H\e[2J");
 	while (1)
 	{
 		execute();

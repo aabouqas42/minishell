@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 02:07:53 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 02:15:20 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**_split(char *str)
 			size++;
 		}
 		str[size] = '\0';
-		argv[i] = _expander(str);
+		argv = _realloc(argv, _expander(str));
 		str += size + 1;
 		i++;
 	}
