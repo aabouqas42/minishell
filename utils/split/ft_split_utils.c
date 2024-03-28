@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/27 20:11:37 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 01:44:42 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,6 @@ size_t	argument_count(char *str)
 		str += i;
 	}
 	return (wc);
-}
-
-char	*_strjoin(char *str1, char *str2)
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	if (str1 == NULL && str2 == NULL)
-		return (NULL);
-	len = _nsx_strlen(str1) + _nsx_strlen(str2);
-	str = malloc (len + 1);
-	if (str == NULL)
-		return (free (str1), NULL);
-	i = 0;
-	while (str1 && str1[i])
-	{
-		str[i] = str1[i];
-		i++;
-	}
-	while (str2 && *str2)
-	{
-		str[i] = *str2;
-		i++;
-		str2++;
-	}
-	str[i] = '\0';
-	return (free (str1), str);
 }
 
 int	set_last_exit(char **str)
@@ -137,11 +109,10 @@ char	*init_res(char *res)
 	return (r);
 }
 
-char	*_strndup(char *str)
+char	*_expander(char *str)
 {
 	char	*res;
 	int		sqt;
-	char	c;
 
 	if (str == NULL)
 		return (NULL);
@@ -151,16 +122,10 @@ char	*_strndup(char *str)
 	{
 		if (*str == 1)
 			sqt = (sqt == 0);
-		if (*str == '$' && *(str +1) != '\0' && sqt == 0)
+		if (*str == '$' && *(str + 1) != '\0' && sqt == 0)
 			(str++, str += set_var(str, &res));
 		else
-		{
-			c = *(str + 1);
-			*(str + 1) = '\0';
-			res = _strjoin(res, str);
-			*(str + 1) = c;
-			str++;
-		}
+			res = _strnjoin(res, str++, 1);
 	}
 	res = init_res(res);
 	return (res);

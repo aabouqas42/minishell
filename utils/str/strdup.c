@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strdup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 15:19:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/27 01:00:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 00:13:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*_strdup(char *str)
 
 	if (str == NULL)
 		return (NULL);
-	res = malloc(_strlen(str) + 1);
+	res = malloc(_strlen(str, '\0') + 1);
 	if (res == NULL)
 		return (0);
 	i = 0;

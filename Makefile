@@ -6,18 +6,19 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/27 23:55:24 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/03/28 02:08:44 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror # -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror 
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
 SRCS = 	parsing/command_check.c \
+		utils/global_utils.c \
 		utils/minishell_utils.c utils/split/ft_split.c utils/split/ft_split_utils.c\
-		utils/str/strlen.c utils/str/strdup.c utils/str/strcmp.c \
-		utils/protected/p_calloc.c \
+		utils/str/strlen.c utils/str/strdup.c utils/str/strcmp.c utils/str/strjoin.c \
+		utils/protected/p_calloc.c utils/split/dqt_sqt.c \
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c
 SRCS_O = $(SRCS:.c=.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/27 03:09:05 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 01:45:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,23 @@ char	*get_paths_env();
 char	**_split(char *str);
 char	*_strndup(char *str);
 char	*_strjoin(char *str1, char *str2);
+char	*_strnjoin(char *str1, char *str2, size_t size);
 int		_strcmp(char *s1, char *s2);
-size_t	_strlen(char *str);
+size_t	_strlen(char *str, char c);
 char	*_strdup(char *s1);
 size_t	argument_count(char *str);
 
 int		cd(t_data *data);
-void	echo(t_data *data);
+void	echo();
 int		pwd();
 int		_export(t_data *data);
-
+size_t	get_size(char *str);
+char	*handle_dqt_sqt(char *str);
 void	*p_calloc(size_t size);
+char	*_expander(char *str);
+
+
+
+char	**_realloc(char **old_tab, char *to_append);
 
 #endif

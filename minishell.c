@@ -6,12 +6,11 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/28 02:01:22 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 02:08:00 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-#include <mlx.h>
 
 int	builtins()
 {
@@ -27,7 +26,7 @@ int	builtins()
 	if (!_strcmp(data->argv[0], "cd"))
 		return (cd(data), 1);
 	if (!_strcmp(data->argv[0], "echo"))
-		return (echo(data), 1);
+		return (echo(), 1);
 	if (!_strcmp(data->argv[0], "pwd"))
 		return (pwd(), 1);
 	if (!_strcmp(data->argv[0], "env"))
@@ -106,6 +105,8 @@ int	main(int ac, char **av, char **env)
 	data_hook(&data);
 	printf("\e[1;1H\e[2J");
 	data_init(env);
+	// goto here;
+	printf("\e[1;1H\e[2J");
 	while (1)
 	{
 		execute();

@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:35:06 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 16:03:33 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/03/28 02:05:15 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	pwd()
+char	**_realloc(char **old_tab, char *to_append)
 {
-	char	*working_dir;
+	char	**new_tab;
+	size_t	tab_len;
+	size_t	i;
 
-	working_dir = getcwd(NULL, 0);
-	printf("%s\n", working_dir);
-	if (working_dir == NULL)
-		return (-1);
-	free(working_dir);
-	return (0);
+	if (old_tab == NULL)
+	{
+		new_tab = p_calloc( 2 * sizeof(char *));
+		*new_tab = to_append;
+		return (new_tab);
+	}
+	tab_len = 0;
+	while (old_tab[tab_len])
+		tab_len++;
+	new_tab = p_calloc((tab_len + 2) * sizeof(char *));
+	i = 0;
+	while (i < tab_len)
+	{
+		new_tab[i] = old_tab[i];
+		i++;
+	}
+	new_tab[i] = to_append;
+	return (new_tab);
 }

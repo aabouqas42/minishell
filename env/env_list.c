@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/27 01:19:22 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 01:42:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ char *env_grepvalue(char *name)
 int	env_valid_name(char *name)
 {
 	if (name == NULL)
-		return (0);
-	if (ft_strnstr("if then else elif fi case esac for while \
-		until do done in function select", name, ft_strlen(name)))
 		return (0);
 	if (ft_isdigit(name[0]))
 		return (0);
