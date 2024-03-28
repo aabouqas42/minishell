@@ -6,22 +6,11 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/27 17:30:37 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/28 01:45:54 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	set_last_exit(char **str, t_data *data)
-{
-	char	*exit_status;
-
-	exit_status = ft_itoa(data->exit_status >> 8);
-	if (exit_status == NULL)
-		safe_exit(-1);
-	*str = _strjoin(*str, exit_status);
-	return (0);
-}
 
 char	**_split(char *str)
 {
@@ -45,10 +34,15 @@ char	**_split(char *str)
 		while (*str && *str == ' ')
 			str++;
 		while (str[size] && (str[size] != ' ' || dqt || sqt))
-			(str[size] == '\"' && !sqt) && (dqt = (dqt == 0)),
-			(str[size] == '\'' && !dqt) && (sqt = (sqt == 0)), size++;
+		{
+			if (str[size] == '\"' && !sqt)
+				(dqt = (dqt == 0)), str[size] = 2;
+			if (str[size] == '\'' && !dqt)
+				(sqt = (sqt == 0)), str[size] = 1;
+			size++;
+		}
 		str[size] = '\0';
-		argv[i] = _strndup(str);
+		argv[i] = _expander(str);
 		str += size + 1;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/27 18:42:21 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/28 01:45:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+
+typedef struct s_qutoes
+{
+	int	_single;
+	int	_double;
+}	t_qutoes;
 
 // # include "dirent.h" ?? 
 
@@ -87,6 +93,7 @@ int		_export(t_data *data);
 size_t	get_size(char *str);
 char	*handle_dqt_sqt(char *str);
 void	*p_calloc(size_t size);
+char	*_expander(char *str);
 
 
 

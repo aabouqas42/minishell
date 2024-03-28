@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/27 18:42:06 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/28 02:05:15 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**_realloc(char **old_tab, char *to_append)
 	if (old_tab == NULL)
 	{
 		new_tab = p_calloc( 2 * sizeof(char *));
-		new_tab[0] = to_append;
+		*new_tab = to_append;
 		return (new_tab);
 	}
 	tab_len = 0;
@@ -31,11 +31,9 @@ char	**_realloc(char **old_tab, char *to_append)
 	i = 0;
 	while (i < tab_len)
 	{
-		new_tab[i] = _strdup(old_tab[i]);
-		free (old_tab[i]);
+		new_tab[i] = old_tab[i];
 		i++;
 	}
-	new_tab[i] =_strdup(to_append);
-	free (old_tab[i]);
+	new_tab[i] = to_append;
 	return (new_tab);
 }

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:28:49 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/28 01:42:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ int	env_valid_name(char *name)
 {
 	if (name == NULL)
 		return (0);
-	if (ft_strnstr("if then else elif fi case esac for while \
-		until do done in function select", name, ft_strlen(name)))
-		return (0);
 	if (ft_isdigit(name[0]))
 		return (0);
 	while (*name)
@@ -53,7 +50,7 @@ int	env_export(char *name, char *value, t_data *data)
 {
 	t_env	*tmp;
 
-	if (env_valid_name(name) == 0)
+	if (!env_valid_name(name))
 		return (ENV_NOT_CREATED);
 	if (data->env == NULL)
 	{
