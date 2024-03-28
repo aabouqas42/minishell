@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 01:45:25 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:37:47 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,29 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-typedef struct s_qutoes
+typedef enum e_cmd_type
 {
-	int	_single;
-	int	_double;
-}	t_qutoes;
+	None,
+	CMD_TYPE_COMMAND,
+	CMD_TYPE_PIPE,
+	CMD_TYPE_SREDIRECTION,
+	CMD_TYPE_DREDIRECTION
+}	t_cmd_type;
+
+typedef struct s_cmd
+{
+	char		*cmd_all_path;
+	char		**argv;
+	char		**env;
+	t_cmd_type	cmd_type;
+}	t_cmd;
+
+
+// typedef struct s_qutoes
+// {
+// 	int	_single;
+// 	int	_double;
+// }	t_qutoes; USELESS FOR NOW
 
 // # include "dirent.h" ?? 
 
@@ -42,6 +60,7 @@ typedef struct s_env
 
 typedef struct s_data
 {
+	t_cmd		**commands;
 	t_env		*env;
 	char		**argv;
 	char		*prompt;

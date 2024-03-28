@@ -6,11 +6,37 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 02:15:20 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:45:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+size_t	args_is_valid(char *str)
+{
+	int		i;
+	int		dqt;
+	int		sqt;
+
+	dqt = 0;
+	sqt = 0;
+	while (str && *str)
+	{
+		i = 0;
+		while (*str && *str == ' ')
+			str++;
+		while (str[i] && (str[i] != ' ' || dqt || sqt))
+		{
+			(str[i] == '\"' && !sqt) && (dqt = !dqt);
+			(str[i] == '\'' && !dqt) && (sqt = !sqt);
+			i++;
+		}
+		if (dqt || sqt)
+			return (0);
+		str += i;
+	}
+	return (1);
+}
 
 char	**_split(char *str)
 {
@@ -24,10 +50,8 @@ char	**_split(char *str)
 	i = 0;
 	dqt = 0;
 	sqt = 0;
-	// wc = argument_count(str);
-	// if (wc == 0)
-	// 	return (printf("Invalid Args..\n"), NULL);
-	// argv = p_calloc (sizeof(char *) * (wc + 1));
+	if (!args_is_valid(str))
+		return (printf("Invalid Args..\n"), NULL);
 	argv = NULL;
 	while (*str)
 	{

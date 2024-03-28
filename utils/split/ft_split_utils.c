@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/28 01:44:42 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:48:15 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-size_t	argument_count(char *str)
-{
-	size_t	wc;
-	int		i;
-	int		dqt;
-	int		sqt;
-
-	wc = 0;
-	dqt = 0;
-	sqt = 0;
-	while (str && *str)
-	{
-		i = 0;
-		while (*str && *str == ' ')
-			str++;
-		wc += (*str != '\0');
-		while (str[i] && (str[i] != ' ' || dqt || sqt))
-		{
-			(str[i] == '\"' && !sqt) && (dqt = !dqt);
-			(str[i] == '\'' && !dqt) && (sqt = !sqt);
-			i++;
-		}
-		if (dqt || sqt)
-			return (0);
-		str += i;
-	}
-	return (wc);
-}
 
 int	set_last_exit(char **str)
 {
@@ -69,7 +40,11 @@ int	set_var(char *argv_str, char **str)
 	if (*argv_str == '?')
 		return (set_last_exit(str), 1);
 	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
+	{
+		if (i == 0 && ft_isdigit(argv_str[i]))
+			return (1);
 		i++;
+	}
 	c = argv_str[i];
 	argv_str[i] = '\0';
 	tmp = env_grepvalue(argv_str);
@@ -122,7 +97,7 @@ char	*_expander(char *str)
 	{
 		if (*str == 1)
 			sqt = (sqt == 0);
-		if (*str == '$' && *(str + 1) != '\0' && sqt == 0)
+		if (*str == '$' && (ft_isalnum(*(str + 1)) || *(str +1) == 1 || *(str +1) == 2) && sqt == 0)
 			(str++, str += set_var(str, &res));
 		else
 			res = _strnjoin(res, str++, 1);
