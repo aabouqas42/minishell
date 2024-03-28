@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:51:43 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/26 02:03:38 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:40:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*_strjoin(char *str1, char *str2)
 	len = _nsx_strlen(str1) + _strlen(str2, '\0');
 	str = malloc (len + 1);
 	if (str == NULL)
-		return (free (str1), NULL);
+		free (str1), safe_exit(-1);
 	i = 0;
 	while (str1 && str1[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/27 03:44:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:45:42 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,22 @@ int	set_var(char *argv_str, char **str)
 	return (i);
 }
 
-int	set_word(char *argv_str, char **str, int sqt)
+int	set_word(char *argv_str, char **str, int *sqt, int *dqt)
 {
 	int		i;
 	char	c;
 
 	i = 0;
-	while ((argv_str[i] && argv_str[i] != '$' ) || sqt)
+	while (argv_str[i] && (argv_str[i] != '$'  || sqt))
+	{
+		if ((argv_str[i] == '\'' && sqt) || (argv_str[i] == '"' && dqt))
+		{
+			argv_str[i] == '\'' && (*sqt = !*sqt);
+			argv_str[i] == '\"' && (*dqt = !*dqt);
+			return (0);
+		}
 		i++;
+	}
 	c = argv_str[i];
 	argv_str[i] = '\0';
 	*str = _strjoin(*str, argv_str);
@@ -100,9 +108,9 @@ char	*_strndup(char *str)
 		if (*str == '$' && (dqt || (!dqt && !sqt)))
 			(str++, str += set_var(str, &res));
 		else
-			str += set_word(str, &res, sqt);
+			str += set_word(str, &res, &sqt, &dqt);
 	}
-	printf("@@%s>>\n", res);
+	printf("--[%s]--\n", res);
 	res = handle_dqt_sqt(res);
 	return (res);
 }

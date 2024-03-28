@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 00:44:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/27 02:07:56 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:07:29 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ size_t	get_size(char *str)
 
 char	*handle_dqt_sqt(char *str)
 {
-	size_t	size;
+	// size_t	size;
 	int		dqt;
 	int		sqt;
 	int		i;
@@ -45,12 +45,10 @@ char	*handle_dqt_sqt(char *str)
 
 	if (ft_strchr(str, '\'') == NULL && ft_strchr(str, '\"') == NULL)
 		return (str);
-	size = get_size(str);
+	// size = get_size(str);
 	// printf("str : %s\nsize : %zu\n", str, size);
 	saved_pointer = str;
-	new_str = p_calloc (size + 1);
-	if (new_str == NULL)
-		safe_exit(-1);
+	new_str = NULL;
 	i = 0;
 	dqt = 0;
 	sqt = 0;
@@ -61,7 +59,7 @@ char	*handle_dqt_sqt(char *str)
 		if (*str == '\'' && dqt == 0)
 			sqt = !sqt;
 		if ((dqt && *str != '\"') || (sqt && *str != '\'') || (ft_strchr("\'\"", *str) == NULL && !dqt && !sqt))
-			new_str[i++] = *str;
+			new_str = _strnjoin(new_str, str, 1);
 		str++;
 	}
 	free (saved_pointer);

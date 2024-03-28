@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/27 01:44:33 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:42:21 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,9 @@ int		_export(t_data *data);
 size_t	get_size(char *str);
 char	*handle_dqt_sqt(char *str);
 void	*p_calloc(size_t size);
+
+
+
+char	**_realloc(char **old_tab, char *to_append);
 
 #endif

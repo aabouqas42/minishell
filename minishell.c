@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/26 17:30:21 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:42:13 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,12 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 
 	// atexit(ex);
-	// char **argv;
+	char **argv;
 	// char	*s;
-	// int i = 0;
+	int i = 0;
 	data_hook(&data);
 	data_init(env);
-	// goto here;
+	goto here;
 	printf("\e[1;1H\e[2J");
 	while (1)
 	{
@@ -118,7 +118,11 @@ int	main(int ac, char **av, char **env)
 		data.argv = NULL;
 		data.program_path = NULL;
 	}
-	// here :
+	
+	here :
+		argv = _realloc(av, "aissm");
+		while (argv[i])
+			printf("%s\n", argv[i++]);
 	// 	s = "ls $?     \"    '$PATH' $PATH    \"  refionr";
 	// 	// printf("[%s]\n", s);
 	// 	argv = _split(s, &data);

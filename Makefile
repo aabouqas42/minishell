@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/27 00:54:17 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/27 17:33:23 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
 SRCS = 	parsing/command_check.c \
+		utils/global_utils.c \
 		utils/minishell_utils.c utils/split/ft_split.c utils/split/ft_split_utils.c\
 		utils/str/strlen.c utils/str/strdup.c utils/str/strcmp.c utils/str/strjoin.c \
 		utils/protected/p_calloc.c utils/split/dqt_sqt.c \
