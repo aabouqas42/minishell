@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 17:37:47 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:38:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	t_cmd		**commands;
+	// t_cmd		**commands;
 	t_env		*env;
 	char		**argv;
 	char		*prompt;
