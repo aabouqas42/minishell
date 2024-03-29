@@ -20,14 +20,14 @@ CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME) : $(SRC_OBJ)
-	ar rc $(NAME) $(SRC_OBJ)
+	@ar rc $(NAME) $(SRC_OBJ)
 %.o: %.c libft.h
-	cc $(CFLAGS) -c $<
+	@cc $(CFLAGS) -c $<
 clean:
-	rm -f $(SRC_OBJ)
+	@rm -f $(SRC_OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

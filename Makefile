@@ -6,7 +6,7 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/28 02:08:44 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/03/28 18:38:38 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,23 +25,29 @@ SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
 
 all: $(NAME)
+	@echo "\033[32mminishell Is Ready.\033[0m"
 
-$(NAME): $(NAME).c $(SRCS_O) $(INC)$(NAME).h $(LIBFT)
-	$(CC) $(NAME).c $(SRCS_O) $(LIBFT) -lreadline -o $(NAME)
+$(NAME): $(LIBFT) $(NAME).c $(SRCS_O) $(INC)$(NAME).h
+	@echo "\033[32mCompiling Executable $(NAME)\033[0m"
+	@$(CC) $(NAME).c $(SRCS_O) $(LIBFT) -lreadline -o $(NAME)
 
 %.o: %.c $(INC)$(NAME).h
-	$(CC) -c $< -o $@
+	@echo "\033[32mCompiling $<\033[0m"
+	@$(CC) -c $< -o $@
 
 $(LIBFT): 
-	make -C libft/
+	@echo "\033[32mCompiling LIFT\033[0m"
+	@make -C libft/
 
 clean:
-	make -C libft/ clean
-	rm -f $(SRCS_O)
+	@echo "\033[32mCleaning Object Files...\033[0m"
+	@make -C libft/ clean
+	@rm -f $(SRCS_O)
 
 fclean: clean 
-	make -C libft/ fclean
-	rm -f $(NAME)
+	@echo "\033[32mCleaning Executable File & Library...\033[0m"
+	@make -C libft/ fclean
+	@rm -f $(NAME)
 
 re: fclean all
 

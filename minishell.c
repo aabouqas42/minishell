@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/28 17:38:06 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/29 01:35:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	t_data	data;
 
-	atexit(ex);
-	// char **argv = NULL;
-	// int i = 0;
+	// atexit(ex);
 	// goto hh;
 	printf("\e[1;1H\e[2J");
 	data_hook(&data);
