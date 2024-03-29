@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/23 14:09:22 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/29 18:12:36 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,14 @@ char	*get_curr_path()
 int	cd(t_data *data)
 {
 	char	*curr_path;
+	char	*old_path;
 
+	old_path = get_curr_path();
 	if (data->argv[1] == NULL)
 	{
-		chdir(env_grepvalue("HOME"));
+		if (chdir(env_grepvalue("HOME")) != 0)
+			return (perror("Error\n"), 1);
+		env_export("OLD_PWD", old_path, data);
 		curr_path = get_curr_path();
 		env_export("PWD", curr_path, data);
 		free (curr_path);
@@ -38,6 +42,7 @@ int	cd(t_data *data)
 		return (printf("no such ile or directory: %s\n", data->argv[1]), 1);
 	curr_path = get_curr_path();
 	env_export("PWD", curr_path, data);
+	env_export("OLD_PWD", old_path, data);
 	free (curr_path);
 	return (1);
 }
