@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/28 18:35:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/30 01:38:46 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	set_var(char *argv_str, char **str)
 	char	*tmp;
 
 	i = 0;
-	if (*argv_str == '\0')
-		return (0);
 	if (*argv_str == '?')
 		return (set_last_exit(str), 1);
 	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
@@ -70,7 +68,7 @@ char	*_expander(char *str)
 	{
 		if (*str == 1)
 			sqt = (sqt == 0);
-		if (*str == '$' && (ft_isalnum(*(str + 1)) || *(str + 1) == 1 || *(str + 1) == 2) && sqt == 0)
+		if (*str == '$' && (ft_isalnum(*(str + 1))|| *(str + 1) == 1 || *(str + 1) == 2) && sqt == 0)
 			(str++, str += set_var(str, &res));
 		else if (ft_isprint(*str))
 			res = _strnjoin(res, str++, 1);

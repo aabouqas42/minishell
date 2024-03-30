@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 18:38:40 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:53:03 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ typedef struct s_cmd
 }	t_cmd;
 
 
-// typedef struct s_qutoes
-// {
-// 	int	_single;
-// 	int	_double;
-// }	t_qutoes; USELESS FOR NOW
+typedef struct s_qutoes
+{
+	int	_single;
+	int	_double;
+}	t_qutoes; 
 
 // # include "dirent.h" ?? 
 
@@ -115,7 +115,9 @@ void	*p_calloc(size_t size);
 char	*_expander(char *str);
 
 
-
+int		set_var(char *argv_str, char **str);
+size_t	args_is_valid(char *str);
 char	**_realloc(char **old_tab, char *to_append);
+int		main();
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/29 01:36:28 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/30 04:00:26 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,29 @@ size_t	args_is_valid(char *str)
 
 char	**_split(char *str)
 {
-	char	**argv;
-	size_t	size;
-	int		dqt;
-	int		sqt;
+	char		**argv;
+	char		*res;
+	t_qutoes	q;
 
-	dqt = 0;
-	sqt = 0;
-	argv = NULL;
-	if (!args_is_valid(str))
-		return (printf("Invalid Args..\n"), NULL);
+	(1) && (q._double = 0, q._single = 0, argv = NULL);
 	while (*str)
 	{
-		size = 0;
-		str = skiper(str);
-		while (str[size] && (!is_white_spaces(str[size]) || dqt || sqt))
+		(1) && (str = skiper(str) - 1, res = NULL);
+		while (*(++str) && (!is_white_spaces(*str) || q._double || q._single))
 		{
-			if (str[size] == '\"' && !sqt)
-				(dqt = (dqt == 0)), str[size] = 2;
-			if (str[size] == '\'' && !dqt)
-				(sqt = (sqt == 0)), str[size] = 1;
-			size++;
+			(*str == '\"' && !q._single) && (q._double = (q._double == 0));
+			(*str == '\'' && !q._double) && (q._single = (q._single == 0));
+			if ((q._double && *str != '"') || (q._single && *str != '\'')
+				|| (!q._double && !q._single && !ft_strchr("\'\"", *str)))
+			{
+				if (*str == '$' && q._single == 0
+					&& ft_isalnum(*(str +1) || ft_strchr("\'\"", *(str +1))))
+					str += set_var(str + 1, &res);
+				else
+					res = _strnjoin(res, str, 1);
+			}
 		}
-		str[size] = '\0';
-		argv = _realloc(argv, _expander(str));
-		str += size + 1;
+		argv = _realloc(argv, res);
 	}
 	return (argv);
 }
