@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/30 04:00:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/30 18:50:21 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,20 @@ char	*skiper(char *str)
 
 size_t	args_is_valid(char *str)
 {
-	int		dqt;
-	int		sqt;
+	t_qutoes	qt;
 
-	dqt = 0;
-	sqt = 0;
+	qt.dqt = 0;
+	qt.sqt = 0;
 	while (str && *str)
 	{
 		str = skiper(str);
-		while (*str && (!is_white_spaces(*str) || dqt || sqt))
+		while (*str && (!is_white_spaces(*str) || qt.dqt || qt.sqt))
 		{
-			(*str == '\"' && !sqt) && (dqt = !dqt);
-			(*str == '\'' && !dqt) && (sqt = !sqt);
+			(*str == '\"' && !qt.sqt) && (qt.dqt = !qt.dqt);
+			(*str == '\'' && !qt.dqt) && (qt.sqt = !qt.sqt);
 			str++;
 		}
-		if (dqt || sqt)
+		if (qt.dqt || qt.sqt)
 			return (0);
 	}
 	return (1);
@@ -50,22 +49,24 @@ char	**_split(char *str)
 {
 	char		**argv;
 	char		*res;
-	t_qutoes	q;
+	t_qutoes	qt;
 
-	(1) && (q._double = 0, q._single = 0, argv = NULL);
+	(1) && (qt.dqt = 0, qt.sqt = 0, argv = NULL);
 	while (*str)
 	{
 		(1) && (str = skiper(str) - 1, res = NULL);
-		while (*(++str) && (!is_white_spaces(*str) || q._double || q._single))
+		while (*(++str) && (!is_white_spaces(*str) || qt.dqt || qt.sqt))
 		{
-			(*str == '\"' && !q._single) && (q._double = (q._double == 0));
-			(*str == '\'' && !q._double) && (q._single = (q._single == 0));
-			if ((q._double && *str != '"') || (q._single && *str != '\'')
-				|| (!q._double && !q._single && !ft_strchr("\'\"", *str)))
+			(*str == '\"' && !qt.sqt) && (qt.dqt = (qt.dqt == 0));
+			(*str == '\'' && !qt.dqt) && (qt.sqt = (qt.sqt == 0));
+			if ((qt.dqt && *str != '"') || (qt.sqt && *str != '\'')
+				|| (!qt.dqt && !qt.sqt && !ft_strchr("\'\"", *str)))
 			{
-				if (*str == '$' && q._single == 0
+				if (*str == '$' && qt.sqt == 0
 					&& ft_isalnum(*(str +1) || ft_strchr("\'\"", *(str +1))))
 					str += set_var(str + 1, &res);
+				else if (ft_strchr("<>|", *str))
+					argv = _realloc(argv, _strnjoin(NULL, str, 1));
 				else
 					res = _strnjoin(res, str, 1);
 			}

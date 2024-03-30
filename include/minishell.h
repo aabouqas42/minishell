@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/30 03:53:03 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/30 18:36:40 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct s_cmd
 
 typedef struct s_qutoes
 {
-	int	_single;
-	int	_double;
+	int	sqt;
+	int	dqt;
 }	t_qutoes; 
 
 // # include "dirent.h" ?? 
@@ -83,6 +83,7 @@ int		env_valid_name(char *name);
 void	env_print(t_env	*head);
 size_t	env_size(t_env *env);
 void	env_free(t_env *env);
+void	env_free_list(t_env *env);
 char	*env_grepvalue(char *name);
 
 t_data	*data_hook(t_data *data);
@@ -118,6 +119,5 @@ char	*_expander(char *str);
 int		set_var(char *argv_str, char **str);
 size_t	args_is_valid(char *str);
 char	**_realloc(char **old_tab, char *to_append);
-int		main();
 
 #endif
