@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/31 00:43:08 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/31 03:41:43 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ size_t	set_arg(char *str, char **res, t_qutoes qt)
 	size = 0;
 	if ((qt.dqt && c != '"') || (qt.sqt && c != '\'') || (!qt.dqt && !qt.sqt && !ft_strchr("\'\"", c)))
 	{
-		if (c == '$' && qt.sqt == 0 && ft_isalnum(nc || ft_strchr("\'\"", nc)))
+		if (c == '$' && qt.sqt == 0 && (ft_isalnum(nc ) || ft_strchr("\'\"", nc)))
 			size += set_var(str + 1, res) + 1;
 		else
 			(1) && (*res = _strnjoin(*res, str, 1), (size++));
 	}
+	if (size == 0)
+		return (1);
 	return (size);
 }
 
