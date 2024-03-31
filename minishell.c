@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/29 01:37:06 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/30 23:39:38 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	builtins()
 	if (!_strcmp(data->argv[0], "env"))
 		return (env_print(data->env), 1);
 	if (!_strcmp(data->argv[0], "export"))
-		return (_export(data), 1);
+		return (export(), 1);
 	return (0);
 }
 
@@ -79,12 +79,12 @@ void	data_init(char **base_env)
 	{
 		value = ft_strchr(*base_env, '=') + 1;
 		*(value - 1) = '\0';
-		env_export(*base_env, value, data);
+		env_export(*base_env, value);
 		*(value - 1) = '=';
 		base_env++;
 	}
 	if (env_grepvalue("PATH") == 0)
-		env_export("PATH", get_paths_env(), data);
+		env_export("PATH", get_paths_env());
 }
 
 void ex()

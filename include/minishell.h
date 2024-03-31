@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 18:38:40 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/30 23:57:33 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_data
 #define ENV_FAILURE 0
 #define ENV_CREATED 1
 
-int		env_export(char *name, char *value, t_data *data);
+int		env_export(char *name, char *value);
 t_env	*env_create(char *name, char *value);
 t_env	*env_get(char *name, t_data	*data);
 int		env_unset(char *name, t_env **env);
@@ -108,7 +108,7 @@ size_t	argument_count(char *str);
 int		cd(t_data *data);
 void	echo();
 int		pwd();
-int		_export(t_data *data);
+int		export();
 size_t	get_size(char *str);
 char	*handle_dqt_sqt(char *str);
 void	*p_calloc(size_t size);

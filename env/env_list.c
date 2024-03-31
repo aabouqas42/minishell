@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 01:42:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:59:31 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,29 @@ int	env_valid_name(char *name)
 	return (1);
 }
 
-int	env_export(char *name, char *value, t_data *data)
+int	env_export(char *name, char *value)
 {
+	t_data *data;
 	t_env	*tmp;
 
+	data = data_hook(NULL);
 	if (!env_valid_name(name))
-		return (ENV_NOT_CREATED);
+		return (0);
 	if (data->env == NULL)
 	{
 		data->env = env_create(name, value);
-		if (data->env == NULL)
-			return (ENV_FAILURE);
-		return (ENV_CREATED);
+		return ((data->env != NULL));
 	}
 	tmp = env_get(name, data);
 	if (tmp != NULL)
 	{
 		free(tmp->value);
 		tmp->value = _strdup(value);
-		if (tmp->value == NULL)
-			return (ENV_FAILURE);
-		return (ENV_CREATED);
+		return ((tmp->value != NULL));
 	}
 	tmp = env_get_last(data->env);
 	tmp->next = env_create(name, value);
-	if (tmp->next == NULL)
-		return (ENV_FAILURE);
-	return (ENV_CREATED);
+	return (tmp->next != NULL);
 }
 
 int	env_unset(char *name, t_env **env)

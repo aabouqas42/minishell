@@ -3,35 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:23:26 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/23 15:16:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/31 00:40:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	_export(t_data *data)
+int	export()
 {
 	char	*name;
 	char	*value;
+	char	*save;
+	t_data *data;
 	size_t	i;
 
-	i = 0;
+	data = data_hook(NULL);
 	if (data == NULL || data->argv == NULL)
 		return (0);
-	if (data->argv[1] == NULL)
-		return (env_print(data->env), 1);
-	name = data->argv[1];
+	i = 1;
 	value = "";
-	i = 0;
-	while (name[i] && name[i] != '=')
+	while (data->argv[i])
+	{
+		name = data->argv[i];
+		save = ft_strchr(data->argv[i], '=');
+		if (save)
+		{
+			if (*(save -1) == '+')
+			{
+				*(save -1) = '\0';
+				value = env_grepvalue(name);
+			}
+			*(save++) = '\0';
+			value = ft_strjoin(value, save);
+			// printf("name = %s, value = %s\n", name, value);
+			env_export(name, value);
+		}else
+			env_export(name, NULL);
 		i++;
-	if (name[i] == '=' && name[i + 1] != '\0')
-		value = (name + i + 1);
-	name[i] = '\0';
-	if (env_export(name, value, data) == ENV_CREATED)
-		return (1);
+	}
+	if (i == 0)
+		return (env_sort(data->env), 0);
+	// if (data->argv[1] == NULL)
+	// 	return (env_sort(data->env), 1);
+	// name = data->argv[1];
+	// value = "";
+	// i = 0;
+	// if (ft_strchr(name, '='))
+
+	// while (name[i] && name[i] != '=')
+	// 	i++;
+	// if (name[i] == '=')
+	// 	value = (name + i + 1);
+	// name[i] = '\0';
+	// if (env_export(name, value))
+	// 	return (1);
+	// return (printf("minishell: export: `%s=%s': not a valid identifier\n", name, value), 0);
 	return (0);
 }
