@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/30 03:48:14 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/30 23:06:20 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,14 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	t_data	data;
-	// char	**argv;
-	// int		i = 0;
+	char	**argv;
+	int		i = 0;
 
 	// atexit(ex);
 	printf("\e[1;1H\e[2J");
 	data_hook(&data);
 	data_init(env);
+	goto h;
 	while (1)
 	{
 		execute();
@@ -116,5 +117,13 @@ int	main(int ac, char **av, char **env)
 		data.argv = NULL;
 		data.program_path = NULL;
 	}
+	h:
+		while (1)
+		{
+			i = 0;
+			argv = _split(readline("($)"));
+			while (argv[i])
+				printf("[%s]\n", argv[i++]);
+		}
 	return (EXIT_SUCCESS);
 }
