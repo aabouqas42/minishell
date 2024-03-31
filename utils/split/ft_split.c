@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/29 01:36:28 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/31 00:43:08 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,53 +26,65 @@ char	*skiper(char *str)
 
 size_t	args_is_valid(char *str)
 {
-	int		dqt;
-	int		sqt;
+	t_qutoes	qt;
 
-	dqt = 0;
-	sqt = 0;
+	qt.dqt = 0;
+	qt.sqt = 0;
 	while (str && *str)
 	{
 		str = skiper(str);
-		while (*str && (!is_white_spaces(*str) || dqt || sqt))
+		while (*str && (!is_white_spaces(*str) || qt.dqt || qt.sqt))
 		{
-			(*str == '\"' && !sqt) && (dqt = !dqt);
-			(*str == '\'' && !dqt) && (sqt = !sqt);
+			(*str == '\"' && !qt.sqt) && (qt.dqt = !qt.dqt);
+			(*str == '\'' && !qt.dqt) && (qt.sqt = !qt.sqt);
 			str++;
 		}
-		if (dqt || sqt)
+		if (qt.dqt || qt.sqt)
 			return (0);
 	}
 	return (1);
 }
 
+size_t	set_arg(char *str, char **res, t_qutoes qt)
+{
+	size_t	size;
+	char	c;
+	char	nc;
+
+	c = *str;
+	nc = *(str + 1);
+	size = 0;
+	if ((qt.dqt && c != '"') || (qt.sqt && c != '\'') || (!qt.dqt && !qt.sqt && !ft_strchr("\'\"", c)))
+	{
+		if (c == '$' && qt.sqt == 0 && ft_isalnum(nc || ft_strchr("\'\"", nc)))
+			size += set_var(str + 1, res) + 1;
+		else
+			(1) && (*res = _strnjoin(*res, str, 1), (size++));
+	}
+	return (size);
+}
+
 char	**_split(char *str)
 {
-	char	**argv;
-	size_t	size;
-	int		dqt;
-	int		sqt;
+	char		**argv;
+	char		*res;
+	t_qutoes	qt;
 
-	dqt = 0;
-	sqt = 0;
-	argv = NULL;
-	if (!args_is_valid(str))
-		return (printf("Invalid Args..\n"), NULL);
+	(1) && (qt.dqt = 0, qt.sqt = 0, argv = NULL);
 	while (*str)
 	{
-		size = 0;
-		str = skiper(str);
-		while (str[size] && (!is_white_spaces(str[size]) || dqt || sqt))
+		(1) && (str = skiper(str), res = NULL);
+		while (*str && (!ft_strchr("<>|", *str) && (!is_white_spaces(*str) || qt.dqt || qt.sqt)))
 		{
-			if (str[size] == '\"' && !sqt)
-				(dqt = (dqt == 0)), str[size] = 2;
-			if (str[size] == '\'' && !dqt)
-				(sqt = (sqt == 0)), str[size] = 1;
-			size++;
+			(*str == '\"' && !qt.sqt) && (qt.dqt = (qt.dqt == 0));
+			(*str == '\'' && !qt.dqt) && (qt.sqt = (qt.sqt == 0));
+			str += set_arg(str, &res, qt);
 		}
-		str[size] = '\0';
-		argv = _realloc(argv, _expander(str));
-		str += size + 1;
+		argv = _realloc(argv, res);
+		if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
+			(1) && (argv = _realloc(argv, _strnjoin(NULL, str, 2)), str += 2);
+		else if (ft_strchr("<>|", *str))
+			(1) && (argv = _realloc(argv, _strnjoin(NULL, str, 1)), str++);
 	}
 	return (argv);
 }

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   env_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 22:07:17 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/29 23:01:59 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/03/30 18:32:40 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/03/30 18:36:22 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-char	*ft_strchr(const char *s, int c)
+void	env_free_list(t_env *env)
 {
-	while (*s)
+	t_env	*curr;
+
+	while (env)
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		curr = env->next;
+		env_free(env);
+		env = curr;
 	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/03/29 01:36:34 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/03/30 18:45:46 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS = 	parsing/command_check.c \
 		utils/str/strlen.c utils/str/strdup.c utils/str/strcmp.c utils/str/strjoin.c \
 		utils/protected/p_calloc.c \
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
+		env/env_free.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
