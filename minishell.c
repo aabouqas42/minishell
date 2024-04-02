@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/31 18:17:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/02 07:27:34 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	cmd_err()
 
 int	execute()
 {
-	t_data *data;
-	int	child_pid;
+	t_data	*data;
+	int		child_pid;
 
 	data = data_hook(NULL);
 	data->line = readline(data->prompt);
@@ -74,16 +74,17 @@ int	execute()
 		return (perror("Invalid args\n"), data->exit_status = 127, 0);
 	add_history(data->line);
 	data->commands = _split(data->line);
-	if (data->commands == NULL || cmd_err())
-		return 1;
+	if (data->commands == NULL)
+		return (1);
 	if (builtins())
 		return (0);
 	if (is_valid_cmd(data, data->commands[0]) != 1)
 	{
-		printf("\e[31mminishell : %s: command not found\e[0m\n", data->line);
-		return (data->exit_status = 127 << 8, -1);
+		printf("\e[31mminishell : %s command not found\e[0m\n", data->line);
+		data->exit_status = 127 << 8;
+		return (-1);
 	}
-	child_pid = fork(); 
+	child_pid = fork();
 	if (child_pid == 0)
 		execve(data->program_path, data->commands, NULL);
 	return (-1);
