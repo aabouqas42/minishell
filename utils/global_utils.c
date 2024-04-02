@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/31 00:41:34 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/03/31 18:27:01 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	arg_is_io_operator(char	*str)
+{
+	if (str == NULL)
+		return (1);
+	if ((((*str == '|' || *str == '<' || *str == '>') && *(str +1) == '\0')
+		|| ((*str == '<' || *str == '>') && (*(str +1) == '<' || *(str +1) == '>') && *(str +2) == '\0')))
+			return (1);
+	return (0);
+}
 
 char	**_realloc(char **old_tab, char *to_append)
 {

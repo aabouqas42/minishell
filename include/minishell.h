@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/31 02:51:20 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/31 17:23:39 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ typedef enum e_cmd_type
 
 typedef struct s_cmd
 {
-	char		*cmd_all_path;
 	char		**argv;
-	char		**env;
 	t_cmd_type	cmd_type;
 }	t_cmd;
 
@@ -60,9 +58,8 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	// t_cmd		**commands;
 	t_env		*env;
-	char		**argv;
+	char		**commands;
 	char		*prompt;
 	char		*line;
 	char		*program_path;
@@ -87,6 +84,8 @@ void	env_free_list(t_env *env);
 char	*env_grepvalue(char *name);
 
 t_data	*data_hook(t_data *data);
+
+int	arg_is_io_operator(char	*str);
 
 /*	END ENV LIST	*/
 

@@ -1,0 +1,14 @@
+total 480
+-rw-r--r--   1 mait-elk  candidate   2066 Mar 31 18:22 Makefile
+drwxr-xr-x   6 mait-elk  candidate    204 Apr  1 09:30 builtins
+drwxr-xr-x   7 mait-elk  candidate    238 Apr  1 09:30 env
+-rw-r--r--   1 mait-elk  candidate  82956 Mar 28 02:07 env.tldr
+-rw-r--r--   1 mait-elk  candidate      0 Apr  1 10:03 file
+drwxr-xr-x   3 mait-elk  candidate    102 Mar 31 02:51 include
+drwxr-xr-x  57 mait-elk  candidate   1938 Apr  1 09:30 libft
+-rwxr-xr-x   1 mait-elk  candidate  90720 Apr  1 09:30 minishell
+-rw-r--r--   1 mait-elk  candidate   4041 Mar 31 18:17 minishell.c
+drwxr-xr-x   3 mait-elk  candidate    102 Apr  1 09:30 parsing
+-rwxr-xr-x   1 mait-elk  candidate  50096 Apr  1 10:02 pipe
+-rw-r--r--   1 mait-elk  candidate   1327 Apr  1 10:02 pipe.c
+drwxr-xr-x   7 mait-elk  candidate    238 Apr  1 09:30 utils

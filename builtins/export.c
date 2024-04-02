@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:23:26 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/31 00:40:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/03/31 03:02:04 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int	export()
 	size_t	i;
 
 	data = data_hook(NULL);
-	if (data == NULL || data->argv == NULL)
+	if (data == NULL || data->commands == NULL)
 		return (0);
 	i = 1;
 	value = "";
-	while (data->argv[i])
+	while (data->commands[i])
 	{
-		name = data->argv[i];
-		save = ft_strchr(data->argv[i], '=');
+		name = data->commands[i];
+		save = ft_strchr(data->commands[i], '=');
 		if (save)
 		{
 			if (*(save -1) == '+')
@@ -46,9 +46,9 @@ int	export()
 	}
 	if (i == 0)
 		return (env_sort(data->env), 0);
-	// if (data->argv[1] == NULL)
+	// if (data->commands[1] == NULL)
 	// 	return (env_sort(data->env), 1);
-	// name = data->argv[1];
+	// name = data->commands[1];
 	// value = "";
 	// i = 0;
 	// if (ft_strchr(name, '='))
