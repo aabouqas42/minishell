@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/30 18:40:21 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/01 06:48:35 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	safe_exit(int status)
 	free (data->program_path);
 	data->program_path = NULL;
 	free_tab(data->argv);
-	env_free_list(data->env);
+	// env_free_list(data->env);
 	data->argv = NULL;
 	// free (data->prompt); #BUS ERROR ?
 	exit(status);

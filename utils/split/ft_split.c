@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/31 03:41:43 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/02 07:23:43 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**_split(char *str)
 	while (*str)
 	{
 		(1) && (str = skiper(str), res = NULL);
-		while (*str && (!ft_strchr("<>|", *str) && (!is_white_spaces(*str) || qt.dqt || qt.sqt)))
+		while (*str && !ft_strchr("<>|", *str) && ((!is_white_spaces(*str) || qt.dqt || qt.sqt)))
 		{
 			(*str == '\"' && !qt.sqt) && (qt.dqt = (qt.dqt == 0));
 			(*str == '\'' && !qt.dqt) && (qt.sqt = (qt.sqt == 0));

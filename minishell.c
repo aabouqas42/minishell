@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/31 17:14:32 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/01 05:15:00 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,6 @@ int	main(int ac, char **av, char **env)
 		data.program_path = NULL;
 	}
 	h:
-		while (1)
-		{
-			i = 0;
-			argv = _split(readline("($)"));
-			while (argv[i])
-				printf("[%s]\n", argv[i++]);
-		}
+		
 	return (EXIT_SUCCESS);
 }
