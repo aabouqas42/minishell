@@ -1,42 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   create.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/01 05:26:50 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/01 17:46:01 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/04/03 00:36:40 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/04/03 01:43:14 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-int	_pipe(char **commands)
+t_list_args	*create(char )
 {
-	int	i;
-	int	child;
-	int	fds[2];
-	t_data	*data;
+	t_list_args	*new_node;
 
-	i = 0;
-	data = data_hook(NULL);
-	while (commands[i])
-	{
-		if (*commands[i] == '|')
-		{
-			commands[i] = NULL;
-			if (is_valid_cmd(data, commands[0]) != 1)
-				return (perror("Err\n"), 1);
-			dup2(fds[1], 1);
-			dup2(fds[0], 0);
-			child = fork();
-			if (child == 0)
-				execve(data->program_path, commands, NULL);
-			i++;
-		}
-		i++;
-	}
-	return (0);
+	new_node->_in = 0;
+	new_node->_out = 1;
+	new_node->action = Void;
+	
+	return (new_node);
 }

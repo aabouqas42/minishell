@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/31 17:23:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:56:03 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+# include <fcntl.h>
 
 typedef enum e_cmd_type
 {
@@ -42,7 +43,7 @@ typedef struct s_qutoes
 	int	dqt;
 }	t_qutoes; 
 
-// # include "dirent.h" ?? 
+// # include "dirent.h" ??
 
 # define CMD_FAIL -1
 # define CMD_INVALID 0
@@ -56,6 +57,28 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef enum e_action
+{
+	Void,
+	Pipe,
+	Redirect_in,
+	Redirect_out,
+	Append_in,
+	Append_out
+	
+}	t_action;
+
+typedef struct	s_list_args
+{
+	char				**argv;
+	char				**env;
+	char				*program_path;
+	t_action			action;
+	int					_out;
+	int					_in;
+	struct s_list_args	*next;
+}	t_list_args;
+
 typedef struct s_data
 {
 	t_env		*env;
@@ -64,6 +87,7 @@ typedef struct s_data
 	char		*line;
 	char		*program_path;
 	int			exit_status;
+	t_list_args	*list;
 }	t_data;
 
 #define ENV_NOT_CREATED -1
@@ -108,7 +132,8 @@ size_t	argument_count(char *str);
 int		cd(t_data *data);
 void	echo();
 int		pwd();
-int		export();
+int		_export();
+int		_redirection();
 size_t	get_size(char *str);
 char	*handle_dqt_sqt(char *str);
 void	*p_calloc(size_t size);
@@ -118,5 +143,10 @@ char	*_expander(char *str);
 int		set_var(char *argv_str, char **str);
 size_t	args_is_valid(char *str);
 char	**_realloc(char **old_tab, char *to_append);
+
+void		add(t_list_args **head);
+t_list_args	*create();
+t_list_args	*get_first();
+t_list_args	*get_last(t_list_args *head);
 
 #endif
