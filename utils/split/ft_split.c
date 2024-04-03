@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/02 07:26:35 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/03 01:01:29 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char	**_split(char *str)
 		{
 			(*str == '\"' && !qt.sqt) && (qt.dqt = (qt.dqt == 0));
 			(*str == '\'' && !qt.dqt) && (qt.sqt = (qt.sqt == 0));
-			// printf("%s %d %d\n", str, qt.dqt, qt.sqt);
 			str += set_arg(str, &res, qt);
 		}
 		commands = _realloc(commands, res);

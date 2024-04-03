@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 12:31:13 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/03 22:36:12 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/04/03 23:25:38 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	builtins()
 	if (!_strcmp(data->commands[0], "env"))
 		return (env_print(data->env), 1);
 	if (!_strcmp(data->commands[0], "export"))
-		return (export(), 1);
+		return (_export(), 1);
 	return (0);
 }
 
@@ -64,7 +64,7 @@ int	cmd_err()
 int	execute()
 {
 	t_data	*data;
-	int		child_pid;
+	// int		child_pid;
 
 	data = data_hook(NULL);
 	data->line = readline(data->prompt);
@@ -74,28 +74,30 @@ int	execute()
 		return (perror("Invalid args\n"), data->exit_status = 127, 0);
 	add_history(data->line);
 	data->commands = _split(data->line);
-	if (data->commands == NULL)
+	if (data->commands == NULL || cmd_err())
 		return (1);
-	if (builtins())
-		return (0);
-	if (is_valid_cmd(data, data->commands[0]) != 1)
-	{
-		printf("\e[31mminishell : %s command not found\e[0m\n", data->line);
-		data->exit_status = 127 << 8;
-		return (-1);
-	}
-	child_pid = fork();
-	if (child_pid == 0)
-		execve(data->program_path, data->commands, NULL);
+	_redirection();
+	// if (builtins())
+	// 	return (0);
+	// if (is_valid_cmd(data, data->commands[0]) != CMD_VALID)
+	// {
+	// 	printf("\e[31mminishell : %s command not found\e[0m\n", data->line);
+	// 	data->exit_status = 127 << 8;
+	// 	return (-1);
+	// }
+	// child_pid = fork();
+	// if (child_pid == 0)
+	// 	execve(data->program_path, data->commands, NULL);
 	return (-1);
 }
 
 void	data_init(char **base_env)
 {
-	t_data	*data;
+	t_data		*data;
 	char	*value;
 
 	data = data_hook(NULL);
+	data->list = NULL;
 	data->commands = NULL;
 	data->line = NULL;
 	data->env = NULL;
@@ -131,7 +133,7 @@ int	main(int ac, char **av, char **env)
 	printf("\e[1;1H\e[2J");
 	data_hook(&data);
 	data_init(env);
-	// goto h;
+	// goto here;
 	while (1)
 	{
 		execute();
@@ -142,13 +144,7 @@ int	main(int ac, char **av, char **env)
 		data.commands = NULL;
 		data.program_path = NULL;
 	}
-	// h:
-	// 	while (1)
-	// 	{
-	// 		i = 0;
-	// 		commands = _split(readline("($)"));
-	// 		while (commands[i])
-	// 			printf("[%s]\n", commands[i++]);
-	// 	}
+	// here:
+		
 	return (EXIT_SUCCESS);
 }

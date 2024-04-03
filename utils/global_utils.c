@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/03 22:29:57 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/03 23:26:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ int	arg_is_io_operator(char	*str)
 {
 	if (str == NULL)
 		return (1);
-	if ((((*str == '|' || *str == '<' || *str == '>') && *(str +1) == '\0')
-		|| ((*str == '<' || *str == '>') && (*(str +1) == '<' || *(str +1) == '>') && *(str +2) == '\0')))
-			return (1);
-	return (0);
+	return (
+		(ft_strchr("<>|", *str) && *(str + 1) == 0)
+		|| ft_strncmp(str, ">>", 3) == 0
+		|| ft_strncmp(str, "<<", 3) == 0
+	);
 }
 
 char	**_realloc(char **old_tab, char *to_append)
@@ -32,7 +33,7 @@ char	**_realloc(char **old_tab, char *to_append)
 		return (old_tab);
 	if (old_tab == NULL)
 	{
-		new_tab = p_calloc( 2 * sizeof(char *));
+		new_tab = p_calloc(2 * sizeof(char *));
 		*new_tab = to_append;
 		return (new_tab);
 	}
@@ -49,3 +50,4 @@ char	**_realloc(char **old_tab, char *to_append)
 	new_tab[i] = to_append;
 	return (new_tab);
 }
+

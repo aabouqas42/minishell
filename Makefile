@@ -6,11 +6,11 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/04/03 22:34:20 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/04/03 23:25:51 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror 
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
@@ -21,7 +21,8 @@ SRCS = 	parsing/command_check.c \
 		utils/protected/p_funcs.c \
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
 		env/env_free.c \
-		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c
+		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \
+		multiples/redirections.c
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
 
