@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/30 01:38:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:18:46 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	set_last_exit(char **str)
 	exit_status = ft_itoa(data->exit_status >> 8);
 	if (exit_status == NULL)
 		safe_exit(-1);
-	*str = _strjoin(*str, exit_status);
+	*str = _strnjoin(*str, exit_status, p_strlenc(exit_status, '\0'));
 	if (*str == NULL)
 		safe_exit(-1);
 	data->exit_status = 0;
@@ -48,7 +48,7 @@ int	set_var(char *argv_str, char **str)
 	tmp = env_grepvalue(argv_str);
 	if (tmp == NULL)
 		tmp = "";
-	*str = _strjoin(*str, tmp);
+	*str = _strnjoin(*str, tmp, p_strlenc(tmp, '\0'));
 	if (*str == NULL)
 		safe_exit(-1);
 	argv_str[i] = c;

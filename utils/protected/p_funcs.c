@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   p_calloc.c                                         :+:      :+:    :+:   */
+/*   p_funcs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:48:03 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/28 18:22:43 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:17:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,34 @@ void	*p_calloc(size_t size)
 	while (size--)
 		res[size] = '\0';
 	return ((void *)res);
+}
+
+size_t	p_strlenc(char *str, char c)
+{
+	size_t	size;
+
+	size = 0;
+	while (str && str[size] && str[size] != c)
+		size++;
+	return (size);
+}
+
+char	*p_strdup(char *str)
+{
+	size_t	i;
+	char	*res;
+
+	if (str == NULL)
+		return (NULL);
+	res = malloc(p_strlenc(str, '\0') + 1);
+	if (res == NULL)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		res[i] = str[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }

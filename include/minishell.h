@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/31 17:23:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:30:02 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_data
 {
 	t_env		*env;
 	char		**commands;
+	char		***argvs;
 	char		*prompt;
 	char		*line;
 	char		*program_path;
@@ -98,11 +99,11 @@ void	free_tab(char **array);
 char	*get_paths_env();
 char	**_split(char *str);
 char	*_strndup(char *str);
-char	*_strjoin(char *str1, char *str2);
+// char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
 int		_strcmp(char *s1, char *s2);
-size_t	_strlen(char *str, char c);
-char	*_strdup(char *s1);
+size_t	p_strlenc(char *str, char c);
+char	*p_strdup(char *s1);
 size_t	argument_count(char *str);
 
 int		cd(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/02 07:27:08 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:24:35 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ char	*get_prompt()
 	// if (prompt == NULL)
 	// 	safe_exit(-1);
 	// return (prompt);
-	return ("($) ");
+	return ("mait-elk@1337.ma $> ");
 }

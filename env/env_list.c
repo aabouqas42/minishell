@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/30 17:59:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:57:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	env_export(char *name, char *value)
 	if (tmp != NULL)
 	{
 		free(tmp->value);
-		tmp->value = _strdup(value);
+		tmp->value = p_strdup(value);
 		return ((tmp->value != NULL));
 	}
 	tmp = env_get_last(data->env);

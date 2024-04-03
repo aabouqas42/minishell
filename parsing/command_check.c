@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/26 02:18:54 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:54:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 	paths = env_grepvalue("PATH");
 	while (paths && *paths)
 	{
-		i = _strlen(paths, ':');
+		i = p_strlenc(paths, ':');
 		c = paths[i];
 		paths[i] = '\0';
 		program_path = ft_strjoin(paths, tmp);

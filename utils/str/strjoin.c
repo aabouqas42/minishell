@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strjoin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:51:43 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/03/27 18:40:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/03 01:03:21 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,6 @@ char	*_strnjoin(char *str1, char *str2, size_t size)
 		i++;
 		str2++;
 		size--;
-	}
-	str[i] = '\0';
-	return (free (str1), str);
-}
-
-char	*_strjoin(char *str1, char *str2)
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	if (str1 == NULL && str2 == NULL)
-		return (NULL);
-	len = _nsx_strlen(str1) + _strlen(str2, '\0');
-	str = malloc (len + 1);
-	if (str == NULL)
-		free (str1), safe_exit(-1);
-	i = 0;
-	while (str1 && str1[i])
-	{
-		str[i] = str1[i];
-		i++;
-	}
-	while (str2 && *str2)
-	{
-		str[i] = *str2;
-		i++;
-		str2++;
 	}
 	str[i] = '\0';
 	return (free (str1), str);

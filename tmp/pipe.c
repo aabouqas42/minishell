@@ -1,55 +1,51 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/01 09:29:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/02 06:50:24 by mait-elk         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 #include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "libft/libft.h"
 #include "include/minishell.h"
 
-int main(int ac, char **av)
-{
-	int pid;
-	int	i = 1;
-	int	fds[2];
+int main(int ac, char **av) {
+	int in = dup(0);
+    int fd[2];
 
-	pipe(fds);
-	while (av[i +1])
-	{
-		// printf("%s\n", av[i]);
-		pid = fork();
-		if (pid == 0)
-		{
-			dup2(fds[1], 1);
-			close(fds[0]);
-			close(fds[1]);
-			char	**v = ft_split(av[i], ' ');
-			execve(v[0], v, NULL);
-		}
-		// waitpid(pid, NULL, 0);
-		i++;
+	pipe(fd);
+	int pid = fork();
+	if (pid == 0) {
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		char **av = ft_split("ls -l", ' ');
+		execve("/bin/ls", av, NULL);
 	}
+
+	dup2(fd[0], 0);
 	pid = fork();
-	if (pid == 0)
-	{
-		dup2(fds[0], 0);
-		close(fds[0]);
-		close(fds[1]);
-		char	**v = ft_split(av[i], ' ');
-		execve(v[0], v, NULL);
-	}
-	close(fds[0]);
-	close(fds[1]);
-	// waitpid(pid, NULL, 0);
-	return (EXIT_SUCCESS);	
+    if (pid == 0) {
+        dup2(fd[1], STDOUT_FILENO);
+        close(fd[0]);
+        close(fd[1]);
+		char **av = ft_split("grep mait", ' ');
+        execve("/usr/bin/grep", av, NULL);
+    }
+    close(fd[1]);
+	dup2(fd[0], 0);
+	close(fd[0]);
+	pipe(fd);
+	pid = fork();
+    if (pid == 0) {
+        close(fd[0]);
+        close(fd[1]);
+		char **av = ft_split("grep 102", ' ');
+        execve("/usr/bin/grep", av, NULL);
+    }
+	dup2(in ,0);
+	close(in);
+    close(fd[0]);
+    close(fd[1]);
+    waitpid(-1, NULL, 0);
+    return 0;
 }

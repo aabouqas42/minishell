@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 05:26:50 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/01 17:46:01 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:55:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "include/minishell.h"
 
 
 int	_pipe(char **commands)
