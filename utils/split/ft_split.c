@@ -6,20 +6,15 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/03 01:01:29 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/04 01:42:10 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	is_white_spaces(int c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
-}
-
 char	*skiper(char *str)
 {
-	while (str && *str && is_white_spaces(*str))
+	while (str && *str && _spaces(*str))
 		str++;
 	return (str);
 }
@@ -33,7 +28,7 @@ size_t	args_is_valid(char *str)
 	while (str && *str)
 	{
 		str = skiper(str);
-		while (*str && (!is_white_spaces(*str) || qt.dqt || qt.sqt))
+		while (*str && (!_spaces(*str) || qt.dqt || qt.sqt))
 		{
 			(*str == '\"' && !qt.sqt) && (qt.dqt = !qt.dqt);
 			(*str == '\'' && !qt.dqt) && (qt.sqt = !qt.sqt);
@@ -54,7 +49,8 @@ size_t	set_arg(char *str, char **res, t_qutoes qt)
 	c = *str;
 	nc = *(str + 1);
 	size = 0;
-	if ((qt.dqt && c != '"') || (qt.sqt && c != '\'') || (!qt.dqt && !qt.sqt && !ft_strchr("\'\"", c)))
+	if ((qt.dqt && c != '"') || (qt.sqt && c != '\'')
+		|| (!qt.dqt && !qt.sqt && !ft_strchr("\'\"", c)))
 	{
 		if (c == '$' && qt.sqt == 0 && (ft_isalnum(nc ) || ft_strchr("\'\"", nc)))
 			size += set_var(str + 1, res) + 1;
@@ -76,7 +72,7 @@ char	**_split(char *str)
 	while (*str)
 	{
 		(1) && (str = skiper(str), res = NULL);
-		while (*str && !ft_strchr("<>|", *str) && ((!is_white_spaces(*str) || qt.dqt || qt.sqt)))
+		while (*str && !ft_strchr("<>|", *str) && ((!_spaces(*str) || qt.dqt || qt.sqt)))
 		{
 			(*str == '\"' && !qt.sqt) && (qt.dqt = (qt.dqt == 0));
 			(*str == '\'' && !qt.dqt) && (qt.sqt = (qt.sqt == 0));

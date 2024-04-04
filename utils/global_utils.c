@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/03 23:26:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/04 01:41:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,7 @@ char	**_realloc(char **old_tab, char *to_append)
 	return (new_tab);
 }
 
+int	_spaces(int c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
+}

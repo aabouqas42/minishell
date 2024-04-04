@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/03 23:26:02 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/04 01:41:33 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ size_t	get_size(char *str);
 char	*handle_dqt_sqt(char *str);
 void	*p_calloc(size_t size);
 char	*_expander(char *str);
+int		_spaces(int c);
 
 
 int		set_var(char *argv_str, char **str);

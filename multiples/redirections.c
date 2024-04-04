@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 18:39:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/04 00:57:15 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/04 02:15:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	_redirection()
 			if (ft_strncmp(commands[i], ">", 2) == 0)
 			{
 				i++;
-				out = openfile(commands[i], O_CREAT | O_RDWR | O_TRUNC);
+				out = openfile(commands[i], O_CREAT | O_RDWR | O_TRUNC); 
 			}
 			else
 		 		av = _realloc(av, p_strdup(commands[i]));
