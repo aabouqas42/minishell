@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 18:39:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/03 23:26:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/04 00:57:15 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void run(int in, int out, char **av)
 	// 	return;
 	is_valid_cmd(data_hook(NULL), av[0]);
 	char *ppath = data_hook(NULL)->program_path;
-	printf("program path : %s, in:%d, out:%d\n", ppath, in, out);
+	printf("RUNNING : %s, in:%d, out:%d\n", ppath, in, out);
 	int pid = fork();
 	if (pid == 0)
 	{
@@ -51,25 +51,31 @@ int	_redirection()
 	commands = data->commands;
 	while  (commands[i])
 	{
-		if (ft_strncmp(commands[i], ">", 2) == 0)
+		while (commands[i] && ft_strncmp(commands[i], "|", 2) != 0)
 		{
-			// if (out != 1)
-			// 	close(out);
-			out = openfile(commands[++i], O_CREAT | O_RDWR | O_TRUNC);
+			if (ft_strncmp(commands[i], ">", 2) == 0)
+			{
+				i++;
+				out = openfile(commands[i], O_CREAT | O_RDWR | O_TRUNC);
+			}
+			else
+		 		av = _realloc(av, p_strdup(commands[i]));
+			i++;
 		}
-		else if (ft_strncmp(commands[i], "|", 2) != 0)
-		 	av = _realloc(av, p_strdup(commands[i]));
-		if (p_strlenc(commands[i], '\0') == 0 || ft_strncmp(commands[i], "|", 2) == 0)
-		{
+		if (commands[i] != NULL)
+		{	
+			run(in, out, av);
+			av = NULL;
+			(in != 0) && (close(in), in = 0);
+			(out != 1) && (close(out), out = 1);
+			i++;
+		}else{
+			run(in, out, av);
 			av = NULL;
 			(in != 0) && (close(in), in = 0);
 			(out != 1) && (close(out), out = 1);
 		}
-		i++;
 	}
-	run(in, out, av);
-	(in != 0) && (close(in), in = 0);
-	(out != 1) && (close(out), out = 1);
 	printf("\n");
 	// safe_exit(-1);
 	return (0);
