@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/04 01:42:10 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:20:17 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ size_t	args_is_valid(char *str)
 		str = skiper(str);
 		while (*str && (!_spaces(*str) || qt.dqt || qt.sqt))
 		{
-			(*str == '\"' && !qt.sqt) && (qt.dqt = !qt.dqt);
-			(*str == '\'' && !qt.dqt) && (qt.sqt = !qt.sqt);
+			if (*str == '\"' && !qt.sqt)
+				(qt.dqt = !qt.dqt);
+			if (*str == '\'' && !qt.dqt)
+				(qt.sqt = !qt.sqt);
 			str++;
 		}
 		if (qt.dqt || qt.sqt)
@@ -68,7 +70,8 @@ char	**_split(char *str)
 	char		*res;
 	t_qutoes	qt;
 
-	(1) && (qt.dqt = 0, qt.sqt = 0, commands = NULL);
+	ft_bzero(&qt, sizeof(t_qutoes));
+	commands = NULL;
 	while (*str)
 	{
 		(1) && (str = skiper(str), res = NULL);

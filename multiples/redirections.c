@@ -6,34 +6,38 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 18:39:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/04 03:07:42 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/18 09:29:11 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int openfile(char *name, int flags)
+int	openfile(char *name, int flags)
 {
-	int fd = open(name, flags, 0666);
+	int	fd;
+	
+	fd = open(name, flags, 0666);
 	return (fd);
 }
 
-void run(char **av, int is_last_cmd)
+void	run(char **av, int is_last_cmd)
 {
 	char	**argv = NULL;
 	int 	in = 0;
 	int 	out = 1;
+	(void)is_last_cmd;
 	is_valid_cmd(data_hook(NULL), av[0]);
 	char *ppath = data_hook(NULL)->program_path;
 	printf("RUNNING : %s, in:%d, out:%d\n", ppath, in, out);
 	int pid = fork();
 	if (pid == 0)
 	{
-		while (argv) {
+		while (argv)
+		{
 			
 		}
 		if (in != 0)
-			dup2(in, 0) != 0 && exit(-1);if [ i == 0 ]
+			dup2(in, 0);
 		if (out != 1)
 			dup2(out, 1);
 		execve(ppath, av, NULL);

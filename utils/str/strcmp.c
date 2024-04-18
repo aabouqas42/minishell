@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strcmp.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:57:39 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/03 01:02:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:56:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	_strcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
-	while (s1[i] || s2[i])
+	while ((s1 && s2) && (s1[i] || s2[i]))
 	{
 		if (s1[i] != s2[i])
 			return (s1[i] - s2[i]);
