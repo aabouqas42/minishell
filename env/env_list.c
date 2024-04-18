@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/18 09:04:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:36:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ char	**env_to_2darray()
 		tmp = ft_strjoin(line, env->value);
 		free(line);
 		res[j] = tmp;
-		// printf("%s\n", res[j]);
 		j++;
 		env = env->next;
 	}

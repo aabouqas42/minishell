@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/18 15:20:17 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:48:13 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**_split(char *str)
 		commands = _realloc(commands, res);
 		if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
 			(1) && (commands = _realloc(commands, _strnjoin(NULL, str, 2)), str += 2);
-		else if (ft_strchr("<>|", *str))
+		else if (str && *str && ft_strchr("<>|", *str) != NULL)
 			(1) && (commands = _realloc(commands, _strnjoin(NULL, str, 1)), str++);
 	}
 	return (commands);

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/18 18:28:47 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:48:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	data_init(char **base_env)
 {
 	t_data		*data;
 	char		*value;
+	char		*number;
 
 	data = data_hook(NULL);
 	ft_bzero(data, sizeof(t_data));
@@ -94,11 +95,12 @@ void	data_init(char **base_env)
 		*(value) = '\0';
 		if (_strcmp(*base_env, "SHLVL") == 0)
 		{
-			value = ft_itoa(ft_atoi(value +1) + 1);
-			if (value == NULL)
+			number = ft_itoa(ft_atoi(value + 1) + 1);
+			if (number == NULL)
 				safe_exit(-1);
-			env_export(*base_env, value);
-		}else
+			env_export(*base_env, number);
+			free (number);
+		} else
 			env_export(*base_env, value +1);
 		*(value) = '=';
 		base_env++;
