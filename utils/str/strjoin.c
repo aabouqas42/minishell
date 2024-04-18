@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:51:43 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/03 01:03:21 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:52:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*_strnjoin(char *str1, char *str2, size_t size)
 	len = _nsx_strlen(str1) + size;
 	str = malloc (len + 1);
 	if (str == NULL)
-		return (free (str1), NULL);
+		return (free (str1), safe_exit(-1), NULL);
 	i = 0;
 	while (str1 && str1[i])
 	{

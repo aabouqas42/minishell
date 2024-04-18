@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/16 10:19:52 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:19:24 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	do_error(t_error_type errtype)
 	if (errtype == SYNTAX_ERR)
 	{
 		printf("Syntax Error\n");
-		data_hook(NULL)->exit_status = 256;
+		data_hook(NULL)->exit_status = 256 << 8;
 	}
 	if (errtype == COMDNF_ERR)
 	{
 		printf("Command Not Found\n");
-		data_hook(NULL)->exit_status = 127;
+		data_hook(NULL)->exit_status = 127 << 8;
 	}
 	
 }
@@ -56,8 +56,8 @@ void	safe_exit(int status)
 	t_data *data;
 
 	data = data_hook(NULL);
-	free (data->line);
-	data->line = NULL;
+	free (data->usrinput);
+	data->usrinput = NULL;
 	free (data->program_path);
 	data->program_path = NULL;
 	free_tab(data->commands);

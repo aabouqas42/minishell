@@ -15,6 +15,7 @@
 		"readline.h": "c",
 		"history.h": "c",
 		"libft.h": "c",
-		"fcntl.h": "c"
+		"fcntl.h": "c",
+		"stdio.h": "c"
 	}
 }

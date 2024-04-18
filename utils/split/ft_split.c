@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/16 12:16:57 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:47:22 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	**_split(char *str)
 
 	qt = (t_qutoes){0, 0};
 	commands = NULL;
+	data_hook(NULL)->commands = commands;
 	while (*str)
 	{
 		(1) && (str = skiper(str), res = NULL);
