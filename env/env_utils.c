@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:57:27 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/03/30 17:55:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/18 09:08:34 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_env	*env_create(char *name, char *value)
 	if (env == NULL)
 		safe_exit(-1);
 	env->name = ft_strdup(name);
-	(value != NULL) && (env->value = ft_strdup(value));
+	if (value != NULL)
+		env->value = ft_strdup(value);
 	return (env);
 }
 

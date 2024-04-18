@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/03 01:01:29 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/16 12:16:57 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ size_t	args_is_valid(char *str)
 		str = skiper(str);
 		while (*str && (!is_white_spaces(*str) || qt.dqt || qt.sqt))
 		{
-			(*str == '\"' && !qt.sqt) && (qt.dqt = !qt.dqt);
-			(*str == '\'' && !qt.dqt) && (qt.sqt = !qt.sqt);
+			if (*str == '\"' && !qt.sqt)
+				(qt.dqt = !qt.dqt);
+			if (*str == '\'' && !qt.dqt)
+				(qt.sqt = !qt.sqt);
 			str++;
 		}
 		if (qt.dqt || qt.sqt)
@@ -72,7 +74,8 @@ char	**_split(char *str)
 	char		*res;
 	t_qutoes	qt;
 
-	(1) && (qt.dqt = 0, qt.sqt = 0, commands = NULL);
+	qt = (t_qutoes){0, 0};
+	commands = NULL;
 	while (*str)
 	{
 		(1) && (str = skiper(str), res = NULL);

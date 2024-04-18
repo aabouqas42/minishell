@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/03 22:24:35 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:19:52 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,21 @@ t_data	*data_hook(t_data *data)
 	if (data != NULL)
 		data_saved = data;
 	return (data_saved);
+}
+
+void	do_error(t_error_type errtype)
+{
+	if (errtype == SYNTAX_ERR)
+	{
+		printf("Syntax Error\n");
+		data_hook(NULL)->exit_status = 256;
+	}
+	if (errtype == COMDNF_ERR)
+	{
+		printf("Command Not Found\n");
+		data_hook(NULL)->exit_status = 127;
+	}
+	
 }
 
 void	free_tab(char **array)

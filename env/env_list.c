@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/03 00:57:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/18 09:04:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,44 @@ int	env_unset(char *name, t_env **env)
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+char	**env_to_2darray()
+{
+	char	**res;
+	t_env	*env;
+	char	*tmp;
+	char	*line;
+	int		i;
+	int		j;
+
+	i = 0;
+	res = NULL;
+	env = data_hook(NULL)->env;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	res = malloc(sizeof(char *) * (i + 1));
+	if (res == NULL)
+		safe_exit(-1);
+	env = data_hook(NULL)->env;
+	j = 0;
+	while (j < i)
+	{
+		line = NULL;
+		tmp = ft_strjoin(line, env->name);
+		free(line);
+		line = ft_strjoin(tmp, "=");
+		free(tmp);
+		tmp = ft_strjoin(line, env->value);
+		free(line);
+		res[j] = tmp;
+		// printf("%s\n", res[j]);
+		j++;
+		env = env->next;
+	}
+	res[i] = NULL;
+	return (res);
 }

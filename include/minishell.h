@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/03 23:26:02 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:51:18 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include <fcntl.h>
+
+typedef enum e_error_type{
+	SYNTAX_ERR,
+	COMDNF_ERR
+}	t_error_type;
+
+void	do_error(t_error_type errtype);
+
+#define LOG(v) printf("%s\n", v)
+
+#define MSG_SYNTAX_ERR "Syntax Error"
+#define MSG_COMMAND_ERR "Command Not Found"
 
 typedef enum e_cmd_type
 {
@@ -83,7 +95,6 @@ typedef struct s_data
 {
 	t_env		*env;
 	char		**commands;
-	char		***argvs;
 	char		*prompt;
 	char		*line;
 	char		*program_path;
@@ -94,6 +105,8 @@ typedef struct s_data
 #define ENV_NOT_CREATED -1
 #define ENV_FAILURE 0
 #define ENV_CREATED 1
+
+char	**env_to_2darray();
 
 int		env_export(char *name, char *value);
 t_env	*env_create(char *name, char *value);
@@ -120,7 +133,6 @@ char	*get_prompt();
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	free_tab(char **array);
-char	*get_paths_env();
 char	**_split(char *str);
 char	*_strndup(char *str);
 // char	*_strjoin(char *str1, char *str2);
