@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/18 15:57:48 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:27:31 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ char	**_split(char *str);
 char	*_strndup(char *str);
 // char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
-int		_strcmp(char *s1, char *s2);
+int	is_same(char *s1, char *s2);
 size_t	p_strlenc(char *str, char c);
 char	*p_strdup(char *s1);
 size_t	argument_count(char *str);

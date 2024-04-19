@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/18 19:42:22 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:06:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**_realloc(char **old_tab, char *to_append)
 		new_tab[i] = old_tab[i];
 		i++;
 	}
-	// free(old_tab);
+	free(old_tab);
 	new_tab[i] = to_append;
 	return (new_tab);
 }

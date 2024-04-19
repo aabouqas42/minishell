@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/18 19:48:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:59:51 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ int	builtins()
 	t_data *data;
 
 	data = data_hook(NULL);
-	if (!_strcmp(data->commands[0], "exit"))
+	if (is_same(data->commands[0], "exit"))
 		safe_exit(0);
-	if (!_strcmp(data->commands[0], "cd"))
+	if (is_same(data->commands[0], "cd"))
 		return (cd(data), 1);
-	if (!_strcmp(data->commands[0], "echo"))
+	if (is_same(data->commands[0], "echo"))
 		return (echo(), 1);
-	if (!_strcmp(data->commands[0], "pwd"))
+	if (is_same(data->commands[0], "pwd"))
 		return (pwd(), 1);
-	if (!_strcmp(data->commands[0], "env"))
+	if (is_same(data->commands[0], "env"))
 		return (env_print(data->env), 1);
-	if (!_strcmp(data->commands[0], "export"))
+	if (is_same(data->commands[0], "export"))
 		return (_export(), 1);
 	return (0);
 }
@@ -43,7 +43,15 @@ int	check_input()
 	{
 		if ((i == 0 && is_io_op(cmds[i]))
 			|| (is_io_op(cmds[i]) && cmds[i + 1] == NULL)
-			|| (!_strcmp(cmds[i], "|") && !_strcmp(cmds[i + 1], "|")))
+			|| (is_same(cmds[i], "|")
+			&& is_same(cmds[i + 1], "|"))
+			|| (is_same(cmds[i], "&&")
+			|| is_same(cmds[i], "(")
+			|| is_same(cmds[i], ")")
+			|| is_same(cmds[i], "()")
+			|| is_same(cmds[i], "&")
+			|| is_same(cmds[i], "{")
+			|| is_same(cmds[i], "}")))
 		{
 			ft_putstr_fd("Syntax Error\n", 2);
 			return (-1);
@@ -76,15 +84,15 @@ int	request_input()
 	}
 	child_pid = fork();
 	if (child_pid == 0)
-		execve(data->program_path, data->commands, env_to_2darray());
-	return (-1);
+		execve(data->program_path, data->commands, NULL);
+	return (0);
 }
 
 void	data_init(char **base_env)
 {
-	t_data		*data;
-	char		*value;
-	char		*number;
+	t_data	*data;
+	char	*value;
+	char	*number;
 
 	data = data_hook(NULL);
 	ft_bzero(data, sizeof(t_data));
@@ -93,7 +101,7 @@ void	data_init(char **base_env)
 	{
 		value = ft_strchr(*base_env, '=');
 		*(value) = '\0';
-		if (_strcmp(*base_env, "SHLVL") == 0)
+		if (is_same(*base_env, "SHLVL"))
 		{
 			number = ft_itoa(ft_atoi(value + 1) + 1);
 			if (number == NULL)
