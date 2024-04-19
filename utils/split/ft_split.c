@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 10:44:49 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:39:04 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	**_split(char *str)
 
 	ft_bzero(&qt, sizeof(t_qutoes));
 	commands = NULL;
+	data_hook(NULL)->commands = commands;
 	while (*str)
 	{
 		(1) && (str = skiper(str), res = NULL);

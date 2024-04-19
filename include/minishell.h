@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 10:27:31 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:38:50 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ typedef struct	s_list_args
 
 typedef struct s_data
 {
+	char		***cmds;
 	t_env		*env;
 	char		**commands;
 	char		*prompt;
-	char		*line;
+	char		*usrinput;
 	char		*program_path;
 	int			exit_status;
 	t_list_args	*list;

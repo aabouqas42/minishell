@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 10:59:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:10:44 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,132 @@ int	check_input()
 	return (0);
 }
 
+int	cmds_counter(char **cmds)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (cmds && cmds[i])
+	{
+		if (is_same(cmds[i], "|") == 0)
+			j++;
+		i++;
+	}
+	return (j + 1);
+}
+
+char	***get_commands()
+{
+	char	***cmds;
+	char	**commands;
+	int		i;
+
+	commands = data_hook(NULL)->commands;
+	cmds = p_calloc((cmds_counter(commands) + 1) * sizeof(char **));
+	i = 0;
+	while (commands && *commands)
+	{
+		if (is_same(*commands, "|") == 0)
+			cmds[i] = _realloc(cmds[i], *commands);
+		else
+			i++;
+		commands++;
+	}
+	return (cmds);
+}
+
+void	run_cmd(char	**argv_tmp)
+{
+	char	**argv;
+	int		child_pid;
+	int		action;
+	int		in;
+	int		out;
+
+	in = 0;
+	out = 1;
+	argv = NULL;
+	child_pid = fork();
+	if (child_pid == 0)
+	{
+		while (*argv_tmp)
+		{
+			if (is_same(*argv_tmp, ">") || is_same(*argv_tmp, ">>"))
+			{
+				action = O_RDWR | O_CREAT | (is_same(*argv_tmp, ">") * O_TRUNC) + (is_same(*argv_tmp, ">>") * O_APPEND);
+				argv_tmp++;
+				out > 1 && close(out);
+				out = open(*argv_tmp, action, 0666);
+				if (out == -1)
+					perror("open");
+			} else if (is_same(*argv_tmp, "<"))
+			{
+				argv_tmp++;
+				in = open(*argv_tmp, O_RDONLY);
+			} else
+				argv = _realloc(argv, *argv_tmp);
+			argv_tmp++;
+		}
+		if (out != 1)
+		{
+			dup2(out, STDOUT_FILENO);
+			close (out);
+		}
+		if (in != 0)
+		{
+			dup2(in, STDIN_FILENO);
+			close (in);
+		}
+		if (is_valid_cmd(data_hook(NULL), argv[0]) == 0)
+			ft_putstr_fd("Error : minishell : command not Found\n", 2);
+		else
+			execve(data_hook(NULL)->program_path, argv, env_to_2darray());
+	}
+	waitpid(-1, NULL, 0);
+	free_tab(data_hook(NULL)->commands);
+	free(data_hook(NULL)->program_path);
+}
+
 int	request_input()
 {
 	t_data	*data;
-	int		child_pid;
+	// int		child_pid;
 
 	data = data_hook(NULL);
-	data->line = readline(data->prompt);
-	if (data->line == NULL || *data->line == '\0')
+	data->usrinput = readline(data->prompt);
+	if (data->usrinput == NULL || *data->usrinput == '\0')
 		return (0);
-	add_history(data->line);
-	if (args_is_valid(data->line) == 0)
+	add_history(data->usrinput);
+	if (args_is_valid(data->usrinput) == 0)
 		return (do_error(SYNTAX_ERR), 0);
-	data->commands = _split(data->line);
-	if (check_input() == -1 || builtins())
-		return (0);
-	if (is_valid_cmd(data, data->commands[0]) != CMD_VALID)
+	data->commands = _split(data->usrinput);
+	char ***cmds = get_commands();
+	int	fds[2];
+	while (cmds && *cmds)
 	{
-		printf("\e[31mminishell : %s command not found\e[0m\n", data->line);
-		data->exit_status = 127 << 8;
-		return (-1);
+		run_cmd(*cmds);
+		
+		cmds++;
 	}
-	child_pid = fork();
-	if (child_pid == 0)
-		execve(data->program_path, data->commands, NULL);
-	return (0);
+	// waitpid(-1, NULL, 0);
+	// env_print(data->env);
+	// if (data->commands == NULL || cmd_err())
+	// 	return (1);
+	// _redirection();
+	// if (builtins())
+	// 	return (0);
+	// if (is_valid_cmd(data, data->commands[0]) != CMD_VALID)
+	// {
+	// 	printf("\e[31mminishell : %s command not found\e[0m\n", data->usrinput);
+	// 	data->exit_status = 127 << 8;
+	// 	return (-1);
+	// }
+	// child_pid = fork();
+	// if (child_pid == 0)
+	// 	execve(data->program_path, data->commands, env_to_2darray());
+	return (-1);
 }
 
 void	data_init(char **base_env)
@@ -132,9 +233,9 @@ int	main(int ac, char **av, char **env)
 	{
 		request_input();
 		waitpid(-1, &data.exit_status, 0);
-		free (data.program_path);
-		free (data.line);
-		free_tab(data.commands);
+		// free (data.program_path);
+		// free (data.usrinput);
+		// free_tab(data.commands);
 		data.commands = NULL;
 		data.program_path = NULL;
 	}
