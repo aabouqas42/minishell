@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 10:35:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:37:32 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	run_cmd(char	**argv_tmp)
 				printf("<F%s> (%d)", *argv_tmp, out);
 			}else if (_strcmp(*argv_tmp, "<") == 0)
 			{
+				
 				argv_tmp++;
 				in = open(*argv_tmp, O_RDONLY);
 			}else
