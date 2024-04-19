@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/18 20:19:43 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:35:31 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,44 @@ char	***get_commands()
 	return (cmds);
 }
 
+void	run_cmd(char	**argv_tmp)
+{
+	char	**argv;
+	int		child_pid;
+	int		action;
+	int		in;
+	int		out;
+
+	in = 0;
+	out = 1;
+	argv = NULL;
+	child_pid = fork();
+	if (child_pid == 0)
+	{
+		while (*argv_tmp)
+		{
+			if (_strcmp(*argv_tmp, ">") == 0 || _strcmp(*argv_tmp, ">>") == 0)
+			{
+				action = O_RDWR | O_CREAT | (!_strcmp(*argv_tmp, ">") * O_TRUNC) + (!_strcmp(*argv_tmp, ">>") * O_APPEND);
+				argv_tmp++;
+				if (out > 1)
+					close(out);
+				out = open(*argv_tmp, action, 0666);
+				if (out == -1)
+					perror("open");
+				printf("<F%s> (%d)", *argv_tmp, out);
+			}else if (_strcmp(*argv_tmp, "<") == 0)
+			{
+				argv_tmp++;
+				in = open(*argv_tmp, O_RDONLY);
+			}else
+				argv = _realloc(argv, *argv_tmp);
+			argv_tmp++;
+		}
+		
+	}
+}
+
 int	execute()
 {
 	t_data	*data;
@@ -110,13 +148,10 @@ int	execute()
 	char ***cmds = get_commands();
 	while (cmds && *cmds)
 	{
-		int i = 0;
-		printf("Command: %s , Args : ", (*cmds)[i++]);
-		while ((*cmds)[i])
-			printf("(%s) ", (*cmds)[i++]);
-		printf("\n");
+		run_cmd(*cmds);
 		cmds++;
 	}
+	// waitpid(-1, NULL, 0);
 	// env_print(data->env);
 	// if (data->commands == NULL || cmd_err())
 	// 	return (1);
