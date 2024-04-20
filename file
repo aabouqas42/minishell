@@ -1,0 +1,16 @@
+.
+..
+.git
+Makefile
+builtins
+env
+file
+include
+libft
+minishell
+minishell.c
+minishell.dSYM
+multiples
+parsing
+t.tldr
+utils

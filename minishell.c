@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 12:10:44 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/20 19:31:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ int	check_input()
 			|| is_same(cmds[i], "(")
 			|| is_same(cmds[i], ")")
 			|| is_same(cmds[i], "()")
-			|| is_same(cmds[i], "&")
-			|| is_same(cmds[i], "{")
-			|| is_same(cmds[i], "}")))
+			|| is_same(cmds[i], "&"))
+			)
 		{
 			ft_putstr_fd("Syntax Error\n", 2);
 			return (-1);
@@ -97,16 +96,14 @@ char	***get_commands()
 	return (cmds);
 }
 
-void	run_cmd(char	**argv_tmp)
+void	run_cmd(char **argv_tmp, int next_pipe, int isfirst)
 {
+	t_data	*data;
 	char	**argv;
 	int		child_pid;
 	int		action;
-	int		in;
-	int		out;
 
-	in = 0;
-	out = 1;
+	data = data_hook(NULL);
 	argv = NULL;
 	child_pid = fork();
 	if (child_pid == 0)
@@ -117,42 +114,100 @@ void	run_cmd(char	**argv_tmp)
 			{
 				action = O_RDWR | O_CREAT | (is_same(*argv_tmp, ">") * O_TRUNC) + (is_same(*argv_tmp, ">>") * O_APPEND);
 				argv_tmp++;
-				out > 1 && close(out);
-				out = open(*argv_tmp, action, 0666);
-				if (out == -1)
+				data->out > 1 && close(data->out);
+				data->out = open(*argv_tmp, action, 0666);
+				if (data->out == -1)
 					perror("open");
 			} else if (is_same(*argv_tmp, "<"))
 			{
 				argv_tmp++;
-				in = open(*argv_tmp, O_RDONLY);
+				data->in = open(*argv_tmp, O_RDONLY);
 			} else
 				argv = _realloc(argv, *argv_tmp);
 			argv_tmp++;
 		}
-		if (out != 1)
+		if (isfirst && next_pipe)
 		{
-			dup2(out, STDOUT_FILENO);
-			close (out);
+			dup2(data->fds[1], STDOUT_FILENO);
+			close (data->fds[1]);
+			close (data->fds[0]);
+			close(data->oldfd);
 		}
-		if (in != 0)
+		if (!isfirst && next_pipe)
 		{
-			dup2(in, STDIN_FILENO);
-			close (in);
+			dup2(data->oldfd, STDIN_FILENO);
+			dup2(data->fds[1], STDOUT_FILENO);
+			close(data->fds[0]);
+			close(data->fds[1]);
+			close(data->oldfd);
 		}
+		if (!isfirst && !next_pipe)
+		{
+			dup2(data->oldfd, STDIN_FILENO);
+			close (data->fds[0]);
+			close (data->fds[1]);
+			close(data->oldfd);
+		}
+		//
+		// if (data->out != 1)
+		// {
+		// 	dup2(data->out, STDOUT_FILENO);
+		// 	close (data->out);
+		// }
+		// if (data->in != 0)
+		// {
+		// 	dup2(data->in, STDIN_FILENO);
+		// 	close (data->in);
+		// }
 		if (is_valid_cmd(data_hook(NULL), argv[0]) == 0)
 			ft_putstr_fd("Error : minishell : command not Found\n", 2);
 		else
 			execve(data_hook(NULL)->program_path, argv, env_to_2darray());
 	}
-	waitpid(-1, NULL, 0);
-	free_tab(data_hook(NULL)->commands);
-	free(data_hook(NULL)->program_path);
 }
+
+// void _runcmd_1(char **args)
+// {
+// 	t_data	*data;
+// 	data = data_hook(NULL);
+// 	if (!is_valid_cmd(data, args[0]))
+// 	{
+// 		printf("command not found\n");
+// 		return;
+// 	}
+// 	if (fork() == 0)
+// 	{
+// 		dup2(data->fds[1], 1);
+// 		close (data->fds[0]);
+// 		close (data->fds[1]);
+// 		execve(data->program_path, args, env_to_2darray());
+// 	}
+// }
+
+// void _runcmd_2(char **args)
+// {
+// 	t_data	*data;
+// 	data = data_hook(NULL);
+// 	if (args == NULL)
+// 		return ;
+// 	if (!is_valid_cmd(data, args[0]))
+// 	{
+// 		printf("command not found\n");
+// 		return ;
+// 	}
+// 	if (fork() == 0)
+// 	{
+// 		dup2(data->fds[0], 0);
+// 		close (data->fds[0]);
+// 		close (data->fds[1]);
+// 		execve(data->program_path, args, NULL);
+// 	}
+// }
 
 int	request_input()
 {
 	t_data	*data;
-	// int		child_pid;
+	int		i;
 
 	data = data_hook(NULL);
 	data->usrinput = readline(data->prompt);
@@ -163,13 +218,25 @@ int	request_input()
 		return (do_error(SYNTAX_ERR), 0);
 	data->commands = _split(data->usrinput);
 	char ***cmds = get_commands();
-	int	fds[2];
-	while (cmds && *cmds)
+	i = 0;
+	data->oldfd = 0;
+	while (cmds && cmds[i])
 	{
-		run_cmd(*cmds);
-		
-		cmds++;
+		pipe(data->fds);
+		run_cmd(cmds[i], cmds[i +1] != NULL, i == 0);
+		close(data->fds[1]);
+		if (data->oldfd)
+			close(data->oldfd);
+		data->oldfd = data->fds[0];
+		i++;
 	}
+	close(data->oldfd);
+	while (waitpid(-1, &data->exit_status, 0) != -1)
+	{
+		// printf("asdasdad\n");
+	}
+	// while (wait(0) != -1)
+	// 	;
 	// waitpid(-1, NULL, 0);
 	// env_print(data->env);
 	// if (data->commands == NULL || cmd_err())
@@ -197,7 +264,8 @@ void	data_init(char **base_env)
 
 	data = data_hook(NULL);
 	ft_bzero(data, sizeof(t_data));
-	data->prompt = get_prompt();
+	data->out = 1;
+	data->prompt = get_prompt();	
 	while (base_env && *base_env)
 	{
 		value = ft_strchr(*base_env, '=');
@@ -226,18 +294,17 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	t_data	data;
 
-	printf("\e[1;1H\e[2J");
+	//printf("\e[1;1H\e[2J");
 	data_hook(&data);
 	data_init(env);
 	while (1)
 	{
 		request_input();
-		waitpid(-1, &data.exit_status, 0);
 		// free (data.program_path);
 		// free (data.usrinput);
 		// free_tab(data.commands);
-		data.commands = NULL;
-		data.program_path = NULL;
+		// data.commands = NULL;
+		// data.program_path = NULL;
 	}
 	return (EXIT_SUCCESS);
 }

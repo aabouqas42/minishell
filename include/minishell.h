@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 11:38:50 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:54:29 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,10 @@ typedef struct s_data
 	char		*usrinput;
 	char		*program_path;
 	int			exit_status;
+	int			in;
+	int			out;
+	int			oldfd;
+	int			fds[2];
 	t_list_args	*list;
 }	t_data;
 
