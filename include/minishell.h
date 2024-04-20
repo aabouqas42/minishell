@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/18 20:06:06 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:38:50 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char	*env_grepvalue(char *name);
 
 t_data	*data_hook(t_data *data);
 
-int	arg_is_io_operator(char	*str);
+int		is_io_op(char	*str);
 
 /*	END ENV LIST	*/
 
@@ -138,7 +138,7 @@ char	**_split(char *str);
 char	*_strndup(char *str);
 // char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
-int		_strcmp(char *s1, char *s2);
+int	is_same(char *s1, char *s2);
 size_t	p_strlenc(char *str, char c);
 char	*p_strdup(char *s1);
 size_t	argument_count(char *str);
@@ -152,7 +152,8 @@ size_t	get_size(char *str);
 char	*handle_dqt_sqt(char *str);
 void	*p_calloc(size_t size);
 char	*_expander(char *str);
-
+int		_spaces(int c);
+int		request_input();
 
 int		set_var(char *argv_str, char **str);
 size_t	args_is_valid(char *str);

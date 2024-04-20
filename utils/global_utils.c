@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/03 23:26:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:06:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	arg_is_io_operator(char	*str)
+int	is_io_op(char	*str)
 {
 	if (str == NULL)
 		return (1);
@@ -47,7 +47,12 @@ char	**_realloc(char **old_tab, char *to_append)
 		new_tab[i] = old_tab[i];
 		i++;
 	}
+	free(old_tab);
 	new_tab[i] = to_append;
 	return (new_tab);
 }
 
+int	_spaces(int c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
+}

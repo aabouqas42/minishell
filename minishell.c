@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 10:37:32 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/20 13:25:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,41 +17,45 @@ int	builtins()
 	t_data *data;
 
 	data = data_hook(NULL);
-	if (!_strcmp(data->commands[0], "exit"))
+	if (is_same(data->commands[0], "exit"))
 		safe_exit(0);
-	if (!_strcmp(data->commands[0], "cd"))
+	if (is_same(data->commands[0], "cd"))
 		return (cd(data), 1);
-	if (!_strcmp(data->commands[0], "echo"))
+	if (is_same(data->commands[0], "echo"))
 		return (echo(), 1);
-	if (!_strcmp(data->commands[0], "pwd"))
+	if (is_same(data->commands[0], "pwd"))
 		return (pwd(), 1);
-	if (!_strcmp(data->commands[0], "env"))
+	if (is_same(data->commands[0], "env"))
 		return (env_print(data->env), 1);
-	if (!_strcmp(data->commands[0], "export"))
+	if (is_same(data->commands[0], "export"))
 		return (_export(), 1);
 	return (0);
 }
 
-int	cmd_err()
+int	check_input()
 {
-	char	**commands;
-	size_t	i;
+	char	**cmds;
+	int		i;
 
-	
-	commands = data_hook(NULL)->commands;
+	cmds = data_hook(NULL)->commands;
 	i = 0;
-	while (commands[i])
+	while (cmds[i])
 	{
-		if (arg_is_io_operator(commands[i]))
+		if ((i == 0 && is_io_op(cmds[i]))
+			|| (is_io_op(cmds[i]) && cmds[i + 1] == NULL)
+			|| (is_same(cmds[i], "|")
+			&& is_same(cmds[i + 1], "|"))
+			|| (is_same(cmds[i], "&&")
+			|| is_same(cmds[i], "(")
+			|| is_same(cmds[i], ")")
+			|| is_same(cmds[i], "()")
+			|| is_same(cmds[i], "&")
+			|| is_same(cmds[i], "{")
+			|| is_same(cmds[i], "}")))
 		{
-			if ((i == 0 && arg_is_io_operator(commands[i]))
-				|| (arg_is_io_operator(commands[i -1]) || arg_is_io_operator(commands[i +1])))
-				// || commands[i +1] == NULL || arg_is_io_operator(commands[i +1]))
-				return (printf("syntaxxx errrrr\n"), 1);
+			ft_putstr_fd("Syntax Error\n", 2);
+			return (-1);
 		}
-		// if (commands[i][0] == '|' && (commands[i -1]|| commands[i +1] == NULL))
-		// if ((commands[i][0] == '>' || commands[i][0] == '<' ) && (commands[i -1] == NULL || commands[i +1] == NULL))
-		// 	return (printf("syntaxxx errrrr\n"), 1);
 		i++;
 	}
 	return (0);
@@ -66,7 +70,7 @@ int	cmds_counter(char **cmds)
 	j = 0;
 	while (cmds && cmds[i])
 	{
-		if (_strcmp(cmds[i], "|") == 0)
+		if (is_same(cmds[i], "|") == 0)
 			j++;
 		i++;
 	}
@@ -84,25 +88,26 @@ char	***get_commands()
 	i = 0;
 	while (commands && *commands)
 	{
-		if (_strcmp(*commands, "|") != 0)
-		{
+		if (is_same(*commands, "|") == 0)
 			cmds[i] = _realloc(cmds[i], *commands);
-		}else
+		else
 			i++;
 		commands++;
 	}
 	return (cmds);
 }
 
-void	run_cmd(char	**argv_tmp)
+void	run_cmd(char	**argv_tmp, int there_pipe, int is_first_cmd)
 {
 	char	**argv;
 	int		child_pid;
 	int		action;
 	int		in;
 	int		out;
+	// int	fds[2];
 
-	in = 0;
+	// pipe(fds);
+	in =  0;
 	out = 1;
 	argv = NULL;
 	child_pid = fork();
@@ -110,32 +115,47 @@ void	run_cmd(char	**argv_tmp)
 	{
 		while (*argv_tmp)
 		{
-			if (_strcmp(*argv_tmp, ">") == 0 || _strcmp(*argv_tmp, ">>") == 0)
+			if (is_same(*argv_tmp, ">") || is_same(*argv_tmp, ">>"))
 			{
-				action = O_RDWR | O_CREAT | (!_strcmp(*argv_tmp, ">") * O_TRUNC) + (!_strcmp(*argv_tmp, ">>") * O_APPEND);
+				action = O_RDWR | O_CREAT | (is_same(*argv_tmp, ">") * O_TRUNC) + (is_same(*argv_tmp, ">>") * O_APPEND);
 				argv_tmp++;
-				if (out > 1)
-					close(out);
+				out > 1 && close(out);
 				out = open(*argv_tmp, action, 0666);
 				if (out == -1)
 					perror("open");
-				printf("<F%s> (%d)", *argv_tmp, out);
-			}else if (_strcmp(*argv_tmp, "<") == 0)
+			} else if (is_same(*argv_tmp, "<"))
 			{
 				
 				argv_tmp++;
 				in = open(*argv_tmp, O_RDONLY);
-			}else
+			} else
 				argv = _realloc(argv, *argv_tmp);
 			argv_tmp++;
 		}
-		
+		if (out != 1)
+		{
+			dup2(out, STDOUT_FILENO);
+			close (out);
+		}
+		if (in != 0)
+		{
+			dup2(in, STDIN_FILENO);
+			close (in);
+		}
+		if (is_valid_cmd(data_hook(NULL), argv[0]) == 0)
+			ft_putstr_fd("minishell : command not Found\n", 2);
+		else
+			execve(data_hook(NULL)->program_path, argv, env_to_2darray());
 	}
+	waitpid(-1, NULL, 0);
+	// free_tab(data_hook(NULL)->commands);
+	// free(data_hook(NULL)->program_path);
 }
 
-int	execute()
+int	request_input()
 {
 	t_data	*data;
+	int		i;
 	// int		child_pid;
 
 	data = data_hook(NULL);
@@ -147,10 +167,12 @@ int	execute()
 		return (do_error(SYNTAX_ERR), 0);
 	data->commands = _split(data->usrinput);
 	char ***cmds = get_commands();
-	while (cmds && *cmds)
+	// int	fds[2];
+	i = 0;
+	while (cmds && cmds[i])
 	{
-		run_cmd(*cmds);
-		cmds++;
+		run_cmd(cmds[i], cmds[i +1] != NULL, i == 0);
+		i++;
 	}
 	// waitpid(-1, NULL, 0);
 	// env_print(data->env);
@@ -173,8 +195,9 @@ int	execute()
 
 void	data_init(char **base_env)
 {
-	t_data		*data;
-	char		*value;
+	t_data	*data;
+	char	*value;
+	char	*number;
 
 	data = data_hook(NULL);
 	ft_bzero(data, sizeof(t_data));
@@ -183,13 +206,14 @@ void	data_init(char **base_env)
 	{
 		value = ft_strchr(*base_env, '=');
 		*(value) = '\0';
-		if (_strcmp(*base_env, "SHLVL") == 0)
+		if (is_same(*base_env, "SHLVL"))
 		{
-			value = ft_itoa(ft_atoi(value +1) + 1);
-			if (value == NULL)
+			number = ft_itoa(ft_atoi(value + 1) + 1);
+			if (number == NULL)
 				safe_exit(-1);
-			env_export(*base_env, value);
-		}else
+			env_export(*base_env, number);
+			free (number);
+		} else
 			env_export(*base_env, value +1);
 		*(value) = '=';
 		base_env++;
@@ -199,11 +223,6 @@ void	data_init(char **base_env)
 	if (env_grepvalue("SHLVL") == 0)
 		env_export("SHLVL", "1");
 }
-
-// void ex()
-// {
-// 	system("leaks minishell");
-// }
 
 int	main(int ac, char **av, char **env)
 {
@@ -216,11 +235,11 @@ int	main(int ac, char **av, char **env)
 	data_init(env);
 	while (1)
 	{
-		execute();
+		request_input();
 		waitpid(-1, &data.exit_status, 0);
-		free (data.program_path);
-		free (data.usrinput);
-		free_tab(data.commands);
+		// free (data.program_path);
+		// free (data.usrinput);
+		// free_tab(data.commands);
 		data.commands = NULL;
 		data.program_path = NULL;
 	}

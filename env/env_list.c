@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/18 09:04:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:38:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char *env_grepvalue(char *name)
 		env = data->env;
 		while (env)
 		{
-			if (_strcmp(env->name, name) == 0)
+			if (is_same(env->name, name))
 				return (env->value);
 			env = env->next;
 		}
@@ -81,14 +81,14 @@ int	env_unset(char *name, t_env **env)
 	tmp = *env;
 	if (tmp == NULL)
 		return (1);
-	if (_strcmp(tmp->name, name) == 0)
+	if (is_same(tmp->name, name))
 	{
 		*env = (*env)->next;
 		return (env_free(tmp), 1);
 	}
 	while (tmp->next)
 	{
-		if (_strcmp(tmp->next->name, name) == 0)
+		if (is_same(tmp->next->name, name))
 		{
 			todelete = tmp->next;
 			tmp->next = tmp->next->next;
@@ -131,7 +131,6 @@ char	**env_to_2darray()
 		tmp = ft_strjoin(line, env->value);
 		free(line);
 		res[j] = tmp;
-		// printf("%s\n", res[j]);
 		j++;
 		env = env->next;
 	}

@@ -3,31 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 18:39:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/04 02:03:52 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/18 09:29:11 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int openfile(char *name, int flags)
+int	openfile(char *name, int flags)
 {
-	int fd = open(name, flags, 0666);
+	int	fd;
+	
+	fd = open(name, flags, 0666);
 	return (fd);
 }
 
-void run(int in, int out, char **av)
+void	run(char **av, int is_last_cmd)
 {
-	// if (av == NULL)
-	// 	return;
+	char	**argv = NULL;
+	int 	in = 0;
+	int 	out = 1;
+	(void)is_last_cmd;
 	is_valid_cmd(data_hook(NULL), av[0]);
 	char *ppath = data_hook(NULL)->program_path;
 	printf("RUNNING : %s, in:%d, out:%d\n", ppath, in, out);
 	int pid = fork();
 	if (pid == 0)
 	{
+		while (argv)
+		{
+			
+		}
 		if (in != 0)
 			dup2(in, 0);
 		if (out != 1)
@@ -40,8 +48,6 @@ void run(int in, int out, char **av)
 int	_redirection()
 {
 	int	i;
-	int in = 0;
-	int out = 1;
 	char **av = NULL;
 	t_data	*data;
 	char **commands;
@@ -53,28 +59,18 @@ int	_redirection()
 	{
 		while (commands[i] && ft_strncmp(commands[i], "|", 2) != 0)
 		{
-			if (ft_strncmp(commands[i], ">", 2) == 0)
-			{
-				i++;
-				out = openfile(commands[i], O_CREAT | O_RDWR | O_TRUNC);
-			}
-			else
-		 		av = _realloc(av, p_strdup(commands[i]));
+			// if (ft_strncmp(commands[i], ">", 2) == 0)
+			// {
+			// 	i++;
+			// 	out = openfile(commands[i], O_CREAT | O_RDWR | O_TRUNC); 
+			// }
+			// else
+		 	av = _realloc(av, p_strdup(commands[i]));
 			i++;
 		}
-		if (commands[i] != NULL)
-		{	
-			run(in, out, av);
-			av = NULL;
-			(in != 0) && (close(in), in = 0);
-			(out != 1) && (close(out), out = 1);
-			i++;
-		}else{
-			run(in, out, av);
-			av = NULL;
-			(in != 0) && (close(in), in = 0);
-			(out != 1) && (close(out), out = 1);
-		}
+		run(av, (commands[i] == NULL));
+		i += (commands[i] != NULL);
+		av = NULL;
 	}
 	printf("\n");
 	// safe_exit(-1);

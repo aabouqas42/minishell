@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   strcmp.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:57:39 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/19 10:16:21 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:39:44 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	_strcmp(char *s1, char *s2)
+int	is_same(char *s1, char *s2)
 {
 	int	i;
 
@@ -20,8 +20,8 @@ int	_strcmp(char *s1, char *s2)
 	while ((s1 && s2) && (s1[i] || s2[i]))
 	{
 		if (s1[i] != s2[i])
-			return (s1[i] - s2[i]);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
