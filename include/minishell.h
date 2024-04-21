@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/20 18:54:29 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/21 13:48:55 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ int		is_io_op(char	*str);
 
 
 char	*get_prompt();
+int		check_input();
 
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
@@ -146,6 +147,11 @@ int	is_same(char *s1, char *s2);
 size_t	p_strlenc(char *str, char c);
 char	*p_strdup(char *s1);
 size_t	argument_count(char *str);
+
+char	***get_commands();
+void	data_init(char **base_env);
+void	set_defaults();
+void	free_matrix(char ***matrix);
 
 int		cd(t_data *data);
 void	echo();

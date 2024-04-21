@@ -6,11 +6,11 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/04/19 15:47:20 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/04/21 13:59:19 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
@@ -18,7 +18,7 @@ SRCS = 	parsing/command_check.c \
 		utils/global_utils.c \
 		utils/minishell_utils.c utils/split/ft_split.c utils/split/ft_split_utils.c \
 		utils/str/strcmp.c utils/str/strjoin.c \
-		utils/protected/p_funcs.c \
+		utils/protected/p_funcs.c utils/matrix_utils/matrix.c utils/data_init.c\
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
 		env/env_free.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \

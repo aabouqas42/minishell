@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/20 19:31:37 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:00:00 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,42 +60,6 @@ int	check_input()
 	return (0);
 }
 
-int	cmds_counter(char **cmds)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (cmds && cmds[i])
-	{
-		if (is_same(cmds[i], "|") == 0)
-			j++;
-		i++;
-	}
-	return (j + 1);
-}
-
-char	***get_commands()
-{
-	char	***cmds;
-	char	**commands;
-	int		i;
-
-	commands = data_hook(NULL)->commands;
-	cmds = p_calloc((cmds_counter(commands) + 1) * sizeof(char **));
-	i = 0;
-	while (commands && *commands)
-	{
-		if (is_same(*commands, "|") == 0)
-			cmds[i] = _realloc(cmds[i], *commands);
-		else
-			i++;
-		commands++;
-	}
-	return (cmds);
-}
-
 void	run_cmd(char **argv_tmp, int next_pipe, int isfirst)
 {
 	t_data	*data;
@@ -127,27 +91,17 @@ void	run_cmd(char **argv_tmp, int next_pipe, int isfirst)
 			argv_tmp++;
 		}
 		if (isfirst && next_pipe)
-		{
-			dup2(data->fds[1], STDOUT_FILENO);
-			close (data->fds[1]);
-			close (data->fds[0]);
-			close(data->oldfd);
-		}
+			dup2(data->fds[1], 1);
 		if (!isfirst && next_pipe)
 		{
-			dup2(data->oldfd, STDIN_FILENO);
-			dup2(data->fds[1], STDOUT_FILENO);
-			close(data->fds[0]);
-			close(data->fds[1]);
-			close(data->oldfd);
+			dup2(data->oldfd, 0);
+			dup2(data->fds[1], 1);
 		}
 		if (!isfirst && !next_pipe)
-		{
-			dup2(data->oldfd, STDIN_FILENO);
-			close (data->fds[0]);
-			close (data->fds[1]);
-			close(data->oldfd);
-		}
+			dup2(data->oldfd, 0);
+		close (data->fds[0]);
+		close (data->fds[1]);
+		close(data->oldfd);
 		//
 		// if (data->out != 1)
 		// {
@@ -159,50 +113,10 @@ void	run_cmd(char **argv_tmp, int next_pipe, int isfirst)
 		// 	dup2(data->in, STDIN_FILENO);
 		// 	close (data->in);
 		// }
-		if (is_valid_cmd(data_hook(NULL), argv[0]) == 0)
-			ft_putstr_fd("Error : minishell : command not Found\n", 2);
-		else
-			execve(data_hook(NULL)->program_path, argv, env_to_2darray());
+		execve(data_hook(NULL)->program_path, argv, env_to_2darray());
 	}
+	free(data->program_path);
 }
-
-// void _runcmd_1(char **args)
-// {
-// 	t_data	*data;
-// 	data = data_hook(NULL);
-// 	if (!is_valid_cmd(data, args[0]))
-// 	{
-// 		printf("command not found\n");
-// 		return;
-// 	}
-// 	if (fork() == 0)
-// 	{
-// 		dup2(data->fds[1], 1);
-// 		close (data->fds[0]);
-// 		close (data->fds[1]);
-// 		execve(data->program_path, args, env_to_2darray());
-// 	}
-// }
-
-// void _runcmd_2(char **args)
-// {
-// 	t_data	*data;
-// 	data = data_hook(NULL);
-// 	if (args == NULL)
-// 		return ;
-// 	if (!is_valid_cmd(data, args[0]))
-// 	{
-// 		printf("command not found\n");
-// 		return ;
-// 	}
-// 	if (fork() == 0)
-// 	{
-// 		dup2(data->fds[0], 0);
-// 		close (data->fds[0]);
-// 		close (data->fds[1]);
-// 		execve(data->program_path, args, NULL);
-// 	}
-// }
 
 int	request_input()
 {
@@ -217,76 +131,23 @@ int	request_input()
 	if (args_is_valid(data->usrinput) == 0)
 		return (do_error(SYNTAX_ERR), 0);
 	data->commands = _split(data->usrinput);
-	char ***cmds = get_commands();
+	data->cmds = get_commands();
 	i = 0;
-	data->oldfd = 0;
-	while (cmds && cmds[i])
+	while (data->cmds && data->cmds[i])
 	{
+		if (!is_valid_cmd(data, data->cmds[i][0]))
+			return (do_error(COMDNF_ERR), 0);
 		pipe(data->fds);
-		run_cmd(cmds[i], cmds[i +1] != NULL, i == 0);
+		run_cmd(data->cmds[i], data->cmds[i + 1] != NULL, i == 0);
 		close(data->fds[1]);
-		if (data->oldfd)
-			close(data->oldfd);
+		data->oldfd && close(data->oldfd);
 		data->oldfd = data->fds[0];
 		i++;
 	}
-	close(data->oldfd);
-	while (waitpid(-1, &data->exit_status, 0) != -1)
-	{
-		// printf("asdasdad\n");
-	}
-	// while (wait(0) != -1)
-	// 	;
-	// waitpid(-1, NULL, 0);
-	// env_print(data->env);
-	// if (data->commands == NULL || cmd_err())
-	// 	return (1);
-	// _redirection();
-	// if (builtins())
-	// 	return (0);
-	// if (is_valid_cmd(data, data->commands[0]) != CMD_VALID)
-	// {
-	// 	printf("\e[31mminishell : %s command not found\e[0m\n", data->usrinput);
-	// 	data->exit_status = 127 << 8;
-	// 	return (-1);
-	// }
-	// child_pid = fork();
-	// if (child_pid == 0)
-	// 	execve(data->program_path, data->commands, env_to_2darray());
-	return (-1);
+	return (close(data->oldfd), -1);
 }
 
-void	data_init(char **base_env)
-{
-	t_data	*data;
-	char	*value;
-	char	*number;
 
-	data = data_hook(NULL);
-	ft_bzero(data, sizeof(t_data));
-	data->out = 1;
-	data->prompt = get_prompt();	
-	while (base_env && *base_env)
-	{
-		value = ft_strchr(*base_env, '=');
-		*(value) = '\0';
-		if (is_same(*base_env, "SHLVL"))
-		{
-			number = ft_itoa(ft_atoi(value + 1) + 1);
-			if (number == NULL)
-				safe_exit(-1);
-			env_export(*base_env, number);
-			free (number);
-		} else
-			env_export(*base_env, value +1);
-		*(value) = '=';
-		base_env++;
-	}
-	if (env_grepvalue("PATH") == 0)
-		env_export("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
-	if (env_grepvalue("SHLVL") == 0)
-		env_export("SHLVL", "1");
-}
 
 int	main(int ac, char **av, char **env)
 {
@@ -294,13 +155,15 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	t_data	data;
 
-	//printf("\e[1;1H\e[2J");
 	data_hook(&data);
 	data_init(env);
+	set_defaults();
 	while (1)
 	{
 		request_input();
-		// free (data.program_path);
+		while (waitpid(-1, &data.exit_status, 0) != -1);
+		free_matrix(data.cmds);
+		free (data.usrinput);
 		// free (data.usrinput);
 		// free_tab(data.commands);
 		// data.commands = NULL;
