@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 11:38:50 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:47:10 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include <fcntl.h>
+# include <dirent.h>
+
+# define P printf
 
 typedef enum e_error_type{
 	SYNTAX_ERR,
@@ -28,24 +31,11 @@ typedef enum e_error_type{
 
 void	do_error(t_error_type errtype);
 
-#define LOG(v) printf("%s\n", v)
-
-#define MSG_SYNTAX_ERR "Syntax Error"
-#define MSG_COMMAND_ERR "Command Not Found"
-
-typedef enum e_cmd_type
-{
-	None,
-	CMD_TYPE_COMMAND,
-	CMD_TYPE_PIPE,
-	CMD_TYPE_SREDIRECTION,
-	CMD_TYPE_DREDIRECTION
-}	t_cmd_type;
 
 typedef struct s_cmd
 {
 	char		**argv;
-	t_cmd_type	cmd_type;
+	
 }	t_cmd;
 
 
@@ -55,11 +45,6 @@ typedef struct s_qutoes
 	int	dqt;
 }	t_qutoes; 
 
-// # include "dirent.h" ??
-
-# define CMD_FAIL -1
-# define CMD_INVALID 0
-# define CMD_VALID 1
 
 /*	ENV LIST	*/
 typedef struct s_env
@@ -68,28 +53,6 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
-
-typedef enum e_action
-{
-	Void,
-	Pipe,
-	Redirect_in,
-	Redirect_out,
-	Append_in,
-	Append_out
-	
-}	t_action;
-
-typedef struct	s_list_args
-{
-	char				**argv;
-	char				**env;
-	char				*program_path;
-	t_action			action;
-	int					_out;
-	int					_in;
-	struct s_list_args	*next;
-}	t_list_args;
 
 typedef struct s_data
 {
@@ -100,12 +63,7 @@ typedef struct s_data
 	char		*usrinput;
 	char		*program_path;
 	int			exit_status;
-	t_list_args	*list;
 }	t_data;
-
-#define ENV_NOT_CREATED -1
-#define ENV_FAILURE 0
-#define ENV_CREATED 1
 
 char	**env_to_2darray();
 
@@ -135,22 +93,17 @@ int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	free_tab(char **array);
 char	**_split(char *str);
-char	*_strndup(char *str);
-// char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
 int	is_same(char *s1, char *s2);
-size_t	p_strlenc(char *str, char c);
-char	*p_strdup(char *s1);
-size_t	argument_count(char *str);
-
+size_t	_strlenc(char *str, char c);
+char	*_strdup(char *s1);
+char	*_strndup(char *s1, size_t size);
 int		cd(t_data *data);
 void	echo();
 int		pwd();
 int		_export();
 int		_redirection();
-size_t	get_size(char *str);
-char	*handle_dqt_sqt(char *str);
-void	*p_calloc(size_t size);
+void	*_calloc(size_t size);
 char	*_expander(char *str);
 int		_spaces(int c);
 int		request_input();
@@ -158,10 +111,5 @@ int		request_input();
 int		set_var(char *argv_str, char **str);
 size_t	args_is_valid(char *str);
 char	**_realloc(char **old_tab, char *to_append);
-
-void		add(t_list_args **head);
-t_list_args	*create();
-t_list_args	*get_first();
-t_list_args	*get_last(t_list_args *head);
 
 #endif

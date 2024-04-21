@@ -6,11 +6,27 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/20 13:25:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:53:15 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+// char	*path_prog(char *cmd)
+// {
+// 	char	*program;
+// 	char	*paths;
+// 	char	*path;
+
+// 	program = NULL;
+// 	path = NULL;
+// 	paths = env_get("PATH", data_hook(NULL));
+// 	while (*paths)
+// 	{
+		
+// 		paths++;
+// 	}
+// }
 
 int	builtins()
 {
@@ -84,7 +100,7 @@ char	***get_commands()
 	int		i;
 
 	commands = data_hook(NULL)->commands;
-	cmds = p_calloc((cmds_counter(commands) + 1) * sizeof(char **));
+	cmds = _calloc((cmds_counter(commands) + 1) * sizeof(char **));
 	i = 0;
 	while (commands && *commands)
 	{
@@ -104,9 +120,8 @@ void	run_cmd(char	**argv_tmp, int there_pipe, int is_first_cmd)
 	int		action;
 	int		in;
 	int		out;
-	// int	fds[2];
-
-	// pipe(fds);
+	char	*heredoc = NULL;
+	
 	in =  0;
 	out = 1;
 	argv = NULL;
@@ -123,7 +138,20 @@ void	run_cmd(char	**argv_tmp, int there_pipe, int is_first_cmd)
 				out = open(*argv_tmp, action, 0666);
 				if (out == -1)
 					perror("open");
-			} else if (is_same(*argv_tmp, "<"))
+			}else if (is_same(*argv_tmp, "<<"))
+			{
+				argv_tmp++;
+				while (1)
+				{
+					char	*in = readline("heredoc> ");
+					if (in && is_same(in, *argv_tmp))
+						break;
+					heredoc = ft_strjoin(heredoc, in);
+					heredoc = ft_strjoin(heredoc, "\n");
+				}
+				printf("%s\n", heredoc);
+			}
+			else if (is_same(*argv_tmp, "<"))
 			{
 				
 				argv_tmp++;
@@ -143,10 +171,14 @@ void	run_cmd(char	**argv_tmp, int there_pipe, int is_first_cmd)
 			close (in);
 		}
 		if (is_valid_cmd(data_hook(NULL), argv[0]) == 0)
+		{
 			ft_putstr_fd("minishell : command not Found\n", 2);
+			return ;
+		}
 		else
 			execve(data_hook(NULL)->program_path, argv, env_to_2darray());
 	}
+	(void)(there_pipe+is_first_cmd);
 	waitpid(-1, NULL, 0);
 	// free_tab(data_hook(NULL)->commands);
 	// free(data_hook(NULL)->program_path);
@@ -174,7 +206,7 @@ int	request_input()
 		run_cmd(cmds[i], cmds[i +1] != NULL, i == 0);
 		i++;
 	}
-	// waitpid(-1, NULL, 0);
+	while(waitpid(-1, NULL, 0) != -1);
 	// env_print(data->env);
 	// if (data->commands == NULL || cmd_err())
 	// 	return (1);
@@ -233,6 +265,7 @@ int	main(int ac, char **av, char **env)
 	printf("\e[1;1H\e[2J");
 	data_hook(&data);
 	data_init(env);
+	P("hello %d\n", 87867);
 	while (1)
 	{
 		request_input();

@@ -6,21 +6,20 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/17 18:06:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:51:39 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*get_program_path(t_data *data, char *cmd)
+void	get_program_path(char *cmd)
 {
 	char	*program_path;
 
-	(void)data;
-	program_path = ft_strdup(cmd);
+	program_path = _strdup(cmd);
 	if (program_path == NULL)
 		safe_exit(-1);
-	return (program_path);
+	data_hook(NULL)->program_path = program_path;
 }
 
 int	is_valid_cmd(t_data *data, char *cmd)
@@ -32,16 +31,16 @@ int	is_valid_cmd(t_data *data, char *cmd)
 	size_t	i;
 
 	if (cmd == NULL)
-		return (CMD_FAIL);
+		return (0);
 	if (access(cmd, X_OK) == 0)
-		return (data->program_path = get_program_path(data, cmd), 1);
+		return (get_program_path(cmd), 1);
 	tmp = ft_strjoin("/", cmd);
 	if (tmp == NULL)
 		safe_exit(-1);
 	paths = env_grepvalue("PATH");
 	while (paths && *paths)
 	{
-		i = p_strlenc(paths, ':');
+		i = _strlenc(paths, ':');
 		c = paths[i];
 		paths[i] = '\0';
 		program_path = ft_strjoin(paths, tmp);
@@ -49,9 +48,9 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		if (program_path == NULL)
 			(free(tmp), safe_exit(-1));
 		if (access(program_path, X_OK) == 0)
-			return (data->program_path = program_path, free(tmp), CMD_VALID);
+			return (data->program_path = program_path, free(tmp), 1);
 		free(program_path);
 		paths += i + (paths[i] == ':');
 	}
-	return (free(tmp), CMD_INVALID);
+	return (free(tmp), 0);
 }

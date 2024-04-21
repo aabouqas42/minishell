@@ -6,13 +6,13 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:48:03 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/03 22:17:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:45:47 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	*p_calloc(size_t size)
+void	*_calloc(size_t size)
 {
 	char	*res;
 
@@ -24,7 +24,7 @@ void	*p_calloc(size_t size)
 	return ((void *)res);
 }
 
-size_t	p_strlenc(char *str, char c)
+size_t	_strlenc(char *str, char c)
 {
 	size_t	size;
 
@@ -34,18 +34,38 @@ size_t	p_strlenc(char *str, char c)
 	return (size);
 }
 
-char	*p_strdup(char *str)
+char	*_strdup(char *str)
 {
 	size_t	i;
 	char	*res;
 
 	if (str == NULL)
 		return (NULL);
-	res = malloc(p_strlenc(str, '\0') + 1);
+	res = malloc(_strlenc(str, '\0') + 1);
 	if (res == NULL)
 		return (0);
 	i = 0;
 	while (str[i])
+	{
+		res[i] = str[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
+char	*_strndup(char *str, size_t size)
+{
+	size_t	i;
+	char	*res;
+
+	if (str == NULL)
+		return (NULL);
+	res = malloc(size + 1);
+	if (res == NULL)
+		return (NULL);
+	i = 0;
+	while (str[i] && i < size)
 	{
 		res[i] = str[i];
 		i++;
