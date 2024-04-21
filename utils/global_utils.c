@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/19 11:06:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:51:51 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ char	**_realloc(char **old_tab, char *to_append)
 		return (old_tab);
 	if (old_tab == NULL)
 	{
-		new_tab = p_calloc(2 * sizeof(char *));
+		new_tab = _calloc(2 * sizeof(char *));
 		*new_tab = to_append;
 		return (new_tab);
 	}
 	tab_len = 0;
 	while (old_tab[tab_len])
 		tab_len++;
-	new_tab = p_calloc((tab_len + 2) * sizeof(char *));
+	new_tab = _calloc((tab_len + 2) * sizeof(char *));
 	i = 0;
 	while (i < tab_len)
 	{

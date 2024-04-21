@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/21 16:04:25 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:21:48 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	***get_commands()
 		do_error(SYNTAX_ERR);
 		return (NULL);
 	}
-	cmds = p_calloc((cmds_counter(commands) + 1) * sizeof(char **));
+	cmds = _calloc((cmds_counter(commands) + 1) * sizeof(char **));
 	i = 0;
 	while (commands && *commands)
 	{

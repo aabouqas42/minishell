@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 10:38:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:52:18 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	env_export(char *name, char *value)
 	if (tmp != NULL)
 	{
 		free(tmp->value);
-		tmp->value = p_strdup(value);
+		tmp->value = _strdup(value);
 		return ((tmp->value != NULL));
 	}
 	tmp = env_get_last(data->env);

@@ -6,11 +6,27 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 16:16:12 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:37:23 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+// char	*path_prog(char *cmd)
+// {
+// 	char	*program;
+// 	char	*paths;
+// 	char	*path;
+
+// 	program = NULL;
+// 	path = NULL;
+// 	paths = env_get("PATH", data_hook(NULL));
+// 	while (*paths)
+// 	{
+		
+// 		paths++;
+// 	}
+// }
 
 int	builtins()
 {
@@ -82,7 +98,7 @@ void	run_cmd(char **argv_tmp, int next_pipe, int isfirst)
 				data->out = open(*argv_tmp, action, 0666);
 				if (data->out == -1)
 					perror("open");
-			} else if (is_same(*argv_tmp, "<"))
+			}else if (is_same(*argv_tmp, "<<"))
 			{
 				argv_tmp++;
 				data->in = open(*argv_tmp, O_RDONLY);
@@ -144,10 +160,8 @@ int	request_input()
 		data->oldfd = data->fds[0];
 		i++;
 	}
-	return (close(data->oldfd), -1);
+	return (close(data->oldfd), data->oldfd = 0, -1);
 }
-
-
 
 int	main(int ac, char **av, char **env)
 {

@@ -1,1 +1,17 @@
+<<<<<<< HEAD
 hello
+=======
+Makefile
+builtins
+env
+file
+include
+libft
+minishell
+minishell.c
+multiples
+parsing
+t.tldr
+tuto.tldr
+utils
+>>>>>>> b01c300228b632a40ebb999e26dd01c4cbeb5c32
