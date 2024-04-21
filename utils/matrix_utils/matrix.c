@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/21 13:48:37 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:04:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,13 @@ void	free_matrix(char ***matrix)
 {
 	int	i;
 
+	if (matrix == NULL)
+		return ;
 	i = 0;
 	while (matrix[i])
 	{
 		free_tab(matrix[i]);
 		i++;
 	}
+	free (matrix);
 }

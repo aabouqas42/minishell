@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 14:00:00 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:16:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,7 @@ int	main(int ac, char **av, char **env)
 		while (waitpid(-1, &data.exit_status, 0) != -1);
 		free_matrix(data.cmds);
 		free (data.usrinput);
-		// free (data.usrinput);
-		// free_tab(data.commands);
-		// data.commands = NULL;
-		// data.program_path = NULL;
+		free (data.commands);
 	}
 	return (EXIT_SUCCESS);
 }
