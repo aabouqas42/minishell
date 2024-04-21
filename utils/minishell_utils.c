@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/18 18:19:24 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/21 13:16:45 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,19 @@ t_data	*data_hook(t_data *data)
 
 void	do_error(t_error_type errtype)
 {
+	char	*err;
+
 	if (errtype == SYNTAX_ERR)
 	{
-		printf("Syntax Error\n");
+		err = "Error : minishell : Syntax ERROR\n";
 		data_hook(NULL)->exit_status = 256 << 8;
 	}
 	if (errtype == COMDNF_ERR)
 	{
-		printf("Command Not Found\n");
+		err = "Error : minishell : Command Not Found\n";
 		data_hook(NULL)->exit_status = 127 << 8;
 	}
-	
+	ft_putstr_fd(err, 2);
 }
 
 void	free_tab(char **array)

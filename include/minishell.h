@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 16:47:10 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:10:09 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ typedef struct s_data
 	char		*usrinput;
 	char		*program_path;
 	int			exit_status;
+	int			in;
+	int			out;
+	int			oldfd;
+	int			fds[2];
 }	t_data;
 
 char	**env_to_2darray();
@@ -73,6 +77,10 @@ t_env	*env_get(char *name, t_data	*data);
 int		env_unset(char *name, t_env **env);
 t_env	*env_get_last(t_env	*env);
 void	env_sort(t_env *env);
+char	***get_commands();
+void	data_init(char **base_env);
+void	set_defaults();
+void	free_matrix(char ***matrix);
 int		env_valid_name(char *name);
 void	env_print(t_env	*head);
 size_t	env_size(t_env *env);
@@ -88,6 +96,7 @@ int		is_io_op(char	*str);
 
 
 char	*get_prompt();
+int		check_input();
 
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
