@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 17:10:09 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:43:12 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,6 @@ typedef enum e_error_type{
 }	t_error_type;
 
 void	do_error(t_error_type errtype);
-
-
-typedef struct s_cmd
-{
-	char		**argv;
-	
-}	t_cmd;
-
 
 typedef struct s_qutoes
 {
@@ -103,7 +95,7 @@ void	safe_exit(int status);
 void	free_tab(char **array);
 char	**_split(char *str);
 char	*_strnjoin(char *str1, char *str2, size_t size);
-int	is_same(char *s1, char *s2);
+int		is_same(char *s1, char *s2);
 size_t	_strlenc(char *str, char c);
 char	*_strdup(char *s1);
 char	*_strndup(char *s1, size_t size);

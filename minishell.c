@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 17:40:44 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:42:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ int	request_input()
 	data->commands = _split(data->usrinput);
 	data->cmds = get_commands();
 	i = 0;
-	data->oldfd = 0;
 	while (data->cmds && data->cmds[i])
 	{
 		if (!is_valid_cmd(data, data->cmds[i][0]))
@@ -176,7 +175,7 @@ int	request_input()
 		data->oldfd = data->fds[0];
 		i++;
 	}
-	return (close(data->oldfd), -1);
+	return (close(data->oldfd), data->oldfd = 0, -1);
 }
 
 int	main(int ac, char **av, char **env)
