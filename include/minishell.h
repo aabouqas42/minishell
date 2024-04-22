@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 17:43:12 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:25:47 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <dirent.h>
 
 # define P printf
+# define ignore (void)
 
 typedef enum e_error_type{
 	SYNTAX_ERR,
@@ -48,17 +49,18 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	char		***cmds;
-	t_env		*env;
-	char		**commands;
-	char		*prompt;
-	char		*usrinput;
-	char		*program_path;
-	int			exit_status;
-	int			in;
-	int			out;
-	int			oldfd;
-	int			fds[2];
+	char	***cmds;
+	t_env	*env;
+	char	**commands;
+	char	*prompt;
+	char	*usrinput;
+	char	*program_path;
+	int		exit_status;
+	char	*heredoc;
+	int		in;
+	int		out;
+	int		oldfd;
+	int		fds[2];
 }	t_data;
 
 char	**env_to_2darray();
@@ -94,6 +96,7 @@ int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	free_tab(char **array);
 char	**_split(char *str);
+char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
 int		is_same(char *s1, char *s2);
 size_t	_strlenc(char *str, char c);
@@ -112,5 +115,11 @@ int		request_input();
 int		set_var(char *argv_str, char **str);
 size_t	args_is_valid(char *str);
 char	**_realloc(char **old_tab, char *to_append);
+
+void	open_heredoc(char *target);
+void	set_out(char **arg);
+void	set_in_out();
+char	**get_argv(char **args);
+void	set_pipes(int first, int there_is_next);
 
 #endif
