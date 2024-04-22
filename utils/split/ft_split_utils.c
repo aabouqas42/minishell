@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/21 16:52:06 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:29:30 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	set_last_exit(char **str)
 {
-	t_data *data;
+	t_data	*data;
 	char	*exit_status;
 
 	data = data_hook(NULL);
@@ -37,12 +37,10 @@ int	set_var(char *argv_str, char **str)
 	i = 0;
 	if (*argv_str == '?')
 		return (set_last_exit(str), 1);
+	if (ft_isdigit(argv_str[0]))
+		return (1);
 	while (argv_str[i] && (ft_isalnum(argv_str[i]) || argv_str[i] == '_'))
-	{
-		if (i == 0 && ft_isdigit(argv_str[i]))
-			return (1);
 		i++;
-	}
 	c = argv_str[i];
 	argv_str[i] = '\0';
 	tmp = env_grepvalue(argv_str);
@@ -68,8 +66,9 @@ char	*_expander(char *str)
 	{
 		if (*str == 1)
 			sqt = (sqt == 0);
-		if (*str == '$' && (ft_isalnum(*(str + 1))|| *(str + 1) == 1 || *(str + 1) == 2) && sqt == 0)
-			(str++, str += set_var(str, &res));
+		if (*str == '$' && (ft_isalnum(*(str +1))
+				|| *(str +1) == 1 || *(str +1) == 2) && sqt == 0)
+			(1) && (str++, str += set_var(str, &res));
 		else if (ft_isprint(*str))
 			res = _strnjoin(res, str++, 1);
 		else

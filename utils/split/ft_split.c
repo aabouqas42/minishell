@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 16:32:38 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:24:27 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,42 +51,75 @@ size_t	set_arg(char *str, char **res, t_qutoes qt)
 	c = *str;
 	nc = *(str + 1);
 	size = 0;
-	if ((qt.dqt && c != '"') || (qt.sqt && c != '\'')
-		|| (!qt.dqt && !qt.sqt && !ft_strchr("\'\"", c)))
+	// if ((qt.dqt && c != '"') || (qt.sqt && c != '\'')
+	// 	|| (!qt.dqt && !qt.sqt && !ft_strchr("\'\"", c)))
+	// {
+	if (c == '$' && qt.sqt == 0 && (ft_isalnum(nc) || ft_strchr("\'\"", nc)))
 	{
-		if (c == '$' && qt.sqt == 0 && (ft_isalnum(nc ) || ft_strchr("\'\"", nc)))
-			size += set_var(str + 1, res) + 1;
-		else
-			(1) && (*res = _strnjoin(*res, str, 1), (size++));
+		size += set_var(str + 1, res) + 1;
+		P(".");
 	}
-	if (size == 0)
-		return (1);
+	else
+	{
+		(1) && (*res = _strnjoin(*res, str, 1), (size++));
+		P(",");
+	}
+	// }
+	// if (size == 0)
+	// 	return (1);
 	return (size);
 }
+
+//
+// char	**_split(char *str)
+// {
+// 	char		**commands;
+// 	char		*res;
+// 	t_qutoes	qt;
+// 	ft_bzero(&qt, sizeof(t_qutoes));
+// 	commands = NULL;
+// 	data_hook(NULL)->commands = commands;
+// 	while (*str)
+// 	{
+// 		(1) && (str = skiper(str), res = NULL);
+// 		while (*str && !ft_strchr("<>|", *str) && ((!_spaces(*str) || qt.dqt || qt.sqt)))
+// 		{
+// 			(*str == '\"' && !qt.sqt) && (qt.dqt = (qt.dqt == 0));
+// 			(*str == '\'' && !qt.dqt) && (qt.sqt = (qt.sqt == 0));
+// 			str += set_arg(str, &res, qt);
+// 		}
+// 		commands = _realloc(commands, res);
+// 		if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
+// 			(1) && (commands = _realloc(commands, _strnjoin(NULL, str, 2)), str += 2);
+// 		else if (str && *str && ft_strchr("<>|", *str) != NULL)
+// 			(1) && (commands =_realloc(commands, _strnjoin(NULL, str, 1)), str++);
+// 	}
+// 	return (commands);
+// }
 
 char	**_split(char *str)
 {
 	char		**commands;
 	char		*res;
-	t_qutoes	qt;
+	char		qt;
 
-	ft_bzero(&qt, sizeof(t_qutoes));
 	commands = NULL;
 	data_hook(NULL)->commands = commands;
 	while (*str)
 	{
+		qt = 0;
 		(1) && (str = skiper(str), res = NULL);
-		while (*str && !ft_strchr("<>|", *str) && ((!_spaces(*str) || qt.dqt || qt.sqt)))
+		while (*str && (!_spaces(*str) || qt))
 		{
-			(*str == '\"' && !qt.sqt) && (qt.dqt = (qt.dqt == 0));
-			(*str == '\'' && !qt.dqt) && (qt.sqt = (qt.sqt == 0));
-			str += set_arg(str, &res, qt);
+			if ((*str == '\"' && qt != '\'') || (*str == '\'' && qt != '\"'))
+				qt = !qt * (*str);
+			if (*str == '$' && qt != '\'' && (ft_isalnum(*(str +1)) || ft_strchr("\'\"", *(str +1))))
+				str += set_var(str + 1, &res) + 1;
+			else
+				(1) && (res = _strnjoin(res, str, 1), str++);
 		}
 		commands = _realloc(commands, res);
-		if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
-			(1) && (commands = _realloc(commands, _strnjoin(NULL, str, 2)), str += 2);
-		else if (str && *str && ft_strchr("<>|", *str) != NULL)
-			(1) && (commands = _realloc(commands, _strnjoin(NULL, str, 1)), str++);
+		str++;
 	}
 	return (commands);
 }

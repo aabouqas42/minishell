@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 17:42:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:33:27 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,20 +162,27 @@ int	request_input()
 	if (args_is_valid(data->usrinput) == 0)
 		return (do_error(SYNTAX_ERR), 0);
 	data->commands = _split(data->usrinput);
-	data->cmds = get_commands();
 	i = 0;
-	while (data->cmds && data->cmds[i])
+	while (data->commands[i])
 	{
-		if (!is_valid_cmd(data, data->cmds[i][0]))
-			return (do_error(COMDNF_ERR), 0);
-		pipe(data->fds);
-		run_cmd(data->cmds[i], data->cmds[i + 1] != NULL, i == 0);
-		close(data->fds[1]);
-		data->oldfd && close(data->oldfd);
-		data->oldfd = data->fds[0];
-		i++;
+		printf("%s\n", data->commands[i++]);
 	}
-	return (close(data->oldfd), data->oldfd = 0, -1);
+	// data->cmds = get_commands();
+	// free (data->commands);
+	// i = 0;
+	// while (data->cmds && data->cmds[i])
+	// {
+		// if (!is_valid_cmd(data, data->cmds[i][0]))
+		// 	return (do_error(COMDNF_ERR), 0);
+		// pipe(data->fds);
+		// run_cmd(data->cmds[i], data->cmds[i + 1] != NULL, i == 0);
+		// close(data->fds[1]);
+		// data->oldfd && close(data->oldfd);
+		// data->oldfd = data->fds[0];
+	// 	i++;
+	// }
+	return (0);
+	// return (close(data->oldfd), data->oldfd = 0, -1);
 }
 
 int	main(int ac, char **av, char **env)
@@ -190,10 +197,9 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		request_input();
-		while (waitpid(-1, &data.exit_status, 0) != -1);
-		free_matrix(data.cmds);
+		// while (waitpid(-1, &data.exit_status, 0) != -1);
+		// free_matrix(data.cmds);
 		free (data.usrinput);
-		free (data.commands);
 	}
 	return (EXIT_SUCCESS);
 }
