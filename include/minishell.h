@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/23 11:25:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:42:05 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@
 # define P printf
 # define ignore (void)
 
+// # define ERRT_SYNTAX "syntax error near unexpected token `"
+// # define ERRT_COMDNF "command not found"
+
 typedef enum e_error_type{
 	SYNTAX_ERR,
-	COMDNF_ERR
+	COMDNF_ERR,
+	ISDIR_ERR
 }	t_error_type;
 
-void	do_error(t_error_type errtype);
+void	do_error(t_error_type errtype, char *reason);
 
 typedef struct s_qutoes
 {
@@ -90,12 +94,12 @@ int		is_io_op(char	*str);
 
 
 char	*get_prompt();
-int		check_input();
+int		check_input(char **cmds);
 
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	free_tab(char **array);
-void	_split(char *str);
+void	expand_variables(char *str);
 char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
 int		is_same(char *s1, char *s2);
@@ -108,12 +112,11 @@ int		pwd();
 int		_export();
 int		_redirection();
 void	*_calloc(size_t size);
-char	*_expander(char *str);
 int		_spaces(int c);
 int		request_input();
 char	*remove_qts(char *str);
 int		set_var(char *argv_str, char **str);
-size_t	args_is_valid(char *str);
+int		check_quotes_closed(char *str);
 char	**_realloc(char **old_tab, char *to_append);
 
 void	open_heredoc(char *target);

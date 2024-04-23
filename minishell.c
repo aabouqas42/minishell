@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/23 13:03:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:12:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,32 @@ int	builtins()
 	return (0);
 }
 
-int	check_input()
+int	check_input(char **cmds)
 {
-	char	**cmds;
 	int		i;
 
-	cmds = data_hook(NULL)->args;
 	i = 0;
 	while (cmds[i])
 	{
-		if ((i == 0 && is_io_op(cmds[i]))
-			|| (is_io_op(cmds[i]) && cmds[i + 1] == NULL)
-			|| (is_same(cmds[i], "|")
-			&& is_same(cmds[i + 1], "|"))
-			|| (is_same(cmds[i], "&&")
-			|| is_same(cmds[i], "(")
-			|| is_same(cmds[i], ")")
-			|| is_same(cmds[i], "()")
-			|| is_same(cmds[i], "&"))
-			)
+		if (cmds[0][0] == '|')
+			do_error(SYNTAX_ERR, cmds[i]);
+		else if (is_io_op(cmds[i]))
 		{
-			ft_putstr_fd("Syntax Error\n", 2);
-			return (-1);
+			if (is_io_op(cmds[i +1]))
+				return (do_error(SYNTAX_ERR, cmds[i +1]), -1);
 		}
+		// if ((i == 0 && is_io_op(cmds[i]))
+		// 	|| (is_io_op(cmds[i]) && cmds[i + 1] == NULL)
+		// 	|| (is_same(cmds[i], "|")
+		// 	&& is_same(cmds[i + 1], "|"))
+		// 	)
+		// {
+		// 	if (cmds[i +1] != NULL)
+		// 		do_error(SYNTAX_ERR, cmds[i +1]);
+		// 	else
+		// 		do_error(SYNTAX_ERR, "newline");
+		// 	return (-1);
+		// }
 		i++;
 	}
 	return (0);
@@ -64,14 +67,13 @@ void	program_runner(char **args, int first, int there_is_next)
 {
 	t_data	*data;
 	char	**argv;
-	int		child_pid;
 
 	ignore first;
 	ignore there_is_next;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
-	child_pid = fork();
-	if (child_pid == 0)
+	
+	if (fork() == 0)
 	{
 		argv = get_argv(args);
 		if (is_valid_cmd(data, argv[0]) == 0)
@@ -100,31 +102,39 @@ int	request_input()
 	if (data->usrinput == NULL || *data->usrinput == '\0')
 		return (0);
 	add_history(data->usrinput);
-	if (args_is_valid(data->usrinput) == 0)
-		return (do_error(SYNTAX_ERR), 0);
-	_split(data->usrinput);
+	if (!check_quotes_closed(data->usrinput))
+		return (0);
+	expand_variables(data->usrinput);
+	if (check_input(data->args) == -1)
+	{
+		return (0);
+	}
 	data->cmds = get_commands();
-	i = 0;
-	// while (data->args[i])
-	// {
-	// 	printf("%s\n", data->args[i++]);
-	// }
 	data->oldfd = 0;
+	i = 0;
 	while (data->cmds && data->cmds[i])
 	{
+		//DEBUG
+		// int j = 0;
+		// while (data->cmds[i][j])
+		// {
+		// 	P("(%s)", data->cmds[i][j]);
+		// 	j++;
+		// }
+		// P("\n");
+		
 		if (!is_valid_cmd(data, data->cmds[i][0]))
-			return (do_error(COMDNF_ERR), 0);
+			return (0);
 		program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
 		i++;
 	}
 	return (0);
 }
 
-
 int	main(int ac, char **av, char **env)
 {
-	(void)ac;
-	(void)av;
+	ignore	ac;
+	ignore	av;
 	t_data	data;
 
 	data_hook(&data);

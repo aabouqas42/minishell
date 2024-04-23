@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/23 15:52:38 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:34:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,6 @@ char	***get_commands()
 	int		i;
 
 	commands = data_hook(NULL)->args;
-	// if (check_input() == -1)
-	// {
-	// 	do_error(SYNTAX_ERR);
-	// 	return (NULL);
-	// }
 	cmds = _calloc((cmds_counter(commands) + 1) * sizeof(char **));
 	i = 0;
 	while (commands && *commands)
