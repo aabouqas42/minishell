@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/23 09:52:41 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:52:38 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ char	***get_commands()
 	int		i;
 
 	commands = data_hook(NULL)->args;
-	if (check_input() == -1)
-	{
-		do_error(SYNTAX_ERR);
-		return (NULL);
-	}
+	// if (check_input() == -1)
+	// {
+	// 	do_error(SYNTAX_ERR);
+	// 	return (NULL);
+	// }
 	cmds = _calloc((cmds_counter(commands) + 1) * sizeof(char **));
 	i = 0;
 	while (commands && *commands)

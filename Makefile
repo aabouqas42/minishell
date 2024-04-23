@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/04/23 12:47:58 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/04/23 15:25:54 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ INC = include/
 LIBFT = libft/libft.a
 SRCS = 	parsing/command_check.c \
 		utils/global_utils.c \
-		utils/minishell_utils.c utils/split/ft_split.c utils/split/ft_split_utils.c \
+		utils/minishell_utils.c split/ft_split.c split/ft_split_utils.c \
 		utils/str/str_utils.c \
 		utils/protected/protected_funcs.c\
 		utils/matrix_utils/matrix.c \
