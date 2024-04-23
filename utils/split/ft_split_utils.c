@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/22 19:29:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/23 10:49:10 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,26 @@ int	set_var(char *argv_str, char **str)
 	return (i);
 }
 
-char	*_expander(char *str)
-{
-	char	*res;
-	int		sqt;
+// char	*_expander(char *str)
+// {
+// 	char	*res;
+// 	int		sqt;
 
-	if (str == NULL)
-		return (NULL);
-	res = NULL;
-	sqt = 0;
-	while (*str)
-	{
-		if (*str == 1)
-			sqt = (sqt == 0);
-		if (*str == '$' && (ft_isalnum(*(str +1))
-				|| *(str +1) == 1 || *(str +1) == 2) && sqt == 0)
-			(1) && (str++, str += set_var(str, &res));
-		else if (ft_isprint(*str))
-			res = _strnjoin(res, str++, 1);
-		else
-			str++;
-	}
-	return (res);
-}
+// 	if (str == NULL)
+// 		return (NULL);
+// 	res = NULL;
+// 	sqt = 0;
+// 	while (*str)
+// 	{
+// 		if (*str == 1)
+// 			sqt = (sqt == 0);
+// 		if (*str == '$' && (ft_isalnum(*(str +1))
+// 				|| *(str +1) == 1 || *(str +1) == 2) && sqt == 0)
+// 			(1) && (str++, str += set_var(str, &res));
+// 		else if (ft_isprint(*str))
+// 			res = _strnjoin(res, str++, 1);
+// 		else
+// 			str++;
+// 	}
+// 	return (res);
+// }
