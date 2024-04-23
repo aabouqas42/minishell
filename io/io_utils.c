@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_analyse.c                                      :+:      :+:    :+:   */
+/*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 11:07:46 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/22 19:54:55 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/04/23 12:47:08 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	set_out(char **arg)
 		action |= O_APPEND;
 	if (data->out > 1)
 		close(data->out);
-	data->out = open(*(arg + 1), action, 0666);
+	data->out = open(remove_qts(*(arg + 1)), action, 0666);
 	if (data->out == -1)
 		perror("open");
 }
@@ -84,6 +84,31 @@ void	set_in_out()
 	}
 }
 
+char	*remove_qts(char *str)
+{
+	char	*new_str;
+	char	qt;
+	int		i;
+
+	new_str = NULL;
+	i = 0;
+	qt = 0;
+	if (!ft_strchr(str, '\'') && !ft_strchr(str, '\"'))
+		return (str);
+	while (str && (str[i] || qt))
+	{
+		if ((str[i] == '\'' && qt != '\"') || (str[i] == '\"' && qt != '\''))
+			qt = (qt == 0) * (str[i]);
+		if ((qt == '\"' && str[i] != '\"') || (qt == '\'' && str[i] != '\''))
+			new_str = _strnjoin(new_str, &str[i], 1);
+		i++;
+	}
+	free (str);
+	if (str && new_str == NULL)
+		return (ft_strdup(""));
+	return (new_str);
+}
+
 char	**get_argv(char **args)
 {
 	t_data	*data;
@@ -106,7 +131,7 @@ char	**get_argv(char **args)
 			args++;
 			data->in = open(*args, O_RDONLY);
 		} else
-			argv = _realloc(argv, *args);
+			argv = _realloc(argv, remove_qts(*args));
 		args++;
 	}
 	return (argv);

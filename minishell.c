@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/23 10:10:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/23 13:03:46 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	program_runner(char **args, int first, int there_is_next)
 		argv = get_argv(args);
 		if (is_valid_cmd(data, argv[0]) == 0)
 			return ;
-		// set_pipes(first, there_is_next);
+		set_pipes(first, there_is_next);
 		set_in_out();
 		execve(data->program_path, argv, env_to_2darray());
 	}
@@ -103,21 +103,23 @@ int	request_input()
 	if (args_is_valid(data->usrinput) == 0)
 		return (do_error(SYNTAX_ERR), 0);
 	_split(data->usrinput);
+	data->cmds = get_commands();
 	i = 0;
-	while (data->args[i])
-	{
-		printf("%s\n", data->args[i++]);
-	}
-	// data->oldfd = 0;
-	// while (data->cmds && data->cmds[i])
+	// while (data->args[i])
 	// {
-	// 	if (!is_valid_cmd(data, data->cmds[i][0]))
-	// 		return (do_error(COMDNF_ERR), 0);
-	// 	program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
-	// 	i++;
+	// 	printf("%s\n", data->args[i++]);
 	// }
+	data->oldfd = 0;
+	while (data->cmds && data->cmds[i])
+	{
+		if (!is_valid_cmd(data, data->cmds[i][0]))
+			return (do_error(COMDNF_ERR), 0);
+		program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
+		i++;
+	}
 	return (0);
 }
+
 
 int	main(int ac, char **av, char **env)
 {
@@ -131,7 +133,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		request_input();
-		// while (waitpid(-1, &data.exit_status, 0) != -1);
+		while (waitpid(-1, &data.exit_status, 0) != -1);
 		// free_matrix(data.cmds);
 		free_tab(data.args);
 		data.args = NULL;

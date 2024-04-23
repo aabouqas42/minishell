@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/23 10:08:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/23 11:25:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	*_calloc(size_t size);
 char	*_expander(char *str);
 int		_spaces(int c);
 int		request_input();
-
+char	*remove_qts(char *str);
 int		set_var(char *argv_str, char **str);
 size_t	args_is_valid(char *str);
 char	**_realloc(char **old_tab, char *to_append);

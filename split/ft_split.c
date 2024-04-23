@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/23 10:12:16 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:14:04 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
 char	*skiper(char *str)
 {
@@ -107,7 +107,7 @@ void	_split(char *str)
 				qt = (qt == 0) * (*str);
 			if (ft_strchr("<>|", *str) && !qt)
 				break;
-			if (*str == '$' && qt != '\'' && (ft_isalnum(*(str +1)) || ft_strchr("\'\"", *(str +1))))
+			if (*str == '$' && qt != '\'' && (ft_isalnum(*(str + 1)) || ft_strchr("\'\"", *(str + 1))))
 				str += set_var(str + 1, &res) + 1;
 			else
 				(1) && (res = _strnjoin(res, str, 1), str++);
