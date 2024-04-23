@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/22 19:24:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/23 10:12:16 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,9 @@ size_t	set_arg(char *str, char **res, t_qutoes qt)
 	// 	|| (!qt.dqt && !qt.sqt && !ft_strchr("\'\"", c)))
 	// {
 	if (c == '$' && qt.sqt == 0 && (ft_isalnum(nc) || ft_strchr("\'\"", nc)))
-	{
 		size += set_var(str + 1, res) + 1;
-		P(".");
-	}
 	else
-	{
 		(1) && (*res = _strnjoin(*res, str, 1), (size++));
-		P(",");
-	}
 	// }
 	// if (size == 0)
 	// 	return (1);
@@ -97,29 +91,31 @@ size_t	set_arg(char *str, char **res, t_qutoes qt)
 // 	return (commands);
 // }
 
-char	**_split(char *str)
+void	_split(char *str)
 {
-	char		**commands;
-	char		*res;
-	char		qt;
+	char	***args_ptr;
+	char	*res;
+	char	qt;
 
-	commands = NULL;
-	data_hook(NULL)->commands = commands;
+	args_ptr = &data_hook(NULL)->args;
 	while (*str)
 	{
-		qt = 0;
-		(1) && (str = skiper(str), res = NULL);
+		(1) && (str = skiper(str), res = NULL, qt = 0);
 		while (*str && (!_spaces(*str) || qt))
 		{
 			if ((*str == '\"' && qt != '\'') || (*str == '\'' && qt != '\"'))
-				qt = !qt * (*str);
+				qt = (qt == 0) * (*str);
+			if (ft_strchr("<>|", *str) && !qt)
+				break;
 			if (*str == '$' && qt != '\'' && (ft_isalnum(*(str +1)) || ft_strchr("\'\"", *(str +1))))
 				str += set_var(str + 1, &res) + 1;
 			else
 				(1) && (res = _strnjoin(res, str, 1), str++);
 		}
-		commands = _realloc(commands, res);
-		str++;
+		*args_ptr = _realloc(*args_ptr, res);
+		if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
+			(1) && (*args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 2)), str +=2);
+		else if (str && *str && ft_strchr("<>|", *str) != NULL)
+			(1) && (*args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 1)), str++);
 	}
-	return (commands);
 }

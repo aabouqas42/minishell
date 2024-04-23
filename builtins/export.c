@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:23:26 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/02 18:51:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:53:51 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int	_export()
 	size_t	i;
 
 	data = data_hook(NULL);
-	if (data == NULL || data->commands == NULL)
+	if (data == NULL || data->args == NULL)
 		return (0);
 	i = 1;
 	value = "";
-	while (data->commands[i])
+	while (data->args[i])
 	{
-		name = data->commands[i];
-		save = ft_strchr(data->commands[i], '=');
+		name = data->args[i];
+		save = ft_strchr(data->args[i], '=');
 		if (save)
 		{
 			if (*(save -1) == '+')
@@ -46,9 +46,9 @@ int	_export()
 	}
 	if (i == 0)
 		return (env_sort(data->env), 0);
-	// if (data->commands[1] == NULL)
+	// if (data->args[1] == NULL)
 	// 	return (env_sort(data->env), 1);
-	// name = data->commands[1];
+	// name = data->args[1];
 	// value = "";
 	// i = 0;
 	// if (ft_strchr(name, '='))

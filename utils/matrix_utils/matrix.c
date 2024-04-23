@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/21 17:43:18 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:52:41 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	***get_commands()
 	char	**commands;
 	int		i;
 
-	commands = data_hook(NULL)->commands;
+	commands = data_hook(NULL)->args;
 	if (check_input() == -1)
 	{
 		do_error(SYNTAX_ERR);

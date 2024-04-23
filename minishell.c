@@ -6,44 +6,28 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/22 18:33:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/23 10:10:27 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-// char	*path_prog(char *cmd)
-// {
-// 	char	*program;
-// 	char	*paths;
-// 	char	*path;
-
-// 	program = NULL;
-// 	path = NULL;
-// 	paths = env_get("PATH", data_hook(NULL));
-// 	while (*paths)
-// 	{
-		
-// 		paths++;
-// 	}
-// }
-
 int	builtins()
 {
-	t_data *data;
+	t_data	*data;
 
 	data = data_hook(NULL);
-	if (is_same(data->commands[0], "exit"))
+	if (is_same(data->args[0], "exit"))
 		safe_exit(0);
-	if (is_same(data->commands[0], "cd"))
+	if (is_same(data->args[0], "cd"))
 		return (cd(data), 1);
-	if (is_same(data->commands[0], "echo"))
+	if (is_same(data->args[0], "echo"))
 		return (echo(), 1);
-	if (is_same(data->commands[0], "pwd"))
+	if (is_same(data->args[0], "pwd"))
 		return (pwd(), 1);
-	if (is_same(data->commands[0], "env"))
+	if (is_same(data->args[0], "env"))
 		return (env_print(data->env), 1);
-	if (is_same(data->commands[0], "export"))
+	if (is_same(data->args[0], "export"))
 		return (_export(), 1);
 	return (0);
 }
@@ -53,7 +37,7 @@ int	check_input()
 	char	**cmds;
 	int		i;
 
-	cmds = data_hook(NULL)->commands;
+	cmds = data_hook(NULL)->args;
 	i = 0;
 	while (cmds[i])
 	{
@@ -76,77 +60,34 @@ int	check_input()
 	return (0);
 }
 
-void	run_cmd(char **argv_tmp, int next_pipe, int isfirst)
+void	program_runner(char **args, int first, int there_is_next)
 {
 	t_data	*data;
 	char	**argv;
 	int		child_pid;
-	int		action;
-	char	*heredoc = NULL;
 
+	ignore first;
+	ignore there_is_next;
 	data = data_hook(NULL);
-	argv = NULL;
+	there_is_next && pipe(data->fds);
 	child_pid = fork();
 	if (child_pid == 0)
 	{
-		while (*argv_tmp)
-		{
-			if (is_same(*argv_tmp, ">") || is_same(*argv_tmp, ">>"))
-			{
-				action = O_RDWR | O_CREAT | (is_same(*argv_tmp, ">") * O_TRUNC) + (is_same(*argv_tmp, ">>") * O_APPEND);
-				argv_tmp++;
-				data->out > 1 && close(data->out);
-				data->out = open(*argv_tmp, action, 0666);
-				if (data->out == -1)
-					perror("open");
-			}else if (is_same(*argv_tmp, "<<"))
-			{
-				argv_tmp++;
-				while (1)
-				{
-					char	*in = readline("heredoc> ");
-					if (in && is_same(in, *argv_tmp))
-						break;
-					heredoc = ft_strjoin(heredoc, in);
-					heredoc = ft_strjoin(heredoc, "\n");
-				}
-				printf("%s\n", heredoc);
-			}
-			else if (is_same(*argv_tmp, "<"))
-			{
-				
-				argv_tmp++;
-				data->in = open(*argv_tmp, O_RDONLY);
-			} else
-				argv = _realloc(argv, *argv_tmp);
-			argv_tmp++;
-		}
-		if (isfirst && next_pipe)
-			dup2(data->fds[1], 1);
-		if (!isfirst && next_pipe)
-		{
-			dup2(data->oldfd, 0);
-			dup2(data->fds[1], 1);
-		}
-		if (!isfirst && !next_pipe)
-			dup2(data->oldfd, 0);
-		close (data->fds[0]);
-		close (data->fds[1]);
-		close(data->oldfd);
-		//
-		// if (data->out != 1)
-		// {
-		// 	dup2(data->out, STDOUT_FILENO);
-		// 	close (data->out);
-		// }
-		// if (data->in != 0)
-		// {
-		// 	dup2(data->in, STDIN_FILENO);
-		// 	close (data->in);
-		// }
-		execve(data_hook(NULL)->program_path, argv, env_to_2darray());
+		argv = get_argv(args);
+		if (is_valid_cmd(data, argv[0]) == 0)
+			return ;
+		// set_pipes(first, there_is_next);
+		set_in_out();
+		execve(data->program_path, argv, env_to_2darray());
 	}
 	free(data->program_path);
+	data->program_path = NULL;
+	if (there_is_next)
+	{
+		close(data->fds[1]);
+		data->oldfd && close(data->oldfd);
+		data->oldfd = data->fds[0];
+	}
 }
 
 int	request_input()
@@ -161,28 +102,21 @@ int	request_input()
 	add_history(data->usrinput);
 	if (args_is_valid(data->usrinput) == 0)
 		return (do_error(SYNTAX_ERR), 0);
-	data->commands = _split(data->usrinput);
+	_split(data->usrinput);
 	i = 0;
-	while (data->commands[i])
+	while (data->args[i])
 	{
-		printf("%s\n", data->commands[i++]);
+		printf("%s\n", data->args[i++]);
 	}
-	// data->cmds = get_commands();
-	// free (data->commands);
-	// i = 0;
+	// data->oldfd = 0;
 	// while (data->cmds && data->cmds[i])
 	// {
-		// if (!is_valid_cmd(data, data->cmds[i][0]))
-		// 	return (do_error(COMDNF_ERR), 0);
-		// pipe(data->fds);
-		// run_cmd(data->cmds[i], data->cmds[i + 1] != NULL, i == 0);
-		// close(data->fds[1]);
-		// data->oldfd && close(data->oldfd);
-		// data->oldfd = data->fds[0];
+	// 	if (!is_valid_cmd(data, data->cmds[i][0]))
+	// 		return (do_error(COMDNF_ERR), 0);
+	// 	program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
 	// 	i++;
 	// }
 	return (0);
-	// return (close(data->oldfd), data->oldfd = 0, -1);
 }
 
 int	main(int ac, char **av, char **env)
@@ -199,6 +133,8 @@ int	main(int ac, char **av, char **env)
 		request_input();
 		// while (waitpid(-1, &data.exit_status, 0) != -1);
 		// free_matrix(data.cmds);
+		free_tab(data.args);
+		data.args = NULL;
 		free (data.usrinput);
 	}
 	return (EXIT_SUCCESS);

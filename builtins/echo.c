@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/19 10:40:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:53:43 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	echo()
 	i = 1;
 	nl = 1;
 	data = data_hook(NULL);
-	if (data->commands[i] && is_same(data->commands[i], "-n"))
+	if (data->args[i] && is_same(data->args[i], "-n"))
 		(nl = 0, i++);
-	while (data->commands[i])
+	while (data->args[i])
 	{
-		printf("%s", data->commands[i]);
+		printf("%s", data->args[i]);
 		i++;
-		if (data->commands[i])
+		if (data->args[i])
 			printf(" ");
 	}
 	if (nl == 0)

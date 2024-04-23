@@ -1,16 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strjoin.c                                          :+:      :+:    :+:   */
+/*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 23:51:43 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/18 12:52:40 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/03/23 14:57:39 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/04/22 20:15:07 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+size_t	_strlen(char *str)
+{
+	return (_strlenc(str, 0));
+}
+
+int	is_same(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while ((s1 && s2) && (s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 char	*_strnjoin(char *str1, char *str2, size_t size)
 {
@@ -36,6 +55,34 @@ char	*_strnjoin(char *str1, char *str2, size_t size)
 		i++;
 		str2++;
 		size--;
+	}
+	str[i] = '\0';
+	return (free (str1), str);
+}
+
+char	*_strjoin(char *str1, char *str2)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	if (str1 == NULL && str2 == NULL)
+		return (NULL);
+	len = _strlen(str1) + _strlen(str2);
+	str = malloc (len + 1);
+	if (str == NULL)
+		return (free (str1), safe_exit(-1), NULL);
+	i = 0;
+	while (str1 && str1[i])
+	{
+		str[i] = str1[i];
+		i++;
+	}
+	while (str2 && *str2)
+	{
+		str[i] = *str2;
+		i++;
+		str2++;
 	}
 	str[i] = '\0';
 	return (free (str1), str);
