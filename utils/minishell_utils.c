@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/23 09:52:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:40:03 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,29 @@ t_data	*data_hook(t_data *data)
 	return (data_saved);
 }
 
-void	do_error(t_error_type errtype)
+void	do_error(t_error_type errtype, char *reason)
 {
-	char	*err;
-
 	if (errtype == SYNTAX_ERR)
 	{
-		err = "Error : minishell : Syntax ERROR\n";
+		ft_putstr_fd("minishell : syntax error near unexpected token {", 2);
+		ft_putstr_fd(reason, 2);
+		ft_putstr_fd("}\n", 2);
 		data_hook(NULL)->exit_status = 256 << 8;
 	}
 	if (errtype == COMDNF_ERR)
 	{
-		err = "Error : minishell : Command Not Found\n";
+		ft_putstr_fd("minishell : ", 2);
+		ft_putstr_fd(reason, 2);
+		ft_putstr_fd(": command not found\n", 2);
 		data_hook(NULL)->exit_status = 127 << 8;
 	}
-	ft_putstr_fd(err, 2);
+	if (errtype == ISDIR_ERR)
+	{
+		ft_putstr_fd("minishell : ", 2);
+		ft_putstr_fd(reason, 2);
+		ft_putstr_fd(": is a directory\n", 2);
+		data_hook(NULL)->exit_status = 127 << 8;
+	}
 }
 
 void	free_tab(char **array)
