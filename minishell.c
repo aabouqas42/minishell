@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/23 20:12:12 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:41:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,8 @@ void	program_runner(char **args, int first, int there_is_next)
 	t_data	*data;
 	char	**argv;
 
-	ignore first;
-	ignore there_is_next;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
-	
 	if (fork() == 0)
 	{
 		argv = get_argv(args);
@@ -104,27 +101,14 @@ int	request_input()
 	add_history(data->usrinput);
 	if (!check_quotes_closed(data->usrinput))
 		return (0);
-	expand_variables(data->usrinput);
+	_split(data->usrinput);
 	if (check_input(data->args) == -1)
-	{
 		return (0);
-	}
 	data->cmds = get_commands();
 	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])
 	{
-		//DEBUG
-		// int j = 0;
-		// while (data->cmds[i][j])
-		// {
-		// 	P("(%s)", data->cmds[i][j]);
-		// 	j++;
-		// }
-		// P("\n");
-		
-		if (!is_valid_cmd(data, data->cmds[i][0]))
-			return (0);
 		program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
 		i++;
 	}

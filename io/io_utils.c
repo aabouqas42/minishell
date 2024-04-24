@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/23 20:44:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:48:02 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,14 @@ char	*remove_qts(char *str)
 	while (str && (str[i] || qt))
 	{
 		if ((str[i] == '\'' && qt != '\"') || (str[i] == '\"' && qt != '\''))
-			qt = (qt == 0) * (str[i++]);
-		new_str = _strnjoin(new_str, &str[i], 1);
-		i += str[i] != 0;
+		{
+			qt = (qt == 0) * (str[i]);
+			i++;
+			continue ;
+		}
+		if (str[i] != qt)
+			new_str = _strnjoin(new_str, &str[i], 1);
+		i++;
 	}
 	free (str);
 	if (str && new_str == NULL)
