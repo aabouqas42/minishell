@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 13:12:28 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:20:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,19 @@ int	check_input(char **cmds)
 	{
 		if (cmds[0][0] == '|')
 			do_error(SYNTAX_ERR, cmds[i]);
-		else if (is_io_op(cmds[i]))
+		else if (ft_strchr("<>", cmds[i][0]))
 		{
-			#error jhhhhhh fix it
-			if (ft_strncmp(cmds[i +1], ">>", 3) || )
+			if (cmds[i +1] && ft_strchr("<>|", cmds[i +1][0]))
+				return (do_error(SYNTAX_ERR, cmds[i +1]), -1);
+			else if (cmds[i +1] == NULL)
+				return (do_error(SYNTAX_ERR, "newline"), -1);
+		}else if (ft_strchr("|", cmds[i][0]))
+		{
+			if (cmds[i +1] && ft_strchr("|", cmds[i +1][0]))
 				return (do_error(SYNTAX_ERR, cmds[i +1]), -1);
 			else if (cmds[i +1] == NULL)
 				return (do_error(SYNTAX_ERR, "newline"), -1);
 		}
-		// if ((i == 0 && is_io_op(cmds[i]))
-		// 	|| (is_io_op(cmds[i]) && cmds[i + 1] == NULL)
-		// 	|| (is_same(cmds[i], "|")
-		// 	&& is_same(cmds[i + 1], "|"))
-		// 	)
-		// {
-		// 	if (cmds[i +1] != NULL)
-		// 		do_error(SYNTAX_ERR, cmds[i +1]);
-		// 	else
-		// 		do_error(SYNTAX_ERR, "newline");
-		// 	return (-1);
-		// }
 		i++;
 	}
 	return (0);

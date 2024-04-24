@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/24 12:43:53 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:17:31 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	do_error(t_error_type errtype, char *reason)
 {
 	if (errtype == SYNTAX_ERR)
 	{
-		ft_putstr_fd("minishell : syntax error near unexpected token '", 2);
+		ft_putstr_fd("minishell : syntax error near unexpected token `", 2);
 		ft_putstr_fd(reason, 2);
 		ft_putstr_fd("'\n", 2);
 		data_hook(NULL)->exit_status = 258 << 8;
