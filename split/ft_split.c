@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 16:58:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:19:04 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	_split(char *str)
 			{
 				str++;
 				continue;
-			} else if (*str == '$' && qt != '\'' && (ft_isalnum(*(str + 1))))
+			} else if (*str == '$' && qt != '\'' && (ft_isalnum(*(str + 1)) || (*(str + 1) && ft_strchr("_?", *(str + 1)))))
 				str += set_var(str + 1, &res) + 1;
 			else
 				(1) && (res = _strnjoin(res, str, 1), str++);
