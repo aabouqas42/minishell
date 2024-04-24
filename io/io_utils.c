@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/24 09:48:02 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 20:18:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char	*remove_qts(char *str)
 			new_str = _strnjoin(new_str, &str[i], 1);
 		i++;
 	}
+	#error fix leaks in tests '' and "" inputs in your prompt and check leaks !!!
 	free (str);
 	if (str && new_str == NULL)
 		return (ft_strdup(""));

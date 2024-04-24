@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/24 15:17:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/24 20:10:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ void	do_error(t_error_type errtype, char *reason)
 		ft_putstr_fd(reason, 2);
 		ft_putstr_fd(": is a directory\n", 2);
 		data_hook(NULL)->exit_status = 126 << 8;
+	}
+	if (errtype == NSFODIR_ERR)
+	{
+		ft_putstr_fd("minishell : ", 2);
+		ft_putstr_fd(reason, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		data_hook(NULL)->exit_status = 127 << 8;
 	}
 }
 

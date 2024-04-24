@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 15:20:37 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/24 20:18:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ int	check_input(char **cmds)
 	while (cmds[i])
 	{
 		if (cmds[0][0] == '|')
-			do_error(SYNTAX_ERR, cmds[i]);
-		else if (ft_strchr("<>", cmds[i][0]))
+			return (do_error(SYNTAX_ERR, cmds[i]), -1);
+		if (ft_strchr("<>", cmds[i][0]))
 		{
 			if (cmds[i +1] && ft_strchr("<>|", cmds[i +1][0]))
 				return (do_error(SYNTAX_ERR, cmds[i +1]), -1);
 			else if (cmds[i +1] == NULL)
 				return (do_error(SYNTAX_ERR, "newline"), -1);
-		}else if (ft_strchr("|", cmds[i][0]))
+		}
+		if (ft_strchr("|", cmds[i][0]))
 		{
 			if (cmds[i +1] && ft_strchr("|", cmds[i +1][0]))
 				return (do_error(SYNTAX_ERR, cmds[i +1]), -1);
@@ -75,8 +76,6 @@ void	program_runner(char **args, int first, int there_is_next)
 		set_in_out();
 		execve(data->program_path, argv, env_to_2darray());
 	}
-	free(data->program_path);
-	data->program_path = NULL;
 	if (there_is_next)
 	{
 		close(data->fds[1]);
@@ -124,10 +123,13 @@ int	main(int ac, char **av, char **env)
 	{
 		request_input();
 		while (waitpid(-1, &data.exit_status, 0) != -1);
-		// free_matrix(data.cmds);
-		free_tab(data.args);
+		#error fix leaks in tests '' and "" inputs in your prompt and check leaks !!!
+		free_matrix(data.cmds);
+		data.cmds = NULL;
+		free(data.args);
 		data.args = NULL;
-		free (data.usrinput);
+		// free (data.usrinput);
+		// data.usrinput = NULL;
 	}
 	return (EXIT_SUCCESS);
 }

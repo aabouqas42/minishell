@@ -58,7 +58,7 @@
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "cross",
+				"type": "default",
 				"rotation": 0
 			},
 			"isFocusMode": false,
@@ -68,8 +68,8 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1658.333251953125,
-				"h": 750.8333129882812
+				"w": 1578.333251953125,
+				"h": 1019.1666259765625
 			},
 			"insets": [
 				false,
@@ -98,18 +98,20 @@
 			"typeName": "instance"
 		},
 		{
-			"x": 8256.391370003577,
-			"y": 8833.6180004878,
-			"z": 0.1,
+			"x": -1074.8371370278062,
+			"y": -3418.0721810537616,
+			"z": 1.0465542092016287,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
 		},
 		{
-			"editingShapeId": null,
+			"editingShapeId": "shape:v16b6k-uUludWqiXChB1R",
 			"croppingShapeId": null,
-			"selectedShapeIds": [],
-			"hoveredShapeId": null,
+			"selectedShapeIds": [
+				"shape:v16b6k-uUludWqiXChB1R"
+			],
+			"hoveredShapeId": "shape:v16b6k-uUludWqiXChB1R",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -121,9 +123,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": 4771.081774527673,
-			"y": -2962.9148754878006,
-			"lastActivityTimestamp": 1713699893554,
+			"x": 1422.4996403658452,
+			"y": 4011.3571745757163,
+			"lastActivityTimestamp": 1713982735089,
 			"meta": {}
 		},
 		{
@@ -34369,6 +34371,52 @@
 			},
 			"parentId": "page:page",
 			"index": "b8m",
+			"typeName": "shape"
+		},
+		{
+			"x": 1793.4248134496213,
+			"y": 3719.81996060199,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:OIkNnXwU2CMkBMjOPbniN",
+			"type": "text",
+			"props": {
+				"color": "light-blue",
+				"size": "m",
+				"w": 291.09112548828125,
+				"text": "/bin:/usr/bin:usr/local/bin",
+				"font": "sans",
+				"align": "start",
+				"autoSize": true,
+				"scale": 1.8046807270960554
+			},
+			"parentId": "page:page",
+			"index": "b8n",
+			"typeName": "shape"
+		},
+		{
+			"x": 1309.8095905886423,
+			"y": 3856.758639898909,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:v16b6k-uUludWqiXChB1R",
+			"type": "text",
+			"props": {
+				"color": "light-blue",
+				"size": "m",
+				"w": 337.6747710477669,
+				"text": "int  ft_stoken(src, &dest, ':')\n{\n    static char savec;\n    static char *saveptr;\n    int i = 0;\n\n    if (saveptr == null)\n        saveptr = src;\n    while (saveptr[i])\n       {\n        \n        i++;\n      }\n\n}",
+				"font": "sans",
+				"align": "start",
+				"autoSize": true,
+				"scale": 1.10962694202978
+			},
+			"parentId": "page:page",
+			"index": "b8o",
 			"typeName": "shape"
 		}
 	]

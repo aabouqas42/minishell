@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 10:40:44 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 19:34:12 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 typedef enum e_error_type{
 	SYNTAX_ERR,
 	COMDNF_ERR,
-	ISDIR_ERR
+	ISDIR_ERR,
+	NSFODIR_ERR
 }	t_error_type;
 
 void	do_error(t_error_type errtype, char *reason);
@@ -124,5 +125,7 @@ void	set_out(char **arg);
 void	set_in_out();
 char	**get_argv(char **args);
 void	set_pipes(int first, int there_is_next);
+
+char	*ft_strtokenize(char *src, char c);
 
 #endif
