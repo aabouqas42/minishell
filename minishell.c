@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 16:11:03 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 19:43:06 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void	program_runner(char **args, int first, int there_is_next)
 		set_in_out();
 		execve(data->program_path, argv, env_to_2darray());
 	}
-	free(data->program_path);
-	data->program_path = NULL;
 	if (there_is_next)
 	{
 		close(data->fds[1]);
@@ -125,8 +123,8 @@ int	main(int ac, char **av, char **env)
 		request_input();
 		while (waitpid(-1, &data.exit_status, 0) != -1);
 		free_matrix(data.cmds);
-		free (data.args);
-		free (data.usrinput);
+		// free (data.args);
+		// free (data.usrinput);
 		data.args = NULL;
 		data.usrinput = NULL;
 		data.cmds = NULL;
