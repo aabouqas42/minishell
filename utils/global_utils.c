@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/23 12:38:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:48:40 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_io_op(char	*str)
 {
 	if (str == NULL)
-		return (1);
+		return (0);
 	return (
 		(ft_strchr("<>|", *str) && *(str + 1) == 0)
 		|| ft_strncmp(str, ">>", 3) == 0

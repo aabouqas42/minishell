@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 10:41:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:12:28 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,11 @@ int	check_input(char **cmds)
 			do_error(SYNTAX_ERR, cmds[i]);
 		else if (is_io_op(cmds[i]))
 		{
-			if (is_io_op(cmds[i +1]))
+			#error jhhhhhh fix it
+			if (ft_strncmp(cmds[i +1], ">>", 3) || )
 				return (do_error(SYNTAX_ERR, cmds[i +1]), -1);
+			else if (cmds[i +1] == NULL)
+				return (do_error(SYNTAX_ERR, "newline"), -1);
 		}
 		// if ((i == 0 && is_io_op(cmds[i]))
 		// 	|| (is_io_op(cmds[i]) && cmds[i + 1] == NULL)

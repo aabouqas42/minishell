@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/23 18:40:03 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:43:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	do_error(t_error_type errtype, char *reason)
 {
 	if (errtype == SYNTAX_ERR)
 	{
-		ft_putstr_fd("minishell : syntax error near unexpected token {", 2);
+		ft_putstr_fd("minishell : syntax error near unexpected token '", 2);
 		ft_putstr_fd(reason, 2);
-		ft_putstr_fd("}\n", 2);
-		data_hook(NULL)->exit_status = 256 << 8;
+		ft_putstr_fd("'\n", 2);
+		data_hook(NULL)->exit_status = 258 << 8;
 	}
 	if (errtype == COMDNF_ERR)
 	{
@@ -42,7 +42,7 @@ void	do_error(t_error_type errtype, char *reason)
 		ft_putstr_fd("minishell : ", 2);
 		ft_putstr_fd(reason, 2);
 		ft_putstr_fd(": is a directory\n", 2);
-		data_hook(NULL)->exit_status = 127 << 8;
+		data_hook(NULL)->exit_status = 126 << 8;
 	}
 }
 
