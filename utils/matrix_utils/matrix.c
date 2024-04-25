@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/25 10:10:13 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:47:10 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ char	***get_commands()
 		if (is_same(*commands, "|") == 0)
 			cmds[i] = _realloc(cmds[i], *commands);
 		else
+		{
+			free(*commands);
 			i++;
+		}
 		commands++;
 	}
 	return (cmds);

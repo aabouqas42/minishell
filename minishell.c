@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 10:37:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:11:01 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	request_input()
 	if (check_input(data->args) == -1)
 		return (0);
 	data->cmds = get_commands();
+	free (data->args);
+	data->args = NULL;
 	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])
@@ -127,9 +129,7 @@ int	main(int ac, char **av, char **env)
 		request_input();
 		while (waitpid(-1, &data.exit_status, 0) != -1);
 		free_matrix(data.cmds);
-		free (data.args);
 		free (data.usrinput);
-		data.args = NULL;
 		data.usrinput = NULL;
 		data.cmds = NULL;
 	}
