@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 10:36:21 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:06:14 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # define P printf
 # define ignore (void)
 
+
+int		is_valid_input(char *usrin);
+char	*skiper(char *str);
+char	saver(char tosave);
 // # define ERRT_SYNTAX "syntax error near unexpected token `"
 // # define ERRT_COMDNF "command not found"
 
@@ -32,7 +36,8 @@ typedef enum e_error_type{
 	SYNTAX_ERR,
 	COMDNF_ERR,
 	ISDIR_ERR,
-	NSFODIR_ERR
+	NSFODIR_ERR,
+	AMBIGUOUS_ERR
 }	t_error_type;
 
 void	do_error(t_error_type errtype, char *reason);
@@ -79,7 +84,7 @@ void	env_sort(t_env *env);
 char	***get_commands();
 int		cmds_counter(char **cmds);
 void	data_init(char **base_env);
-void	set_defaults();
+void	init_default_envs();
 void	free_matrix(char ***matrix);
 int		env_valid_name(char *name);
 void	env_print(t_env	*head);

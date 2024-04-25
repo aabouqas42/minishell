@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 16:52:18 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:30:17 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ char *env_grepvalue(char *name)
 	t_data	*data;
 	t_env	*env;
 
-	data = data_hook(NULL);
-	if (name != NULL && data != NULL)
+	if (name != NULL)
 	{
+		data = data_hook(NULL);
 		env = data->env;
 		while (env)
 		{

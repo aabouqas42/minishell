@@ -6,22 +6,17 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/21 17:43:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:06:38 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	set_defaults()
+void	init_default_envs()
 {
-	t_data	*data;
-
-	data = data_hook(NULL);
-	if (data == NULL)
-		return ;
-	if (env_grepvalue("PATH") == 0)
+	if (env_grepvalue("PATH") == NULL)
 		env_export("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
-	if (env_grepvalue("SHLVL") == 0)
+	if (env_grepvalue("SHLVL") == NULL)
 		env_export("SHLVL", "1");
 }
 
