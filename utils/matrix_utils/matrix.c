@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/24 20:10:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:10:13 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ void	free_matrix(char ***matrix)
 	if (matrix == NULL)
 		return ;
 	i = 0;
-	while (matrix[i])
+	while (matrix[i] != NULL)
 	{
 		free_tab(matrix[i]);
-		i++;
+		i++;    
 	}
 	free (matrix);
 }

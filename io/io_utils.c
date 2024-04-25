@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/25 10:02:07 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:20:55 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	open_heredoc(char *target)
 void	set_out(char **arg)
 {
 	t_data	*data;
+	char	*ptr;
 	int		action;
 
 	data = data_hook(NULL);
@@ -40,9 +41,11 @@ void	set_out(char **arg)
 		action |= O_APPEND;
 	if (data->out > 1)
 		close(data->out);
-	data->out = open(remove_qts(*(arg + 1)), action, 0666);
+	ptr = remove_qts(*(arg + 1));
+	data->out = open(ptr, action, 0666);
+	free (ptr);
 	if (data->out == -1)
-		perror("open");
+		exit(-1);
 }
 
 void	set_pipes(int first, int there_is_next)
@@ -76,12 +79,12 @@ void	set_in_out()
 	t_data	*data;
 
 	data = data_hook(NULL);
-	if (data->out != 1)
+	if (data->out > 1)
 	{
 		dup2(data->out, STDOUT_FILENO);
 		close (data->out);
 	}
-	if (data->in != 0)
+	if (data->in > 0)
 	{
 		dup2(data->in, STDIN_FILENO);
 		close (data->in);
@@ -111,7 +114,6 @@ char	*remove_qts(char *str)
 			new_str = _strnjoin(new_str, &str[i], 1);
 		i++;
 	}
-	// free (str);
 	if (str && new_str == NULL)
 		return (ft_strdup(""));
 	return (new_str);
@@ -138,6 +140,9 @@ char	**get_argv(char **args)
 		{
 			args++;
 			data->in = open(*args, O_RDONLY);
+			#error fix leaks and nsf
+			if (data->in == -1)
+				(do_error(NSFODIR_ERR, *args), safe_exit(-1));
 		} else
 			argv = _realloc(argv, remove_qts(*args));
 		args++;

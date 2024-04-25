@@ -6,11 +6,12 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/24 20:10:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:10:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/minishell.h"
+#include <stdio.h>
 
 t_data	*data_hook(t_data *data)
 {
@@ -100,5 +101,5 @@ char	*get_prompt()
 	// if (prompt == NULL)
 	// 	safe_exit(-1);
 	// return (prompt);
-	return ("mait-elk@1337.ma $> ");
+	return ("aabouqas@1337.ma $> ");
 }

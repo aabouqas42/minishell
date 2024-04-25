@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 18:55:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:10:03 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,11 @@ void	_split(char *str)
 				qt = (qt == 0) * (*str);
 			if (ft_strchr("<>|", *str) && !qt)
 				break;
-			if (*str == '$' && qt != '\'' && (ft_isalnum(*(str +1)) || *(str + 1) == '?' || *(str +1) == qt))
+			if (*str == '$' && (qt == 0 && *(str + 1) && ft_strchr("\'\"", *(str + 1))))
+			{
+				str++;
+				continue;
+			} else if (*str == '$' && qt != '\'' && (ft_isalnum(*(str + 1)) || (*(str + 1) && ft_strchr("_?", *(str + 1)))))
 				str += set_var(str + 1, &res) + 1;
 			else
 				(1) && (res = _strnjoin(res, str, 1), str++);

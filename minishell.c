@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 09:35:16 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:19:44 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ int	check_input(char **cmds)
 void	program_runner(char **args, int first, int there_is_next)
 {
 	t_data	*data;
-	char	**argv;
+	char	**argv; 
 
+	ignore first;
+	ignore there_is_next;
+	ignore args;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
 	if (fork() == 0)
@@ -124,11 +127,11 @@ int	main(int ac, char **av, char **env)
 		request_input();
 		while (waitpid(-1, &data.exit_status, 0) != -1);
 		free_matrix(data.cmds);
-		data.cmds = NULL;
-		free(data.args);
+		free (data.args);
+		free (data.usrinput);
 		data.args = NULL;
-		// free (data.usrinput);
-		// data.usrinput = NULL;
+		data.usrinput = NULL;
+		data.cmds = NULL;
 	}
 	return (EXIT_SUCCESS);
 }
