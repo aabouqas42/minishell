@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 10:19:44 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:37:16 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	program_runner(char **args, int first, int there_is_next)
 	{
 		argv = get_argv(args);
 		if (is_valid_cmd(data, argv[0]) == 0)
-			return ;
+			exit(-1);
 		set_pipes(first, there_is_next);
 		set_in_out();
 		execve(data->program_path, argv, env_to_2darray());

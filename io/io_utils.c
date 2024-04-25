@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/25 10:20:55 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:35:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ char	**get_argv(char **args)
 		{
 			args++;
 			data->in = open(*args, O_RDONLY);
-			#error fix leaks and nsf
 			if (data->in == -1)
 				(do_error(NSFODIR_ERR, *args), safe_exit(-1));
 		} else

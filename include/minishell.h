@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 19:34:12 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:36:21 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int		env_unset(char *name, t_env **env);
 t_env	*env_get_last(t_env	*env);
 void	env_sort(t_env *env);
 char	***get_commands();
+int		cmds_counter(char **cmds);
 void	data_init(char **base_env);
 void	set_defaults();
 void	free_matrix(char ***matrix);
