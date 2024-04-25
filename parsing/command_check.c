@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 16:23:07 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:46:32 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,67 @@ size_t	is_symbolee(char *str)
 }
 
 
-int	is_valid_input(char *usrin)
-{
-	char	*res;
-	char	qt;
+// int	is_valid_input(char *usrin)
+// {
+// 	char	*res;
+// 	char	qt;
 
-	while (*usrin)
+// 	while (*usrin)
+// 	{
+// 		(1) && (usrin = skiper(usrin), res = NULL, qt = 0);
+// 		while (*usrin && (!_spaces(*usrin) || qt))
+// 		{
+// 			if ((*usrin == '\"' && qt != '\'') || (*usrin == '\'' && qt != '\"'))
+// 				qt = (qt == 0) * (*usrin);
+// 			if (ft_strchr("<>|", *usrin) && !qt)
+// 				break;
+// 			(1) && (res = _strnjoin(res, usrin, 1), usrin++);
+// 		}
+// 		printf("[%s] ", res);
+// 		usrin += is_symbolee(usrin);
+// 	}
+// 	printf("\n");
+// 	return (0);
+// }
+
+char	*_strchr(char *s, char c)
+{
+	while (*s)
 	{
-		(1) && (usrin = skiper(usrin), res = NULL, qt = 0);
-		while (*usrin && (!_spaces(*usrin) || qt))
-		{
-			if ((*usrin == '\"' && qt != '\'') || (*usrin == '\'' && qt != '\"'))
-				qt = (qt == 0) * (*usrin);
-			if (ft_strchr("<>|", *usrin) && !qt)
-				break;
-			(1) && (res = _strnjoin(res, usrin, 1), usrin++);
-		}
-		printf("[%s] ", res);
-		usrin += is_symbolee(usrin);
+		if (*s == c)
+			return (s);
+		s++;
 	}
-	printf("\n");
 	return (0);
+}
+
+int	is_valid_input(char **usrin)
+{
+	char	**args;
+	int	i;
+
+	i = 0;
+	args = NULL;
+	if (is_same(usrin[0], "|"))
+		return (do_error(SYNTAX_ERR, usrin[0]), 0);
+	while (usrin && usrin[i])
+	{
+		if (is_io_op(usrin[i]) && usrin[i + 1] == NULL)
+				return (do_error(SYNTAX_ERR, "newline"), 0);
+		if (_strchr("<>", usrin[i][0]) && !is_same(usrin[i], "<<"))
+		{
+			if (usrin[i + 1] && usrin[i + 1][0] == '$')
+				if (!(_strchr(usrin[i +1], '\"') || _strchr(usrin[i +1], '\'')))
+					if (!env_grepvalue(&usrin[i + 1][1]))
+						return (do_error(AMBIGUOUS_ERR, usrin[i + 1]), 0);
+			if (_strchr("<>|", usrin[i + 1][0]))
+				return (do_error(SYNTAX_ERR, usrin[i + 1]), 0);
+		}
+		if (_strchr("|", usrin[i][0]) && _strchr("|", usrin[i + 1][0]))
+			return (do_error(SYNTAX_ERR, usrin[i + 1]), 0);
+		i++;
+	}
+	return (1);
 }
 
 void	get_program_path(char *cmd)

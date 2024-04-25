@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 17:06:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:44:52 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@
 # define ignore (void)
 
 
-int		is_valid_input(char *usrin);
+// dont forget to delete the following line :)
+void	prt_tab(char **tab);
+
+int		is_valid_input(char **usrin);
 char	*skiper(char *str);
 char	saver(char tosave);
 // # define ERRT_SYNTAX "syntax error near unexpected token `"
