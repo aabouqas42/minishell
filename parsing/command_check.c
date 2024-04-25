@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 16:13:44 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:26:02 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,28 @@ size_t	is_symbolee(char *str)
 }
 
 
-int	is_valid_input(char *usrin)
-{
-	char	*res;
-	char	qt;
-	size_t	s = 0;
+// int	is_valid_input(char *usrin)
+// {
+// 	char	*res;
+// 	char	qt;
 
-	while (*usrin)
-	{
-		(1) && (usrin = skiper(usrin), res = NULL, qt = 0);
-		while (*usrin && (!_spaces(*usrin) || qt))
-		{
-			if ((*usrin == '\"' && qt != '\'') || (*usrin == '\'' && qt != '\"'))
-				qt = (qt == 0) * (*usrin);
-			if (ft_strchr("<>|", *usrin) && !qt)
-				break;
-			(1) && (res = _strnjoin(res, usrin, 1), usrin++);
-		}
-		printf("[%s] ", res);
-		usrin += is_symbolee(usrin);
-	}
-	printf("\n");
-	return (0);
-}
+// 	while (*usrin)
+// 	{
+// 		(1) && (usrin = skiper(usrin), res = NULL, qt = 0);
+// 		while (*usrin && (!_spaces(*usrin) || qt))
+// 		{
+// 			if ((*usrin == '\"' && qt != '\'') || (*usrin == '\'' && qt != '\"'))
+// 				qt = (qt == 0) * (*usrin);
+// 			if (ft_strchr("<>|", *usrin) && !qt)
+// 				break;
+// 			(1) && (res = _strnjoin(res, usrin, 1), usrin++);
+// 		}
+// 		printf("[%s] ", res);
+// 		usrin += is_symbolee(usrin);
+// 	}
+// 	printf("\n");
+// 	return (0);
+// }
 
 void	get_program_path(char *cmd)
 {

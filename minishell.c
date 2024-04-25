@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 15:57:23 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:33:33 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,11 @@ int	request_input()
 	add_history(data->usrinput);
 	if (!check_quotes_closed(data->usrinput))
 		return (0);
-	if (!is_valid_input(data->usrinput))
-		return (0);
+	// if (!is_valid_input(data->usrinput))
+	// 	return (0);
 	_split(data->usrinput);
+	prt_tab(data->args);
+	return 0;
 	if (check_input(data->args) == -1)
 		return (0);
 	data->cmds = get_commands();

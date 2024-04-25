@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
+#    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/04/24 20:12:34 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/04/25 16:32:56 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS = 	parsing/command_check.c \
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
 		env/env_free.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \
+		temp_utils.c\
 		#multiples/
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
