@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 20:18:37 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 09:35:16 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ int	main(int ac, char **av, char **env)
 	{
 		request_input();
 		while (waitpid(-1, &data.exit_status, 0) != -1);
-		#error fix leaks in tests '' and "" inputs in your prompt and check leaks !!!
 		free_matrix(data.cmds);
 		data.cmds = NULL;
 		free(data.args);

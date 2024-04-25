@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/24 20:18:40 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:02:07 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,18 @@ void	set_pipes(int first, int there_is_next)
 
 	data = data_hook(NULL);
 	if (first && there_is_next)
-		dup2(data->fds[1], 1);
+	{
+		(data->out == 1) && dup2(data->fds[1], 1);
+	}
 	if (!first && there_is_next)
 	{
-		dup2(data->oldfd, 0);
-		dup2(data->fds[1], 1);
+		(data->in == 0) && dup2(data->oldfd, 0);
+		(data->out == 1) && dup2(data->fds[1], 1);
 	}
 	if (!first && !there_is_next)
-		dup2(data->oldfd, 0);
+	{
+		(data->in == 0) && dup2(data->oldfd, 0);
+	}
 	if (there_is_next)
 	{
 		close (data->fds[0]);
@@ -107,8 +111,7 @@ char	*remove_qts(char *str)
 			new_str = _strnjoin(new_str, &str[i], 1);
 		i++;
 	}
-	#error fix leaks in tests '' and "" inputs in your prompt and check leaks !!!
-	free (str);
+	// free (str);
 	if (str && new_str == NULL)
 		return (ft_strdup(""));
 	return (new_str);
