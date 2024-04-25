@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 16:33:33 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:38:06 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ int	check_input(char **cmds)
 	{
 		if (cmds[i][0] && ft_strchr("<>", cmds[i][0]))
 		{
-			if (cmds[i +1] && ft_strchr("<>|", cmds[i + 1][0]))
+			if (cmds[i + 1] && ft_strchr("<>|", cmds[i + 1][0]))
 				return (do_error(SYNTAX_ERR, cmds[i + 1]), -1);
-			else if (cmds[i +1] == NULL)
-				return (do_error(SYNTAX_ERR, "newlineee"), -1);
+			else if (cmds[i + 1] == NULL)
+				return (do_error(SYNTAX_ERR, "newline"), -1);
 		}
 		if (cmds[i][0] && ft_strchr("|", cmds[i][0]))
 		{
@@ -99,9 +99,9 @@ int	request_input()
 	add_history(data->usrinput);
 	if (!check_quotes_closed(data->usrinput))
 		return (0);
-	// if (!is_valid_input(data->usrinput))
-	// 	return (0);
 	_split(data->usrinput);
+	if (!is_valid_input(data->args))
+		return (0);
 	prt_tab(data->args);
 	return 0;
 	if (check_input(data->args) == -1)

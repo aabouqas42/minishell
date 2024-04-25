@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 16:32:12 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:40:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 // dont forget to delete the following line :)
 void	prt_tab(char **tab);
 
-int		is_valid_input(char *usrin);
+int		is_valid_input(char **usrin);
 char	*skiper(char *str);
 char	saver(char tosave);
 // # define ERRT_SYNTAX "syntax error near unexpected token `"

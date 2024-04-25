@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 16:26:02 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:40:11 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,46 @@ size_t	is_symbolee(char *str)
 // 	printf("\n");
 // 	return (0);
 // }
+
+char	*_strchr(char *s, char c)
+{
+	while (*s)
+	{
+		if (*s == c)
+			return (s);
+		s++;
+	}
+	return (0);
+}
+
+int	is_valid_input(char **usrin)
+{
+	char	**args;
+	int	i;
+
+	i = 0;
+	args = NULL;
+	if (is_same(usrin[0], "|"))
+		return (do_error(SYNTAX_ERR, usrin[0]), 0);
+	while (usrin && usrin[i])
+	{
+		if (is_io_op(usrin[i]) && usrin[i + 1] == NULL)
+				return (do_error(SYNTAX_ERR, "newline"), 0);
+		if (_strchr("<>", usrin[i][0]) && !is_same(usrin[i], "<<"))
+		{
+			if (usrin[i + 1] && usrin[i + 1][0] == '$')
+				if (!(_strchr(usrin[i +1], '\"') || _strchr(usrin[i +1], '\'')))
+					if (!env_grepvalue(&usrin[i + 1][1]))
+						return (do_error(AMBIGUOUS_ERR, usrin[i + 1]), 0);
+			if (_strchr("<>|", usrin[i + 1][0]))
+				return (do_error(SYNTAX_ERR, usrin[i + 1]), 0);
+		}
+		if (_strchr("|", usrin[i][0]) && _strchr("|", usrin[i + 1][0]))
+			return (do_error(SYNTAX_ERR, usrin[i + 1]), 0);
+		i++;
+	}
+	return (1);
+}
 
 void	get_program_path(char *cmd)
 {

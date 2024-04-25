@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/25 13:30:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:37:40 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	set_out(char **arg)
 	char	*ptr;
 	int		action;
 
-	if (**arg == '\0')
-	{
-		do_error(AMBIGUOUS_ERR, "eferre");
-		exit(-1);
-	}
+	// if (**arg == '\0')
+	// {
+	// 	do_error(AMBIGUOUS_ERR, "eferre");
+	// 	exit(-1);
+	// }
 	data = data_hook(NULL);
 	action = O_RDWR | O_CREAT;
 	if (is_same(*arg, ">"))
