@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/24 19:43:06 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 09:54:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ int	check_input(char **cmds)
 void	program_runner(char **args, int first, int there_is_next)
 {
 	t_data	*data;
-	char	**argv;
+	char	**argv; 
 
+	ignore first;
+	ignore there_is_next;
+	ignore args;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
 	if (fork() == 0)
@@ -123,8 +126,8 @@ int	main(int ac, char **av, char **env)
 		request_input();
 		while (waitpid(-1, &data.exit_status, 0) != -1);
 		free_matrix(data.cmds);
-		// free (data.args);
-		// free (data.usrinput);
+		free (data.args);
+		free (data.usrinput);
 		data.args = NULL;
 		data.usrinput = NULL;
 		data.cmds = NULL;

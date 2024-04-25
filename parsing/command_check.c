@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/23 19:32:50 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 09:58:59 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		return (do_error(ISDIR_ERR, cmd), 0);
 	if (access(cmd, X_OK) == 0)
 		return (get_program_path(cmd), 1);
+	if (_strlenc(cmd, 0) == 0)
+		return (do_error(COMDNF_ERR, cmd), 0);
 	tmp = ft_strjoin("/", cmd);
 	if (tmp == NULL)
 		safe_exit(-1);

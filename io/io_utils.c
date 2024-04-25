@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/24 09:48:02 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 09:49:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	open_heredoc(char *target)
 void	set_out(char **arg)
 {
 	t_data	*data;
+	char	*ptr;
 	int		action;
 
 	data = data_hook(NULL);
@@ -40,9 +41,11 @@ void	set_out(char **arg)
 		action |= O_APPEND;
 	if (data->out > 1)
 		close(data->out);
-	data->out = open(remove_qts(*(arg + 1)), action, 0666);
+	ptr = remove_qts(*(arg + 1));
+	data->out = open(ptr, action, 0666);
+	free (ptr);
 	if (data->out == -1)
-		perror("open");
+		exit(-1);
 }
 
 void	set_pipes(int first, int there_is_next)
@@ -107,7 +110,7 @@ char	*remove_qts(char *str)
 			new_str = _strnjoin(new_str, &str[i], 1);
 		i++;
 	}
-	free (str);
+	// printf("[%s]\n[%s]\n", new_str, str);
 	if (str && new_str == NULL)
 		return (ft_strdup(""));
 	return (new_str);
