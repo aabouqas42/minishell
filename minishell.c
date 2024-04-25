@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 10:37:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:57:23 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,21 @@ int	check_input(char **cmds)
 	int		i;
 
 	i = 0;
-	while (cmds[i])
+	if (cmds && cmds[0][0] == '|')
+		return (do_error(SYNTAX_ERR, cmds[0]), -1);
+	while (cmds && cmds[i])
 	{
-		if (cmds[0][0] == '|')
-			return (do_error(SYNTAX_ERR, cmds[i]), -1);
-		if (ft_strchr("<>", cmds[i][0]))
+		if (cmds[i][0] && ft_strchr("<>", cmds[i][0]))
 		{
-			if (cmds[i +1] && ft_strchr("<>|", cmds[i +1][0]))
-				return (do_error(SYNTAX_ERR, cmds[i +1]), -1);
+			if (cmds[i +1] && ft_strchr("<>|", cmds[i + 1][0]))
+				return (do_error(SYNTAX_ERR, cmds[i + 1]), -1);
 			else if (cmds[i +1] == NULL)
-				return (do_error(SYNTAX_ERR, "newline"), -1);
+				return (do_error(SYNTAX_ERR, "newlineee"), -1);
 		}
-		if (ft_strchr("|", cmds[i][0]))
+		if (cmds[i][0] && ft_strchr("|", cmds[i][0]))
 		{
 			if (cmds[i +1] && ft_strchr("|", cmds[i +1][0]))
-				return (do_error(SYNTAX_ERR, cmds[i +1]), -1);
+				return (do_error(SYNTAX_ERR, cmds[i + 1]), -1);
 			else if (cmds[i +1] == NULL)
 				return (do_error(SYNTAX_ERR, "newline"), -1);
 		}
@@ -99,11 +99,14 @@ int	request_input()
 	add_history(data->usrinput);
 	if (!check_quotes_closed(data->usrinput))
 		return (0);
+	if (!is_valid_input(data->usrinput))
+		return (0);
 	_split(data->usrinput);
 	if (check_input(data->args) == -1)
 		return (0);
 	data->cmds = get_commands();
 	data->oldfd = 0;
+	
 	i = 0;
 	while (data->cmds && data->cmds[i])
 	{
@@ -121,7 +124,7 @@ int	main(int ac, char **av, char **env)
 
 	data_hook(&data);
 	data_init(env);
-	set_defaults();
+	set_defaults();	
 	while (1)
 	{
 		request_input();

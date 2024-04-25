@@ -3,14 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 10:08:45 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:13:44 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char	saver(char tosave)
+{
+	static char saved;
+	char 		tmp;
+
+	tmp = saved;
+	if (tosave == 0)
+		return (saved = 0, tmp);
+	saved = tosave;
+	return (0);
+}
+
+size_t	is_symbolee(char *str)
+{
+	if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
+	{
+		saver(str[2]);
+		str[2] = '\0';
+		str[2] = saver(0);
+		printf("[%s]", str);
+		// *args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 2));
+		return (2);
+	}
+	if (str && *str && ft_strchr("<>|", *str) != NULL)
+	{
+		saver(str[1]);
+		printf("[%s]", str);
+		str[1] = saver(str[1]);
+		// *args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 1));
+	}
+	return (1);
+}
+
+
+int	is_valid_input(char *usrin)
+{
+	char	*res;
+	char	qt;
+	size_t	s = 0;
+
+	while (*usrin)
+	{
+		(1) && (usrin = skiper(usrin), res = NULL, qt = 0);
+		while (*usrin && (!_spaces(*usrin) || qt))
+		{
+			if ((*usrin == '\"' && qt != '\'') || (*usrin == '\'' && qt != '\"'))
+				qt = (qt == 0) * (*usrin);
+			if (ft_strchr("<>|", *usrin) && !qt)
+				break;
+			(1) && (res = _strnjoin(res, usrin, 1), usrin++);
+		}
+		printf("[%s] ", res);
+		usrin += is_symbolee(usrin);
+	}
+	printf("\n");
+	return (0);
+}
 
 void	get_program_path(char *cmd)
 {

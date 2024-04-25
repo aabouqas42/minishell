@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/25 10:35:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/25 13:30:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ void	set_out(char **arg)
 	char	*ptr;
 	int		action;
 
+	if (**arg == '\0')
+	{
+		do_error(AMBIGUOUS_ERR, "eferre");
+		exit(-1);
+	}
 	data = data_hook(NULL);
 	action = O_RDWR | O_CREAT;
 	if (is_same(*arg, ">"))
@@ -55,23 +60,23 @@ void	set_pipes(int first, int there_is_next)
 	data = data_hook(NULL);
 	if (first && there_is_next)
 	{
-		(data->out == 1) && dup2(data->fds[1], 1);
+		if (data->out == 1)
+			dup2(data->fds[1], 1);
 	}
 	if (!first && there_is_next)
 	{
-		(data->in == 0) && dup2(data->oldfd, 0);
-		(data->out == 1) && dup2(data->fds[1], 1);
+		if (data->in == 0)
+			dup2(data->oldfd, 0);
+		if(data->out == 1)
+			dup2(data->fds[1], 1);
 	}
 	if (!first && !there_is_next)
-	{
-		(data->in == 0) && dup2(data->oldfd, 0);
-	}
-	if (there_is_next)
-	{
-		close (data->fds[0]);
-		close (data->fds[1]);
+		if (data->in == 0)
+			dup2(data->oldfd, 0);
+	close (data->fds[0]);
+	close (data->fds[1]);
+	if ((!first && !there_is_next) || (!first && there_is_next))
 		close(data->oldfd);
-	}
 }
 
 void	set_in_out()
@@ -143,6 +148,7 @@ char	**get_argv(char **args)
 			if (data->in == -1)
 				(do_error(NSFODIR_ERR, *args), safe_exit(-1));
 		} else
+		if (**args != '\0')
 			argv = _realloc(argv, remove_qts(*args));
 		args++;
 	}

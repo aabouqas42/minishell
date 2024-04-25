@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 10:10:03 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/25 13:24:06 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,11 @@ int	check_quotes_closed(char *str)
 				qt = (qt == 0) * (*str);
 			str++;
 		}
-		if (qt)
-		{
-			if (qt == '\'')
-				return (do_error(SYNTAX_ERR, "\'"), 0);
-			if (qt == '\"')
-				return (do_error(SYNTAX_ERR, "\""), 0);
-		}
-		if (*str)
-			str++;
+		if (qt == '\'')
+			return (do_error(SYNTAX_ERR, "\'"), 0);
+		if (qt == '\"')
+			return (do_error(SYNTAX_ERR, "\""), 0);
+		str+= (*str != '\0');
 	}
 	return (1);
 }
