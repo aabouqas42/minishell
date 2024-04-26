@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/04/25 16:32:56 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/04/26 11:11:42 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CFLAGS = -Wall -Wextra -Werror # -g -fsanitize=address
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
-SRCS = 	parsing/command_check.c \
+SRCS = 	parsing/command_check.c parsing/check_redirections.c parsing/expand_input.c \
 		utils/global_utils.c \
 		utils/minishell_utils.c split/ft_split.c split/ft_split_utils.c \
 		utils/str/str_utils.c \
@@ -25,7 +25,7 @@ SRCS = 	parsing/command_check.c \
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
 		env/env_free.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \
-		temp_utils.c\
+		temp_utils.c \
 		#multiples/
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell

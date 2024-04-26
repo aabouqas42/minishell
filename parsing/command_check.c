@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 20:46:32 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/26 11:14:31 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,30 +82,9 @@ char	*_strchr(char *s, char c)
 
 int	is_valid_input(char **usrin)
 {
-	char	**args;
-	int	i;
-
-	i = 0;
-	args = NULL;
-	if (is_same(usrin[0], "|"))
-		return (do_error(SYNTAX_ERR, usrin[0]), 0);
-	while (usrin && usrin[i])
-	{
-		if (is_io_op(usrin[i]) && usrin[i + 1] == NULL)
-				return (do_error(SYNTAX_ERR, "newline"), 0);
-		if (_strchr("<>", usrin[i][0]) && !is_same(usrin[i], "<<"))
-		{
-			if (usrin[i + 1] && usrin[i + 1][0] == '$')
-				if (!(_strchr(usrin[i +1], '\"') || _strchr(usrin[i +1], '\'')))
-					if (!env_grepvalue(&usrin[i + 1][1]))
-						return (do_error(AMBIGUOUS_ERR, usrin[i + 1]), 0);
-			if (_strchr("<>|", usrin[i + 1][0]))
-				return (do_error(SYNTAX_ERR, usrin[i + 1]), 0);
-		}
-		if (_strchr("|", usrin[i][0]) && _strchr("|", usrin[i + 1][0]))
-			return (do_error(SYNTAX_ERR, usrin[i + 1]), 0);
-		i++;
-	}
+	if (!check_redirections(usrin))
+		return (0);
+	expand_input(usrin);
 	return (1);
 }
 

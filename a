@@ -1,0 +1,15 @@
+Makefile
+a
+builtins
+env
+include
+io
+libft
+main.c
+minishell
+minishell.c
+parsing
+split
+temp_utils.c
+temp_utils.o
+utils

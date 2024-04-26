@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 20:45:04 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/26 11:06:56 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,14 @@ int	request_input()
 	if (!check_quotes_closed(data->usrinput))
 		return (0);
 	_split(data->usrinput);
-	if (!is_valid_input(data->args))
+	if (is_valid_input(data->args) == 0)
 		return (0);
-	prt_tab(data->args);
-	return 0;
-	if (check_input(data->args) == -1)
-		return (0);
+	// prt_tab(data->args);
+	// return 0;
 	data->cmds = get_commands();
 	free (data->args);
 	data->args = NULL;
 	data->oldfd = 0;
-	
 	i = 0;
 	while (data->cmds && data->cmds[i])
 	{
@@ -133,7 +130,9 @@ int	main(int ac, char **av, char **env)
 	{
 		request_input();
 		while (waitpid(-1, &data.exit_status, 0) != -1);
-		free_matrix(data.cmds);
+		// free_matrix(data.cmds);
+		free_tab(data.args);
+		data.args = NULL;
 		free (data.usrinput);
 		data.usrinput = NULL;
 		data.cmds = NULL;
