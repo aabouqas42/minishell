@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/26 11:14:31 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:55:41 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,34 @@ char	*_strchr(char *s, char c)
 	return (0);
 }
 
+t_flags	*init_flags(int size, char **usrin)
+{
+	t_flags	*flags;
+	int		i;
+
+	flags = malloc (size * sizeof(t_flags));
+	if (flags == NULL)
+		safe_exit(-1);
+	i = 0;
+	while (usrin[i])
+	{
+		
+	}
+	
+	return (flags);
+}
+
 int	is_valid_input(char **usrin)
 {
+	t_data	*data;
+	int		size;
+
+	data = data_hook(NULL);
+	size = cmds_counter(data->args);
+	data->flags = init_flags(size, usrin);
+	data->flags = ;
+	if (data->flags == NULL)
+		safe_exit(-1);
 	if (!check_redirections(usrin))
 		return (0);
 	expand_input(usrin);

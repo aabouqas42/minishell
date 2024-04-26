@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/26 11:15:15 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:44:32 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,17 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef enum e_flags
+{
+	FLAG_WORD,
+	FLAG_IO_OP
+}	t_flags;
+
 typedef struct s_data
 {
 	char	***cmds;
 	t_env	*env;
+	t_flags	*flags;
 	char	**args;
 	char	*prompt;
 	char	*usrinput;
