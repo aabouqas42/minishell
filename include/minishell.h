@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/26 15:09:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:45:04 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,17 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef enum e_flags {
-	F_WORD,
-	F_IO_OP
+typedef enum e_flags
+{
+	FLAG_WORD,
+	FLAG_IO_OP
 }	t_flags;
 
 typedef struct s_data
 {
 	char	***cmds;
 	t_env	*env;
+	t_flags	*flags;
 	char	**args;
 	
 	char	*prompt;
@@ -117,7 +119,7 @@ int		check_input(char **cmds);
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	free_tab(char **array);
-void	_split(char *str);
+void	split_usrin(char *usr_in);
 char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
 int		is_same(char *s1, char *s2);

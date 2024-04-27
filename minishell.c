@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/26 15:07:10 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:52:33 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,20 @@ void	program_runner(char **args, int first, int there_is_next)
 	}
 }
 
-int	request_input()
+int	read_input(t_data *data)
 {
-	t_data	*data;
-	int		i;
-
-	data = data_hook(NULL);
 	data->usrinput = readline(data->prompt);
 	if (data->usrinput == NULL || *data->usrinput == '\0')
 		return (0);
 	add_history(data->usrinput);
-	if (!check_quotes_closed(data->usrinput))
-		return (0);
-	_split(data->usrinput);
+	return (1);
+}
+
+int	handle_input(t_data *data)
+{
+	int		i;
+	
+	split_usrin(data->usrinput);
 	if (is_valid_input(data->args) == 0)
 		return (0);
 	// prt_tab(data->args);
@@ -114,28 +115,30 @@ int	request_input()
 		program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
 		i++;
 	}
+	while (waitpid(-1, &data->exit_status, 0) != -1);
+	free_matrix(data->cmds);
+	free_tab(data->args);
+	data->args = NULL;
+	free (data->usrinput);
+	data->usrinput = NULL;
+	data->cmds = NULL;
 	return (0);
 }
 
 int	main(int ac, char **av, char **env)
 {
+	t_data	data;
 	ignore	ac;
 	ignore	av;
-	t_data	data;
 
 	data_hook(&data);
 	data_init(env);
-	init_default_envs();	
+	init_default_envs();
 	while (1)
 	{
-		request_input();
-		while (waitpid(-1, &data.exit_status, 0) != -1);
-		// free_matrix(data.cmds);
-		free_tab(data.args);
-		data.args = NULL;
-		free (data.usrinput);
-		data.usrinput = NULL;
-		data.cmds = NULL;
+		if (!read_input(&data) || !check_quotes_closed(data.usrinput))
+			continue;
+		handle_input(&data);
 	}
 	return (EXIT_SUCCESS);
 }
