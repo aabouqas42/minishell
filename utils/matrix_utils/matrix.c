@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 12:44:47 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:36:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,22 @@ char	***get_commands()
 	char	***cmds;
 	char	**commands;
 	int		i;
+	int		j;
 
 	commands = data_hook(NULL)->args;
 	cmds = _calloc((cmds_counter(commands) + 1) * sizeof(char **));
-	i = 0;
-	while (commands && *commands)
+	(1) && (i = 0, j = 0);
+	while (commands && commands[i])
 	{
-		if (is_same(*commands, "|") == 0)
-			cmds[i] = _realloc(cmds[i], *commands);
-		else
+		// P("[%s, %d]", commands[i], data_hook(NULL)->flags[i]);
+		if (is_same(commands[i], "|") && data_hook(NULL)->flags[i])
 		{
-			free (*commands);
-			i++;
+			free (commands[i]);
+			j++;
 		}
-		commands++;
+		else
+			cmds[j] = _realloc(cmds[j], commands[i]);
+		i++;
 	}
 	return (cmds);
 }

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 09:06:20 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:05:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int	is_valid_input(char **usrin)
 {
 	t_data	*data;
 
+	if (usrin == NULL)
+		return (0);
 	data = data_hook(NULL);
 	data->flags = init_flags(usrin);
 	if (!check_redirections(usrin))

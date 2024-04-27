@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/26 10:39:12 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:45:02 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,20 @@ void	do_error(t_error_type errtype, char *reason)
 	ft_putstr_fd("minishell : ", 2);
 	ft_putstr_fd(reason, 2);
 	if (errtype == COMDNF_ERR)
-	{
 		ft_putstr_fd(": command not found\n", 2);
-		data_hook(NULL)->exit_status = 127 << 8;
-	}
 	if (errtype == ISDIR_ERR)
 	{
 		ft_putstr_fd(": is a directory\n", 2);
 		data_hook(NULL)->exit_status = 126 << 8;
 	}
 	if (errtype == NSFODIR_ERR)
-	{
 		ft_putstr_fd(": No such file or directory\n", 2);
-		data_hook(NULL)->exit_status = 127 << 8;
-	}
 	if (errtype == AMBIGUOUS_ERR)
-	{
 		ft_putstr_fd(": ambiguous redirect\n", 2);
+	if ((errtype == NSFODIR_ERR)
+		|| (errtype == AMBIGUOUS_ERR)
+		|| (errtype == COMDNF_ERR))
 		data_hook(NULL)->exit_status = 127 << 8;
-	}
 }
 
 void	free_tab(char **array)

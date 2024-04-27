@@ -1,0 +1,492 @@
+Makefile
+builtins
+env
+file
+file2
+file3
+file4
+include
+io
+libft
+minishell
+minishell.c
+minishell.dSYM
+parsing
+split
+temp_utils.c
+temp_utils.o
+utils
+Makefile
+builtins
+env
+file
+file2
+file3
+file4
+include
+io
+libft
+minishell
+minishell.c
+minishell.dSYM
+parsing
+split
+temp_utils.c
+temp_utils.o
+utils
+Makefile
+builtins
+env
+file
+file2
+file3
+file4
+include
+io
+libft
+minishell
+minishell.c
+minishell.dSYM
+parsing
+split
+temp_utils.c
+temp_utils.o
+utils
+Makefile
+builtins
+env
+file
+file2
+file3
+file4
+include
+io
+libft
+minishell
+minishell.c
+minishell.dSYM
+parsing
+split
+temp_utils.c
+temp_utils.o
+utils
+Makefile
+builtins
+env
+file
+file2
+file3
+file4
+include
+io
+libft
+minishell
+minishell.c
+minishell.dSYM
+parsing
+split
+temp_utils.c
+temp_utils.o
+utils
+Makefile
+builtins
+env
+file
+file2
+file3
+file4
+include
+io
+libft
+minishell
+minishell.c
+minishell.dSYM
+parsing
+split
+temp_utils.c
+temp_utils.o
+utils
+total 208
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate   870B Apr 27 13:11 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 208
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate   2.3K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 208
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate   3.7K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 216
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate   5.2K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 216
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate   6.6K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 224
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate   8.0K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 224
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate   9.5K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 224
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate    11K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 232
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate    12K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 232
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate    14K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 232
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate    15K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 240
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate    17K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 240
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate    18K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 240
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate    20K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 248
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate    21K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils
+total 248
+drwxr-xr-x   23 aabouqas  candidate   782B Apr 27 13:11 .
+drwxr-xr-x  112 aabouqas  candidate   3.8K Apr 27 13:11 ..
+-rw-r--r--@   1 aabouqas  candidate   6.0K Apr 27 13:11 .DS_Store
+drwxr-xr-x   17 aabouqas  candidate   578B Apr 27 12:56 .git
+-rw-r--r--    1 aabouqas  candidate    29B Apr 21 16:58 .gitignore
+-rw-r--r--    1 aabouqas  candidate   2.2K Apr 27 12:56 Makefile
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 builtins
+drwxr-xr-x   12 aabouqas  candidate   408B Apr 27 13:11 env
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file2
+-rw-r--r--    1 aabouqas  candidate     0B Apr 27 13:12 file3
+-rw-r--r--    1 aabouqas  candidate    22K Apr 27 13:12 file4
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 27 12:56 include
+drwxr-xr-x    4 aabouqas  candidate   136B Apr 27 13:11 io
+drwxr-xr-x  109 aabouqas  candidate   3.6K Apr 27 13:11 libft
+-rwxr-xr-x    1 aabouqas  candidate    69K Apr 27 13:11 minishell
+-rw-r--r--    1 aabouqas  candidate   3.6K Apr 27 13:07 minishell.c
+drwxr-xr-x    3 aabouqas  candidate   102B Apr 26 17:05 minishell.dSYM
+drwxr-xr-x   10 aabouqas  candidate   340B Apr 27 13:11 parsing
+drwxr-xr-x    6 aabouqas  candidate   204B Apr 27 13:11 split
+-rw-r--r--    1 aabouqas  candidate   193B Apr 26 16:00 temp_utils.c
+-rw-r--r--    1 aabouqas  candidate   884B Apr 27 13:11 temp_utils.o
+drwxr-xr-x   11 aabouqas  candidate   374B Apr 27 13:11 utils

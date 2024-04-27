@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/25 16:49:56 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:50:23 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,6 @@ char	*skiper(char *str)
 	while (str && *str && _spaces(*str))
 		str++;
 	return (str);
-}
-
-int	check_quotes_closed(char *str)
-{
-	char	qt;
-
-	qt = 0;
-	while (str && *str)
-	{
-		str = skiper(str);
-		while (*str && (!_spaces(*str) || qt))
-		{
-			if ((*str == '\"' && qt != '\'') || (*str == '\'' && qt != '\"'))
-				qt = (qt == 0) * (*str);
-			str++;
-		}
-		if (qt == '\'')
-			return (do_error(SYNTAX_ERR, "\'"), 0);
-		if (qt == '\"')
-			return (do_error(SYNTAX_ERR, "\""), 0);
-		str+= (*str != '\0');
-	}
-	return (1);
 }
 
 size_t	is_symbole(char ***args_ptr, char *str)
@@ -84,28 +61,28 @@ size_t	is_symbole(char ***args_ptr, char *str)
 // 	}
 // }
 
-void	_split(char *str)
+void	split_usrin(char *usr_in)
 {
 	char	***args_ptr;
 	char	*res;
 	char	qt;
 
 	args_ptr = &data_hook(NULL)->args;
-	while (*str)
+	while (*usr_in)
 	{
-		str = skiper(str);
+		usr_in = skiper(usr_in);
 		res = NULL;
 		qt = 0;
-		while (*str && (!_spaces(*str) || qt))
+		while (*usr_in && (!_spaces(*usr_in) || qt))
 		{
-			if ((*str == '\"' && qt != '\'') || (*str == '\'' && qt != '\"'))
-				qt = (qt == 0) * (*str);
-			if (ft_strchr("<>|", *str) && !qt)
+			if ((*usr_in == '\"' && qt != '\'') || (*usr_in == '\'' && qt != '\"'))
+				qt = (qt == 0) * (*usr_in);
+			if (ft_strchr("<>|", *usr_in) && !qt)
 				break;
-			res = _strnjoin(res, str, 1);
-			str++;
+			res = _strnjoin(res, usr_in, 1);
+			usr_in++;
 		}
 		*args_ptr = _realloc(*args_ptr, res);
-		str += is_symbole(args_ptr, str);
+		usr_in += is_symbole(args_ptr, usr_in);
 	}
 }

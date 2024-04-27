@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 09:13:27 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:57:27 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		is_valid_input(char **usrin);
 int		check_redirections(char **usrin);
 void	expand_input(char **usrinput);
 char	*skiper(char *str);
+char	*_strchr(char *s, char c);
 char	saver(char tosave);
 // # define ERRT_SYNTAX "syntax error near unexpected token `"
 // # define ERRT_COMDNF "command not found"
@@ -74,6 +75,7 @@ typedef struct s_data
 	t_env	*env;
 	t_flags	*flags;
 	char	**args;
+	
 	char	*prompt;
 	char	*usrinput;
 	char	*program_path;
@@ -121,7 +123,7 @@ int		check_input(char **cmds);
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	free_tab(char **array);
-void	_split(char *str);
+void	split_usrin(char *usr_in);
 char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
 int		is_same(char *s1, char *s2);
