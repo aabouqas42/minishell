@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/23 09:53:35 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:51:14 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	cd(t_data *data)
 	char	*old_path;
 
 	old_path = get_curr_path();
+	return 1;
 	if (data->args[1] == NULL)
 	{
 		if (chdir(env_grepvalue("HOME")) != 0)
@@ -36,6 +37,7 @@ int	cd(t_data *data)
 		curr_path = get_curr_path();
 		env_export("PWD", curr_path);
 		free (curr_path);
+		free (old_path);
 		return (1);
 	}
 	if (chdir(data->args[1]) != 0)
@@ -44,5 +46,6 @@ int	cd(t_data *data)
 	env_export("PWD", curr_path);
 	env_export("OLD_PWD", old_path);
 	free (curr_path);
+	free (old_path);
 	return (1);
 }

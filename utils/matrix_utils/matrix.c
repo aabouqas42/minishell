@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/25 10:47:10 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:44:47 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	cmds_counter(char **cmds)
 	j = 0;
 	while (cmds && cmds[i])
 	{
-		if (is_same(cmds[i], "|") == 0)
+		if (cmds[i] && ft_strncmp(cmds[i], "|", 3) == 0)
 			j++;
 		i++;
 	}
@@ -43,7 +43,7 @@ char	***get_commands()
 			cmds[i] = _realloc(cmds[i], *commands);
 		else
 		{
-			free(*commands);
+			free (*commands);
 			i++;
 		}
 		commands++;
@@ -61,7 +61,7 @@ void	free_matrix(char ***matrix)
 	while (matrix[i] != NULL)
 	{
 		free_tab(matrix[i]);
-		i++;    
+		i++;
 	}
 	free (matrix);
 }

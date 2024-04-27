@@ -6,11 +6,11 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/04/26 11:11:42 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/04/27 09:33:06 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror # -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a

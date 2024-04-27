@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/26 11:06:56 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:55:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	program_runner(char **args, int first, int there_is_next)
 		data->oldfd && close(data->oldfd);
 		data->oldfd = data->fds[0];
 	}
+	free (data->args);
 }
 
 int	request_input()
@@ -102,11 +103,9 @@ int	request_input()
 	_split(data->usrinput);
 	if (is_valid_input(data->args) == 0)
 		return (0);
-	// prt_tab(data->args);
-	// return 0;
+	if (cmds_counter(data->args) == 1 && builtins())
+		return (free_tab(data->args), 0);
 	data->cmds = get_commands();
-	free (data->args);
-	data->args = NULL;
 	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])
@@ -130,12 +129,13 @@ int	main(int ac, char **av, char **env)
 	{
 		request_input();
 		while (waitpid(-1, &data.exit_status, 0) != -1);
-		// free_matrix(data.cmds);
-		free_tab(data.args);
+		free_matrix(data.cmds);
+		data.cmds = NULL;
 		data.args = NULL;
 		free (data.usrinput);
 		data.usrinput = NULL;
-		data.cmds = NULL;
+		free (data.flags);
+		data.flags = NULL;
 	}
 	return (EXIT_SUCCESS);
 }

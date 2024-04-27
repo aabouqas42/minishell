@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/25 20:44:58 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:21:32 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	open_heredoc(char *target)
 void	set_out(char **arg)
 {
 	t_data	*data;
-	char	*ptr;
 	int		action;
 
 	// if (**arg == '\0')
@@ -46,9 +45,7 @@ void	set_out(char **arg)
 		action |= O_APPEND;
 	if (data->out > 1)
 		close(data->out);
-	ptr = remove_qts(*(arg + 1));
-	data->out = open(ptr, action, 0666);
-	free (ptr);
+	data->out = open(*(arg + 1), action, 0666);
 	if (data->out == -1)
 		exit(-1);
 }
@@ -128,29 +125,29 @@ char	**get_argv(char **args)
 {
 	t_data	*data;
 	char	**argv;
+	int		i;
 
 	data = data_hook(NULL);
 	argv = NULL;
-	while (*args)
+	i = 0;
+	while (args[i])
 	{
-		if (is_same(*args, ">") || is_same(*args, ">>"))
+		if (data->flags[i] == FLAG_IO_OP  && (is_same(args[i], ">") || is_same(args[i], ">>")))
 		{
-			set_out(args);
-			args += 1;
-		} else if (is_same(*args, "<<"))
+			set_out(args + i);
+			i += 1;
+		} else if (is_same(args[i], "<<"))
 		{
-			open_heredoc(*(args + 1));
+			open_heredoc((args[i + 1]));
 			printf("%s\n", data->heredoc);
-		} else if (is_same(*args, "<"))
+		} else if (is_same(args[i], "<"))
 		{
-			args++;
-			data->in = open(*args, O_RDONLY);
+			data->in = open(args[++i], O_RDONLY);
 			if (data->in == -1)
-				(do_error(NSFODIR_ERR, *args), safe_exit(-1));
+				(do_error(NSFODIR_ERR, args[i]), safe_exit(-1));
 		} else
-		if (**args != '\0')
-			argv = _realloc(argv, remove_qts(*args));
-		args++;
+			argv = _realloc(argv, args[i]);
+		i++;
 	}
 	return (argv);
 }

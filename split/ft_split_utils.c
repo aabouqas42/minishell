@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/26 11:32:12 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 09:12:49 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,11 @@ int	set_var(char *argv_str, char **str)
 	c = argv_str[i];
 	argv_str[i] = '\0';
 	tmp = env_grepvalue(argv_str);
-	if (tmp == NULL)
-		tmp = "";
-	*str = _strnjoin(*str, tmp, _strlenc(tmp, '\0'));
-	if (*str == NULL)
-		safe_exit(-1);
 	argv_str[i] = c;
+	if (tmp != NULL)
+	{
+		*str = _strnjoin(*str, tmp, _strlenc(tmp, '\0'));
+	}
 	return (i);
 }
 
