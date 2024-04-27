@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 19:55:09 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 20:35:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ int	is_valid_input(char **usrin)
 	if (!check_redirections(usrin))
 		return (0);
 	expand_input(usrin);
+	prt_tab(usrin);
+	if (*data->args == NULL)
+		return (0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 12:58:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 20:42:45 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	expand_input(char **usrinput)
 				new_str = _strnjoin(new_str, &((*usrinput)[i]), 1);
 			i++;
 		}
-		(1) && (free (*usrinput), *usrinput = new_str);
+		#error   there     error in test 'ls $a -a' ($a) is ignored but because not found var but should \
+				not add to the list \
+					ex sol: realloc list again from null because the size of the list will change 
+		(1) && ((new_str) &&(free (*usrinput), (*usrinput = new_str)));
 		usrinput++;
 	}
 }
