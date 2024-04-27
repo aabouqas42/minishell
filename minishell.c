@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 13:40:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:46:29 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ void	handle_input(t_data *data)
 	split_usrin(data->usrinput);
 	if (is_valid_input(data->args) == 0)
 		return ;
-	if (cmds_counter(data->args) == 1 && builtins())
+	// if (cmds_counter(data->args) == 1 && builtins())
 		// return (free_tab(data->args));
-		return ;
+		// return ;
 	data->cmds = get_commands();
 	data->oldfd = 0;
 	i = 0;

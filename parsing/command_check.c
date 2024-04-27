@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 13:05:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:46:55 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ t_flags	*init_flags(char **usrin)
 	{
 		if (is_io_op(usrin[i]))
 			flags[i] = FLAG_IO_OP;
-		// printf("%s - %d\n", usrin[i], flags[i]);
 		i++;
 	}
 	return (flags);
