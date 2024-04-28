@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/28 16:05:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/28 17:10:00 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct s_data
 	t_env	*env;
 	t_flags	*flags;
 	char	**args;
-	
 	char	*prompt;
 	char	*usrinput;
 	char	*program_path;

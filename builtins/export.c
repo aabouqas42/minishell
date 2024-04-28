@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:23:26 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/23 09:53:51 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/28 19:39:36 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ int	_export()
 			}
 			*(save++) = '\0';
 			value = ft_strjoin(value, save);
-			// printf("name = %s, value = %s\n", name, value);
 			env_export(name, value);
+			// this fixed the leaks :)
+			free(value);
 		}else
 			env_export(name, NULL);
 		i++;
