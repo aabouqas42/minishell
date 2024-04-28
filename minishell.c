@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 20:20:35 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/28 16:12:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	builtins()
 		return (env_print(data->env), 1);
 	if (is_same(data->args[0], "export"))
 		return (_export(), 1);
+	if (is_same(data->args[0], "unset"))
+		return (env_unset(data->args[1], &data->env), 1);
 	return (0);
 }
 
@@ -102,7 +104,7 @@ int	read_input(t_data *data)
 
 void	handle_input(t_data *data)
 {
-	int		i;
+	int	i;
 	
 	split_usrin(data->usrinput);
 	if (is_valid_input(data->args) == 0)

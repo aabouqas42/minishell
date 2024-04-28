@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 12:57:27 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/28 16:05:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define P printf
 # define ignore (void)
 
-
+ 
 // dont forget to delete the following line :)
 void	prt_tab(char **tab);
 int		is_valid_input(char **usrin);
@@ -88,7 +88,6 @@ typedef struct s_data
 }	t_data;
 
 char	**env_to_2darray();
-
 
 
 char	*_strchr(char *s, char c);

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 20:35:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/28 16:28:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ size_t	is_symbolee(char *str)
 
 char	*_strchr(char *s, char c)
 {
-	while (*s)
+	while (s && *s)
 	{
 		if (*s == c)
 			return (s);
@@ -111,12 +111,12 @@ int	is_valid_input(char **usrin)
 	if (usrin == NULL)
 		return (0);
 	data = data_hook(NULL);
-	data->flags = init_flags(usrin);
-	if (!check_redirections(usrin))
+	data->flags = init_flags(data->args);
+	if (!check_redirections(data->args))
 		return (0);
-	expand_input(usrin);
-	prt_tab(usrin);
-	if (*data->args == NULL)
+	expand_input(data->args);
+	// prt_tab(data->args);
+	if (data->args == 0 || *data->args == NULL)
 		return (0);
 	return (1);
 }

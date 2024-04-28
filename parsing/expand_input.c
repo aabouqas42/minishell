@@ -6,40 +6,43 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 20:42:45 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/28 16:47:28 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	expand_input(char **usrinput)
+void	expand_input(char **uin)
 {
-	char	*new_str;
+	char	*str;
+	char	**args;
 	char	qt;
 	int		i;
 	
-	while(usrinput && *usrinput)
+	args = NULL;
+	while(uin && *uin)
 	{
-		new_str = NULL;
+		str = NULL;
 		(1) && (i = 0, qt = 0);
-		while ((*usrinput) && (*usrinput)[i])
+		while ((*uin) && (*uin)[i])
 		{
-			if (((*usrinput)[i] == '\"' && qt != '\'') || ((*usrinput)[i] == '\'' && qt != '\"'))
+			if (((*uin)[i] == '\"' && qt != '\'') || ((*uin)[i] == '\'' && qt != '\"'))
 			{
-				qt = (qt == 0) * ((*usrinput)[i]);
+				qt = (qt == 0) * ((*uin)[i]);
 				if (qt == 0)
-					new_str = _strnjoin(new_str, "", 1);
-			}
-			else if ((*usrinput)[i] == '$' && qt != '\'')
-				i += set_var(*usrinput +i +1, &new_str);
+					str = _strnjoin(str, "", 1);
+			} else if ((*uin)[i] == '$' && qt == 0 && _strchr("\'\"", (*uin)[i + 1]) && (i++ || 1))
+				continue;
+			else if ((*uin)[i] == '$' && qt != '\'' && (ft_isalnum((*uin)[i + 1]) || ((*uin)[i + 1] && _strchr("_?", (*uin)[i + 1]))))
+				i += set_var(*uin +i +1, &str);
 			else
-				new_str = _strnjoin(new_str, &((*usrinput)[i]), 1);
+				str = _strnjoin(str, &((*uin)[i]), 1);
 			i++;
 		}
-		#error   there     error in test 'ls $a -a' ($a) is ignored but because not found var but should \
-				not add to the list \
-					ex sol: realloc list again from null because the size of the list will change 
-		(1) && ((new_str) &&(free (*usrinput), (*usrinput = new_str)));
-		usrinput++;
+		if (str != NULL)
+			args = _realloc(args, str);
+		uin++;
 	}
+	free_tab(data_hook(NULL)->args);
+	data_hook(NULL)->args = args;
 }
