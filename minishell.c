@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/28 16:12:12 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:52:55 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,19 @@ void	program_runner(char **args, int first, int there_is_next)
 {
 	t_data	*data;
 	char	**argv; 
+	int		child_pid;
 
 	ignore first;
 	ignore there_is_next;
 	ignore args;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
-	if (fork() == 0)
+	child_pid = fork();
+	if (child_pid == -1)
+	{
+		ft_putstr_fd("Unexpected Error\n", 2);
+		return ;
+	} else if (child_pid == 0)
 	{
 		argv = get_argv(args);
 		if (is_valid_cmd(data, argv[0]) == 0)
@@ -84,9 +90,9 @@ void	program_runner(char **args, int first, int there_is_next)
 	if (there_is_next)
 	{
 		close(data->fds[1]);
-		data->oldfd && close(data->oldfd);
-		data->oldfd = data->fds[0];
+		data->oldfd && close(data->oldfd) && (data->oldfd = data->fds[0]);
 	}
+	printf("--[%d %d]--\n", data->oldfd, there_is_next);
 }
 
 int	read_input(t_data *data)
@@ -112,6 +118,7 @@ void	handle_input(t_data *data)
 	data->cmds = get_commands();
 	if (data->cmds[1] == NULL && builtins())
 		return;
+	prt_tab(data->args);
 	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])

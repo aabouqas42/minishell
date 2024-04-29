@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 12:21:32 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:00:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	set_pipes(int first, int there_is_next)
 {
 	t_data	*data;
 
+	// this fixed the stdin Err :)
+	if (first && !there_is_next)
+		return;
 	data = data_hook(NULL);
 	if (first && there_is_next)
 	{
