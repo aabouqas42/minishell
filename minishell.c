@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/29 10:52:55 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:18:06 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	program_runner(char **args, int first, int there_is_next)
 	if (there_is_next)
 	{
 		close(data->fds[1]);
-		data->oldfd && close(data->oldfd) && (data->oldfd = data->fds[0]);
+		data->oldfd && close(data->oldfd);
+		data->oldfd = data->fds[0];
 	}
 	printf("--[%d %d]--\n", data->oldfd, there_is_next);
 }
