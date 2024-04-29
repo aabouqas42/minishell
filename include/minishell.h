@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 12:57:27 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:25:46 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@
 # define P printf
 # define ignore (void)
 
-
+ 
 // dont forget to delete the following line :)
-void	prt_tab(char **tab);
+void prt_tab(char	**tab);
+
 int		is_valid_input(char **usrin);
 int		check_redirections(char **usrin);
 void	expand_input(char **usrinput);
@@ -75,7 +76,6 @@ typedef struct s_data
 	t_env	*env;
 	t_flags	*flags;
 	char	**args;
-	
 	char	*prompt;
 	char	*usrinput;
 	char	*program_path;
@@ -87,8 +87,8 @@ typedef struct s_data
 	int		fds[2];
 }	t_data;
 
+t_data	*data_hook(t_data *data);
 char	**env_to_2darray();
-
 
 
 char	*_strchr(char *s, char c);
@@ -110,7 +110,6 @@ void	env_free(t_env *env);
 void	env_free_list(t_env *env);
 char	*env_grepvalue(char *name);
 
-t_data	*data_hook(t_data *data);
 
 int		is_io_op(char	*str);
 
@@ -134,21 +133,16 @@ int		cd(t_data *data);
 void	echo();
 int		pwd();
 int		_export();
-int		_redirection();
 void	*_calloc(size_t size);
 int		_spaces(int c);
-int		request_input();
-char	*remove_qts(char *str);
 int		set_var(char *argv_str, char **str);
 int		check_quotes_closed(char *str);
 char	**_realloc(char **old_tab, char *to_append);
 
 void	open_heredoc(char *target);
 void	set_out(char **arg);
-void	set_in_out();
+void	set_io();
 char	**get_argv(char **args);
 void	set_pipes(int first, int there_is_next);
-
-char	*ft_strtokenize(char *src, char c);
 
 #endif

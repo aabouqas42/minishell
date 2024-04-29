@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/29 09:56:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:50:12 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	builtins()
 		return (env_print(data->env), 1);
 	if (is_same(data->args[0], "export"))
 		return (_export(), 1);
+	if (is_same(data->args[0], "unset"))
+		return (env_unset(data->args[1], &data->env), 1);
 	return (0);
 }
 
@@ -76,7 +78,7 @@ void	program_runner(char **args, int first, int there_is_next)
 		if (is_valid_cmd(data, argv[0]) == 0)
 			exit(-1);
 		set_pipes(first, there_is_next);
-		set_in_out();
+		set_io();
 		execve(data->program_path, argv, env_to_2darray());
 	}
 	if (there_is_next)
@@ -102,15 +104,15 @@ int	read_input(t_data *data)
 
 void	handle_input(t_data *data)
 {
-	int		i;
+	int	i;
 	
 	split_usrin(data->usrinput);
 	if (is_valid_input(data->args) == 0)
 		return ;
 	data->cmds = get_commands();
+	data->oldfd = 0;
 	if (data->cmds[1] == NULL && builtins())
 		return;
-	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])
 	{

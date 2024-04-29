@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 12:21:32 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:02:03 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	set_pipes(int first, int there_is_next)
 		close(data->oldfd);
 }
 
-void	set_in_out()
+void	set_io()
 {
 	t_data	*data;
 
@@ -91,34 +91,6 @@ void	set_in_out()
 		dup2(data->in, STDIN_FILENO);
 		close (data->in);
 	}
-}
-
-char	*remove_qts(char *str)
-{
-	char	*new_str;
-	char	qt;
-	int		i;
-
-	new_str = NULL;
-	i = 0;
-	qt = 0;
-	if (!ft_strchr(str, '\'') && !ft_strchr(str, '\"'))
-		return (str);
-	while (str && (str[i] || qt))
-	{
-		if ((str[i] == '\'' && qt != '\"') || (str[i] == '\"' && qt != '\''))
-		{
-			qt = (qt == 0) * (str[i]);
-			i++;
-			continue ;
-		}
-		if (str[i] != qt)
-			new_str = _strnjoin(new_str, &str[i], 1);
-		i++;
-	}
-	if (str && new_str == NULL)
-		return (ft_strdup(""));
-	return (new_str);
 }
 
 char	**get_argv(char **args)

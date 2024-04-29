@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/29 09:55:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:50:45 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,54 +24,9 @@ char	saver(char tosave)
 	return (0);
 }
 
-size_t	is_symbolee(char *str)
-{
-	if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
-	{
-		saver(str[2]);
-		str[2] = '\0';
-		str[2] = saver(0);
-		printf("[%s]", str);
-		// *args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 2));
-		return (2);
-	}
-	if (str && *str && ft_strchr("<>|", *str) != NULL)
-	{
-		saver(str[1]);
-		printf("[%s]", str);
-		str[1] = saver(str[1]);
-		// *args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 1));
-	}
-	return (1);
-}
-
-
-// int	is_valid_input(char *usrin)
-// {
-// 	char	*res;
-// 	char	qt;
-
-// 	while (*usrin)
-// 	{
-// 		(1) && (usrin = skiper(usrin), res = NULL, qt = 0);
-// 		while (*usrin && (!_spaces(*usrin) || qt))
-// 		{
-// 			if ((*usrin == '\"' && qt != '\'') || (*usrin == '\'' && qt != '\"'))
-// 				qt = (qt == 0) * (*usrin);
-// 			if (ft_strchr("<>|", *usrin) && !qt)
-// 				break;
-// 			(1) && (res = _strnjoin(res, usrin, 1), usrin++);
-// 		}
-// 		printf("[%s] ", res);
-// 		usrin += is_symbolee(usrin);
-// 	}
-// 	printf("\n");
-// 	return (0);
-// }
-
 char	*_strchr(char *s, char c)
 {
-	while (*s)
+	while (s && *s)
 	{
 		if (*s == c)
 			return (s);
@@ -110,12 +65,12 @@ int	is_valid_input(char **usrin)
 	if (usrin == NULL)
 		return (0);
 	data = data_hook(NULL);
-	data->flags = init_flags(usrin);
-	if (!check_redirections(usrin))
+	data->flags = init_flags(data->args);
+	if (!check_redirections(data->args))
 		return (0);
-	expand_input(usrin);
-	prt_tab(usrin);
-	if (*data->args == NULL)
+	expand_input(data->args);
+	// prt_tab(data->args);
+	if (data->args == 0 || *data->args == NULL)
 		return (0);
 	return (1);
 }

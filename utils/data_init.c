@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/25 17:06:38 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:31:35 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,16 @@ void	data_init(char **base_env)
 		*(value) = '\0';
 		if (is_same(*base_env, "SHLVL"))
 		{
-			number = ft_itoa(ft_atoi(value + 1) + 1);
-			if (number == NULL)
-				safe_exit(-1);
+			if ((value + 1)[0] == '\0')
+				number = "1";
+			else if (ft_atoi(value + 1) > 999)
+				number = "";
+			else
+			{
+				number = ft_itoa(ft_atoi(value +1) + 1);
+				if (number == NULL)
+					safe_exit(-1);
+			}
 			env_export(*base_env, number);
 			free (number);
 		} else
