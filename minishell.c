@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 15:46:29 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/29 09:56:39 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,11 @@ int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
 	if (data->usrinput == NULL || *data->usrinput == '\0')
+	{
+		free(data->usrinput);
+		data->usrinput = NULL;
 		return (0);
+	}
 	add_history(data->usrinput);
 	return (1);
 }
@@ -103,10 +107,9 @@ void	handle_input(t_data *data)
 	split_usrin(data->usrinput);
 	if (is_valid_input(data->args) == 0)
 		return ;
-	// if (cmds_counter(data->args) == 1 && builtins())
-		// return (free_tab(data->args));
-		// return ;
 	data->cmds = get_commands();
+	if (data->cmds[1] == NULL && builtins())
+		return;
 	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])
@@ -114,15 +117,6 @@ void	handle_input(t_data *data)
 		program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
 		i++;
 	}
-	while (waitpid(-1, &data->exit_status, 0) != -1);
-	free_matrix(data->cmds);
-	data->cmds = NULL;
-	free (data->args);
-	data->args = NULL;
-	free (data->flags);
-	data->flags = NULL;
-	free (data->usrinput);
-	data->usrinput = NULL;
 }
 
 int	main(int ac, char **av, char **env)
@@ -139,6 +133,15 @@ int	main(int ac, char **av, char **env)
 		if (!read_input(&data) || !check_quotes_closed(data.usrinput))
 			continue;
 		handle_input(&data);
+		while (waitpid(-1, &data.exit_status, 0) != -1);
+		free_matrix(data.cmds);
+		data.cmds = NULL;
+		free (data.args);
+		data.args = NULL;
+		free (data.flags);
+		data.flags = NULL;
+		free (data.usrinput);
+		data.usrinput = NULL;
 	}
 	return (EXIT_SUCCESS);
 }

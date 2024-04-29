@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 12:51:14 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:47:50 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	cd(t_data *data)
 	char	*old_path;
 
 	old_path = get_curr_path();
-	return 1;
 	if (data->args[1] == NULL)
 	{
 		if (chdir(env_grepvalue("HOME")) != 0)

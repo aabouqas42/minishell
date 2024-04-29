@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 15:46:55 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/29 09:55:27 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ int	is_valid_input(char **usrin)
 	if (!check_redirections(usrin))
 		return (0);
 	expand_input(usrin);
+	prt_tab(usrin);
+	if (*data->args == NULL)
+		return (0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 13:36:37 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:03:40 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,23 @@ int	cmds_counter(char **cmds)
 char	***get_commands()
 {
 	char	***cmds;
-	char	**commands;
+	char	**args;
 	int		i;
 	int		j;
 
-	commands = data_hook(NULL)->args;
-	cmds = _calloc((cmds_counter(commands) + 1) * sizeof(char **));
+	args = data_hook(NULL)->args;
+	cmds = _calloc((cmds_counter(args) + 1) * sizeof(char **));
 	(1) && (i = 0, j = 0);
-	while (commands && commands[i])
+	while (args && args[i])
 	{
-		// P("[%s, %d]", commands[i], data_hook(NULL)->flags[i]);
-		if (is_same(commands[i], "|") && data_hook(NULL)->flags[i])
+		// P("[%s, %d]", args[i], data_hook(NULL)->flags[i]);
+		if (is_same(args[i], "|") && data_hook(NULL)->flags[i])
 		{
-			free (commands[i]);
+			free (args[i]);
 			j++;
 		}
 		else
-			cmds[j] = _realloc(cmds[j], commands[i]);
+			cmds[j] = _realloc(cmds[j], args[i]);
 		i++;
 	}
 	return (cmds);
