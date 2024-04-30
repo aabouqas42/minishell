@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   args_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 12:50:56 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/27 12:51:40 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:04:32 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_quotes_closed(char *str)
+int	check_qts(char *str)
 {
 	char	qt;
 

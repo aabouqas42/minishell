@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:57:39 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/24 19:40:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:43:14 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,15 @@ char	*_strjoin(char *str1, char *str2)
 	}
 	str[i] = '\0';
 	return (free (str1), str);
+}
+
+char	*_strchr(char *s, char c)
+{
+	while (s && *s)
+	{
+		if (*s == c)
+			return (s);
+		s++;
+	}
+	return (0);
 }

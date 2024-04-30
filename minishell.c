@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 19:47:19 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:07:16 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	program_runner(char **args, int first, int there_is_next)
 	int		child_pid;
 
 	ignore first;
-	ignore there_is_next;
-	ignore args;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
 	child_pid = fork();
@@ -85,7 +83,8 @@ void	program_runner(char **args, int first, int there_is_next)
 			exit(-1);
 		set_pipes(first, there_is_next);
 		set_io();
-		execve(data->program_path, argv, env_to_2darray());
+		execve(data->program_path, argv, get_env_array());
+		// an other error here :) if execve fails you should exit :))))
 		exit(-1);
 	}
 	if (there_is_next)
@@ -102,28 +101,34 @@ void	program_runner(char **args, int first, int there_is_next)
 int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
-	if (data->usrinput == NULL || *data->usrinput == '\0')
+	if (data->usrinput == NULL)
+		safe_exit(-1);
+	if (*data->usrinput == '\0' || check_qts(data->usrinput) == 0)
 	{
 		free(data->usrinput);
 		data->usrinput = NULL;
-		return (0);
+		return (-1);
 	}
 	add_history(data->usrinput);
 	return (1);
 }
-
+void	_free();
 void	handle_input(t_data *data)
 {
 	int	i;
-	
 	split_usrin(data->usrinput);
 	if (is_valid_input(data->args) == 0)
+	{
+		// memory problem fixed here :)
+		free_tab(data->args);
+		data->args = NULL;
+		_free();
 		return ;
+	}
 	data->cmds = get_commands();
-	return;
-	data->oldfd = 0;
 	if (data->cmds[1] == NULL && builtins())
-		return;
+		return ;
+	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])
 	{
@@ -131,6 +136,22 @@ void	handle_input(t_data *data)
 		i++;
 	}
 }
+
+void	_free()
+{
+	t_data	*data;
+
+	data = data_hook(NULL);
+	free_matrix(data->cmds);
+	data->cmds = NULL;
+	free (data->args);
+	data->args = NULL;
+	free (data->flags);
+	data->flags = NULL;
+	free (data->usrinput);
+	data->usrinput = NULL;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -141,16 +162,11 @@ int	main(int ac, char **av, char **env)
 	data_init(env);
 	while (1)
 	{
-		if (read_input(&data) && check_quotes_closed(data.usrinput))
-		{
-			handle_input(&data);
-			while (waitpid(-1, &data.exit_status, 0) != -1);
-			prt_tab(data.args);
-		}
-		1 && (free(data.cmds), data.cmds = NULL);
-		1 && (free_tab (data.args), data.args = NULL);
-		1 && (free (data.flags), data.flags = NULL);
-		1 && (free (data.usrinput), data.usrinput = NULL);
+		if (read_input(&data) == -1)
+			continue ;
+		handle_input(&data);
+		while (waitpid(-1, &data.exit_status, 0) != -1);
+		_free();
 	}
 	return (EXIT_SUCCESS);
 }

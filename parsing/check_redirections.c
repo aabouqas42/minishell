@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/30 15:21:59 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:52:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_redirections(char **usrin)
 {
 	char	**args;
-	int	i;
+	int		i;
 
 	i = 0;
 	args = NULL;

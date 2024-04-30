@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 19:30:04 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:09:06 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,6 @@ char	saver(char tosave)
 	if (tosave == 0)
 		return (saved = 0, tmp);
 	saved = tosave;
-	return (0);
-}
-
-char	*_strchr(char *s, char c)
-{
-	while (s && *s)
-	{
-		if (*s == c)
-			return (s);
-		s++;
-	}
 	return (0);
 }
 
@@ -65,8 +54,8 @@ int	is_valid_input(char **usrin)
 	if (usrin == NULL)
 		return (0);
 	data = data_hook(NULL);
-	data->flags = init_flags(data->args);
-	if (!check_redirections(data->args))
+	data->flags = init_flags(usrin);
+	if (check_redirections(data->args) == 0)
 		return (0);
 	expand_input(data->args);
 	if (data->args == 0 || *data->args == NULL)
@@ -84,54 +73,111 @@ void	get_program_path(char *cmd)
 	data_hook(NULL)->program_path = program_path;
 }
 
-int	is_dir(char *name)
+int	is_fod(char *name)
 {
-	DIR	*dir;
+	struct stat	st;
 
-	dir = opendir(name);
-	if (dir == NULL)
+	if (name == NULL)
+		return (-1);
+	if (stat(name, &st) == 0)
+	{
+		if (S_ISREG(st.st_mode))
+			return (1);
+		if (S_ISDIR(st.st_mode))
+			return (2);
 		return (0);
-	closedir(dir);
-	return (1);
+	}
+	return (-1);
 }
 
-int	is_valid_cmd(t_data *data, char *cmd)
+int	is_valid(char *cmd)
 {
-	char	*tmp;
-	char	*paths;
-	char	*program_path;
-	char	c;
-	size_t	i;
-
 	if (cmd == NULL)
 		return (do_error(COMDNF_ERR, cmd), 0);
 	if (_strlenc(cmd, 0) == 0)
-		return (do_error(COMDNF_ERR, cmd), 0);
-	if (ft_strchr(cmd, '/'))
+		return (do_error(COMDNF_ERR, cmd), -1);
+	if (ft_strchr(cmd, '/') || ft_strchr(cmd, '.'))
 	{
-		if (is_dir(cmd))
-			return (do_error(ISDIR_ERR, cmd), 1);
-		if (access(cmd, X_OK) == 0)
-			return (get_program_path(cmd), 1);
-		return (do_error(NSFODIR_ERR, cmd), 1);
+		if (is_fod(cmd) == FILE && access(cmd, X_OK) == -1)
+			return (do_error(PERMIDEN_ERR, cmd), -1);
+		if (is_fod(cmd) == DIRE)
+			return (do_error(ISDIR_ERR, cmd), -1);
+		// must check it 1 because /bin/ls not work
+		if (is_fod(cmd) == -1)
+			return (do_error(NSFODIR_ERR, cmd), -1);
 	}
-	tmp = ft_strjoin("/", cmd);
-	if (tmp == NULL)
-		safe_exit(-1);
-	paths = env_grepvalue("PATH");
-	while (paths && *paths)
+	return (0);
+}
+
+// int	is_dir(char *name)
+// {
+// 	DIR	*dir;
+
+// 	dir = opendir(name);
+// 	if (dir == NULL)
+// 		return (0);
+// 	closedir(dir);
+// 	return (1);
+// }
+
+// int	is_valid_cmd(t_data *data, char *cmd)
+// {
+// 	char	*tmp;
+// 	char	*paths;
+// 	char	*program_path;
+// 	size_t	i;
+
+// 	if (access(cmd, X_OK) == 0)
+// 		return (get_program_path(cmd), 1);
+// 	if (is_valid(cmd) == -1)
+// 		return (0);
+// 	tmp = ft_strjoin("/", cmd);
+// 	if (tmp == NULL)
+// 		safe_exit(-1);
+// 	paths = env_grepvalue("PATH");
+// 	while (paths && *paths)
+// 	{
+// 		i = _strlenc(paths, ':');
+// 		saver(paths[i]);
+// 		paths[i] = '\0';
+// 		program_path = ft_strjoin(paths, tmp);
+// 		paths[i] = saver(0);
+// 		if (program_path == NULL)
+// 			(free(tmp), safe_exit(-1));
+// 		if (access(program_path, X_OK) == 0)
+// 			return (data->program_path = program_path, free(tmp), 1);
+// 		free(program_path);
+// 		paths += i + (paths[i] == ':');
+// 	}
+// 	return (free(tmp), do_error(COMDNF_ERR, cmd), 0);
+// }
+
+int	is_valid_cmd(t_data *data, char *cmd)
+{
+	char			**paths;
+	static size_t	i;
+
+	if (is_valid(cmd) == -1)
+		return (0);
+	/**
+	 * must check if the cmd is valid first because "/"
+	 * is a dir and access returns 0 so it will execve
+	 * will fail and create a new procces :)
+	 */
+	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == 0)
+		return (get_program_path(cmd), 1);
+	paths = ft_split(env_grepvalue("PATH"), ':');
+	while (paths && paths[i])
 	{
-		i = _strlenc(paths, ':');
-		c = paths[i];
-		paths[i] = '\0';
-		program_path = ft_strjoin(paths, tmp);
-		paths[i] = c;
-		if (program_path == NULL)
-			(free(tmp), safe_exit(-1));
-		if (access(program_path, X_OK) == 0)
-			return (data->program_path = program_path, free(tmp), 1);
-		free(program_path);
-		paths += i + (paths[i] == ':');
+		paths[i] = _strjoin(paths[i], "/");
+		data->program_path = ft_strjoin(paths[i], cmd);
+		if (access(data->program_path, X_OK) == 0)
+			break ;
+		free (data->program_path);
+		data->program_path = NULL;
+		i++;
 	}
-	return (free(tmp), do_error(COMDNF_ERR, cmd), 0);
+	if (data->program_path == NULL)
+		do_error(COMDNF_ERR, cmd);
+	return (free_tab(paths), i = 0, data->program_path != NULL);
 }

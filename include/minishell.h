@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 12:07:53 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:58:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+#include <sys/stat.h>
+# include <signal.h>
 # include <fcntl.h>
 # include <dirent.h>
 
@@ -36,12 +38,15 @@ char	*skiper(char *str);
 char	*_strchr(char *s, char c);
 char	saver(char tosave);
 
+# define FILE 1
+# define DIRE 2
 typedef enum e_error_type{
 	SYNTAX_ERR,
 	COMDNF_ERR,
 	ISDIR_ERR,
 	NSFODIR_ERR,
-	AMBIGUOUS_ERR
+	AMBIGUOUS_ERR,
+	PERMIDEN_ERR
 }	t_error_type;
 
 void	do_error(t_error_type errtype, char *reason);
@@ -85,8 +90,8 @@ typedef struct s_data
 	int		fds[2];
 }	t_data;
 
+char	**get_env_array();
 t_data	*data_hook(t_data *data);
-char	**env_to_2darray();
 
 
 char	*_strchr(char *s, char c);
@@ -117,6 +122,7 @@ char	*get_prompt();
 int		check_input(char **cmds);
 char	*get_curr_path();
 
+t_flags	*init_flags(char **usrin);
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	free_tab(char **array);
@@ -134,7 +140,7 @@ int		_export();
 void	*_calloc(size_t size);
 int		_spaces(int c);
 int		set_var(char *argv_str, char **str);
-int		check_quotes_closed(char *str);
+int		check_qts(char *str);
 char	**_realloc(char **old_tab, char *to_append);
 
 void	open_heredoc(char *target);

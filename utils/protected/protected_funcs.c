@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   p_funcs.c                                          :+:      :+:    :+:   */
+/*   protected_funcs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:48:03 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/21 16:45:47 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:16:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*_strdup(char *str)
 		return (NULL);
 	res = malloc(_strlenc(str, '\0') + 1);
 	if (res == NULL)
-		return (0);
+		safe_exit(-1);
 	i = 0;
 	while (str[i])
 	{
