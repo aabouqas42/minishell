@@ -5,10 +5,12 @@ file
 include
 io
 libft
+minishell
 minishell.c
 minishell.dSYM
 parsing
 split
 temp_utils.c
+temp_utils.o
 tldraw.tldr
 utils

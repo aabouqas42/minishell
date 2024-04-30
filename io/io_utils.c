@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/29 11:02:01 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:39:35 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,26 @@ void	set_pipes(int first, int there_is_next)
 {
 	t_data	*data;
 
-	// this fixed the stdin Err :)
 	if (first && !there_is_next)
 		return;
 	data = data_hook(NULL);
 	if (first && there_is_next)
 	{
 		if (data->out == 1)
-			dup2(data->fds[1], 1);
+			data->out = data->fds[1];
 	}
 	if (!first && there_is_next)
 	{
 		if (data->in == 0)
-			dup2(data->oldfd, 0);
+			data->in = data->oldfd;
 		if(data->out == 1)
-			dup2(data->fds[1], 1);
+			data->out = data->fds[1];
 	}
 	if (!first && !there_is_next)
+	{
 		if (data->in == 0)
-			dup2(data->oldfd, 0);
-	close (data->fds[0]);
-	close (data->fds[1]);
-	if ((!first && !there_is_next) || (!first && there_is_next))
-		close(data->oldfd);
+			data->in = data->oldfd;
+	}
 }
 
 void	set_io()
@@ -115,6 +112,7 @@ char	**get_argv(char **args)
 		{
 			open_heredoc((args[i + 1]));
 			printf("%s\n", data->heredoc);
+			
 		} else if (is_same(args[i], "<"))
 		{
 			data->in = open(args[++i], O_RDONLY);

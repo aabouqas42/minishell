@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/30 12:08:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:32:57 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	data_init(char **base_env)
 {
 	t_data	*data;
 	
-
 	data = data_hook(NULL);
 	ft_bzero(data, sizeof(t_data));
 	data->out = 1;

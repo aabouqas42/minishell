@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 16:03:40 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:33:30 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,8 @@ char	***get_commands()
 	(1) && (i = 0, j = 0);
 	while (args && args[i])
 	{
-		// P("[%s, %d]", args[i], data_hook(NULL)->flags[i]);
 		if (is_same(args[i], "|") && data_hook(NULL)->flags[i])
-		{
-			free (args[i]);
 			j++;
-		}
 		else
 			cmds[j] = _realloc(cmds[j], args[i]);
 		i++;
