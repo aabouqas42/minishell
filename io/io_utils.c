@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/29 10:02:03 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:02:01 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	set_pipes(int first, int there_is_next)
 {
 	t_data	*data;
 
+	// this fixed the stdin Err :)
+	if (first && !there_is_next)
+		return;
 	data = data_hook(NULL);
 	if (first && there_is_next)
 	{

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/29 10:25:46 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:07:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	expand_input(char **usrinput);
 char	*skiper(char *str);
 char	*_strchr(char *s, char c);
 char	saver(char tosave);
-// # define ERRT_SYNTAX "syntax error near unexpected token `"
-// # define ERRT_COMDNF "command not found"
 
 typedef enum e_error_type{
 	SYNTAX_ERR,
@@ -101,7 +99,6 @@ void	env_sort(t_env *env);
 char	***get_commands();
 int		cmds_counter(char **cmds);
 void	data_init(char **base_env);
-void	init_default_envs();
 void	free_matrix(char ***matrix);
 int		env_valid_name(char *name);
 void	env_print(t_env	*head);
@@ -118,6 +115,7 @@ int		is_io_op(char	*str);
 
 char	*get_prompt();
 int		check_input(char **cmds);
+char	*get_curr_path();
 
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/29 10:50:12 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:30:13 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	builtins()
 
 	data = data_hook(NULL);
 	if (is_same(data->args[0], "exit"))
-		safe_exit(0);
+		(printf("exit\n"), safe_exit(0));
 	if (is_same(data->args[0], "cd"))
 		return (cd(data), 1);
 	if (is_same(data->args[0], "echo"))
@@ -66,13 +66,19 @@ void	program_runner(char **args, int first, int there_is_next)
 {
 	t_data	*data;
 	char	**argv; 
+	int		child_pid;
 
 	ignore first;
 	ignore there_is_next;
 	ignore args;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
-	if (fork() == 0)
+	child_pid = fork();
+	if (child_pid == -1)
+	{
+		ft_putstr_fd("Unexpected Error\n", 2);
+		return ;
+	} else if (child_pid == 0)
 	{
 		argv = get_argv(args);
 		if (is_valid_cmd(data, argv[0]) == 0)
@@ -83,10 +89,11 @@ void	program_runner(char **args, int first, int there_is_next)
 	}
 	if (there_is_next)
 	{
-		close(data->fds[1]);
+		(data->fds[1] != 1) && close(data->fds[1]);
 		data->oldfd && close(data->oldfd);
 		data->oldfd = data->fds[0];
 	}
+	// printf("--[%d %d]--\n", data->oldfd, there_is_next);
 }
 
 int	read_input(t_data *data)
@@ -113,6 +120,7 @@ void	handle_input(t_data *data)
 	data->oldfd = 0;
 	if (data->cmds[1] == NULL && builtins())
 		return;
+	// prt_tab(data->args);
 	i = 0;
 	while (data->cmds && data->cmds[i])
 	{
@@ -129,7 +137,6 @@ int	main(int ac, char **av, char **env)
 
 	data_hook(&data);
 	data_init(env);
-	init_default_envs();
 	while (1)
 	{
 		if (!read_input(&data) || !check_quotes_closed(data.usrinput))
