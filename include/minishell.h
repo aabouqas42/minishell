@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/28 17:10:00 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:52:46 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+#include <sys/stat.h>
+# include <signal.h>
 # include <fcntl.h>
 # include <dirent.h>
 
@@ -37,12 +39,15 @@ char	saver(char tosave);
 // # define ERRT_SYNTAX "syntax error near unexpected token `"
 // # define ERRT_COMDNF "command not found"
 
+# define FILE 1
+# define DIRE 2
 typedef enum e_error_type{
 	SYNTAX_ERR,
 	COMDNF_ERR,
 	ISDIR_ERR,
 	NSFODIR_ERR,
-	AMBIGUOUS_ERR
+	AMBIGUOUS_ERR,
+	PERMIDEN_ERR
 }	t_error_type;
 
 void	do_error(t_error_type errtype, char *reason);
@@ -86,7 +91,7 @@ typedef struct s_data
 	int		fds[2];
 }	t_data;
 
-char	**env_to_2darray();
+char	**get_env_array();
 
 
 char	*_strchr(char *s, char c);

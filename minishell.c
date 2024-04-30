@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/29 11:18:06 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:31:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,6 @@ void	program_runner(char **args, int first, int there_is_next)
 	char	**argv; 
 	int		child_pid;
 
-	ignore first;
-	ignore there_is_next;
-	ignore args;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
 	child_pid = fork();
@@ -85,7 +82,11 @@ void	program_runner(char **args, int first, int there_is_next)
 			exit(-1);
 		set_pipes(first, there_is_next);
 		set_in_out();
-		execve(data->program_path, argv, env_to_2darray());
+		ft_putstr_fd(ft_itoa(data->in), 2);
+		ft_putstr_fd("<\n", 2);
+		ft_putstr_fd(ft_itoa(data->out), 2);
+		ft_putstr_fd(">\n", 2);
+		execve(data->program_path, argv, get_env_array());
 	}
 	if (there_is_next)
 	{
@@ -93,7 +94,6 @@ void	program_runner(char **args, int first, int there_is_next)
 		data->oldfd && close(data->oldfd);
 		data->oldfd = data->fds[0];
 	}
-	printf("--[%d %d]--\n", data->oldfd, there_is_next);
 }
 
 int	read_input(t_data *data)
@@ -119,7 +119,7 @@ void	handle_input(t_data *data)
 	data->cmds = get_commands();
 	if (data->cmds[1] == NULL && builtins())
 		return;
-	prt_tab(data->args);
+	// prt_tab(data->args);
 	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])

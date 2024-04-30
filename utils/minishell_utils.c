@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 13:45:02 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:26:36 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ void	do_error(t_error_type errtype, char *reason)
 		ft_putstr_fd(reason, 2);
 		ft_putstr_fd("'\n", 2);
 		data_hook(NULL)->exit_status = 258 << 8;
+		return ;
+	}
+	if (errtype == PERMIDEN_ERR)
+	{
+		ft_putstr_fd("minishell : ", 2);
+		ft_putstr_fd(reason, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		data_hook(NULL)->exit_status = 126 << 8;
 		return ;
 	}
 	ft_putstr_fd("minishell : ", 2);
@@ -99,4 +107,5 @@ char	*get_prompt()
 	// 	safe_exit(-1);
 	// return (prompt);
 	return ("aabouqas@1337.ma $> ");
+	// return ("");
 }
