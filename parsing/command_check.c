@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 19:23:56 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:42:02 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		return (0);
 	/**
 	 * must check if the cmd is valid first because "/"
-	 * is a dir and access returns 0 so it will execve
+	 * is a dir and access returns 0 so execve
 	 * will failde and create a new procces :)
 	 */
 	if (access(cmd, X_OK) == 0)
