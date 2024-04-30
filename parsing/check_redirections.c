@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 12:57:35 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:44:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_redirections(char **usrin)
 {
 	char	**args;
-	int	i;
+	int		i;
 
 	i = 0;
 	args = NULL;

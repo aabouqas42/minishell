@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/27 16:03:40 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:59:20 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	***get_commands()
 		if (is_same(args[i], "|") && data_hook(NULL)->flags[i])
 		{
 			free (args[i]);
+			args[i] = NULL;
 			j++;
 		}
 		else

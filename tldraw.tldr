@@ -42,9 +42,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": -3896.2955474962023,
-			"y": 16137.241372614146,
-			"lastActivityTimestamp": 1714327799169,
+			"x": -3781.6757365364233,
+			"y": 7897.31613465781,
+			"lastActivityTimestamp": 1714480195740,
 			"meta": {}
 		},
 		{
@@ -55,9 +55,9 @@
 			"typeName": "page"
 		},
 		{
-			"x": 4173.44070728153,
-			"y": -15971.721558848425,
-			"z": 1.130198906366479,
+			"x": 4271.840803235298,
+			"y": -7730.912666370366,
+			"z": 1.3157105392712019,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -65,9 +65,7 @@
 		{
 			"editingShapeId": null,
 			"croppingShapeId": null,
-			"selectedShapeIds": [
-				"shape:iGrusjSTNcIduJX4xqK02"
-			],
+			"selectedShapeIds": [],
 			"hoveredShapeId": null,
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
@@ -94,7 +92,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1362.5,
+				"w": 1658.333251953125,
 				"h": 750.8333129882812
 			},
 			"insets": [
@@ -18124,6 +18122,75 @@
 			},
 			"parentId": "page:page",
 			"index": "b0e",
+			"typeName": "shape"
+		},
+		{
+			"x": -3958.2205668005095,
+			"y": 7861.236811794648,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:f31tizw4UI9lxRTfoXORo",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "m",
+				"w": 48.65693080020683,
+				"text": "\n\nb/\n\nc/",
+				"font": "draw",
+				"align": "middle",
+				"autoSize": true,
+				"scale": 1.9878988644833941
+			},
+			"parentId": "page:page",
+			"index": "b0f",
+			"typeName": "shape"
+		},
+		{
+			"x": -3863.3339096289296,
+			"y": 8140.802880747403,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:z6BAh_q7Z5gBYOrf0xHbQ",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "m",
+				"w": 38.92317581176758,
+				"text": "[2]",
+				"font": "draw",
+				"align": "middle",
+				"autoSize": true,
+				"scale": 1
+			},
+			"parentId": "page:page",
+			"index": "b0g",
+			"typeName": "shape"
+		},
+		{
+			"x": -3852.329877480288,
+			"y": 8001.019846271025,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:66wpoZZd0OxKVJ-UIbrIV",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "m",
+				"w": 30.309894561767578,
+				"text": "[1]",
+				"font": "draw",
+				"align": "middle",
+				"autoSize": true,
+				"scale": 1
+			},
+			"parentId": "page:page",
+			"index": "b0j",
 			"typeName": "shape"
 		}
 	]

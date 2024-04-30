@@ -1,0 +1,14 @@
+Makefile
+builtins
+env
+file
+include
+io
+libft
+minishell.c
+minishell.dSYM
+parsing
+split
+temp_utils.c
+tldraw.tldr
+utils

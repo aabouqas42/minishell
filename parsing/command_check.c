@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 11:36:02 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:23:56 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,62 +21,6 @@ char	saver(char tosave)
 	if (tosave == 0)
 		return (saved = 0, tmp);
 	saved = tosave;
-	return (0);
-}
-
-size_t	is_symbolee(char *str)
-{
-	if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
-	{
-		saver(str[2]);
-		str[2] = '\0';
-		str[2] = saver(0);
-		printf("[%s]", str);
-		// *args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 2));
-		return (2);
-	}
-	if (str && *str && ft_strchr("<>|", *str) != NULL)
-	{
-		saver(str[1]);
-		printf("[%s]", str);
-		str[1] = saver(str[1]);
-		// *args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 1));
-	}
-	return (1);
-}
-
-
-// int	is_valid_input(char *usrin)
-// {
-// 	char	*res;
-// 	char	qt;
-
-// 	while (*usrin)
-// 	{
-// 		(1) && (usrin = skiper(usrin), res = NULL, qt = 0);
-// 		while (*usrin && (!_spaces(*usrin) || qt))
-// 		{
-// 			if ((*usrin == '\"' && qt != '\'') || (*usrin == '\'' && qt != '\"'))
-// 				qt = (qt == 0) * (*usrin);
-// 			if (ft_strchr("<>|", *usrin) && !qt)
-// 				break;
-// 			(1) && (res = _strnjoin(res, usrin, 1), usrin++);
-// 		}
-// 		printf("[%s] ", res);
-// 		usrin += is_symbolee(usrin);
-// 	}
-// 	printf("\n");
-// 	return (0);
-// }
-
-char	*_strchr(char *s, char c)
-{
-	while (s && *s)
-	{
-		if (*s == c)
-			return (s);
-		s++;
-	}
 	return (0);
 }
 
@@ -98,7 +42,6 @@ t_flags	*init_flags(char **usrin)
 	{
 		if (is_io_op(usrin[i]))
 			flags[i] = FLAG_IO_OP;
-		// printf("%s - %d\n", usrin[i], flags[i]);
 		i++;
 	}
 	return (flags);
@@ -111,8 +54,8 @@ int	is_valid_input(char **usrin)
 	if (usrin == NULL)
 		return (0);
 	data = data_hook(NULL);
-	data->flags = init_flags(data->args);
-	if (!check_redirections(data->args))
+	data->flags = init_flags(usrin);
+	if (check_redirections(data->args) == 0)
 		return (0);
 	expand_input(data->args);
 	// prt_tab(data->args);
@@ -150,19 +93,19 @@ int	is_fod(char *name)
 
 int	is_valid(char *cmd)
 {
-	if (cmd == NULL || is_fod(cmd) == 2)
-		return (do_error(ISDIR_ERR, cmd), -1);
+	if (cmd == NULL)
+		return (do_error(COMDNF_ERR, cmd), 0);
 	if (_strlenc(cmd, 0) == 0)
 		return (do_error(COMDNF_ERR, cmd), -1);
-	if (ft_strchr(cmd, '/'))
+	if (ft_strchr(cmd, '/') || ft_strchr(cmd, '.'))
 	{
-		if (access(cmd, X_OK) == 0)
-			return (get_program_path(cmd), 1);
 		if (is_fod(cmd) == FILE && access(cmd, X_OK) == -1)
 			return (do_error(PERMIDEN_ERR, cmd), -1);
 		if (is_fod(cmd) == DIRE)
 			return (do_error(ISDIR_ERR, cmd), -1);
-		return (do_error(NSFODIR_ERR, cmd), -1);
+		// must check it 1 because /bin/ls not work
+		if (is_fod(cmd) == -1)
+			return (do_error(NSFODIR_ERR, cmd), -1);
 	}
 	return (0);
 }
@@ -178,32 +121,64 @@ int	is_valid(char *cmd)
 // 	return (1);
 // }
 
+// int	is_valid_cmd(t_data *data, char *cmd)
+// {
+// 	char	*tmp;
+// 	char	*paths;
+// 	char	*program_path;
+// 	size_t	i;
+
+// 	if (access(cmd, X_OK) == 0)
+// 		return (get_program_path(cmd), 1);
+// 	if (is_valid(cmd) == -1)
+// 		return (0);
+// 	tmp = ft_strjoin("/", cmd);
+// 	if (tmp == NULL)
+// 		safe_exit(-1);
+// 	paths = env_grepvalue("PATH");
+// 	while (paths && *paths)
+// 	{
+// 		i = _strlenc(paths, ':');
+// 		saver(paths[i]);
+// 		paths[i] = '\0';
+// 		program_path = ft_strjoin(paths, tmp);
+// 		paths[i] = saver(0);
+// 		if (program_path == NULL)
+// 			(free(tmp), safe_exit(-1));
+// 		if (access(program_path, X_OK) == 0)
+// 			return (data->program_path = program_path, free(tmp), 1);
+// 		free(program_path);
+// 		paths += i + (paths[i] == ':');
+// 	}
+// 	return (free(tmp), do_error(COMDNF_ERR, cmd), 0);
+// }
+
 int	is_valid_cmd(t_data *data, char *cmd)
 {
-	char	*tmp;
-	char	*paths;
-	char	*program_path;
-	size_t	i;
+	char			**paths;
+	static size_t	i;
 
-	if (is_valid(cmd))
-		return (is_valid(cmd));
-	tmp = ft_strjoin("/", cmd);
-	if (tmp == NULL)
-		safe_exit(-1);
-	paths = env_grepvalue("PATH");
-	while (paths && *paths)
+	if (is_valid(cmd) == -1)
+		return (0);
+	/**
+	 * must check if the cmd is valid first because "/"
+	 * is a dir and access returns 0 so it will execve
+	 * will failde and create a new procces :)
+	 */
+	if (access(cmd, X_OK) == 0)
+		return (get_program_path(cmd), 1);
+	paths = ft_split(env_grepvalue("PATH"), ':');
+	while (paths && paths[i])
 	{
-		i = _strlenc(paths, ':');
-		saver(paths[i]);
-		paths[i] = '\0';
-		program_path = ft_strjoin(paths, tmp);
-		paths[i] = saver(0);
-		if (program_path == NULL)
-			(free(tmp), safe_exit(-1));
-		if (access(program_path, X_OK) == 0)
-			return (data->program_path = program_path, free(tmp), 1);
-		free(program_path);
-		paths += i + (paths[i] == ':');
+		paths[i] = _strjoin(paths[i], "/");
+		data->program_path = ft_strjoin(paths[i], cmd);
+		if (access(data->program_path, X_OK) == 0)
+			break ;
+		free (data->program_path);
+		data->program_path = NULL;
+		i++;
 	}
-	return (free(tmp), do_error(COMDNF_ERR, cmd), 0);
+	if (data->program_path == NULL)
+		do_error(COMDNF_ERR, cmd);
+	return (free_tab(paths), i = 0, data->program_path != NULL);
 }

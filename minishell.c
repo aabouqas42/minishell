@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 12:31:37 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:56:48 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	builtins()
 
 	data = data_hook(NULL);
 	if (is_same(data->args[0], "exit"))
-		safe_exit(0);
+		(printf("exit\n"), safe_exit(0));
 	if (is_same(data->args[0], "cd"))
 		return (cd(data), 1);
 	if (is_same(data->args[0], "echo"))
@@ -68,6 +68,7 @@ void	program_runner(char **args, int first, int there_is_next)
 	char	**argv; 
 	int		child_pid;
 
+	ignore first;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
 	child_pid = fork();
@@ -81,16 +82,14 @@ void	program_runner(char **args, int first, int there_is_next)
 		if (is_valid_cmd(data, argv[0]) == 0)
 			exit(-1);
 		set_pipes(first, there_is_next);
-		set_in_out();
-		ft_putstr_fd(ft_itoa(data->in), 2);
-		ft_putstr_fd("<\n", 2);
-		ft_putstr_fd(ft_itoa(data->out), 2);
-		ft_putstr_fd(">\n", 2);
+		set_io();
 		execve(data->program_path, argv, get_env_array());
+		// an other error here :) if execve fails you should exit :))))
+		exit(-1);
 	}
 	if (there_is_next)
 	{
-		close(data->fds[1]);
+		(data->fds[1] != 1) && close(data->fds[1]);
 		data->oldfd && close(data->oldfd);
 		data->oldfd = data->fds[0];
 	}
@@ -98,28 +97,35 @@ void	program_runner(char **args, int first, int there_is_next)
 
 int	read_input(t_data *data)
 {
+	char	*uin;
+
 	data->usrinput = readline(data->prompt);
-	if (data->usrinput == NULL || *data->usrinput == '\0')
+	uin = data->usrinput;
+	if (uin == NULL || *uin == '\0' || check_qts(uin) == 0)
 	{
 		free(data->usrinput);
 		data->usrinput = NULL;
-		return (0);
+		return (-1);
 	}
 	add_history(data->usrinput);
 	return (1);
 }
-
+void	_free();
 void	handle_input(t_data *data)
 {
 	int	i;
-	
 	split_usrin(data->usrinput);
 	if (is_valid_input(data->args) == 0)
+	{
+		// memory problem fixed here :)
+		free_tab(data->args);
+		data->args = NULL;
+		_free();
 		return ;
+	}
 	data->cmds = get_commands();
 	if (data->cmds[1] == NULL && builtins())
-		return;
-	// prt_tab(data->args);
+		return ;
 	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])
@@ -127,6 +133,21 @@ void	handle_input(t_data *data)
 		program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
 		i++;
 	}
+}
+
+void	_free()
+{
+	t_data	*data;
+
+	data = data_hook(NULL);
+	free_matrix(data->cmds);
+	data->cmds = NULL;
+	free (data->args);
+	data->args = NULL;
+	free (data->flags);
+	data->flags = NULL;
+	free (data->usrinput);
+	data->usrinput = NULL;
 }
 
 int	main(int ac, char **av, char **env)
@@ -137,21 +158,13 @@ int	main(int ac, char **av, char **env)
 
 	data_hook(&data);
 	data_init(env);
-	init_default_envs();
 	while (1)
 	{
-		if (!read_input(&data) || !check_quotes_closed(data.usrinput))
-			continue;
+		if (read_input(&data) == -1)
+			continue ;
 		handle_input(&data);
 		while (waitpid(-1, &data.exit_status, 0) != -1);
-		free_matrix(data.cmds);
-		data.cmds = NULL;
-		free (data.args);
-		data.args = NULL;
-		free (data.flags);
-		data.flags = NULL;
-		free (data.usrinput);
-		data.usrinput = NULL;
+		_free();
 	}
 	return (EXIT_SUCCESS);
 }

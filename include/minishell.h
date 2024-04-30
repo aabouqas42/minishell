@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 11:52:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:58:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@
 
  
 // dont forget to delete the following line :)
-void	prt_tab(char **tab);
+void prt_tab(char	**tab);
+
 int		is_valid_input(char **usrin);
 int		check_redirections(char **usrin);
 void	expand_input(char **usrinput);
 char	*skiper(char *str);
 char	*_strchr(char *s, char c);
 char	saver(char tosave);
-// # define ERRT_SYNTAX "syntax error near unexpected token `"
-// # define ERRT_COMDNF "command not found"
 
 # define FILE 1
 # define DIRE 2
@@ -92,6 +91,7 @@ typedef struct s_data
 }	t_data;
 
 char	**get_env_array();
+t_data	*data_hook(t_data *data);
 
 
 char	*_strchr(char *s, char c);
@@ -104,7 +104,6 @@ void	env_sort(t_env *env);
 char	***get_commands();
 int		cmds_counter(char **cmds);
 void	data_init(char **base_env);
-void	init_default_envs();
 void	free_matrix(char ***matrix);
 int		env_valid_name(char *name);
 void	env_print(t_env	*head);
@@ -113,7 +112,6 @@ void	env_free(t_env *env);
 void	env_free_list(t_env *env);
 char	*env_grepvalue(char *name);
 
-t_data	*data_hook(t_data *data);
 
 int		is_io_op(char	*str);
 
@@ -122,7 +120,9 @@ int		is_io_op(char	*str);
 
 char	*get_prompt();
 int		check_input(char **cmds);
+char	*get_curr_path();
 
+t_flags	*init_flags(char **usrin);
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	free_tab(char **array);
@@ -137,21 +137,16 @@ int		cd(t_data *data);
 void	echo();
 int		pwd();
 int		_export();
-int		_redirection();
 void	*_calloc(size_t size);
 int		_spaces(int c);
-int		request_input();
-char	*remove_qts(char *str);
 int		set_var(char *argv_str, char **str);
-int		check_quotes_closed(char *str);
+int		check_qts(char *str);
 char	**_realloc(char **old_tab, char *to_append);
 
 void	open_heredoc(char *target);
 void	set_out(char **arg);
-void	set_in_out();
+void	set_io();
 char	**get_argv(char **args);
 void	set_pipes(int first, int there_is_next);
-
-char	*ft_strtokenize(char *src, char c);
 
 #endif
