@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 19:28:19 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:47:19 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	handle_input(t_data *data)
 	if (is_valid_input(data->args) == 0)
 		return ;
 	data->cmds = get_commands();
+	return;
 	data->oldfd = 0;
 	if (data->cmds[1] == NULL && builtins())
 		return;
@@ -144,6 +145,7 @@ int	main(int ac, char **av, char **env)
 		{
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1);
+			prt_tab(data.args);
 		}
 		1 && (free(data.cmds), data.cmds = NULL);
 		1 && (free_tab (data.args), data.args = NULL);
