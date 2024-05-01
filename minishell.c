@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 20:07:16 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/01 09:15:41 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,22 @@ int	read_input(t_data *data)
 	add_history(data->usrinput);
 	return (1);
 }
-void	_free();
+
+void	_free()
+{
+	t_data	*data;
+
+	data = data_hook(NULL);
+	free_matrix(data->cmds);
+	data->cmds = NULL;
+	free (data->args);
+	data->args = NULL;
+	free (data->flags);
+	data->flags = NULL;
+	free (data->usrinput);
+	data->usrinput = NULL;
+}
+
 void	handle_input(t_data *data)
 {
 	int	i;
@@ -137,20 +152,6 @@ void	handle_input(t_data *data)
 	}
 }
 
-void	_free()
-{
-	t_data	*data;
-
-	data = data_hook(NULL);
-	free_matrix(data->cmds);
-	data->cmds = NULL;
-	free (data->args);
-	data->args = NULL;
-	free (data->flags);
-	data->flags = NULL;
-	free (data->usrinput);
-	data->usrinput = NULL;
-}
 
 int	main(int ac, char **av, char **env)
 {
