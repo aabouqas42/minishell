@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/01 09:40:18 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:42:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	safe_exit(int status)
 	free (data->program_path);
 	data->program_path = NULL;
 	free_tab(data->args);
-	// env_free_list(data->env);
-	data->args = NULL;
+	clear_history();
+	env_free_list(data->env);
 	// free (data->prompt); #BUS ERROR ?
 	printf("exit\n");
 	exit(status);

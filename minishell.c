@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 11:59:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:53:12 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,13 @@ void	program_runner(char **args, int first, int there_is_next)
 int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
-	if (data->usrinput && *data->usrinput)
-		add_history(data->usrinput);
 	if (data->usrinput == NULL)
 		safe_exit(-1);
+	if (*data->usrinput)
+		add_history(data->usrinput);
 	if (*data->usrinput == '\0' || check_qts(data->usrinput) == 0)
 	{
+		printf("the function fails :)\n");
 		free(data->usrinput);
 		data->usrinput = NULL;
 		return (-1);
@@ -123,6 +124,7 @@ void	handle_input(t_data *data)
 	}
 }
 
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -131,6 +133,8 @@ int	main(int ac, char **av, char **env)
 
 	data_hook(&data);
 	data_init(env);
+	// signal(SIGQUIT, signal_handler);
+	// signal(SIGQUIT, signal_handler);
 	while (1)
 	{
 		if (read_input(&data) != -1)
