@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 16:58:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/01 10:41:47 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		check_redirections(char **usrin);
 void	expand_input(char **usrinput);
 char	*skiper(char *str);
 char	*_strchr(char *s, char c);
-char	saver(char tosave);
 
 # define FILE 1
 # define DIRE 2
