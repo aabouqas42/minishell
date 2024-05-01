@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 18:56:48 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/01 09:44:09 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,14 @@ int	read_input(t_data *data)
 
 	data->usrinput = readline(data->prompt);
 	uin = data->usrinput;
+	if (uin && *uin)
+		add_history(data->usrinput);
 	if (uin == NULL || *uin == '\0' || check_qts(uin) == 0)
 	{
 		free(data->usrinput);
 		data->usrinput = NULL;
 		return (-1);
 	}
-	add_history(data->usrinput);
 	return (1);
 }
 void	_free();
