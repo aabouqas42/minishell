@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 11:51:50 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:57:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,6 @@ int	builtins()
 	return (0);
 }
 
-int	check_input(char **cmds)
-{
-	int		i;
-
-	i = 0;
-	if (cmds && cmds[0][0] == '|')
-		return (do_error(SYNTAX_ERR, cmds[0]), -1);
-	while (cmds && cmds[i])
-	{
-		if (cmds[i][0] && ft_strchr("<>", cmds[i][0]))
-		{
-			if (cmds[i + 1] && ft_strchr("<>|", cmds[i + 1][0]))
-				return (do_error(SYNTAX_ERR, cmds[i + 1]), -1);
-			else if (cmds[i + 1] == NULL)
-				return (do_error(SYNTAX_ERR, "newline"), -1);
-		}
-		if (cmds[i][0] && ft_strchr("|", cmds[i][0]))
-		{
-			if (cmds[i +1] && ft_strchr("|", cmds[i +1][0]))
-				return (do_error(SYNTAX_ERR, cmds[i + 1]), -1);
-			else if (cmds[i +1] == NULL)
-				return (do_error(SYNTAX_ERR, "newline"), -1);
-		}
-		i++;
-	}
-	return (0);
-}
-
 void	program_runner(char **args, int first, int there_is_next)
 {
 	t_data	*data;
@@ -84,26 +56,28 @@ void	program_runner(char **args, int first, int there_is_next)
 		set_pipes(first, there_is_next);
 		set_io();
 		execve(data->program_path, argv, get_env_array());
-		// an other error here :) if execve fails you should exit :))))
 		exit(-1);
 	}
+	//THERE ERROR IN TEST cat | cat | askdakdsk
 	if (there_is_next)
 	{
-		(data->fds[1] != 1) && close(data->fds[1]);
-		data->oldfd && close(data->oldfd);
+		close(data->fds[1]);
 		data->oldfd = data->fds[0];
+	}else
+	{
+		data->fds[1] > 1 && (close(data->fds[1]));
+		data->oldfd && (close(data->oldfd));
 	}
 }
 
 int	read_input(t_data *data)
 {
-	char	*uin;
-
 	data->usrinput = readline(data->prompt);
-	uin = data->usrinput;
-	if (uin && *uin)
+	if (data->usrinput && *data->usrinput)
 		add_history(data->usrinput);
-	if (uin == NULL || *uin == '\0' || check_qts(uin) == 0)
+	if (data->usrinput == NULL)
+		safe_exit(-1);
+	if (*data->usrinput == '\0' || check_qts(data->usrinput) == 0)
 	{
 		free(data->usrinput);
 		data->usrinput = NULL;
@@ -135,7 +109,6 @@ void	handle_input(t_data *data)
 	{
 		free_tab(data->args);
 		data->args = NULL;
-		_free();
 		return ;
 	}
 	data->cmds = get_commands();
@@ -160,10 +133,15 @@ int	main(int ac, char **av, char **env)
 	data_init(env);
 	while (1)
 	{
-		if (read_input(&data) == -1)
-			continue ;
-		handle_input(&data);
-		while (waitpid(-1, &data.exit_status, 0) != -1);
+		if (read_input(&data) != -1)
+		{
+			handle_input(&data);
+			while (waitpid(-1, &data.exit_status, 0) != -1)
+			{
+				if (data.exit_status >> 8 == -1)
+					safe_exit(-1);
+			}
+		}
 		_free();
 	}
 	return (EXIT_SUCCESS);

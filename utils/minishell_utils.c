@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/30 12:26:36 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/01 09:40:18 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	safe_exit(int status)
 	// env_free_list(data->env);
 	data->args = NULL;
 	// free (data->prompt); #BUS ERROR ?
+	printf("exit\n");
 	exit(status);
 }
 
@@ -106,6 +107,5 @@ char	*get_prompt()
 	// if (prompt == NULL)
 	// 	safe_exit(-1);
 	// return (prompt);
-	return ("aabouqas@1337.ma $> ");
-	// return ("");
+	return ("mait-elk@e3r3p16.1337.ma $> ");
 }

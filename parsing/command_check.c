@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 10:44:29 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:54:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 
 	if (is_valid(cmd) == -1)
 		return (0);
-	if (access(cmd, X_OK) == 0)
+	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == 0)
 		return (data->program_path = _strdup(cmd), 1);
 	paths = ft_split(env_grepvalue("PATH"), ':');
 	if (paths == NULL)

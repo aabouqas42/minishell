@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 10:41:47 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:55:41 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ int		is_io_op(char	*str);
 
 
 char	*get_prompt();
-int		check_input(char **cmds);
 char	*get_curr_path();
 
 t_flags	*init_flags(char **usrin);
