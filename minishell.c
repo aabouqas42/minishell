@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 11:59:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/01 20:11:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,54 @@
 int	builtins()
 {
 	t_data	*data;
+	char	**args;
+	int		ret;
+	int		savein;
+	int		saveout;
 
+	ret = 0;
 	data = data_hook(NULL);
+	args = get_argv(data->args);
+	data->args = args;
+	savein = dup(0);
+	saveout = dup(1);
+	if (data->in != 0)
+	{
+		dup2(data->in, 0);
+		close(data->in);
+	}
+	if (data->out != 1)
+	{
+		dup2(data->out, 1);
+		close(data->out);
+	}
+	// printf("in : %d, out : %d\n", data->in, data->out);
 	if (is_same(data->args[0], "exit"))
 		(printf("exit\n"), safe_exit(0));
 	if (is_same(data->args[0], "cd"))
-		return (cd(data), 1);
+		ret = (cd(data), 1);
 	if (is_same(data->args[0], "echo"))
-		return (echo(), 1);
+		ret = (echo(), 1);
 	if (is_same(data->args[0], "pwd"))
-		return (pwd(), 1);
+		ret = (pwd(), 1);
 	if (is_same(data->args[0], "env"))
-		return (env_print(data->env), 1);
+		ret = (env_print(data->env), 1);
 	if (is_same(data->args[0], "export"))
-		return (_export(), 1);
+		ret = (_export(), 1);
 	if (is_same(data->args[0], "unset"))
-		return (env_unset(data->args[1], &data->env), 1);
-	return (0);
+		ret = (env_unset(data->args[1], &data->env), 1);
+	if (data->in != 0)
+	{
+		dup2(savein, 0);
+		close(savein);
+	}
+	if (data->out != 1)
+	{
+		dup2(saveout, 1);
+		close(saveout);
+	}
+	// P("%d\n", ret);
+	return (ret);
 }
 
 void	program_runner(char **args, int first, int there_is_next)
@@ -51,23 +82,31 @@ void	program_runner(char **args, int first, int there_is_next)
 	} else if (child_pid == 0)
 	{
 		argv = get_argv(args);
-		if (is_valid_cmd(data, argv[0]) == 0)
-			exit(-1);
+		// if (data->in > 0)
+		// 	close(data->fds[0]);
+		// if (data->out > 1)
+		// 	close(data->fds[1]);
 		set_pipes(first, there_is_next);
+		if (is_valid_cmd(data, argv[0]) == 0)
+		{
+			// printf("---[%d]--%d-\n", data->oldfd, data->fds[1]);
+			// close (data->oldfd);
+			// close (data->fds[1]);
+			// close (data->fds[0]);
+			exit(-1);
+		}
+		printf("cmd : %s, in : %d, out : %d , oldfd: %d\n", data->program_path, data->in, data->out, data->oldfd);
 		set_io();
 		execve(data->program_path, argv, get_env_array());
 		exit(-1);
 	}
 	//THERE ERROR IN TEST cat | cat | askdakdsk
+	data->fds[1] && close(data->fds[1]);
+	data->oldfd && close(data->oldfd);
 	if (there_is_next)
-	{
-		close(data->fds[1]);
 		data->oldfd = data->fds[0];
-	}else
-	{
-		data->fds[1] > 1 && (close(data->fds[1]));
-		data->oldfd && (close(data->oldfd));
-	}
+	else
+		data->fds[0] && close(data->fds[0]);
 }
 
 int	read_input(t_data *data)
@@ -112,8 +151,8 @@ void	handle_input(t_data *data)
 		return ;
 	}
 	data->cmds = get_commands();
-	if (data->cmds[1] == NULL && builtins())
-		return ;
+	// if (data->cmds[1] == NULL && builtins())
+	// 	return ;
 	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])

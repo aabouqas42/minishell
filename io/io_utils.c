@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/30 19:51:59 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/01 20:13:34 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	set_pipes(int first, int there_is_next)
 	{
 		if (data->out == 1)
 			data->out = data->fds[1];
+		close(data->fds[0]);
 	}
 	if (!first && there_is_next)
 	{
@@ -73,6 +74,8 @@ void	set_pipes(int first, int there_is_next)
 	{
 		if (data->in == 0)
 			data->in = data->oldfd;
+		close(data->fds[0]);
+		close(data->fds[1]);
 	}
 }
 
@@ -85,11 +88,13 @@ void	set_io()
 	{
 		dup2(data->out, STDOUT_FILENO);
 		close (data->out);
+		// close(data->in);
 	}
 	if (data->in > 0)
 	{
 		dup2(data->in, STDIN_FILENO);
 		close (data->in);
+		// close (data->out);
 	}
 }
 
@@ -115,6 +120,8 @@ char	**get_argv(char **args)
 			
 		} else if (is_same(args[i], "<"))
 		{
+			if (data->in != 0)
+				close(data->in);
 			data->in = open(args[++i], O_RDONLY);
 			if (data->in == -1)
 				(do_error(NSFODIR_ERR, args[i]), safe_exit(-1));
