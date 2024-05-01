@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 20:09:06 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/01 09:37:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,63 +109,16 @@ int	is_valid(char *cmd)
 	return (0);
 }
 
-// int	is_dir(char *name)
-// {
-// 	DIR	*dir;
-
-// 	dir = opendir(name);
-// 	if (dir == NULL)
-// 		return (0);
-// 	closedir(dir);
-// 	return (1);
-// }
-
-// int	is_valid_cmd(t_data *data, char *cmd)
-// {
-// 	char	*tmp;
-// 	char	*paths;
-// 	char	*program_path;
-// 	size_t	i;
-
-// 	if (access(cmd, X_OK) == 0)
-// 		return (get_program_path(cmd), 1);
-// 	if (is_valid(cmd) == -1)
-// 		return (0);
-// 	tmp = ft_strjoin("/", cmd);
-// 	if (tmp == NULL)
-// 		safe_exit(-1);
-// 	paths = env_grepvalue("PATH");
-// 	while (paths && *paths)
-// 	{
-// 		i = _strlenc(paths, ':');
-// 		saver(paths[i]);
-// 		paths[i] = '\0';
-// 		program_path = ft_strjoin(paths, tmp);
-// 		paths[i] = saver(0);
-// 		if (program_path == NULL)
-// 			(free(tmp), safe_exit(-1));
-// 		if (access(program_path, X_OK) == 0)
-// 			return (data->program_path = program_path, free(tmp), 1);
-// 		free(program_path);
-// 		paths += i + (paths[i] == ':');
-// 	}
-// 	return (free(tmp), do_error(COMDNF_ERR, cmd), 0);
-// }
-
 int	is_valid_cmd(t_data *data, char *cmd)
 {
 	char			**paths;
-	static size_t	i;
+	size_t			i;
 
+	i = 0;
 	if (is_valid(cmd) == -1)
 		return (0);
-	/**
-	 * must check if the cmd is valid first because "/"
-	 * is a dir and access returns 0 so it will execve
-	 * will fail and create a new procces :)
-	 */
 	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == 0)
-		return (get_program_path(cmd), 1);
+		return (data->program_path = _strdup(cmd), 1);
 	paths = ft_split(env_grepvalue("PATH"), ':');
 	while (paths && paths[i])
 	{
@@ -177,7 +130,8 @@ int	is_valid_cmd(t_data *data, char *cmd)
 		data->program_path = NULL;
 		i++;
 	}
+	free_tab(paths);
 	if (data->program_path == NULL)
 		do_error(COMDNF_ERR, cmd);
-	return (free_tab(paths), i = 0, data->program_path != NULL);
+	return (data->program_path != NULL);
 }

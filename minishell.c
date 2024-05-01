@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 09:15:41 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/01 10:14:23 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	program_runner(char **args, int first, int there_is_next)
 		// an other error here :) if execve fails you should exit :))))
 		exit(-1);
 	}
+	//THERE ERROR IN TEST cat | cat | askdakdsk
 	if (there_is_next)
 	{
 		close(data->fds[1]);
@@ -137,7 +138,6 @@ void	handle_input(t_data *data)
 		// memory problem fixed here :)
 		free_tab(data->args);
 		data->args = NULL;
-		_free();
 		return ;
 	}
 	data->cmds = get_commands();
@@ -163,10 +163,15 @@ int	main(int ac, char **av, char **env)
 	data_init(env);
 	while (1)
 	{
-		if (read_input(&data) == -1)
-			continue ;
-		handle_input(&data);
-		while (waitpid(-1, &data.exit_status, 0) != -1);
+		if (read_input(&data) != -1)
+		{
+			handle_input(&data);
+			while (waitpid(-1, &data.exit_status, 0) != -1)
+			{
+				if (data.exit_status >> 8 == -1)
+					safe_exit(-1);
+			}
+		}
 		_free();
 	}
 	return (EXIT_SUCCESS);

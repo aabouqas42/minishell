@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/30 19:52:57 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/01 09:40:18 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	safe_exit(int status)
 	// env_free_list(data->env);
 	data->args = NULL;
 	// free (data->prompt); #BUS ERROR ?
+	printf("exit\n");
 	exit(status);
 }
 
