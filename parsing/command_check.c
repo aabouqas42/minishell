@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 09:37:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:54:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-char	saver(char tosave)
-{
-	static char saved;
-	char 		tmp;
-
-	tmp = saved;
-	if (tosave == 0)
-		return (saved = 0, tmp);
-	saved = tosave;
-	return (0);
-}
 
 t_flags	*init_flags(char **usrin)
 {
@@ -63,16 +51,6 @@ int	is_valid_input(char **usrin)
 	return (1);
 }
 
-void	get_program_path(char *cmd)
-{
-	char	*program_path;
-
-	program_path = _strdup(cmd);
-	if (program_path == NULL)
-		safe_exit(-1);
-	data_hook(NULL)->program_path = program_path;
-}
-
 int	is_fod(char *name)
 {
 	struct stat	st;
@@ -102,7 +80,6 @@ int	is_valid(char *cmd)
 			return (do_error(PERMIDEN_ERR, cmd), -1);
 		if (is_fod(cmd) == DIRE)
 			return (do_error(ISDIR_ERR, cmd), -1);
-		// must check it 1 because /bin/ls not work
 		if (is_fod(cmd) == -1)
 			return (do_error(NSFODIR_ERR, cmd), -1);
 	}
@@ -111,15 +88,17 @@ int	is_valid(char *cmd)
 
 int	is_valid_cmd(t_data *data, char *cmd)
 {
-	char			**paths;
-	size_t			i;
+	char	**paths;
+	size_t	i;
 
-	i = 0;
 	if (is_valid(cmd) == -1)
 		return (0);
 	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == 0)
 		return (data->program_path = _strdup(cmd), 1);
 	paths = ft_split(env_grepvalue("PATH"), ':');
+	if (paths == NULL)
+		safe_exit(-1);
+	i = 0;
 	while (paths && paths[i])
 	{
 		paths[i] = _strjoin(paths[i], "/");
