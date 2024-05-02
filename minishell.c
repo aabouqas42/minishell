@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 20:11:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:58:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,22 @@ int	builtins()
 	return (ret);
 }
 
+void print_open_file_descriptors(char *c)
+{
+   int fd;
+    char path[256];
+    
+    for(fd = 0; fd < 2500; fd++) {
+        if (fcntl(fd, F_GETFD) != -1) {
+            if (fcntl(fd, F_GETPATH, path) != -1) {
+                dprintf(2, "%s :: File descriptor %d is referencing: %s\n", c, fd, path);
+            } else {
+                dprintf(2, "%s :: File descriptor %d is not associated with an open file.\n", c, fd);
+            }
+        }
+    }
+}
+
 void	program_runner(char **args, int first, int there_is_next)
 {
 	t_data	*data;
@@ -93,10 +109,12 @@ void	program_runner(char **args, int first, int there_is_next)
 			// close (data->oldfd);
 			// close (data->fds[1]);
 			// close (data->fds[0]);
+			// printf("F:%d: cmd : %s, in : %d, out : %d , oldfd: %d\n", first, data->program_path, data->in, data->out, data->oldfd);
 			exit(-1);
 		}
-		printf("cmd : %s, in : %d, out : %d , oldfd: %d\n", data->program_path, data->in, data->out, data->oldfd);
+		// printf("F:%d: cmd : %s, in : %d, out : %d , oldfd: %d\n", first, data->program_path, data->in, data->out, data->oldfd);
 		set_io();
+		// print_open_file_descriptors(argv[0]);
 		execve(data->program_path, argv, get_env_array());
 		exit(-1);
 	}
@@ -151,8 +169,8 @@ void	handle_input(t_data *data)
 		return ;
 	}
 	data->cmds = get_commands();
-	// if (data->cmds[1] == NULL && builtins())
-	// 	return ;
+	if (data->cmds[1] == NULL && builtins())
+		return ;
 	data->oldfd = 0;
 	i = 0;
 	while (data->cmds && data->cmds[i])

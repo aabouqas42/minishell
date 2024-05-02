@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/01 20:13:34 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:47:34 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,8 @@ void	set_pipes(int first, int there_is_next)
 	if (first && !there_is_next)
 		return;
 	data = data_hook(NULL);
-	if (first && there_is_next)
-	{
-		if (data->out == 1)
-			data->out = data->fds[1];
-		close(data->fds[0]);
-	}
+	if (first && there_is_next && data->out == 1)
+		data->out = data->fds[1];
 	if (!first && there_is_next)
 	{
 		if (data->in == 0)
@@ -74,8 +70,6 @@ void	set_pipes(int first, int there_is_next)
 	{
 		if (data->in == 0)
 			data->in = data->oldfd;
-		close(data->fds[0]);
-		close(data->fds[1]);
 	}
 }
 
@@ -88,14 +82,15 @@ void	set_io()
 	{
 		dup2(data->out, STDOUT_FILENO);
 		close (data->out);
-		// close(data->in);
 	}
 	if (data->in > 0)
 	{
 		dup2(data->in, STDIN_FILENO);
 		close (data->in);
-		// close (data->out);
 	}
+	data->oldfd && close (data->oldfd);
+	data->fds[0] && close (data->fds[0]);
+	data->fds[1] && close (data->fds[1]);
 }
 
 char	**get_argv(char **args)
