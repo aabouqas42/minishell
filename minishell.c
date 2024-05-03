@@ -6,29 +6,11 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 15:31:47 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:25:01 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-
-
-// void print_open_file_descriptors(char *c)
-// {
-//    int fd;
-//     char path[256];
-    
-//     for(fd = 0; fd < 2500; fd++) {
-//         if (fcntl(fd, F_GETFD) != -1) {
-//             if (fcntl(fd, F_GETPATH, path) != -1) {
-//                 dprintf(2, "%s :: File descriptor %d is referencing: %s\n", c, fd, path);
-//             } else {
-//                 dprintf(2, "%s :: File descriptor %d is not associated with an open file.\n", c, fd);
-//             }
-//         }
-//     }
-// }
 
 void	close_unused_fds(int there_is_next)
 {
@@ -61,12 +43,12 @@ void	program_runner(char **args, int first, int there_is_next)
 	} else if (child_pid == 0)
 	{
 		argv = get_argv(args);
-		// prt_tab(argv);
 		if (argv == NULL || is_valid_cmd(data, argv[0]) == 0)
 			exit(-1);
 		set_pipes(first, there_is_next);
 		set_io();
-		execve(data->program_path, argv, get_env_array());
+		init_env_array();
+		execve(data->program_path, argv, data->env_2d);
 		exit(-1);
 	}
 	close_unused_fds(there_is_next);
@@ -107,25 +89,6 @@ void	handle_input(t_data *data)
 {
 	int	i;
 	split_usrin(data->usrinput);
-
-	// for (int i = 0;data->cmds[i]; i++)
-	// {
-	// 	for (int j = 0;data->cmds[i][j]; j++)
-	// 	{
-	// 		printf("%s ", data->cmds[i][j]);
-	// 	}
-	// 	printf("\n");
-	// }
-
-	// for (int i = 0;data->cmds[i]; i++)
-	// {
-	// 	for (int j = 0;data->cmds[i][j]; j++)
-	// 	{
-	// 		printf("%s ", data->cmds[i][j]);
-	// 	}
-	// 	printf("\n");
-	// }
-	// return ;
 	if (is_valid_input(data->args) == 0)
 	{
 		free_tab(data->args);
@@ -133,8 +96,8 @@ void	handle_input(t_data *data)
 		return ;
 	}
 	data->cmds = get_commands();
-	// if (data->cmds[1] == NULL && builtins())
-	// 	return ;
+	if (data->cmds[1] == NULL && builtins())
+		return ;
 	i = 0;
 	data->oldfd = 0;
 	int	j = 0;
@@ -163,8 +126,6 @@ int	main(int ac, char **av, char **env)
 
 	data_hook(&data);
 	data_init(env);
-	// signal(SIGQUIT, signal_handler);
-	// signal(SIGQUIT, signal_handler);
 	while (1)
 	{
 		if (read_input(&data) != -1)

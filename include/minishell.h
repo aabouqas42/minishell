@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 15:31:57 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:35:31 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef struct s_qutoes
 	int	dqt;
 }	t_qutoes; 
 
-
 /*	ENV LIST	*/
 typedef struct s_env
 {
@@ -85,6 +84,7 @@ typedef struct s_data
 	t_env	*env;
 	t_flags	*flags;
 	char	**args;
+	char	**env_2d;
 	char	*prompt;
 	char	*usrinput;
 	char	*program_path;
@@ -96,7 +96,7 @@ typedef struct s_data
 	int		fds[2];
 }	t_data;
 
-char	**get_env_array(void);
+void	init_env_array(void);
 t_data	*data_hook(t_data *data);
 
 
@@ -135,6 +135,7 @@ void	split_usrin(char *usr_in);
 char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
 int		is_same(char *s1, char *s2);
+size_t	_strlen(char *str);
 size_t	_strlenc(char *str, char c);
 char	*_strdup(char *s1);
 char	*_strndup(char *s1, size_t size);

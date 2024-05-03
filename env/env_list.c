@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/30 09:32:08 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:27:38 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char *env_grepvalue(char *name)
+char	*env_grepvalue(char *name)
 {
 	t_data	*data;
 	t_env	*env;
@@ -48,7 +48,7 @@ int	env_valid_name(char *name)
 
 int	env_export(char *name, char *value)
 {
-	t_data *data;
+	t_data	*data;
 	t_env	*tmp;
 
 	data = data_hook(NULL);
@@ -99,41 +99,22 @@ int	env_unset(char *name, t_env **env)
 	return (0);
 }
 
-char	**get_env_array()
+void	init_env_array(void)
 {
-	char	**res;
+	t_data	*data;
 	t_env	*env;
-	char	*tmp;
 	char	*line;
-	int		i;
-	int		j;
+	char	*tmp;
 
-	i = 0;
-	res = NULL;
-	env = data_hook(NULL)->env;
+	data = data_hook(NULL);
+	data->env_2d = NULL;
+	env = data->env;
 	while (env)
 	{
-		i++;
+		line = _strdup(env->name);
+		tmp = _strjoin(line, "=");
+		line = _strjoin(tmp, env->value);
+		data->env_2d = _realloc(data->env_2d, line);
 		env = env->next;
 	}
-	res = malloc(sizeof(char *) * (i + 1));
-	if (res == NULL)
-		safe_exit(-1);
-	env = data_hook(NULL)->env;
-	j = 0;
-	while (j < i)
-	{
-		line = NULL;
-		tmp = ft_strjoin(line, env->name);
-		free(line);
-		line = ft_strjoin(tmp, "=");
-		free(tmp);
-		tmp = ft_strjoin(line, env->value);
-		free(line);
-		res[j] = tmp;
-		j++;
-		env = env->next;
-	}
-	res[i] = NULL;
-	return (res);
 }

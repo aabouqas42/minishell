@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:57:27 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/18 09:08:34 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:28:56 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_env	*env_get_last(t_env	*env)
 {
 	if (env == NULL)
 		return (NULL);
-	while(env->next)
+	while (env->next)
 		env = env->next;
 	return (env);
 }

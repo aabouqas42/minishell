@@ -6,12 +6,11 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 15:32:04 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:36:08 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/minishell.h"
-#include <stdio.h>
 
 t_data	*data_hook(t_data *data)
 {
