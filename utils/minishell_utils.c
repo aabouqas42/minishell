@@ -6,12 +6,11 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 09:50:17 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:45:59 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/minishell.h"
-#include <stdio.h>
 
 t_data	*data_hook(t_data *data)
 {
@@ -59,20 +58,7 @@ void	do_error(t_error_type errtype, char *reason)
 		data_hook(NULL)->exit_status = 127 << 8;
 }
 
-void	free_tab(char **array)
-{
-	size_t	i;
 
-	if (array == NULL)
-		return ;
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 void	safe_exit(int status)
 {
