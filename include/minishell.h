@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/02 18:35:12 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:31:57 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+#include <sys/termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -43,8 +44,8 @@ void	expand_input(char **usrinput);
 char	*skiper(char *str);
 char	*_strchr(char *s, char c);
 
-# define FILE 1
-# define DIRE 2
+# define _FILE 1
+# define _DIRE 2
 typedef enum e_error_type{
 	SYNTAX_ERR,
 	COMDNF_ERR,
@@ -95,7 +96,7 @@ typedef struct s_data
 	int		fds[2];
 }	t_data;
 
-char	**get_env_array();
+char	**get_env_array(void);
 t_data	*data_hook(t_data *data);
 
 
@@ -106,7 +107,7 @@ t_env	*env_get(char *name, t_data	*data);
 int		env_unset(char *name, t_env **env);
 t_env	*env_get_last(t_env	*env);
 void	env_sort(t_env *env);
-char	***get_commands();
+char	***get_commands(void);
 int		cmds_counter(char **cmds);
 void	data_init(char **base_env);
 void	free_matrix(char ***matrix);
@@ -123,8 +124,8 @@ int		is_io_op(char	*str);
 /*	END ENV LIST	*/
 
 
-char	*get_prompt();
-char	*get_curr_path();
+char	*get_prompt(void);
+char	*get_curr_path(void);
 
 t_flags	*init_flags(char **usrin);
 int		is_valid_cmd(t_data *data, char *cmd);
@@ -138,19 +139,19 @@ size_t	_strlenc(char *str, char c);
 char	*_strdup(char *s1);
 char	*_strndup(char *s1, size_t size);
 int		cd(t_data *data);
-void	echo();
-int		pwd();
-int		_export();
+void	echo(void);
+int		pwd(void);
+int		_export(void);
 void	*_calloc(size_t size);
 int		_spaces(int c);
 int		set_var(char *argv_str, char **str);
 int		check_qts(char *str);
 char	**_realloc(char **old_tab, char *to_append);
-
+int		is_fod(char *name);
 void	open_heredoc(char *target);
 void	set_out(char **arg);
-void	set_io();
+void	set_io(void);
 char	**get_argv(char **args);
 void	set_pipes(int first, int there_is_next);
-
+int		builtins(void);
 #endif

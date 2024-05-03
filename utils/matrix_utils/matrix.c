@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/02 19:08:04 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:32:10 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	cmds_counter(char **cmds)
 	return (j + 1);
 }
 
-char	***get_commands()
+char	***get_commands(void)
 {
 	char	***cmds;
 	char	**args;

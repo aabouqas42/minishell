@@ -3,26 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/23 09:53:43 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:00:02 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	echo()
+int	is_valid_flag(char *flag)
 {
-	int	i;
-	int	nl;
-	t_data *data;
+	size_t	i;
+
+	if (flag == NULL || *flag == '\0')
+		return (0);
+	i = flag[0] == '-';
+	while (flag && flag[i] && flag[i] == 'n')
+		i++;
+	return (i == _strlenc(flag, '\0'));
+}
+
+void	echo(void)
+{
+	int		i;
+	int		new_line;
+	t_data	*data;
 	
 	i = 1;
-	nl = 1;
+	new_line = 1;
 	data = data_hook(NULL);
-	if (data->args[i] && is_same(data->args[i], "-n"))
-		(nl = 0, i++);
+	if (is_valid_flag(data->args[1]))
+	{
+		new_line = 0;
+		i++;
+	}
 	while (data->args[i])
 	{
 		printf("%s", data->args[i]);
@@ -30,7 +45,6 @@ void	echo()
 		if (data->args[i])
 			printf(" ");
 	}
-	if (nl == 0)
-		printf("%%");
-	printf("\n");
+	if (new_line)
+		printf("\n");
 }

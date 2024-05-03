@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:23:26 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/04/28 19:39:36 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 10:04:03 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	_export()
 	data = data_hook(NULL);
 	if (data == NULL || data->args == NULL)
 		return (0);
+	if (data->args[1] == NULL || is_io_op(data->args[1]))
+		return (env_sort(data->env), 1);
 	i = 1;
 	value = "";
 	while (data->args[i])
@@ -41,14 +43,13 @@ int	_export()
 			env_export(name, value);
 			// this fixed the leaks :)
 			free(value);
-		}else
+		} else
 			env_export(name, NULL);
 		i++;
 	}
-	if (i == 0)
-		return (env_sort(data->env), 0);
-	// if (data->args[1] == NULL)
-	// 	return (env_sort(data->env), 1);
+	// if (i == 0)
+	// 	return (env_sort(data->env), 0);
+
 	// name = data->args[1];
 	// value = "";
 	// i = 0;

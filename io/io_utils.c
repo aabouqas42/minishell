@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/02 18:37:37 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:32:18 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void	open_heredoc(char *target)
 {
 	t_data	*data;
+	char	*in;
 
 	data = data_hook(NULL);
 	while (1)
 	{
-		char	*in = readline("heredoc > ");
+		in = readline("heredoc > ");
 		if (in && is_same(in, target))
-			break;
+			break ;
 		data->heredoc = _strjoin(data->heredoc, in);
 		data->heredoc = _strjoin(data->heredoc, "\n");
 	}
@@ -32,11 +33,6 @@ void	set_out(char **arg)
 	t_data	*data;
 	int		action;
 
-	// if (**arg == '\0')
-	// {
-	// 	do_error(AMBIGUOUS_ERR, "eferre");
-	// 	exit(-1);
-	// }
 	data = data_hook(NULL);
 	action = O_RDWR | O_CREAT;
 	if (is_same(*arg, ">"))
@@ -55,7 +51,7 @@ void	set_pipes(int first, int there_is_next)
 	t_data	*data;
 
 	if (first && !there_is_next)
-		return;
+		return ;
 	data = data_hook(NULL);
 	if (first && there_is_next && data->out == 1)
 		data->out = data->fds[1];
@@ -63,7 +59,7 @@ void	set_pipes(int first, int there_is_next)
 	{
 		if (data->in == 0)
 			data->in = data->oldfd;
-		if(data->out == 1)
+		if (data->out == 1)
 			data->out = data->fds[1];
 	}
 	if (!first && !there_is_next)
@@ -74,7 +70,7 @@ void	set_pipes(int first, int there_is_next)
 	
 }
 
-void	set_io()
+void	set_io(void)
 {
 	t_data	*data;
 
@@ -89,9 +85,13 @@ void	set_io()
 		dup2(data->in, STDIN_FILENO);
 		close (data->in);
 	}
-	data->oldfd && close (data->oldfd);
-	data->fds[0] && close (data->fds[0]);
-	data->fds[1] && close (data->fds[1]);
+	printf("%d - %d\n", data->oldfd, data->fds[0]);
+	if (data->oldfd)
+		close (data->oldfd);
+	if (data->fds[0])
+		close (data->fds[0]);
+	if (data->fds[1])
+		close (data->fds[1]);
 }
 
 char	**get_argv(char **args)
@@ -105,15 +105,14 @@ char	**get_argv(char **args)
 	i = 0;
 	while (args[i])
 	{
-		if (data->flags[i] == FLAG_IO_OP  && (is_same(args[i], ">") || is_same(args[i], ">>")))
+		printf("---[%s %d]---\n", args[i], data->flags[i]);
+		if (data->flags[i] == FLAG_IO_OP && (is_same(args[i], ">") || is_same(args[i], ">>")))
 		{
 			set_out(args + i);
 			i += 1;
 		} else if (is_same(args[i], "<<"))
 		{
 			open_heredoc((args[i + 1]));
-			printf("%s\n", data->heredoc);
-			
 		} else if (is_same(args[i], "<"))
 		{
 			if (data->in != 0)

@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
+#    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/02 11:07:31 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/05/03 15:29:58 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror # -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
@@ -26,6 +26,7 @@ SRCS = 	parsing/command_check.c parsing/check_redirections.c parsing/expand_inpu
 		env/env_free.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \
 		temp_utils.c \
+		builtins/builtins.c \
 		#multiples/
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
@@ -61,6 +62,6 @@ push : fclean
 	@git add .
 	@read -p "Enter commit message: " msg_push; \
 	git commit -m "$$msg_push";
-	@git push origin mait-elk
+	@git push origin ${USER}
 
 .PHONY: clean

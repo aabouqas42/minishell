@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/30 19:52:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:42:18 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	check_redirections(char **usrin)
 				return (do_error(SYNTAX_ERR, "newline"), 0);
 		if (_strchr("<>", usrin[i][0]) && !is_same(usrin[i], "<<"))
 		{
-			// if (usrin[i + 1] && usrin[i + 1][0] == '$')
-			// 	if (!(_strchr(usrin[i +1], '\"') || _strchr(usrin[i + 1], '\'')))
-			// 		if (!env_grepvalue(&usrin[i + 1][1]))
-			// 			return (do_error(AMBIGUOUS_ERR, usrin[i + 1]), 0);
+			if (usrin[i + 1] && usrin[i + 1][0] == '$')
+				if (!(_strchr(usrin[i +1], '\"') || _strchr(usrin[i + 1], '\'')))
+					if (!env_grepvalue(&usrin[i + 1][1]))
+						return (do_error(AMBIGUOUS_ERR, usrin[i + 1]), 0);
 			if (_strchr("<>|", usrin[i + 1][0]))
 				return (do_error(SYNTAX_ERR, usrin[i + 1]), 0);
 		}

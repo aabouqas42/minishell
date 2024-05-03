@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 09:52:03 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:32:04 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,28 +84,24 @@ void	safe_exit(int status)
 	free (data->program_path);
 	data->program_path = NULL;
 	free_tab(data->args);
-	// env_free_list(data->env);
-	data->args = NULL;
-	// free (data->prompt); #BUS ERROR ?
+	clear_history();
+	env_free_list(data->env);
+	free (data->prompt);
 	printf("exit\n");
 	exit(status);
 }
 
-char	*get_prompt()
+char	*get_prompt(void)
 {
-	// char	*prompt;
-	// char	*user;
+	char	*prompt;
+	char	*user;
 
-	// user = getenv("USER");
-	// if (user == NULL || *user == '\0')
-	// 	user = "unknown";
-	// user = ft_strjoin("\e[34m┌「 ", user);
-	// if (user == NULL)
-	// 	safe_exit(-1);
-	// prompt = ft_strjoin(user, " ⫸  1337.ma 」 \n└─$  \e[0m");
-	// free(user);
-	// if (prompt == NULL)
-	// 	safe_exit(-1);
-	// return (prompt);
-	return ("mait-elk@e3r3p16.1337.ma $> ");
+	user = getenv("USER");
+	user = _strdup(user);
+	if (user == NULL || *user == '\0')
+		user = _strdup("unknown");
+	if (user == NULL)
+		safe_exit(-1);
+	prompt = _strjoin(user, "@1337.ma $> ");
+	return (prompt);
 }
