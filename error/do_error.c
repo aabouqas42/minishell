@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:46:47 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 16:56:53 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:41:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	do_error(t_error_type errtype, char *reason)
 		ft_putstr_fd(": Permission denied\n", 2);
 		data_hook(NULL)->exit_status = 126 << 8;
 	}
-	ft_putstr_fd(reason, 2);
 	if (errtype == COMDNF_ERR)
 	{
 		ft_putstr_fd("minishell : ", 2);

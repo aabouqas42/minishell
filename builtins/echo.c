@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/02 17:00:02 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:20:52 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	echo(void)
 	int		i;
 	int		new_line;
 	t_data	*data;
-	
+
 	i = 1;
 	new_line = 1;
 	data = data_hook(NULL);

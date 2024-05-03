@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 17:15:10 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:16:01 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	close_unused_fds(int next)
 void	program_exec(char **args, int first, int next)
 {
 	t_data	*data;
-	char	**argv; 
+	char	**argv;
 	int		child_pid;
 
 	data = data_hook(NULL);
@@ -41,7 +41,8 @@ void	program_exec(char **args, int first, int next)
 	{
 		ft_putstr_fd("Unexpected Error\n", 2);
 		return ;
-	} else if (child_pid == 0)
+	}
+	else if (child_pid == 0)
 	{
 		argv = get_argv(args);
 		set_pipes(first, next);
@@ -69,16 +70,6 @@ int	read_input(t_data *data)
 		return (-1);
 	}
 	return (1);
-}
-
-int	get_argsc(char **args)
-{
-	int	argsc;
-
-	argsc = 0;
-	while (args && args[argsc])
-		argsc++;
-	return (argsc);
 }
 
 void	handle_input(t_data *data)
@@ -113,9 +104,9 @@ void	handle_input(t_data *data)
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
-	(void)	ac;
-	(void)	av;
 
+	(void) ac;
+	(void) av;
 	data_hook(&data);
 	data_init(env);
 	while (1)

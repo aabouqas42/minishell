@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/02 17:09:53 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:20:33 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	cd(t_data *data)
 		return (1);
 	}
 	if (is_fod(data->args[1]) == _FILE)
-		return (printf("minishell cd: %s: Not a directory\n", data->args[1]), 1);
+		return (printf("minishell cd: %s: %s\n", data->args[1], NT_DIR), 1);
 	if (chdir(data->args[1]) != 0)
 		return (printf("no such file or directory: %s\n", data->args[1]), 1);
 	curr_path = get_curr_path();

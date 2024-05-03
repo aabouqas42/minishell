@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 16:41:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:20:06 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 
 // dont forget to delete the following line :)
 void prt_tab(char **tab);
+
+# define NT_DIR "Not a directory"
 
 typedef enum e_error_type
 {
@@ -128,5 +130,6 @@ int		check_redirections(char **usrin);
 void	expand_input(char **usrinput);
 char	*skiper(char *str);
 char	*_strchr(char *s, char c);
+int		get_argsc(char **args);
 
 #endif
