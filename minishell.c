@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/02 10:58:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 10:00:27 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,10 @@ int	builtins()
 		ret = (_export(), 1);
 	if (is_same(data->args[0], "unset"))
 		ret = (env_unset(data->args[1], &data->env), 1);
-	if (data->in != 0)
-	{
-		dup2(savein, 0);
-		close(savein);
-	}
-	if (data->out != 1)
-	{
-		dup2(saveout, 1);
-		close(saveout);
-	}
+	dup2(savein, 0);
+	close(savein);
+	dup2(saveout, 1);
+	close(saveout);
 	// P("%d\n", ret);
 	return (ret);
 }
@@ -98,27 +92,14 @@ void	program_runner(char **args, int first, int there_is_next)
 	} else if (child_pid == 0)
 	{
 		argv = get_argv(args);
-		// if (data->in > 0)
-		// 	close(data->fds[0]);
-		// if (data->out > 1)
-		// 	close(data->fds[1]);
 		set_pipes(first, there_is_next);
 		if (is_valid_cmd(data, argv[0]) == 0)
-		{
-			// printf("---[%d]--%d-\n", data->oldfd, data->fds[1]);
-			// close (data->oldfd);
-			// close (data->fds[1]);
-			// close (data->fds[0]);
-			// printf("F:%d: cmd : %s, in : %d, out : %d , oldfd: %d\n", first, data->program_path, data->in, data->out, data->oldfd);
 			exit(-1);
-		}
-		// printf("F:%d: cmd : %s, in : %d, out : %d , oldfd: %d\n", first, data->program_path, data->in, data->out, data->oldfd);
 		set_io();
-		// print_open_file_descriptors(argv[0]);
 		execve(data->program_path, argv, get_env_array());
 		exit(-1);
 	}
-	//THERE ERROR IN TEST cat | cat | askdakdsk
+	//THERE ERROR IN TEST cat | cat | askdakdsk [FIXED]
 	data->fds[1] && close(data->fds[1]);
 	data->oldfd && close(data->oldfd);
 	if (there_is_next)
@@ -162,6 +143,25 @@ void	handle_input(t_data *data)
 {
 	int	i;
 	split_usrin(data->usrinput);
+
+	// for (int i = 0;data->cmds[i]; i++)
+	// {
+	// 	for (int j = 0;data->cmds[i][j]; j++)
+	// 	{
+	// 		printf("%s ", data->cmds[i][j]);
+	// 	}
+	// 	printf("\n");
+	// }
+
+	// for (int i = 0;data->cmds[i]; i++)
+	// {
+	// 	for (int j = 0;data->cmds[i][j]; j++)
+	// 	{
+	// 		printf("%s ", data->cmds[i][j]);
+	// 	}
+	// 	printf("\n");
+	// }
+	// return ;
 	if (is_valid_input(data->args) == 0)
 	{
 		free_tab(data->args);

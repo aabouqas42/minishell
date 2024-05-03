@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/02 10:47:34 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:37:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	set_pipes(int first, int there_is_next)
 		if (data->in == 0)
 			data->in = data->oldfd;
 	}
+	
 }
 
 void	set_io()

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 11:55:41 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:35:12 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
 # define P printf
 # define ignore (void)
 
+typedef struct s_cmd {
+	char	*program;
+	char	**argv;
+	int		in;
+	int		out;
+}	t_cmd;
  
 // dont forget to delete the following line :)
 void prt_tab(char	**tab);
