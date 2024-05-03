@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/02 17:09:44 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:06:26 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,21 @@ t_flags	*init_flags(char **usrin)
 	return (flags);
 }
 
-int	is_valid_input(char **usrin)
+int	is_valid_input(void)
 {
 	t_data	*data;
 
-	if (usrin == NULL)
-		return (0);
 	data = data_hook(NULL);
-	data->flags = init_flags(usrin);
+	split_usrin(data->usrinput);
+	if (data->usrinput == NULL)
+		return (0);
+	data->flags = init_flags(data->args);
 	if (check_redirections(data->args) == 0)
 		return (0);
 	expand_input(data->args);
 	if (data->args == 0 || *data->args == NULL)
 		return (0);
+	data->cmds = get_commands();
 	return (1);
 }
 

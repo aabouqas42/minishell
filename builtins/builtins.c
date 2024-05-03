@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/02 16:47:04 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:43:06 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ int	run_builtin(t_data *data, char **args)
 	if (data->out != 1 && dup2(data->out, 1))
 		close(data->out);
 	if (args == NULL)
-	{
-		printf("Yes\n");
 		return 0;
-	}
 	if (is_same(args[0], "exit"))
 		(printf("exit\n"), safe_exit(0));
 	if (is_same(args[0], "cd"))

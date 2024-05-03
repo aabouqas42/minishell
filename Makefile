@@ -6,7 +6,7 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/03 16:25:33 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/05/03 16:47:26 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,14 @@ SRCS = 	parsing/command_check.c parsing/check_redirections.c parsing/expand_inpu
 		utils/str/str_utils.c \
 		utils/protected/protected_funcs.c\
 		utils/matrix_utils/matrix.c \
-		utils/data_init.c \
+		utils/data_init.c utils/free.c \
 		io/io_utils.c\
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
 		env/env_free.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \
 		temp_utils.c \
 		builtins/builtins.c \
+		vgvgvg/do_error.c
 		#multiples/
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell

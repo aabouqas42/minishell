@@ -6,13 +6,13 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 16:25:01 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:44:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	close_unused_fds(int there_is_next)
+void	close_unused_fds(int next)
 {
 	t_data	*data;
 
@@ -21,20 +21,21 @@ void	close_unused_fds(int there_is_next)
 		close(data->fds[1]);
 	if (data->oldfd)
 		close(data->oldfd);
-	if (there_is_next)
+	if (next)
 		data->oldfd = data->fds[0];
 	else if (data->fds[0])
 		close(data->fds[0]);
 }
 
-void	program_runner(char **args, int first, int there_is_next)
+void	program_exec(char **args, int first, int next)
 {
 	t_data	*data;
 	char	**argv; 
 	int		child_pid;
 
 	data = data_hook(NULL);
-	there_is_next && pipe(data->fds);
+	if (next)
+		pipe(data->fds);
 	child_pid = fork();
 	if (child_pid == -1)
 	{
@@ -45,13 +46,13 @@ void	program_runner(char **args, int first, int there_is_next)
 		argv = get_argv(args);
 		if (argv == NULL || is_valid_cmd(data, argv[0]) == 0)
 			exit(-1);
-		set_pipes(first, there_is_next);
+		set_pipes(first, next);
 		set_io();
 		init_env_array();
 		execve(data->program_path, argv, data->env_2d);
 		exit(-1);
 	}
-	close_unused_fds(there_is_next);
+	close_unused_fds(next);
 }
 
 int	read_input(t_data *data)
@@ -70,59 +71,50 @@ int	read_input(t_data *data)
 	return (1);
 }
 
-void	_free()
+int	get_argsc(char **args)
 {
-	t_data	*data;
+	int	argsc;
 
-	data = data_hook(NULL);
-	free_matrix(data->cmds);
-	data->cmds = NULL;
-	free (data->args);
-	data->args = NULL;
-	free (data->flags);
-	data->flags = NULL;
-	free (data->usrinput);
-	data->usrinput = NULL;
+	argsc = 0;
+	while (args && args[argsc])
+		argsc++;
+	return (argsc);
 }
 
 void	handle_input(t_data *data)
 {
-	int	i;
-	split_usrin(data->usrinput);
-	if (is_valid_input(data->args) == 0)
+	int		index;
+	int		next;
+	int		first;
+	t_flags	*ptr;
+
+	if (is_valid_input() == 0)
 	{
 		free_tab(data->args);
 		data->args = NULL;
 		return ;
 	}
-	data->cmds = get_commands();
 	if (data->cmds[1] == NULL && builtins())
 		return ;
-	i = 0;
+	index = 0;
 	data->oldfd = 0;
-	int	j = 0;
-	t_flags *p = data->flags;
-	while (data->cmds && data->cmds[i])
+	ptr = data->flags;
+	while (data->cmds && data->cmds[index])
 	{
-		program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
-		j = 0;
-		while (data->cmds[i][j])
-		{
-			j++;
-			data->flags++;
-		}
-		data->flags++;
-		i++;
+		first = index == 0;
+		next = data->cmds[index + 1] != NULL;
+		program_exec(data->cmds[index], first, next);
+		data->flags += get_argsc(data->cmds[index]) + 1;
+		index++;
 	}
-	data->flags = p;
+	data->flags = ptr;
 }
-
 
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
-	ignore	ac;
-	ignore	av;
+	(void)	ac;
+	(void)	av;
 
 	data_hook(&data);
 	data_init(env);
@@ -132,10 +124,8 @@ int	main(int ac, char **av, char **env)
 		{
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
-			{
 				if (data.exit_status >> 8 == -1)
 					safe_exit(-1);
-			}
 		}
 		_free();
 	}
