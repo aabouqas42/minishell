@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/02 17:09:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:23:48 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct s_data
 	char	*program_path;
 	int		exit_status;
 	char	*heredoc;
-	int		i;
 	int		in;
 	int		out;
 	int		oldfd;

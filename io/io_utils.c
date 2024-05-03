@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 10:05:18 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:18:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	**get_argv(char **args)
 	i = 0;
 	while (args[i])
 	{
-		printf("---[%s]---\n", args[i]);
+		printf("---[%s %d]---\n", args[i], data->flags[i]);
 		if (data->flags[i] == FLAG_IO_OP && (is_same(args[i], ">") || is_same(args[i], ">>")))
 		{
 			set_out(args + i);

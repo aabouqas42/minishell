@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/03 09:49:00 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/05/03 15:29:58 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,6 @@ push : fclean
 	@git add .
 	@read -p "Enter commit message: " msg_push; \
 	git commit -m "$$msg_push";
-	@git push origin mait-elk
+	@git push origin ${USER}
 
 .PHONY: clean
