@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 15:32:18 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:08:32 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ void	set_io(void)
 		close (data->in);
 	}
 	printf("%d - %d\n", data->oldfd, data->fds[0]);
-	if (data->oldfd)
+	if (data->oldfd > 1)
 		close (data->oldfd);
-	if (data->fds[0])
+	if (data->fds[0] > 1)
 		close (data->fds[0]);
-	if (data->fds[1])
+	if (data->fds[1] > 1)
 		close (data->fds[1]);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 16:41:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:10:03 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 // dont forget to delete the following line :)
 void prt_tab(char **tab);
+void print_open_file_descriptors();
 
 typedef enum e_error_type
 {
