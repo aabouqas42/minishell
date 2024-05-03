@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 18:59:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:00:02 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_valid_flag(char *flag)
 	return (i == _strlenc(flag, '\0'));
 }
 
-void	echo()
+void	echo(void)
 {
 	int		i;
 	int		new_line;

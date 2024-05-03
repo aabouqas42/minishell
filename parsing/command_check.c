@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 11:54:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:09:44 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ int	is_valid(char *cmd)
 		return (do_error(COMDNF_ERR, cmd), -1);
 	if (ft_strchr(cmd, '/') || ft_strchr(cmd, '.'))
 	{
-		if (is_fod(cmd) == FILE && access(cmd, X_OK) == -1)
+		if (is_fod(cmd) == _FILE && access(cmd, X_OK) == -1)
 			return (do_error(PERMIDEN_ERR, cmd), -1);
-		if (is_fod(cmd) == DIRE)
+		if (is_fod(cmd) == _DIRE)
 			return (do_error(ISDIR_ERR, cmd), -1);
 		if (is_fod(cmd) == -1)
 			return (do_error(NSFODIR_ERR, cmd), -1);

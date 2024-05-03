@@ -6,32 +6,43 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/01 16:53:12 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 09:57:35 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	builtins()
+
+
+// void print_open_file_descriptors(char *c)
+// {
+//    int fd;
+//     char path[256];
+    
+//     for(fd = 0; fd < 2500; fd++) {
+//         if (fcntl(fd, F_GETFD) != -1) {
+//             if (fcntl(fd, F_GETPATH, path) != -1) {
+//                 dprintf(2, "%s :: File descriptor %d is referencing: %s\n", c, fd, path);
+//             } else {
+//                 dprintf(2, "%s :: File descriptor %d is not associated with an open file.\n", c, fd);
+//             }
+//         }
+//     }
+// }
+
+void	close_unused_fds(int there_is_next)
 {
 	t_data	*data;
 
 	data = data_hook(NULL);
-	if (is_same(data->args[0], "exit"))
-		(printf("exit\n"), safe_exit(0));
-	if (is_same(data->args[0], "cd"))
-		return (cd(data), 1);
-	if (is_same(data->args[0], "echo"))
-		return (echo(), 1);
-	if (is_same(data->args[0], "pwd"))
-		return (pwd(), 1);
-	if (is_same(data->args[0], "env"))
-		return (env_print(data->env), 1);
-	if (is_same(data->args[0], "export"))
-		return (_export(), 1);
-	if (is_same(data->args[0], "unset"))
-		return (env_unset(data->args[1], &data->env), 1);
-	return (0);
+	if (data->fds[1])
+		close(data->fds[1]);
+	if (data->oldfd)
+		close(data->oldfd);
+	if (there_is_next)
+		data->oldfd = data->fds[0];
+	else if (data->fds[0])
+		close(data->fds[0]);
 }
 
 void	program_runner(char **args, int first, int there_is_next)
@@ -40,7 +51,6 @@ void	program_runner(char **args, int first, int there_is_next)
 	char	**argv; 
 	int		child_pid;
 
-	ignore first;
 	data = data_hook(NULL);
 	there_is_next && pipe(data->fds);
 	child_pid = fork();
@@ -51,23 +61,15 @@ void	program_runner(char **args, int first, int there_is_next)
 	} else if (child_pid == 0)
 	{
 		argv = get_argv(args);
-		if (is_valid_cmd(data, argv[0]) == 0)
+		// prt_tab(argv);
+		if (argv == NULL || is_valid_cmd(data, argv[0]) == 0)
 			exit(-1);
 		set_pipes(first, there_is_next);
 		set_io();
 		execve(data->program_path, argv, get_env_array());
 		exit(-1);
 	}
-	//THERE ERROR IN TEST cat | cat | askdakdsk
-	if (there_is_next)
-	{
-		close(data->fds[1]);
-		data->oldfd = data->fds[0];
-	}else
-	{
-		data->fds[1] > 1 && (close(data->fds[1]));
-		data->oldfd && (close(data->oldfd));
-	}
+	close_unused_fds(there_is_next);
 }
 
 int	read_input(t_data *data)
@@ -79,7 +81,6 @@ int	read_input(t_data *data)
 		add_history(data->usrinput);
 	if (*data->usrinput == '\0' || check_qts(data->usrinput) == 0)
 	{
-		printf("the function fails :)\n");
 		free(data->usrinput);
 		data->usrinput = NULL;
 		return (-1);
@@ -113,10 +114,10 @@ void	handle_input(t_data *data)
 		return ;
 	}
 	data->cmds = get_commands();
-	if (data->cmds[1] == NULL && builtins())
-		return ;
-	data->oldfd = 0;
+	// if (data->cmds[1] == NULL && builtins())
+	// 	return ;
 	i = 0;
+	data->oldfd = 0;
 	while (data->cmds && data->cmds[i])
 	{
 		program_runner(data->cmds[i], i == 0, data->cmds[i + 1] != NULL);
