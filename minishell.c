@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 16:44:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:15:10 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	program_exec(char **args, int first, int next)
 	} else if (child_pid == 0)
 	{
 		argv = get_argv(args);
-		if (argv == NULL || is_valid_cmd(data, argv[0]) == 0)
-			exit(-1);
 		set_pipes(first, next);
 		set_io();
+		if (argv == NULL || is_valid_cmd(data, argv[0]) == 0)
+			exit(-1);
 		init_env_array();
 		execve(data->program_path, argv, data->env_2d);
 		exit(-1);
