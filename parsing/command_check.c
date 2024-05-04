@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 16:06:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 12:59:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,18 @@ int	is_fod(char *name)
 
 int	is_valid(char *cmd)
 {
-	if (cmd == NULL)
+	if (_strlen(cmd) == 0)
 		return (do_error(COMDNF_ERR, cmd), 0);
-	if (_strlenc(cmd, 0) == 0)
-		return (do_error(COMDNF_ERR, cmd), -1);
 	if (ft_strchr(cmd, '/') || ft_strchr(cmd, '.'))
 	{
-		if (is_fod(cmd) == _FILE && access(cmd, X_OK) == -1)
-			return (do_error(PERMIDEN_ERR, cmd), -1);
+		if (is_fod(cmd) == _FILE && access(cmd, X_OK) == 0)
+			return (do_error(PERMIDEN_ERR, cmd), 0);
 		if (is_fod(cmd) == _DIRE)
-			return (do_error(ISDIR_ERR, cmd), -1);
-		if (is_fod(cmd) == -1)
-			return (do_error(NSFODIR_ERR, cmd), -1);
+			return (do_error(ISDIR_ERR, cmd), 0);
+		if (is_fod(cmd) == 0)
+			return (do_error(NSFODIR_ERR, cmd), 0);
 	}
-	return (0);
+	return (1);
 }
 
 int	is_valid_cmd(t_data *data, char *cmd)
@@ -93,7 +91,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 	char	**paths;
 	size_t	i;
 
-	if (is_valid(cmd) == -1)
+	if (!is_valid(cmd))
 		return (0);
 	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == 0)
 		return (data->program_path = _strdup(cmd), 1);

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 11:21:23 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:05:15 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <errno.h>
 # define _FILE 1
 # define _DIRE 2
-# define P printf
-
-// dont forget to delete the following line :)
-void prt_tab(char **tab);
+# define DQT '\"'
+# define SQT '\''
 
 typedef enum e_error_type
 {
@@ -123,7 +122,7 @@ int		set_var(char *argv_str, char **str);
 int		check_qts(char *str);
 int		is_fod(char *name);
 void	open_heredoc(char *target);
-void	set_out(char **arg);
+int		set_out(char **arg);
 void	set_io(void);
 void	set_pipes(int first, int there_is_next);
 int		is_valid_input(void);

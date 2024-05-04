@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 13:16:01 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 13:29:32 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	program_exec(char **args, int first, int next)
 	child_pid = fork();
 	if (child_pid == -1)
 	{
-		ft_putstr_fd("Unexpected Error\n", 2);
+		print(2, "Unexpected Error", 1);
 		return ;
 	}
 	else if (child_pid == 0)
@@ -48,10 +48,10 @@ void	program_exec(char **args, int first, int next)
 		set_pipes(first, next);
 		set_io();
 		if (argv == NULL || is_valid_cmd(data, argv[0]) == 0)
-			exit(-1);
+			exit(127);
 		init_env_array();
 		execve(data->program_path, argv, data->env_2d);
-		exit(-1);
+		exit(errno);
 	}
 	close_unused_fds(next);
 }
@@ -76,7 +76,6 @@ void	handle_input(t_data *data)
 {
 	int		index;
 	int		next;
-	int		first;
 	t_flags	*ptr;
 
 	if (is_valid_input() == 0)
@@ -93,9 +92,8 @@ void	handle_input(t_data *data)
 	data->flags = ptr;
 	while (data->cmds && data->cmds[index])
 	{
-		first = index == 0;
 		next = data->cmds[index + 1] != NULL;
-		program_exec(data->cmds[index], first, next);
+		program_exec(data->cmds[index], index == 0, next);
 		data->flags += get_argsc(data->cmds[index]) + 1;
 		index++;
 	}
@@ -119,8 +117,10 @@ int	main(int ac, char **av, char **env)
 		{
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
+			{
 				if (data.exit_status >> 8 == -1)
 					safe_exit(-1);
+			}
 		}
 		_free();
 	}

@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/03 20:10:20 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/05/04 13:54:49 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,10 @@ SRCS = 	parsing/command_check.c parsing/check_redirections.c parsing/expand_inpu
 		io/io_utils.c\
 		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
 		env/env_free.c \
+		heredoc/heredoc.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \
-		temp_utils.c \
 		builtins/builtins.c \
-		error/do_error.c
+		error/do_error.c \
 		#multiples/
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
