@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:57:27 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 16:28:56 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:16:48 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	env_print(t_env	*head)
 {
 	while (head)
 	{
-		printf("%s=%s\n", head->name, head->value);
+		if (head->value)
+			printf("%s=%s\n", head->name, head->value);
 		head = head->next;
 	}
 }

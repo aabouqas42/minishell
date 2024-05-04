@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 17:10:03 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 12:45:54 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <errno.h>
 # define _FILE 1
 # define _DIRE 2
 # define P printf
@@ -39,7 +40,9 @@ typedef enum e_error_type
 	ISDIR_ERR,
 	NSFODIR_ERR,
 	AMBIGUOUS_ERR,
-	PERMIDEN_ERR
+	PERMIDEN_ERR,
+	INVNAMEENV_ERR,
+	NOTDIRECTORY_ERR
 }	t_error_type;
 
 typedef struct s_env
@@ -98,6 +101,7 @@ void	env_free(t_env *env);
 void	env_free_list(t_env *env);
 void	free_matrix(char ***matrix);
 size_t	_strlenc(char *str, char c);
+size_t	_strlen(char *str);
 char	*_strjoin(char *str1, char *str2);
 char	*_strnjoin(char *str1, char *str2, size_t size);
 char	*_strdup(char *s1);
@@ -129,5 +133,6 @@ int		check_redirections(char **usrin);
 void	expand_input(char **usrinput);
 char	*skiper(char *str);
 char	*_strchr(char *s, char c);
-
+int		get_argsc(char **args);
+void	print(int fd, char *str, int endl);
 #endif

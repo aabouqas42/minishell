@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:57:39 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 16:35:59 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 10:28:22 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ char	*_strchr(char *s, char c)
 			return (s);
 		s++;
 	}
-	return (0);
+	return (NULL);
 }

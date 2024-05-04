@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 16:43:06 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 09:38:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	run_builtin(t_data *data, char **args)
 	if (data->out != 1 && dup2(data->out, 1))
 		close(data->out);
 	if (args == NULL)
-		return 0;
+		return (0);
 	if (is_same(args[0], "exit"))
 		(printf("exit\n"), safe_exit(0));
 	if (is_same(args[0], "cd"))
@@ -35,7 +35,7 @@ int	run_builtin(t_data *data, char **args)
 	return (0);
 }
 
-int	builtins()
+int	builtins(void)
 {
 	t_data	*data;
 	char	**args;
@@ -43,26 +43,20 @@ int	builtins()
 	int		in;
 	int		out;
 
-
 	data = data_hook(NULL);
 	args = get_argv(data->args);
 	in = dup(0);
 	out = dup(1);
-	if (data->in != 0)
-	{
-		dup2(data->in, 0);
+	if (data->in != 0 && dup2(data->in, 0))
 		close(data->in);
-	}
-	if (data->out != 1)
-	{
-		dup2(data->out, 1);
+	if (data->out != 1 && dup2(data->out, 1))
 		close(data->out);
-	}
 	ret = run_builtin(data, args);
 	dup2(in, 0);
 	dup2(out, 1);
 	close(out);
 	close(in);
-	free(args);
-	return (ret);
+	data->in = 0;
+	data->out = 1;
+	return (free(args), ret);
 }

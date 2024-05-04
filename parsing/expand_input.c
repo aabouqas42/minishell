@@ -6,52 +6,65 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/01 11:03:45 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:09:32 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	skip_case(char *str)
+int	skip_case(char curr_char, char next_char)
 {
-	return (*str == '$' && _strchr("\'\"" , *(str + 1)));
+	return (curr_char == '$' && _strchr("\'\"" , next_char));
 }
 
-int	var_case(char *s)
+int	var_case(char curr_char, char next_char)
 {
-	if (*s == '$')
-		if (ft_isalnum(*(s + 1)) || (*(s + 1) && _strchr("_?", *(s + 1))))
+	if (curr_char == '$')
+		if (ft_isalnum(next_char) || (next_char && _strchr("_?", next_char)))
 				return (1);
 	return (0);
 }
 
+void	expand_arg(char *str, char ***args)
+{
+	char	*res;
+	char	qt;
+
+	qt = 0;
+	res = NULL;
+	while (str && *str != '\0')
+	{
+		if ((*str == '\"' && qt != '\'') || (*str == '\'' && qt != '\"'))
+		{
+			qt = (qt == 0) * (*str);
+			if (qt == 0)
+				res = _strnjoin(res, "", 1);
+		} else if (skip_case(*str, *(str + 1)) && qt == 0)
+		{
+			str++;
+			continue ;
+		}
+		else if (qt != '\'' && var_case(*str, *(str + 1)))
+			str += set_var((str + 1), &res);
+		else
+			res = _strnjoin(res, str, 1);
+		str++;
+	}
+	if (res != NULL)
+		*args = _realloc(*args, res);
+}
+
 void	expand_input(char **uin)
 {
-	char	*str;
-	char	*arg;
 	char	**args;
-	char	qt;
 	int		i;
 	
 	args = NULL;
-	while(uin && *uin)
+	i = 0;
+	while(uin && uin[i] != NULL)
 	{
-		(1) && (i = -1, qt = 0, str = NULL);
-		while ((*uin) && (*uin)[++i])
-		{
-			arg = *uin;
-			if ((arg[i] == '\"' && qt != '\'') || (arg[i] == '\'' && qt != '\"'))
-			{
-				qt = (qt == 0) * (arg[i]);
-				(1) && (qt == 0 && (str = _strnjoin(str, "", 1)));
-			} else if (skip_case(arg + i) && qt == 0 && (1 || i++))
-				continue ;
-			else if (qt != '\'' && var_case(arg + i))
-				i += set_var(*uin + i + 1, &str);
-			else
-				str = _strnjoin(str, arg + i, 1);
-		}
-		(1) && (str != NULL) && (args = _realloc(args, str), uin++);
+		expand_arg(uin[i], &args);
+		i++;
 	}
 	free_tab(data_hook(NULL)->args);
 	data_hook(NULL)->args = args;

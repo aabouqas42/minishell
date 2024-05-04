@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 17:08:32 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 12:09:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	set_pipes(int first, int there_is_next)
 		if (data->in == 0)
 			data->in = data->oldfd;
 	}
-	
 }
 
 void	set_io(void)
@@ -85,7 +84,6 @@ void	set_io(void)
 		dup2(data->in, STDIN_FILENO);
 		close (data->in);
 	}
-	printf("%d - %d\n", data->oldfd, data->fds[0]);
 	if (data->oldfd > 1)
 		close (data->oldfd);
 	if (data->fds[0] > 1)
@@ -105,7 +103,7 @@ char	**get_argv(char **args)
 	i = 0;
 	while (args[i])
 	{
-		printf("---[%s %d]---\n", args[i], data->flags[i]);
+		//printf("---[%s %d]---\n", args[i], data->flags[i]);
 		if (data->flags[i] == FLAG_IO_OP && (is_same(args[i], ">") || is_same(args[i], ">>")))
 		{
 			set_out(args + i);

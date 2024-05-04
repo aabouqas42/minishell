@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/30 11:56:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:07:22 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,23 @@ char	**_realloc(char **old_tab, char *to_append)
 int	_spaces(int c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
+}
+int	get_argsc(char **args)
+{
+	int	argsc;
+
+	argsc = 0;
+	while (args && args[argsc])
+		argsc++;
+	return (argsc);
+}
+
+void	print(int fd, char *str, int endl)
+{
+	size_t	size;
+
+	size = _strlen(str);
+	write (fd, str, size);
+	if (endl)
+		write(fd, "\n", 1);
 }

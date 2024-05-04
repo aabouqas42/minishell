@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 17:15:36 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 12:58:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	close_unused_fds(int next)
 void	program_exec(char **args, int first, int next)
 {
 	t_data	*data;
-	char	**argv; 
+	char	**argv;
 	int		child_pid;
 
 	data = data_hook(NULL);
@@ -41,18 +41,17 @@ void	program_exec(char **args, int first, int next)
 	{
 		ft_putstr_fd("Unexpected Error\n", 2);
 		return ;
-	} else if (child_pid == 0)
+	}
+	else if (child_pid == 0)
 	{
 		argv = get_argv(args);
 		set_pipes(first, next);
 		set_io();
 		if (argv == NULL || is_valid_cmd(data, argv[0]) == 0)
-		{
-			exit(-1);
-		}
+			exit(127);
 		init_env_array();
 		execve(data->program_path, argv, data->env_2d);
-		exit(-1);
+		exit(errno);
 	}
 	close_unused_fds(next);
 }
@@ -73,16 +72,6 @@ int	read_input(t_data *data)
 	return (1);
 }
 
-int	get_argsc(char **args)
-{
-	int	argsc;
-
-	argsc = 0;
-	while (args && args[argsc])
-		argsc++;
-	return (argsc);
-}
-
 void	handle_input(t_data *data)
 {
 	int		index;
@@ -96,11 +85,13 @@ void	handle_input(t_data *data)
 		data->args = NULL;
 		return ;
 	}
+	ptr = data->flags;
 	if (data->cmds[1] == NULL && builtins())
 		return ;
 	index = 0;
 	data->oldfd = 0;
-	ptr = data->flags;
+	// printf("---[in %d  out %d]---\n", data->in, data->out);
+	data->flags = ptr;
 	while (data->cmds && data->cmds[index])
 	{
 		first = index == 0;
@@ -115,9 +106,9 @@ void	handle_input(t_data *data)
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
-	(void)	ac;
-	(void)	av;
 
+	(void) ac;
+	(void) av;
 	data_hook(&data);
 	data_init(env);
 	while (1)
@@ -126,8 +117,10 @@ int	main(int ac, char **av, char **env)
 		{
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
+			{
 				if (data.exit_status >> 8 == -1)
 					safe_exit(-1);
+			}
 		}
 		_free();
 	}
