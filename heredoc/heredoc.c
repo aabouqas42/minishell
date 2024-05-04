@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:35:06 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 15:29:50 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/05/04 18:11:58 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	pwd(void)
+void	open_heredoc(char *target)
 {
-	char	*working_dir;
+	t_data	*data;
+	char	*in;
 
-	working_dir = getcwd(NULL, 0);
-	print(1, working_dir, 1); // why you print it, before check ?
-	if (working_dir == NULL)
-		return (-1);
-	free(working_dir);
-	return (0);
+	data = data_hook(NULL);
+	data->heredoc = NULL;
+	printf("open heredoc :)\n");
+	in = readline("heredoc 1> ");
+	while (!is_same(in, target))
+	{
+		data->heredoc = _strjoin(data->heredoc, in);
+		data->heredoc = _strjoin(data->heredoc, "\n");
+		in = readline("heredoc 2> ");
+	}
 }

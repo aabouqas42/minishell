@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 16:40:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:52:34 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	***get_commands(void)
 	(1) && (i = 0, j = 0);
 	while (args && args[i])
 	{
-		if (is_same(args[i], "|") && data_hook(NULL)->flags[i])
+		if (is_same(args[i], "|") && data_hook(NULL)->flags[i].is_io_op)
 		{
 			free (args[i]);
 			args[i] = NULL;
@@ -52,7 +52,3 @@ char	***get_commands(void)
 	}
 	return (cmds);
 }
-
-
-
-

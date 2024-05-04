@@ -6,30 +6,35 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 12:59:40 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 16:39:15 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_flags	*init_flags(char **usrin)
+t_flag	*init_flags(char **usrin)
 {
-	t_flags	*flags;
+	t_flag	*flags;
 	int		i;
+	int		j;
 	int		size;
 
 	size = 0;
 	while (usrin[size])
 		size++;
-	flags = malloc (size * sizeof(t_flags));
+	flags = malloc (size * sizeof(t_flag));
 	if (flags == NULL)
 		safe_exit(-1);
-	ft_bzero(flags, size * sizeof(t_flags));
+	ft_bzero(flags, size * sizeof(t_flag));
 	i = 0;
 	while (usrin[i])
 	{
 		if (is_io_op(usrin[i]))
-			flags[i] = FLAG_IO_OP;
+			flags[i].is_io_op = 1;
+		j = 0;
+		flags[i].inide_sqt = (ft_strchr(usrin[i], '\'') != NULL);
+		flags[i].inside_dqt = (ft_strchr(usrin[i], '\"') != NULL);
+		flags[i].inide_qts = (flags[i].inide_qts || flags[i].inide_sqt);
 		i++;
 	}
 	return (flags);

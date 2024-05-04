@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:03:36 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/04/30 18:42:23 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:05:59 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	set_last_exit(char **str)
 	if (exit_status == NULL)
 		safe_exit(-1);
 	*str = _strnjoin(*str, exit_status, _strlenc(exit_status, '\0'));
-	// leaks fixed here :)
 	free(exit_status);
 	if (*str == NULL)
 		safe_exit(-1);

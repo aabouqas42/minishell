@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 11:07:22 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:07:16 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	_spaces(int c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
 }
+
 int	get_argsc(char **args)
 {
 	int	argsc;

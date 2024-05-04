@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/02 16:42:18 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 13:58:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	check_redirections(char **usrin)
 	while (usrin && usrin[i])
 	{
 		if (is_io_op(usrin[i]) && usrin[i + 1] == NULL)
-				return (do_error(SYNTAX_ERR, "newline"), 0);
+			return (do_error(SYNTAX_ERR, "newline"), 0);
 		if (_strchr("<>", usrin[i][0]) && !is_same(usrin[i], "<<"))
 		{
 			if (usrin[i + 1] && usrin[i + 1][0] == '$')
-				if (!(_strchr(usrin[i +1], '\"') || _strchr(usrin[i + 1], '\'')))
+				if (!(_strchr(usrin[i + 1], 34) || _strchr(usrin[i + 1], 39)))
 					if (!env_grepvalue(&usrin[i + 1][1]))
 						return (do_error(AMBIGUOUS_ERR, usrin[i + 1]), 0);
 			if (_strchr("<>|", usrin[i + 1][0]))

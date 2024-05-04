@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 12:45:54 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 17:49:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@
 # include <errno.h>
 # define _FILE 1
 # define _DIRE 2
-# define P printf
-
-// dont forget to delete the following line :)
-void prt_tab(char **tab);
-void print_open_file_descriptors();
+# define DQT '\"'
+# define SQT '\''
 
 typedef enum e_error_type
 {
@@ -52,17 +49,27 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef enum e_flags
+typedef struct s_flag
 {
-	FLAG_WORD,
-	FLAG_IO_OP,
-}	t_flags;
+	int	inside_dqt;
+	int	inide_sqt;
+	int	inide_qts;
+	int	is_io_op;
+	int	out;
+	int	in;
+}	t_flag;
+
+// typedef enum e_flags
+// {
+// 	FLAG_WORD,
+// 	FLAG_IO_OP
+// }	t_flags;
 
 typedef struct s_data
 {
 	char	***cmds;
 	t_env	*env;
-	t_flags	*flags;
+	t_flag	*flags;
 	char	**args;
 	char	**env_2d;
 	char	*prompt;
@@ -107,7 +114,7 @@ char	*_strnjoin(char *str1, char *str2, size_t size);
 char	*_strdup(char *s1);
 char	*_strndup(char *s1, size_t size);
 char	*_strchr(char *s, char c);
-t_flags	*init_flags(char **usrin);
+t_flag	*init_flags(char **usrin);
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	split_usrin(char *usr_in);
@@ -125,7 +132,7 @@ int		set_var(char *argv_str, char **str);
 int		check_qts(char *str);
 int		is_fod(char *name);
 void	open_heredoc(char *target);
-void	set_out(char **arg);
+int		set_out(char **arg);
 void	set_io(void);
 void	set_pipes(int first, int there_is_next);
 int		is_valid_input(void);

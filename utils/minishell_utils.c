@@ -6,11 +6,11 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 12:12:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:23:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/minishell.h"
+#include "../include/minishell.h"
 
 t_data	*data_hook(t_data *data)
 {
@@ -23,7 +23,7 @@ t_data	*data_hook(t_data *data)
 
 void	safe_exit(int status)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = data_hook(NULL);
 	free (data->usrinput);
@@ -36,7 +36,7 @@ void	safe_exit(int status)
 	data->env = NULL;
 	free (data->prompt);
 	if (status == -1)
-		printf("exit\n");
+		print(1, "exit", 1);
 	exit(status);
 }
 
