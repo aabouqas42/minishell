@@ -6,7 +6,7 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/04 12:10:03 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/05/04 13:41:56 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,5 +64,11 @@ push : fclean
 	@read -p "Enter commit message: " msg_push; \
 	git commit -m "$$msg_push";
 	@git push origin ${USER}
+
+pull:
+	$(if $(filter-out mait-elk,$(USER)), \
+        @git pull origin mait-elk \
+        @git pull origin aabouqas \
+	)
 
 .PHONY: clean
