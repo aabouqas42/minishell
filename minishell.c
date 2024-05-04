@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 12:07:15 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 13:16:01 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,11 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	(void) ac;
-	(void) av;
+	if (ac != 1)
+	{
+		print(2, "minishell : too many arguments", 1);
+		return (get_argsc(av) * 1);
+	}
 	data_hook(&data);
 	data_init(env);
 	while (1)
