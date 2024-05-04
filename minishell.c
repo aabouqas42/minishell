@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 13:29:32 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 17:52:46 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	handle_input(t_data *data)
 		data->flags += get_argsc(data->cmds[index]) + 1;
 		index++;
 	}
-	data->flags = ptr;
+	data->flags = ptr ;
 }
 
 int	main(int ac, char **av, char **env)
