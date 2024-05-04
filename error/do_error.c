@@ -6,11 +6,12 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:46:47 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 18:41:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 12:00:34 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 
 void	do_error(t_error_type errtype, char *reason)
 {
@@ -55,5 +56,19 @@ void	do_error(t_error_type errtype, char *reason)
 		ft_putstr_fd(reason, 2);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
 		data_hook(NULL)->exit_status = 127 << 8;
+	}
+	if (errtype == INVNAMEENV_ERR)
+	{
+		ft_putstr_fd("minishell : export: `", 2);
+		ft_putstr_fd(reason, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		data_hook(NULL)->exit_status = 127 << 8;
+	}
+	if (errtype == NOTDIRECTORY_ERR)
+	{
+		ft_putstr_fd("minishell : cd: ", 2);
+		ft_putstr_fd(reason, 2);
+		ft_putstr_fd(": Not a directory\n", 2);
+		data_hook(NULL)->exit_status = 1 << 8;
 	}
 }

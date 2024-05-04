@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 20:16:01 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 12:00:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ void	handle_input(t_data *data)
 		data->args = NULL;
 		return ;
 	}
+	ptr = data->flags;
 	if (data->cmds[1] == NULL && builtins())
 		return ;
 	index = 0;
 	data->oldfd = 0;
-	ptr = data->flags;
+	// printf("---[in %d  out %d]---\n", data->in, data->out);
+	data->flags = ptr;
 	while (data->cmds && data->cmds[index])
 	{
 		first = index == 0;

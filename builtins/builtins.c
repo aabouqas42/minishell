@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 20:18:09 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 09:38:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ int	builtins(void)
 	dup2(out, 1);
 	close(out);
 	close(in);
+	data->in = 0;
+	data->out = 1;
 	return (free(args), ret);
 }

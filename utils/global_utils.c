@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 20:14:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:07:22 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,14 @@ int	get_argsc(char **args)
 	while (args && args[argsc])
 		argsc++;
 	return (argsc);
+}
+
+void	print(int fd, char *str, int endl)
+{
+	size_t	size;
+
+	size = _strlen(str);
+	write (fd, str, size);
+	if (endl)
+		write(fd, "\n", 1);
 }

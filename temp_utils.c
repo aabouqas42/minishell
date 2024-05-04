@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 20:16:07 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/03 20:24:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:01:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,5 @@ void	prt_tab(char **tab)
 	// if (env_export(name, value))
 	// 	return (1);
 	// return (
-	//printf(
-	// "minishell: export: `%s=%s': not a valid identifier\n", name, value)
+	//printf(// "minishell: export: `%s=%s': not a valid identifier\n", name, value)
 	// , 0);

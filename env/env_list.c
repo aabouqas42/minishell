@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 16:27:38 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 10:40:10 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*env_grepvalue(char *name)
 
 int	env_valid_name(char *name)
 {
-	if (name == NULL)
+	if (name == NULL || *name == '\0')
 		return (0);
 	if (ft_isdigit(name[0]))
 		return (0);
