@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 14:05:47 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:14:08 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,35 @@ char	*skiper(char *str)
 	return (str);
 }
 
-size_t	is_symbole(char ***args_ptr, char *str)
+size_t	is_symbole(char *str)
 {
-	if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
+	if (!ft_strncmp("<<", str, 2))
 	{
-		*args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 2));
+		t_arg_add(_strnjoin(NULL, str, 2), ARG_HERDOC);
+		return (2);
+	}
+	if (!ft_strncmp(">>", str, 2))
+	{
+		t_arg_add(_strnjoin(NULL, str, 2), ARG_APPEND);
 		return (2);
 	}
 	if (str && *str && ft_strchr("<>|", *str) != NULL)
-		*args_ptr = _realloc(*args_ptr, _strnjoin(NULL, str, 1));
+	{
+		if (ft_strncmp("|", str, 1) == 0)
+			t_arg_add(_strnjoin(NULL, str, 1), ARG_PIPE);
+		if (ft_strncmp("<", str, 1) == 0)
+			t_arg_add(_strnjoin(NULL, str, 1), ARG_REDIN);
+		if (ft_strncmp(">", str, 1) == 0)
+			t_arg_add(_strnjoin(NULL, str, 1), ARG_REDOUT);
+	}
 	return (1);
 }
 
 void	split_usrin(char *usr_in)
 {
-	char	***args_ptr;
 	char	*res;
 	char	qt;
 
-	args_ptr = &data_hook(NULL)->args;
 	while (*usr_in)
 	{
 		usr_in = skiper(usr_in);
@@ -52,7 +62,7 @@ void	split_usrin(char *usr_in)
 			res = _strnjoin(res, usr_in, 1);
 			usr_in++;
 		}
-		*args_ptr = _realloc(*args_ptr, res);
-		usr_in += is_symbole(args_ptr, usr_in);
+		t_arg_add(res, ARG_WORD);
+		usr_in += is_symbole(usr_in);
 	}
 }

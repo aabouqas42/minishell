@@ -1,0 +1,10 @@
+{
+	"files.associations": {
+		"minishell.h": "c",
+		"dirent.h": "c",
+		"errno.h": "c",
+		"signal.h": "c",
+		"sstream": "c",
+		"stat.h": "c"
+	}
+}

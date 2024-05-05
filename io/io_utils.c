@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 13:53:23 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:27:15 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,18 @@ char	**get_argv(char **args)
 	i = 0;
 	while (args[i])
 	{
-		if (d->flags[i] && (is_same(args[i], ">") || is_same(args[i], ">>")))
-			i += set_out(args + i);
-		else if (is_same(args[i], "<<"))
-			open_heredoc((args[i + 1]));
-		else if (is_same(args[i], "<"))
-			i += set_in(d, args[i + 1]);
-		else
-			argv = _realloc(argv, args[i]);
+		// if (d->flags[i].is_io_op && (is_same(args[i], ">") || is_same(args[i], ">>")))
+		// 	i += set_out(args + i);
+		// else if (d->flags[i].is_io_op && is_same(args[i], "<<"))
+		// {
+		// 	i++;
+		// 	print(2, args[i], 1);
+		// 	open_heredoc((args[i]));
+		// }
+		// else if (is_same(args[i], "<"))
+		// 	i += set_in(d, args[i + 1]);
+		// else
+		// 	argv = _realloc(argv, args[i]);
 		i++;
 	}
 	return (argv);

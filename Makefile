@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/04 13:54:49 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/05/05 12:47:00 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = 	parsing/command_check.c parsing/check_redirections.c parsing/expand_inpu
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \
 		builtins/builtins.c \
 		error/do_error.c \
+		linked_lists/t_arg_instr.c \
 		#multiples/
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell
@@ -65,4 +66,4 @@ push : fclean
 	git commit -m "$$msg_push";
 	@git push origin ${USER}
 
-.PHONY: clean
+.PHONY: clean pull

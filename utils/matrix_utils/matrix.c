@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 14:07:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:53:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,36 @@ int	cmds_counter(char **cmds)
 	return (j + 1);
 }
 
-char	***get_commands(void)
+t_cmd	*get_commands(t_arg *argv)
 {
-	char	***cmds;
-	char	**args;
+	t_data	*data;
+	t_arg	*args;
+	t_cmd	*cmds;
 	int		i;
 	int		j;
 
-	args = data_hook(NULL)->args;
-	cmds = _calloc((cmds_counter(args) + 1) * sizeof(char **));
-	(1) && (i = 0, j = 0);
-	while (args && args[i])
+	data = data_hook(NULL);
+	args = data->_args;
+	i = 0;
+	j = 0;
+	while (args)
 	{
-		if (is_same(args[i], "|") && data_hook(NULL)->flags[i])
+		while (args->type != ARG_PIPE)
 		{
-			free (args[i]);
-			args[i] = NULL;
-			j++;
+			args = args->next;
 		}
-		else
-			cmds[j] = _realloc(cmds[j], args[i]);
-		i++;
+		// while (data->args[i] && !(is_same(data->args[i], "|")))
+		// {
+		// 	cmds[j].argv = _realloc(cmds[j].argv, data->args[i]);
+		// 	i++;
+		// }
+		// if (data->args[i] != NULL)
+		// {
+		// 	free (data->args[i]);
+		// 	data->args[i] = NULL;
+		// 	i++;
+		// }
+		j++;
 	}
 	return (cmds);
 }

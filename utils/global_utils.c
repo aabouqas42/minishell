@@ -6,21 +6,35 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 14:07:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:10:15 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	is_io_op(char	*str)
+t_arg_type	is_io_op(char	*str)
 {
 	if (str == NULL)
-		return (0);
-	return (
-		(ft_strchr("<>|", *str) && *(str + 1) == 0)
-		|| ft_strncmp(str, ">>", 3) == 0
-		|| ft_strncmp(str, "<<", 3) == 0
-	);
+		return (None);
+	if (ft_strncmp(str, ">>", 3) == 0)
+		return (ARG_APPEND);
+	if (ft_strncmp(str, "<<", 3) == 0)
+		return (ARG_HERDOC);
+	if (ft_strchr("<>|", *str) && *(str + 1) == 0)
+	{
+		if (ft_strchr("<", *str))
+			return (ARG_REDIN);
+		if (ft_strchr(">", *str))
+			return (ARG_REDOUT);
+		if (ft_strchr("|", *str))
+			return (ARG_PIPE);
+	}
+	return (None);
+	// return (
+	// 	(ft_strchr("<>|", *str) && *(str + 1) == 0)
+	// 	|| ft_strncmp(str, ">>", 3) == 0
+	// 	|| ft_strncmp(str, "<<", 3) == 0
+	// );
 }
 
 char	**_realloc(char **old_tab, char *to_append)

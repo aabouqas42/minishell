@@ -6,34 +6,11 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/05 09:34:36 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:54:18 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_flags	*init_flags(char **usrin)
-{
-	t_flags	*flags;
-	int		i;
-	int		size;
-
-	size = 0;
-	while (usrin[size])
-		size++;
-	flags = malloc (size * sizeof(t_flags));
-	if (flags == NULL)
-		safe_exit(-1);
-	ft_bzero(flags, size * sizeof(t_flags));
-	i = 0;
-	while (usrin[i])
-	{
-		if (is_io_op(usrin[i]))
-			flags[i] = FLAG_IO_OP;
-		i++;
-	}
-	return (flags);
-}
 
 int	is_valid_input(void)
 {
@@ -41,16 +18,30 @@ int	is_valid_input(void)
 
 	data = data_hook(NULL);
 	split_usrin(data->usrinput);
-	for (int k = 0; data->args[k]; k++)
-	{
-		printf("[%s] ", data->args[k]);
-		
-	}
-	printf("\n");
+	data->cmds = get_commands(data->_args);
+	// while (data->_args)
+	// {
+	// 	printf("[%s]{%d}\n", data->_args->value, data->_args->type);
+	// 	data->_args = data->_args->next;
+	// }
+	data->_args = NULL;
+	return 0;
+	
+	// init_heredocs(data->cmds);
+	// for (int i = 0; data->cmds[i].argv; i++)
+	// {
+	// 	data->cmds[i].out = 1;
+	// 	for (int j = 0;data->cmds[i].argv[j]; j++)
+	// 	{
+	// 		printf("[%s %d] ", data->cmds[i].argv[j], data->cmds[i].flags[j].is_io_op);
+	// 	}
+	// 	printf("in : %d , out : %d", data->cmds[i].in, data->cmds[i].out);
+	// 	printf("\n");
+	// }
+	data->syn_err = 0;
 	return (0);
 	if (data->usrinput == NULL)
 		return (0);
-	data->flags = init_flags(data->args);
 	
 	if (check_redirections(data->args) == 0)
 		return (0);
