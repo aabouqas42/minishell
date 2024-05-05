@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:46:47 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 13:20:00 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:51:34 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static void	__syntax_err(char *reason)
 {
 	print(2, "minishell : syntax error near unexpected token `", 0);
-	print(2, reason, 1);
+	print(2, reason, 0);
+	print(2,"'", 1);
 	data_hook(NULL)->exit_status = 258 << 8;
 }
 

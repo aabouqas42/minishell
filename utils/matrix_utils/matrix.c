@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/05 13:53:53 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 20:17:20 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,49 @@ int	cmds_counter(char **cmds)
 	return (j + 1);
 }
 
-t_cmd	*get_commands(t_arg *argv)
+void	get_commands(t_arg *args)
 {
-	t_data	*data;
-	t_arg	*args;
-	t_cmd	*cmds;
+	t_arg	*ptr;
+	t_cmd	cmd;
 	int		i;
-	int		j;
 
-	data = data_hook(NULL);
-	args = data->_args;
 	i = 0;
-	j = 0;
+	ptr = args;
+	// while (ptr)
+	// {
+	// 	printf("---[%s]---\n", ptr->value);
+	// 	ptr = ptr->next;
+	// }
+	// printf("%s %d\n", args->value, args->type == ARG_PIPE);
+	data_hook(NULL)->exit_status = 0;
+	if (args->type > 1 && args->next == NULL)
+		return (do_error(SYNTAX_ERR, "newline"));
 	while (args)
 	{
-		while (args->type != ARG_PIPE)
+		cmd._argv = NULL;
+		cmd.heredocs = NULL;
+		while (args && args->type != ARG_PIPE)
 		{
+			if (args->type == ARG_HERDOC && args->next)
+				cmd.heredocs = _realloc(cmd.heredocs, args->next->value);
+			else
+				t_arg_put(args->value, args->type, &cmd._argv);
 			args = args->next;
 		}
-		// while (data->args[i] && !(is_same(data->args[i], "|")))
+		t_cmd_add(cmd);
+		// t_cmd	*c;
+		// while (data_hook(NULL)->cmds)
 		// {
-		// 	cmds[j].argv = _realloc(cmds[j].argv, data->args[i]);
-		// 	i++;
+		// 	int j = 0;
+		// 	while (cmd.heredocs && cmd.heredocs[j])
+		// 	{
+		// 		printf("[%s]", cmd.heredocs[j]);
+		// 		j++;
+		// 	}
+		// 	printf("\n");
+		// 	data_hook(NULL)->cmds = data_hook(NULL)->cmds->next;
 		// }
-		// if (data->args[i] != NULL)
-		// {
-		// 	free (data->args[i]);
-		// 	data->args[i] = NULL;
-		// 	i++;
-		// }
-		j++;
+		if (args)
+			args = args->next;
 	}
-	return (cmds);
 }

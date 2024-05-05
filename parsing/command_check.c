@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/05 13:54:18 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 20:16:34 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,38 @@ int	is_valid_input(void)
 
 	data = data_hook(NULL);
 	split_usrin(data->usrinput);
-	data->cmds = get_commands(data->_args);
 	// while (data->_args)
 	// {
-	// 	printf("[%s]{%d}\n", data->_args->value, data->_args->type);
+	// 	printf("--[%s]--\n", data->_args->value);
 	// 	data->_args = data->_args->next;
 	// }
+	get_commands(data->_args);
+	// while (data->cmds)
+	// {
+		// printf("HEREDOCS OF : %s\n", data->cmds->_argv->value);
+		// int j = 0;
+		// while (data->cmds->heredocs && data->cmds->heredocs[j])
+		// {
+		// 	printf("[%s]", data->cmds->heredocs[j]);
+		// 	j++;
+		// }
+		// printf("\n");
+	// 	data->cmds = data->cmds->next;
+	// }
+	while (data_hook(NULL)->cmds)
+	{
+		printf("HEREDOCS OF : %s\n", data_hook(NULL)->cmds->_argv->value);
+		int j = 0;
+		while (data_hook(NULL)->cmds->heredocs && data_hook(NULL)->cmds->heredocs[j])
+		{
+			printf("[%s]", data_hook(NULL)->cmds->heredocs[j]);
+			j++;
+		}
+		printf("\n");
+		data_hook(NULL)->cmds = data_hook(NULL)->cmds->next;
+	}
 	data->_args = NULL;
+	data->cmds = NULL;
 	return 0;
 	
 	// init_heredocs(data->cmds);
@@ -43,12 +68,12 @@ int	is_valid_input(void)
 	if (data->usrinput == NULL)
 		return (0);
 	
-	if (check_redirections(data->args) == 0)
-		return (0);
+	// if (check_redirections(data->args) == 0)
+	// 	return (0);
 	expand_input(data->args);
 	if (data->args == 0 || *data->args == NULL)
 		return (0);
-	data->cmds = get_commands();
+	// get_commands(data->_args);
 	return (1);
 }
 

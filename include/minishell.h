@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/05 13:56:10 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:37:28 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,13 @@ typedef struct s_arg
 typedef struct s_cmd
 {
 	char	*program;
+	t_arg	*_argv;
 	char	**argv;
+	char	**heredocs;
 	int		in;
 	int		out;
 	struct s_cmd *next;
 }	t_cmd;
-
-// typedef enum e_flags
-// {
-// 	FLAG_WORD,
-// 	FLAG_IO_OP
-// }	t_flags;
 
 typedef struct s_data
 {
@@ -114,9 +110,13 @@ typedef struct s_data
  * T_ARG INSTRACTIONS
  */
 void	t_arg_add(char *value, t_arg_type type);
+void	t_arg_put(char *value, t_arg_type type, t_arg **head);
+
 /**
- * END T_ARG INSTRACTIONS
+ * T_CMD INSTRACTIONS
  */
+void	t_cmd_add(t_cmd to_add);
+
 
 t_data	*data_hook(t_data *data);
 void	init_heredocs(t_cmd *cmds);
@@ -132,7 +132,7 @@ int		env_export(char *name, char *value);
 int		env_valid_name(char *name);
 void	env_print(t_env	*head);
 void	env_sort(t_env *env);
-t_cmd	*get_commands(t_arg *argv);
+void	get_commands(t_arg *args);
 int		cmds_counter(char **cmds);
 void	data_init(char **base_env);
 char	*get_prompt(void);
@@ -166,12 +166,12 @@ int		_spaces(int c);
 int		set_var(char *argv_str, char **str);
 int		check_qts(char *str);
 int		is_fod(char *name);
-void	open_heredoc(char *target);
+int		open_heredoc(char *target);
 int		set_out(char **arg);
 void	set_io(void);
 void	set_pipes(int first, int there_is_next);
 int		is_valid_input(void);
-int		check_redirections(char **usrin);
+int		check_redirections(t_arg *usrin);
 void	expand_input(char **usrinput);
 char	*skiper(char *str);
 char	*_strchr(char *s, char c);

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/05 12:18:08 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 15:34:28 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_heredocs(t_cmd *cmds)
 	}
 }
 
-void	open_heredoc(char *target)
+int	open_heredoc(char *target)
 {
 	t_data	*data;
 	char	*in;
@@ -65,4 +65,5 @@ void	open_heredoc(char *target)
 		data->heredoc = _strjoin(data->heredoc, "\n");
 		in = readline("heredoc 2> ");
 	}
+	return 0;
 }
