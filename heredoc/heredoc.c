@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 18:11:58 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:52:10 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	open_heredoc(char *target)
 
 	data = data_hook(NULL);
 	data->heredoc = NULL;
-	printf("open heredoc :)\n");
+	printf("open heredoc :) %s\n", target);
 	in = readline("heredoc 1> ");
 	while (!is_same(in, target))
 	{

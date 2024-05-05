@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 18:01:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:51:42 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	var_case(char curr_char, char next_char)
 	return (0);
 }
 
-void	expand_arg(char *str, char ***args)
+void	expand_arg(char *str, char ***args, int after_hd)
 {
 	char	*res;
 	char	qt;
@@ -45,7 +45,7 @@ void	expand_arg(char *str, char ***args)
 			str++;
 			continue ;
 		}
-		else if (qt != '\'' && var_case(*str, *(str + 1)))
+		else if (qt != '\'' && var_case(*str, *(str + 1)) && !after_hd)
 			str += set_var((str + 1), &res);
 		else
 			res = _strnjoin(res, str, 1);
@@ -63,7 +63,8 @@ void	expand_input(char **uin)
 	i = 0;
 	while (uin && uin[i] != NULL)
 	{
-		expand_arg(uin[i], &args);
+		expand_arg(uin[i], &args, (i != 0 && is_same(uin[i -1], "<<")
+				&& data_hook(NULL)->flags[i -1].is_io_op));
 		i++;
 	}
 	free_tab(data_hook(NULL)->args);

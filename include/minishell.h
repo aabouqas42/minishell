@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 17:49:53 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/05 09:00:15 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@
 # define DQT '\"'
 # define SQT '\''
 
+typedef enum e_arg_type
+{
+	ARG_WORD,
+	ARG_PIPE,
+	ARG_REDIR
+}	t_arg_type;
+
 typedef enum e_error_type
 {
 	SYNTAX_ERR,
@@ -51,13 +58,26 @@ typedef struct s_env
 
 typedef struct s_flag
 {
-	int	inside_dqt;
-	int	inide_sqt;
 	int	inide_qts;
 	int	is_io_op;
 	int	out;
 	int	in;
 }	t_flag;
+
+typedef struct s_arg
+{
+	char			*value;
+	t_arg_type		type;
+	struct s_arg	*next;
+}	t_arg;
+
+typedef struct s_cmd
+{
+	char	*program;
+	char	**args;
+	int		in;
+	int		out;
+}	t_cmd;
 
 // typedef enum e_flags
 // {
@@ -67,6 +87,7 @@ typedef struct s_flag
 
 typedef struct s_data
 {
+	t_arg	*_args;
 	char	***cmds;
 	t_env	*env;
 	t_flag	*flags;

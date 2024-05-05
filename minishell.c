@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 17:46:37 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/05 09:04:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
 	if (data->usrinput == NULL)
-		safe_exit(-1);
+		safe_exit(1);
 	if (*data->usrinput)
 		add_history(data->usrinput);
-	if (*data->usrinput == '\0' || check_qts(data->usrinput) == 0)
+	if (*data->usrinput == '\0')
 	{
 		free(data->usrinput);
 		data->usrinput = NULL;
@@ -84,21 +84,23 @@ void	handle_input(t_data *data)
 		data->args = NULL;
 		return ;
 	}
-	ptr = data->flags;
-	if (data->cmds[1] == NULL && builtins())
-		return ;
-	index = 0;
-	data->oldfd = 0;
-	data->flags = ptr;
-	while (data->cmds && data->cmds[index])
-	{
-		next = data->cmds[index + 1] != NULL;
-		program_exec(data->cmds[index], index == 0, next);
-		data->flags += get_argsc(data->cmds[index]) + 1;
-		index++;
-	}
-	data->flags = ptr;
+	// ptr = data->flags;
+	// if (data->cmds[1] == NULL && builtins())
+	// 	return ;
+	// index = 0;
+	// data->oldfd = 0;
+	// data->flags = ptr;
+	// while (data->cmds && data->cmds[index])
+	// {
+	// 	next = data->cmds[index + 1] != NULL;
+	// 	program_exec(data->cmds[index], index == 0, next);
+	// 	data->flags += get_argsc(data->cmds[index]) + 1;
+	// 	index++;
+	// }
+	// data->flags = ptr;
 }
+
+// #error problem in heredoc :)
 
 int	main(int ac, char **av, char **env)
 {
@@ -116,13 +118,13 @@ int	main(int ac, char **av, char **env)
 		if (read_input(&data) != -1)
 		{
 			handle_input(&data);
-			while (waitpid(-1, &data.exit_status, 0) != -1)
-			{
-				if (data.exit_status >> 8 == -1)
-					safe_exit(-1);
-			}
+			// while (waitpid(-1, &data.exit_status, 0) != -1)
+			// {
+			// 	if (data.exit_status >> 8 == -1)
+			// 		safe_exit(-1);
+			// }
 		}
-		_free();
+		// _free();
 	}
 	return (EXIT_SUCCESS);
 }
