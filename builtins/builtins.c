@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 09:38:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/05 09:04:51 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	run_builtin(t_data *data, char **args)
 	if (args == NULL)
 		return (0);
 	if (is_same(args[0], "exit"))
-		(printf("exit\n"), safe_exit(0));
+		(print(1, "exit", 1), safe_exit(0));
 	if (is_same(args[0], "cd"))
 		return (cd(data), 1);
 	if (is_same(args[0], "echo"))
@@ -35,6 +35,17 @@ int	run_builtin(t_data *data, char **args)
 	return (0);
 }
 
+static int	built_in_cmd(char *cmd)
+{
+	return (is_same(cmd, "exit")
+		|| is_same(cmd, "cd")
+		|| is_same(cmd, "echo")
+		|| is_same(cmd, "pwd")
+		|| is_same(cmd, "env")
+		|| is_same(cmd, "export")
+		|| is_same(cmd, "unset"));
+}
+
 int	builtins(void)
 {
 	t_data	*data;
@@ -44,6 +55,8 @@ int	builtins(void)
 	int		out;
 
 	data = data_hook(NULL);
+	// if (!built_in_cmd(data->args[2]))
+	// 	return (0);
 	args = get_argv(data->args);
 	in = dup(0);
 	out = dup(1);

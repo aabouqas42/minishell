@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/03 20:20:52 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:24:04 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	echo(void)
 	}
 	while (data->args[i])
 	{
-		printf("%s", data->args[i]);
+		print(1, data->args[i], 0);
 		i++;
 		if (data->args[i])
-			printf(" ");
+			print(1, " ", 0);
 	}
 	if (new_line)
-		printf("\n");
+		print(1, "\n", 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 14:05:15 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 17:49:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,27 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef enum e_flags
+typedef struct s_flag
 {
-	FLAG_WORD,
-	FLAG_IO_OP,
-}	t_flags;
+	int	inside_dqt;
+	int	inide_sqt;
+	int	inide_qts;
+	int	is_io_op;
+	int	out;
+	int	in;
+}	t_flag;
+
+// typedef enum e_flags
+// {
+// 	FLAG_WORD,
+// 	FLAG_IO_OP
+// }	t_flags;
 
 typedef struct s_data
 {
 	char	***cmds;
 	t_env	*env;
-	t_flags	*flags;
+	t_flag	*flags;
 	char	**args;
 	char	**env_2d;
 	char	*prompt;
@@ -104,7 +114,7 @@ char	*_strnjoin(char *str1, char *str2, size_t size);
 char	*_strdup(char *s1);
 char	*_strndup(char *s1, size_t size);
 char	*_strchr(char *s, char c);
-t_flags	*init_flags(char **usrin);
+t_flag	*init_flags(char **usrin);
 int		is_valid_cmd(t_data *data, char *cmd);
 void	safe_exit(int status);
 void	split_usrin(char *usr_in);

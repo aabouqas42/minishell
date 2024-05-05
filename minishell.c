@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 17:52:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 20:18:41 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	program_exec(char **args, int first, int next)
 	else if (child_pid == 0)
 	{
 		argv = get_argv(args);
+		if (builtins())
 		set_pipes(first, next);
 		set_io();
 		if (argv == NULL || is_valid_cmd(data, argv[0]) == 0)
@@ -76,7 +77,7 @@ void	handle_input(t_data *data)
 {
 	int		index;
 	int		next;
-	t_flags	*ptr;
+	t_flag	*ptr;
 
 	if (is_valid_input() == 0)
 	{
