@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
+#    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/04 14:39:34 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/05/06 20:13:57 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = 	parsing/command_check.c parsing/check_redirections.c parsing/expand_inpu
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \
 		builtins/builtins.c \
 		error/do_error.c \
+		linked_lists/t_arg_instr.c linked_lists/t_cmd_instr.c linked_lists/free_linked_list.c
 		#multiples/
 SRCS_O = $(SRCS:.c=.o)
 NAME = minishell

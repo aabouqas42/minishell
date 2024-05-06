@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 15:52:34 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:24:22 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,42 @@ int	cmds_counter(char **cmds)
 	return (j + 1);
 }
 
-char	***get_commands(void)
+void	create_heredoc(t_cmd *cmd, t_arg *target)
 {
-	char	***cmds;
-	char	**args;
-	int		i;
-	int		j;
-
-	args = data_hook(NULL)->args;
-	cmds = _calloc((cmds_counter(args) + 1) * sizeof(char **));
-	(1) && (i = 0, j = 0);
-	while (args && args[i])
+	if (cmd->in != 0)
 	{
-		if (is_same(args[i], "|") && data_hook(NULL)->flags[i].is_io_op)
-		{
-			free (args[i]);
-			args[i] = NULL;
-			j++;
-		}
-		else
-			cmds[j] = _realloc(cmds[j], args[i]);
-		i++;
+		close(cmd->in);
+		cmd->in = 0;
 	}
-	return (cmds);
+	cmd->in = open_heredoc(target);
+}
+
+void	get_commands(t_arg *args)
+{
+	t_arg	*ptr;
+	t_cmd	cmd;
+	int		i;
+
+	i = 0;
+	ptr = args;
+	data_hook(NULL)->exit_status = 0;
+	ft_bzero(&cmd, sizeof(t_cmd));
+	cmd.out = 1;
+	if (args->type > 1 && args->next == NULL)
+		return (do_error(SYNTAX_ERR, "newline"));
+	while (args)
+	{
+		while (args && args->type != ARG_PIPE)
+		{
+			if (args->type == ARG_HERDOC && args->next)
+				create_heredoc(&cmd, args->next);
+			t_arg_put(args->value, args->type, &cmd.linked_argv);
+			args = args->next;
+		}
+		t_cmd_add(cmd);
+		ft_bzero(&cmd, sizeof(t_cmd));
+		cmd.out = 1;
+		if (args)
+			args = args->next;
+	}
 }

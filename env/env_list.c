@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 10:40:10 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/04 20:04:05 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,13 @@ void	init_env_array(void)
 	env = data->env;
 	while (env)
 	{
-		line = _strdup(env->name);
-		tmp = _strjoin(line, "=");
-		line = _strjoin(tmp, env->value);
-		data->env_2d = _realloc(data->env_2d, line);
+		if (env->value != NULL)
+		{
+			line = _strdup(env->name);
+			tmp = _strjoin(line, "=");
+			line = _strjoin(tmp, env->value);
+			data->env_2d = _realloc(data->env_2d, line);
+		}
 		env = env->next;
 	}
 }

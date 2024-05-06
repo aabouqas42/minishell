@@ -3,42 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 16:39:15 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:53:56 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_flag	*init_flags(char **usrin)
-{
-	t_flag	*flags;
-	int		i;
-	int		j;
-	int		size;
-
-	size = 0;
-	while (usrin[size])
-		size++;
-	flags = malloc (size * sizeof(t_flag));
-	if (flags == NULL)
-		safe_exit(-1);
-	ft_bzero(flags, size * sizeof(t_flag));
-	i = 0;
-	while (usrin[i])
-	{
-		if (is_io_op(usrin[i]))
-			flags[i].is_io_op = 1;
-		j = 0;
-		flags[i].inide_sqt = (ft_strchr(usrin[i], '\'') != NULL);
-		flags[i].inside_dqt = (ft_strchr(usrin[i], '\"') != NULL);
-		flags[i].inide_qts = (flags[i].inide_qts || flags[i].inide_sqt);
-		i++;
-	}
-	return (flags);
-}
 
 int	is_valid_input(void)
 {
@@ -46,15 +18,67 @@ int	is_valid_input(void)
 
 	data = data_hook(NULL);
 	split_usrin(data->usrinput);
-	if (data->usrinput == NULL)
-		return (0);
-	data->flags = init_flags(data->args);
 	if (check_redirections(data->args) == 0)
-		return (0);
+	{
+		int i = 0;
+		while (data->heredocs && data->heredocs[i]) {
+			t_arg	arg = (t_arg){data->heredocs[i], ARG_WORD, NULL};
+			close(open_heredoc(&arg));
+			i++;
+		}
+		return 0;
+	}
 	expand_input(data->args);
-	if (data->args == 0 || *data->args == NULL)
-		return (0);
-	data->cmds = get_commands();
+	get_commands(data->args);
+	// while (data->cmds)
+	// {
+	// 	printf("in : %d, out : %d, cmd : %s\n", data->cmds->in, data->cmds->out, data->cmds->linked_argv->value);
+	// 	if (data->cmds->in != 0)
+	// 		close(data->cmds->in);
+	// 	data->cmds = data->cmds->next;
+	// }
+	return 1;
+	// no syntax error :)
+	// free 
+	// while (data->_args)
+	// {
+	// 	printf("--[%s]--\n", data->_args->value);
+	// 	data->_args = data->_args->next;
+	// }
+	// get_commands(data->_args);
+	// while (data->cmds)
+	// {
+		// printf("HEREDOCS OF : %s\n", data->cmds->_argv->value);
+		// int j = 0;
+		// while (data->cmds->heredocs && data->cmds->heredocs[j])
+		// {
+		// 	printf("[%s]", data->cmds->heredocs[j]);
+		// 	j++;
+		// }
+		// printf("\n");
+	// 	data->cmds = data->cmds->next;
+	// }
+	// init_heredocs(data->cmds);
+	// for (int i = 0; data->cmds[i].argv; i++)
+	// {
+	// 	data->cmds[i].out = 1;
+	// 	for (int j = 0;data->cmds[i].argv[j]; j++)
+	// 	{
+	// 		printf("[%s %d] ", data->cmds[i].argv[j], data->cmds[i].flags[j].is_io_op);
+	// 	}
+	// 	printf("in : %d , out : %d", data->cmds[i].in, data->cmds[i].out);
+	// 	printf("\n");
+	// }
+	// data->syn_err = 0;
+	// return (0);
+	// if (data->usrinput == NULL)
+	// 	return (0);
+	// if (check_redirections(data->args) == 0)
+	// 	return (0);
+	// expand_input(data->args);
+	// if (data->args == 0 || *data->args == NULL)
+	// 	return (0);
+	// get_commands(data->_args);
 	return (1);
 }
 

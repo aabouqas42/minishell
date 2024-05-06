@@ -6,68 +6,68 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 19:06:41 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:32:41 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	set_out(char **arg)
+void	set_out(t_cmd *cmd, t_arg **arg)
 {
 	t_data	*data;
 	int		action;
 
 	data = data_hook(NULL);
 	action = O_RDWR | O_CREAT;
-	if (is_same(*arg, ">"))
+	if ((*arg)->type == ARG_REDOUT)
 		action |= O_TRUNC;
-	if (is_same(*arg, ">>"))
+	if ((*arg)->type == ARG_APPEND)
 		action |= O_APPEND;
-	if (data->out > 1)
-		close(data->out);
-	data->out = open(*(arg + 1), action, 0666);
-	if (data->out == -1)
+	if (cmd->out > 1)
+		close(cmd->out);
+	cmd->out = open((*arg)->next->value, action, 0666);
+	if (cmd->out == -1)
 		exit(-1);
-	return (1);
+	*arg = (*arg)->next;
 }
 
-void	set_pipes(int first, int there_is_next)
+void	set_pipes(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
 
-	if (first && !there_is_next)
+	if (first && !next)
 		return ;
 	data = data_hook(NULL);
-	if (first && there_is_next && data->out == 1)
-		data->out = data->fds[1];
-	if (!first && there_is_next)
+	if (first && next && cmd->out == 1)
+		cmd->out = data->fds[1];
+	if (!first && next)
 	{
-		if (data->in == 0)
-			data->in = data->oldfd;
-		if (data->out == 1)
-			data->out = data->fds[1];
+		if (cmd->in == 0)
+			cmd->in = data->oldfd;
+		if (cmd->out == 1)
+			cmd->out = data->fds[1];
 	}
-	if (!first && !there_is_next)
+	if (!first && !next)
 	{
-		if (data->in == 0)
-			data->in = data->oldfd;
+		if (cmd->in == 0)
+			cmd->in = data->oldfd;
 	}
 }
 
-void	set_io(void)
+void	set_io(t_cmd *cmd)
 {
 	t_data	*data;
 
 	data = data_hook(NULL);
-	if (data->out > 1)
+	if (cmd->out > 1)
 	{
-		dup2(data->out, STDOUT_FILENO);
-		close (data->out);
+		dup2(cmd->out, STDOUT_FILENO);
+		close (cmd->out);
 	}
-	if (data->in > 0)
+	if (cmd->in > 0)
 	{
-		dup2(data->in, STDIN_FILENO);
-		close (data->in);
+		dup2(cmd->in, STDIN_FILENO);
+		close (cmd->in);
 	}
 	if (data->oldfd > 1)
 		close (data->oldfd);
@@ -77,44 +77,35 @@ void	set_io(void)
 		close (data->fds[1]);
 }
 
-int	set_in(t_data	*data, char *file_name)
+void	set_in(t_cmd *cmd, t_arg **arg)
 {
-	if (data->in != 0)
-		close(data->in);
-	data->in = open(file_name, O_RDONLY);
-	if (data->in == -1)
+	if (cmd->in != 0)
+		close(cmd->in);
+	cmd->in = open((*arg)->next->value, O_RDONLY);
+	if (cmd->in == -1)
 	{
-		do_error(NSFODIR_ERR, file_name);
+		do_error(NSFODIR_ERR, (*arg)->next->value);
 		safe_exit(-1);
 	}
-	return (1);
+	(*arg) = (*arg)->next;
 }
 
-char	**get_argv(char **args)
+void	get_argv(t_cmd *cmd)
 {
-	t_data	*d;
-	char	**argv;
-	int		i;
+	t_arg	*args;
 
-	d = data_hook(NULL);
-	argv = NULL;
-	i = 0;
-	while (args[i])
+	args = cmd->linked_argv;
+	cmd->argv = NULL;
+	while (args)
 	{
-		if (d->flags[i].is_io_op && (is_same(args[i], ">") || is_same(args[i], ">>")))
-			i += set_out(args + i);
-		else if (d->flags[i].is_io_op && is_same(args[i], "<<"))
-		{
-			i++;
-			printf("%s %d\n", args[i], i);
-			open_heredoc((args[i]));
-		}
-		else if (is_same(args[i], "<"))
-			i += set_in(d, args[i + 1]);
+		if (args->type == ARG_REDOUT || args->type == ARG_APPEND)
+			set_out(cmd, &args);
+		else if (args->type == ARG_HERDOC)
+			args = args->next;
+		else if (args->type == ARG_REDIN)
+			set_in(cmd, &args);
 		else
-			argv = _realloc(argv, args[i]);
-		// printf("---[%s]---\n", args[i]);
-		i++;
+			cmd->argv = _realloc(cmd->argv, args->value);
+		args = args->next;
 	}
-	return (argv);
 }
