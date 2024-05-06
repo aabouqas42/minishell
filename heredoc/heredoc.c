@@ -6,64 +6,60 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/05 15:34:28 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:12:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	init_heredocs(t_cmd *cmds)
+char	*expand(char *str)
 {
-	t_data	*data;
-	char	*save;
+	char	*new_str;
 	size_t	i;
-	size_t	j;
 
+	if (!_strchr(str, '$'))
+		return (str);
 	i = 0;
-	data = data_hook(NULL);
-	while (cmds[i].argv)
+	new_str = NULL;
+	while (str && str[i] != '\0')
 	{
-		j = 0;
-		while (cmds[i].argv[j])
-		{
-			save = cmds[i].argv[j];
-			// cmds[i].argv[j] = NULL;
-			// if (check_redirections(cmds[i].argv))
-			// 	data_hook(NULL)->syn_err = 1;
-			// cmds[i].argv[j] = save;
-			//check syntax :(
-			if (is_io_op(cmds[i].argv[j]) && (cmds[i].argv[j +1] == NULL || is_io_op(cmds[i].argv[j +1])))
-			{
-				data_hook(NULL)->syn_err = 1;
-				return ;
-			}
-			// printf("[%s] {%d}\n", save, data_hook(NULL)->syn_err);
-			if (is_same(cmds[i].argv[j], "<<"))
-			{
-				// printf("%d\n", check_redirections(cmds[i].argv));
-				// open_heredoc(cmds[i].argv[j]);
-				printf("%s EOF\n", cmds[i].argv[j +1]);
-			}
-			j++;
-		}
+		if (str[i] == '$')
+			i += set_var(&str[i + 1], &new_str);
+		else
+			new_str = _strnjoin(new_str, &str[i], 1);
 		i++;
 	}
+	// hello $USER hhhh this is a test
+	free (str);
+	return (new_str);
 }
 
-int	open_heredoc(char *target)
+int	open_heredoc(t_arg *target)
 {
 	t_data	*data;
 	char	*in;
+	char	*tmp;
+	int		fd_in;
+	int		fd_out;
 
 	data = data_hook(NULL);
-	data->heredoc = NULL;
-	printf("open heredoc :) %s\n", target);
-	in = readline("heredoc 1> ");
-	while (!is_same(in, target))
+	tmp = target->value;
+	target->value = expand_arg(tmp, 1);
+	free(tmp);
+	// printf("open heredoc :) %s\n", target);
+	unlink("/tmp/minishell_heredoc");
+	//check open if fails
+	fd_out = open("/tmp/minishell_heredoc", O_CREAT | O_WRONLY, 0x777);
+	fd_in = open("/tmp/minishell_heredoc", O_RDONLY);
+	unlink("/tmp/minishell_heredoc");
+	in = readline("heredoc > ");
+	while (!is_same(in, target->value))
 	{
-		data->heredoc = _strjoin(data->heredoc, in);
-		data->heredoc = _strjoin(data->heredoc, "\n");
-		in = readline("heredoc 2> ");
+		if (target->type != ARG_QT)
+			in = expand(in);
+		print(fd_out, in, 1);
+		in = readline("heredoc > ");
 	}
-	return 0;
+	close(fd_out);
+	return (fd_in);
 }

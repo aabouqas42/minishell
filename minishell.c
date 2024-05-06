@@ -6,11 +6,21 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/05 13:27:35 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:12:21 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+void	prt_list(t_arg *arg)
+{
+	while (arg)
+	{
+		printf("[%s] ", arg->value);
+		arg = arg->next;
+	}
+	printf("\n");
+}
 
 void	close_unused_fds(int next)
 {
@@ -27,11 +37,12 @@ void	close_unused_fds(int next)
 		close(data->fds[0]);
 }
 
-void	program_exec(char **args, int first, int next)
+void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
-	char	**argv;
 	int		child_pid;
+	// (void )first;
+	// (void )cmd;
 
 	data = data_hook(NULL);
 	if (next)
@@ -44,13 +55,14 @@ void	program_exec(char **args, int first, int next)
 	}
 	else if (child_pid == 0)
 	{
-		argv = get_argv(args);
-		set_pipes(first, next);
-		set_io();
-		if (argv == NULL || is_valid_cmd(data, argv[0]) == 0)
+		get_argv(cmd);
+		set_pipes(cmd, first, next);
+		// printf("cmd : %s, in : %d, out : %d\n", cmd->argv[0], cmd->in, cmd->out);
+		set_io(cmd);
+		if (cmd->argv == NULL || is_valid_cmd(data, cmd->argv[0]) == 0)
 			exit(127);
 		init_env_array();
-		execve(data->program_path, argv, data->env_2d);
+		execve(data->program_path, cmd->argv, data->env_2d);
 		exit(errno);
 	}
 	close_unused_fds(next);
@@ -74,33 +86,27 @@ int	read_input(t_data *data)
 
 void	handle_input(t_data *data)
 {
-	int		index;
-	// int		next;
-	// t_flag	*ptr;
+	t_cmd	*cmds;
+	int		next;
 
 	if (is_valid_input() == 0)
 	{
-		free_tab(data->args);
+		t_arg_free(data->args);
 		data->args = NULL;
 		return ;
 	}
-	// ptr = data->flags;
 	// if (data->cmds[1] == NULL && builtins())
 	// 	return ;
-	index = 0;
+	cmds = data->cmds;
 	data->oldfd = 0;
-	// data->flags = ptr;
-	// while (data->cmds && data->cmds[index])
-	// {
-	// 	next = data->cmds[index + 1] != NULL;
-		// program_exec(data->cmds[index], index == 0, next);
-	// 	data->flags += get_argsc(data->cmds[index]) + 1;
-	// 	index++;
-	// }
-	// data->flags = ptr;
+	while (cmds)
+	{
+		next = cmds->next != NULL;
+		// prt_list(cmds->linked_argv);
+		program_exec(cmds, cmds == data->cmds, next);
+		cmds = cmds->next;
+	}
 }
-
-// #error problem in heredoc :)
 
 int	main(int ac, char **av, char **env)
 {
@@ -118,13 +124,13 @@ int	main(int ac, char **av, char **env)
 		if (read_input(&data) != -1)
 		{
 			handle_input(&data);
-			// while (waitpid(-1, &data.exit_status, 0) != -1)
-			// {
-			// 	if (data.exit_status >> 8 == -1)
-			// 		safe_exit(-1);
-			// }
+			while (waitpid(-1, &data.exit_status, 0) != -1)
+			{
+				// if (data.exit_status >> 8 == -1)
+				// 	safe_exit(-1);
+			}
 		}
-		// _free();
+		_free();
 	}
 	return (EXIT_SUCCESS);
 }

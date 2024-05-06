@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/04 15:23:53 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:24:19 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	safe_exit(int status)
 	data->usrinput = NULL;
 	free (data->program_path);
 	data->program_path = NULL;
-	free_tab(data->args);
+	// free_tab(data->args);
 	clear_history();
 	env_free_list(data->env);
 	data->env = NULL;

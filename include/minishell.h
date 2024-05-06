@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/05 18:37:28 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:55:41 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@
 
 typedef enum e_arg_type
 {
-	None,
 	ARG_WORD,
+	ARG_QT,
 	ARG_PIPE,
 	ARG_REDOUT,
 	ARG_REDIN,
 	ARG_APPEND,
-	ARG_HERDOC
+	ARG_HERDOC,
 }	t_arg_type;
 
 typedef enum e_error_type
@@ -77,10 +77,8 @@ typedef struct s_arg
 
 typedef struct s_cmd
 {
-	char	*program;
-	t_arg	*_argv;
+	t_arg	*linked_argv;
 	char	**argv;
-	char	**heredocs;
 	int		in;
 	int		out;
 	struct s_cmd *next;
@@ -89,19 +87,15 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	t_cmd	*cmds;
-	// char	***cmds;
 	t_env	*env;
-	char	**args;
-	t_arg	*_args;
+	t_arg	*args;
 	char	**env_2d;
 	char	*prompt;
 	char	*usrinput;
 	char	*program_path;
 	int		exit_status;
-	char	*heredoc;
-	int		in;
+	char	**heredocs;
 	int		syn_err;
-	int		out;
 	int		oldfd;
 	int		fds[2];
 }	t_data;
@@ -116,8 +110,7 @@ void	t_arg_put(char *value, t_arg_type type, t_arg **head);
  * T_CMD INSTRACTIONS
  */
 void	t_cmd_add(t_cmd to_add);
-
-
+int		open_heredoc(t_arg *target);
 t_data	*data_hook(t_data *data);
 void	init_heredocs(t_cmd *cmds);
 void	do_error(t_error_type errtype, char *reason);
@@ -160,21 +153,25 @@ int		pwd(void);
 int		_export(void);
 void	echo(void);
 char	**_realloc(char **old_tab, char *to_append);
-char	**get_argv(char **args);
+void	get_argv(t_cmd *cmd);
 void	*_calloc(size_t size);
 int		_spaces(int c);
 int		set_var(char *argv_str, char **str);
 int		check_qts(char *str);
 int		is_fod(char *name);
-int		open_heredoc(char *target);
-int		set_out(char **arg);
-void	set_io(void);
-void	set_pipes(int first, int there_is_next);
+void	t_arg_free(t_arg *head);
+void	t_cmd_free(t_cmd *head);
+void	set_out(t_cmd *cmd, t_arg **arg);
+void	set_io(t_cmd *cmd);
+void	set_pipes(t_cmd *cmd, int first, int next);
 int		is_valid_input(void);
 int		check_redirections(t_arg *usrin);
-void	expand_input(char **usrinput);
+void	expand_input(t_arg *args);
 char	*skiper(char *str);
 char	*_strchr(char *s, char c);
 int		get_argsc(char **args);
 void	print(int fd, char *str, int endl);
+
+void	prt_list(t_arg *arg);
+char	*expand_arg(char *str, int hd);
 #endif

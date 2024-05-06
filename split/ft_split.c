@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/05 13:14:08 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:34:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ void	split_usrin(char *usr_in)
 			res = _strnjoin(res, usr_in, 1);
 			usr_in++;
 		}
-		t_arg_add(res, ARG_WORD);
+		if (_strchr(res, DQT) || _strchr(res, SQT))
+			t_arg_add(res, ARG_QT);
+		else
+			t_arg_add(res, ARG_WORD);
 		usr_in += is_symbole(usr_in);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/05 13:26:37 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:11:49 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	var_case(char curr_char, char next_char)
 	return (0);
 }
 
-void	expand_arg(char *str, char ***args, int after_hd)
+char	*expand_arg(char *str, int hd)
 {
 	char	*res;
 	char	qt;
@@ -34,7 +34,7 @@ void	expand_arg(char *str, char ***args, int after_hd)
 	res = NULL;
 	while (str && *str != '\0')
 	{
-		if ((*str == '\"' && qt != '\'') || (*str == '\'' && qt != '\"'))
+		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
 		{
 			qt = (qt == 0) * (*str);
 			if (qt == 0)
@@ -45,29 +45,33 @@ void	expand_arg(char *str, char ***args, int after_hd)
 			str++;
 			continue ;
 		}
-		else if (qt != '\'' && var_case(*str, *(str + 1)) && !after_hd)
+		else if (qt != SQT && var_case(*str, *(str + 1)) && !hd)
 			str += set_var((str + 1), &res);
 		else
 			res = _strnjoin(res, str, 1);
 		str++;
 	}
-	(1) && (res != NULL && (*args = _realloc(*args, res)));
+	return (res);
 }
 
-void	expand_input(char **uin)
+void	expand_input(t_arg *args)
 {
-	char	**args;
-	int		i;
+	char	*expended;
 
-	args = NULL;
-	i = 0;
-	while (uin && uin[i] != NULL)
+	while (args)
 	{
-		expand_arg(uin[i], &args, (i != 0 && is_same(uin[i -1], "<<")
-				// && data_hook(NULL)->flags[i -1].is_io_op));
-				));
-		i++;
+		if (args->type == ARG_HERDOC)
+		{
+			expended = expand_arg(args->next->value, 1);
+			args = args->next;
+		}
+		else
+			expended = expand_arg(args->value, 0);
+		free (args->value);
+		args->value = expended;
+		args = args->next;
 	}
-	free_tab(data_hook(NULL)->args);
-	data_hook(NULL)->args = args;
+	// cat << end""
+	// free_tab(data_hook(NULL)->args);
+	// data_hook(NULL)->args = args;
 }

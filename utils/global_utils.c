@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/05 13:10:15 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:35:26 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_arg_type	is_io_op(char	*str)
 {
 	if (str == NULL)
-		return (None);
+		return (ARG_WORD);
 	if (ft_strncmp(str, ">>", 3) == 0)
 		return (ARG_APPEND);
 	if (ft_strncmp(str, "<<", 3) == 0)
@@ -29,7 +29,7 @@ t_arg_type	is_io_op(char	*str)
 		if (ft_strchr("|", *str))
 			return (ARG_PIPE);
 	}
-	return (None);
+	return (ARG_WORD);
 	// return (
 	// 	(ft_strchr("<>|", *str) && *(str + 1) == 0)
 	// 	|| ft_strncmp(str, ">>", 3) == 0

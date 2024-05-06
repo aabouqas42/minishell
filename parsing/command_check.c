@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/05 20:16:34 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:53:56 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,34 @@ int	is_valid_input(void)
 
 	data = data_hook(NULL);
 	split_usrin(data->usrinput);
+	if (check_redirections(data->args) == 0)
+	{
+		int i = 0;
+		while (data->heredocs && data->heredocs[i]) {
+			t_arg	arg = (t_arg){data->heredocs[i], ARG_WORD, NULL};
+			close(open_heredoc(&arg));
+			i++;
+		}
+		return 0;
+	}
+	expand_input(data->args);
+	get_commands(data->args);
+	// while (data->cmds)
+	// {
+	// 	printf("in : %d, out : %d, cmd : %s\n", data->cmds->in, data->cmds->out, data->cmds->linked_argv->value);
+	// 	if (data->cmds->in != 0)
+	// 		close(data->cmds->in);
+	// 	data->cmds = data->cmds->next;
+	// }
+	return 1;
+	// no syntax error :)
+	// free 
 	// while (data->_args)
 	// {
 	// 	printf("--[%s]--\n", data->_args->value);
 	// 	data->_args = data->_args->next;
 	// }
-	get_commands(data->_args);
+	// get_commands(data->_args);
 	// while (data->cmds)
 	// {
 		// printf("HEREDOCS OF : %s\n", data->cmds->_argv->value);
@@ -36,22 +58,6 @@ int	is_valid_input(void)
 		// printf("\n");
 	// 	data->cmds = data->cmds->next;
 	// }
-	while (data_hook(NULL)->cmds)
-	{
-		printf("HEREDOCS OF : %s\n", data_hook(NULL)->cmds->_argv->value);
-		int j = 0;
-		while (data_hook(NULL)->cmds->heredocs && data_hook(NULL)->cmds->heredocs[j])
-		{
-			printf("[%s]", data_hook(NULL)->cmds->heredocs[j]);
-			j++;
-		}
-		printf("\n");
-		data_hook(NULL)->cmds = data_hook(NULL)->cmds->next;
-	}
-	data->_args = NULL;
-	data->cmds = NULL;
-	return 0;
-	
 	// init_heredocs(data->cmds);
 	// for (int i = 0; data->cmds[i].argv; i++)
 	// {
@@ -63,16 +69,15 @@ int	is_valid_input(void)
 	// 	printf("in : %d , out : %d", data->cmds[i].in, data->cmds[i].out);
 	// 	printf("\n");
 	// }
-	data->syn_err = 0;
-	return (0);
-	if (data->usrinput == NULL)
-		return (0);
-	
+	// data->syn_err = 0;
+	// return (0);
+	// if (data->usrinput == NULL)
+	// 	return (0);
 	// if (check_redirections(data->args) == 0)
 	// 	return (0);
-	expand_input(data->args);
-	if (data->args == 0 || *data->args == NULL)
-		return (0);
+	// expand_input(data->args);
+	// if (data->args == 0 || *data->args == NULL)
+	// 	return (0);
 	// get_commands(data->_args);
 	return (1);
 }
