@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:37 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 19:13:42 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:30:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void	_free(void)
 	t_data	*data;
 
 	data = data_hook(NULL);
-	t_arg_free(data->args);
-	data->args = NULL;
-	// free_tab(data->heredocs);
-	data->heredocs = NULL;
+	printf("[%p - %p]\n", data->args, data->cmds);
 	t_cmd_free(data->cmds);
+	free(data->args);
 	data->cmds = NULL;
-	free (data->args);
+	// t_arg_free(data->args);
 	data->args = NULL;
+	free_tab(data->heredocs);
+	data->heredocs = NULL;
 	free (data->usrinput);
 	data->usrinput = NULL;
 }

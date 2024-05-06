@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/06 19:50:03 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:27:46 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void	handle_input(t_data *data)
 
 	if (is_valid_input() == 0)
 	{
-		t_arg_free(data->args);
-		data->args = NULL;
+		// t_arg_free(data->args);
+		// data->args = NULL;
 		return ;
 	}
 	// if (data->cmds[1] == NULL && builtins())
