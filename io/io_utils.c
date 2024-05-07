@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 20:32:41 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:46:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	set_out(t_cmd *cmd, t_arg **arg)
 		close(cmd->out);
 	cmd->out = open((*arg)->next->value, action, 0666);
 	if (cmd->out == -1)
+	{
+		do_error(PERMIDEN_ERR, (*arg)->next->value);
 		exit(-1);
+	}
 	*arg = (*arg)->next;
 }
 

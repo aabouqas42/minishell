@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/06 18:55:41 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:55:14 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	get_argv(t_cmd *cmd);
 void	*_calloc(size_t size);
 int		_spaces(int c);
 int		set_var(char *argv_str, char **str);
-int		check_qts(char *str);
+int		check_qts(char *str, int perr);
 int		is_fod(char *name);
 void	t_arg_free(t_arg *head);
 void	t_cmd_free(t_cmd *head);
