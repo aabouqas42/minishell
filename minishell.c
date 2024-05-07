@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 09:24:04 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:44:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	program_exec(t_cmd *cmd, int first, int next)
 	{
 		get_argv(cmd);
 		set_pipes(cmd, first, next);
-		// printf("cmd : %s, in : %d, out : %d\n", cmd->argv[0], cmd->in, cmd->out);
 		set_io(cmd);
+		// printf("cmd : %s, in : %d, out : %d\n", cmd->argv[0], cmd->in, cmd->out);
 		if (cmd->argv == NULL || is_valid_cmd(data, cmd->argv[0]) == 0)
 			exit(127);
 		init_env_array();
@@ -90,7 +90,11 @@ void	handle_input(t_data *data)
 	int		next;
 
 	if (is_valid_input() == 0)
+	{
+		// t_arg_free(data->args);
+		// data->args = NULL;
 		return ;
+	}
 	// if (data->cmds[1] == NULL && builtins())
 	// 	return ;
 	cmds = data->cmds;

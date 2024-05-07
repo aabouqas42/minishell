@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:28:12 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 13:49:25 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:39:15 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	t_arg_free(t_arg *head)
 	while (head)
 	{
 		next = head->next;
-		// free (head->value);
+		free (head->value);
 		free (head);
 		head = next;
 	}
@@ -31,7 +31,8 @@ void	t_cmd_free(t_cmd *head)
 
 	while (head)
 	{
-		next = head->next;
+		next = head->next;		
+		
 		t_arg_free(head->linked_argv);
 		free (head);
 		head = next;

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 12:50:56 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 10:11:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:35:18 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ int	check_qts(char *str)
 				qt = (qt == 0) * (*str);
 			str++;
 		}
-		if (qt == '\'')
-			return (do_error(SYNTAX_ERR, "\'"), 0);
-		if (qt == '\"')
-			return (do_error(SYNTAX_ERR, "\""), 0);
+		if (qt == SQT || qt == DQT)
+		{
+			if (qt == '\'')
+				do_error(SYNTAX_ERR, "\'");
+			if (qt == '\"')
+				do_error(SYNTAX_ERR, "\"");
+			return (0);
+		}
 		str += (*str != '\0');
 	}
 	return (1);

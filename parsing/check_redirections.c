@@ -6,29 +6,76 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 10:29:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:36:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_heredoc(t_arg **userin)
+int	check_valid_redrict(char *file_name)
 {
-	t_data	*data;
-
-	data = data_hook(NULL);
-	if ((*userin)->next && check_qts((*userin)->next->value))
+	if (file_name && *file_name == '\0')
 	{
-		if ((*userin)->type == ARG_HERDOC && (*userin)->next && (*userin)->next->type <= 1)
-		{
-			(*userin)->next->value = expand_arg((*userin)->next->value, 1);
-			data->heredocs = _realloc(data->heredocs, (*userin)->next->value);
-			(*userin) = (*userin)->next;
-			return (1);
-		}
-		(*userin) = (*userin)->next;
+		do_error(NSFODIR_ERR, file_name);
+		return (0);
 	}
-	return (0);
+	// char	*str;
+
+	// str = _strdup(file_name);
+	// str = expand_arg(str, 0);
+	// if (str == NULL || *str == '\0')
+	// {
+	// 	do_error(NSFODIR_ERR, str);
+	// 	free (str);
+	// 	return (0);
+	// }
+	// free (str);
+	return (1);
+}
+
+int	check_ambiguous(char *file_name)
+{
+	if (file_name == NULL)
+	{
+		do_error(AMBIGUOUS_ERR, file_name);
+		return (0);
+	}
+	// char	*str;
+
+	// if (_strchr(file_name, '$') == NULL)
+	// 	return (1);
+	// if (_strchr(file_name, SQT) != NULL || _strchr(file_name, DQT) != NULL)
+	// 	return (1);
+	// str = _strdup(file_name);
+	// str = expand_arg(str, 0);
+	// if (str == NULL || *str == '\0')
+	// {
+	// 	do_error(AMBIGUOUS_ERR, file_name);
+	// 	free (str);
+	// 	return (0);
+	// }
+	// free (str);
+	return (1);
+}
+
+int	check_syntax(t_arg *arg)
+{
+	if (arg->type > 1 && arg->next == NULL)
+			return (do_error(SYNTAX_ERR, "newline"), 0);
+	if ((arg->type >= 3 && arg->type <= 5))
+	{
+		if (check_ambiguous(arg->next->value) == 0)
+			return (0);
+		if (check_valid_redrict(arg->next->value) == 0)
+			return (0);
+		if (arg->next->type > 1)
+			return (do_error(SYNTAX_ERR, arg->next->value), 0);
+	}
+	if (arg->type == ARG_HERDOC && arg->next->type > 1)
+			return (do_error(SYNTAX_ERR, arg->next->value), 0);
+	if (arg->type == ARG_PIPE && arg->next->type == ARG_PIPE)
+		return (do_error(SYNTAX_ERR, arg->next->value), 0);
+	return (1);
 }
 
 int	check_redirections(t_arg *usrin)
@@ -37,24 +84,8 @@ int	check_redirections(t_arg *usrin)
 		return (do_error(SYNTAX_ERR, usrin->value), 0);
 	while (usrin)
 	{
-		if (usrin->type == ARG_QT && check_qts(usrin->value) == 0)
-			return (0);
-		if (usrin->type > 1 && usrin->next == NULL)
-			return (do_error(SYNTAX_ERR, "newline"), 0);
-		if (usrin->type == ARG_HERDOC && usrin->next->type > 1)
-			return (do_error(SYNTAX_ERR, usrin->next->value), 0);
-		if ((usrin->type == ARG_REDIN || usrin->type == ARG_REDOUT))
-		{
-			if (usrin->next && *(usrin->next->value) == '$')
-				if (!(_strchr(usrin->next->value, DQT) || _strchr(usrin->next->value, SQT)))
-					if (!env_grepvalue(usrin->next->value + 1))
-						return (do_error(AMBIGUOUS_ERR, usrin->next->value), 0);
-			if (_strchr("<>|", usrin->next->value[0]))
-				return (do_error(SYNTAX_ERR, usrin->next->value), 0);
-		}
-		if (usrin->type == ARG_PIPE && usrin->next->type == ARG_PIPE)
-			return (do_error(SYNTAX_ERR, usrin->next->value), 0);
-		check_heredoc(&usrin);
+		if (check_syntax(usrin) == 0)
+			return 0;
 		usrin = usrin->next;
 	}
 	return (1);

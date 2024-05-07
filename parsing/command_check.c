@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 10:00:58 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:45:22 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,13 @@ int	is_valid_input(void)
 	t_data	*data;
 
 	data = data_hook(NULL);
+	if (check_qts(data->usrinput) == 0)
+		return (0);
 	split_usrin(data->usrinput);
-	// prt_list(data->args);
-	if (check_redirections(data->args) == 0)
-	{
-		int i = 0;
-		while (data->heredocs && data->heredocs[i]) {
-			t_arg	arg = (t_arg){data->heredocs[i], ARG_WORD, NULL};
-			close(open_heredoc(&arg));
-			i++;
-		}
-		return 0;
-	}
 	expand_input(data->args);
+	prt_list (data->args);
+	if (check_redirections(data->args) == 0)
+		return 0;
 	get_commands(data->args);
 	// while (data->cmds)
 	// {
