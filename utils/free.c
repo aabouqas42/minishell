@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:37 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 11:40:21 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:08:06 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	_free(void)
 
 	data = data_hook(NULL);
 	// printf("[%p - %p]\n", data->args, data->cmds);
-	t_cmd_free(data->cmds);
+	// t_cmd_free(data->cmds);
 	data->cmds = NULL;
 	free(data->args);
 	data->args = NULL;

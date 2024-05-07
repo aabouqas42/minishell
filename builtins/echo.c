@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/06 13:30:52 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:32:41 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_valid_flag(char *flag)
 	return (i == _strlenc(flag, '\0'));
 }
 
-void	echo(void)
+void	echo(char **argv)
 {
 	int		i;
 	int		new_line;
@@ -33,18 +33,18 @@ void	echo(void)
 	i = 1;
 	new_line = 1;
 	data = data_hook(NULL);
-	// if (is_valid_flag(data->args[1]))
-	// {
-	// 	new_line = 0;
-	// 	i++;
-	// }
-	// while (data->args[i])
-	// {
-	// 	print(1, data->args[i], 0);
-	// 	i++;
-	// 	if (data->args[i])
-	// 		print(1, " ", 0);
-	// }
-	// if (new_line)
-	// 	print(1, "\n", 0);
+	while (is_valid_flag(argv[i]))
+	{
+		new_line = 0;
+		i++;
+	}
+	while (argv[i])
+	{
+		print(1, argv[i], 0);
+		i++;
+		if (argv[i])
+			print(1, " ", 0);
+	}
+	if (new_line)
+		print(1, "\n", 0);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   args_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 12:50:56 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 11:58:23 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:35:18 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_qts(char *str, int perr)
+int	check_qts(char *str)
 {
 	char	qt;
 
@@ -28,9 +28,9 @@ int	check_qts(char *str, int perr)
 		}
 		if (qt == SQT || qt == DQT)
 		{
-			if (qt == '\'' && perr)
+			if (qt == '\'')
 				do_error(SYNTAX_ERR, "\'");
-			if (qt == '\"' && perr)
+			if (qt == '\"')
 				do_error(SYNTAX_ERR, "\"");
 			return (0);
 		}

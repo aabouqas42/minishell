@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 10:36:23 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:19:48 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	get_commands(t_arg *args)
 			t_arg_put(args->value, args->type, &cmd.linked_argv);
 			args = args->next;
 		}
+		init_clear_argv(&cmd);
 		t_cmd_add(cmd);
 		ft_bzero(&cmd, sizeof(t_cmd));
 		cmd.out = 1;

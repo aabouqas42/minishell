@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/06 18:53:56 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:21:15 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,13 @@ int	is_valid_input(void)
 	t_data	*data;
 
 	data = data_hook(NULL);
+	if (check_qts(data->usrinput) == 0)
+		return (0);
 	split_usrin(data->usrinput);
-	if (check_redirections(data->args) == 0)
-	{
-		int i = 0;
-		while (data->heredocs && data->heredocs[i]) {
-			t_arg	arg = (t_arg){data->heredocs[i], ARG_WORD, NULL};
-			close(open_heredoc(&arg));
-			i++;
-		}
-		return 0;
-	}
 	expand_input(data->args);
+	// prt_list (data->args);
+	if (check_redirections(data->args) == 0)
+		return 0;
 	get_commands(data->args);
 	// while (data->cmds)
 	// {
@@ -105,8 +100,8 @@ int	is_valid(char *cmd)
 		return (do_error(COMDNF_ERR, cmd), 0);
 	if (ft_strchr(cmd, '/') || ft_strchr(cmd, '.'))
 	{
-		if (is_fod(cmd) == _FILE && access(cmd, X_OK) == 0)
-			return (do_error(PERMIDEN_ERR, cmd), 0);
+		// if (is_fod(cmd) == _FILE && access(cmd, X_OK) == 0)
+		// 	return (do_error(PERMIDEN_ERR, cmd), 0);
 		if (is_fod(cmd) == _DIRE)
 			return (do_error(ISDIR_ERR, cmd), 0);
 		if (is_fod(cmd) == 0)

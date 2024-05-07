@@ -6,57 +6,72 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 20:33:19 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:18:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// int	run_builtin(t_data *data, char **args)
-// {
-// 	if (data->out != 1 && dup2(data->out, 1))
-// 		close(data->out);
-// 	if (args == NULL)
-// 		return (0);
-// 	if (is_same(args[0], "exit"))
-// 		(print(1, "exit", 1), safe_exit(0));
-// 	if (is_same(args[0], "cd"))
-// 		return (cd(data), 1);
-// 	if (is_same(args[0], "echo"))
-// 		return (echo(), 1);
-// 	if (is_same(args[0], "pwd"))
-// 		return (pwd(), 1);
-// 	if (is_same(args[0], "env"))
-// 		return (env_print(data->env), 1);
-// 	if (is_same(args[0], "export"))
-// 		return (_export(), 1);
-// 	if (is_same(args[0], "unset"))
-// 		return (env_unset(data->args[1], &data->env), 1);
-// 	return (0);
-// }
+int	is_builtin(t_cmd *cmd)
+{
+	if (cmd != NULL && cmd->argv)
+	{
+		return  (is_same(cmd->argv[0], "exit")
+				|| is_same(cmd->argv[0], "cd")
+				|| is_same(cmd->argv[0], "echo")
+				|| is_same(cmd->argv[0], "pwd")
+				|| is_same(cmd->argv[0], "env")
+				|| is_same(cmd->argv[0], "export")
+				|| is_same(cmd->argv[0], "unset"));
+	}
+	return (0);
+}
 
-// int	builtins(void)
-// {
-// 	t_data	*data;
-// 	char	**args;
-// 	int		ret;
-// 	int		in;
-// 	int		out;
+int	run_builtin(t_cmd *cmd)
+{
+	t_data	*data;
 
-// 	data = data_hook(NULL);
-// 	args = get_argv(data->args);
-// 	in = dup(0);
-// 	out = dup(1);
-// 	if (data->in != 0 && dup2(data->in, 0))
-// 		close(data->in);
-// 	if (data->out != 1 && dup2(data->out, 1))
-// 		close(data->out);
-// 	ret = run_builtin(data, args);
-// 	dup2(in, 0);
-// 	dup2(out, 1);
-// 	close(out);
-// 	close(in);
-// 	data->in = 0;
-// 	data->out = 1;
-// 	return (free(args), ret);
-// }
+	data = data_hook(NULL);
+	if (cmd->out != 1 && dup2(cmd->out, 1))
+		close(cmd->out);
+	if (cmd->argv == NULL)
+		return (0);
+	if (is_same(cmd->argv[0], "exit"))
+		(print(1, "exit", 1), safe_exit(0));
+	if (is_same(cmd->argv[0], "cd"))
+		return (cd(cmd->argv), 1);
+	if (is_same(cmd->argv[0], "echo"))
+		return (echo(cmd->argv), 1);
+	if (is_same(cmd->argv[0], "pwd"))
+		return (pwd(), 1);
+	if (is_same(cmd->argv[0], "env"))
+		return (env_print(data->env), 1);
+	if (is_same(cmd->argv[0], "export"))
+		return (_export(cmd->argv), 1);
+	if (is_same(cmd->argv[0], "unset"))
+		return (env_unset(data->args[1].value, &data->env), 1);
+	return (0);
+}
+
+int	builtins(t_cmd *cmd)
+{
+	int		ret;
+	int		in;
+	int		out;
+
+	in = dup(0);
+	out = dup(1);
+	init_redirections(cmd);
+	if (cmd->in != 0 && dup2(cmd->in, 0))
+		close(cmd->in);
+	if (cmd->out != 1 && dup2(cmd->out, 1))
+		close(cmd->out);
+	ret = run_builtin(cmd);
+	dup2(in, 0);
+	dup2(out, 1);
+	close(out);
+	close(in);
+	cmd->in = 0;
+	cmd->out = 1;
+	return (ret);
+}
