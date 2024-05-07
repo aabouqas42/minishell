@@ -6,27 +6,11 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 17:24:22 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:36:23 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	cmds_counter(char **cmds)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (cmds && cmds[i])
-	{
-		if (cmds[i] && ft_strncmp(cmds[i], "|", 3) == 0)
-			j++;
-		i++;
-	}
-	return (j + 1);
-}
 
 void	create_heredoc(t_cmd *cmd, t_arg *target)
 {
@@ -40,12 +24,8 @@ void	create_heredoc(t_cmd *cmd, t_arg *target)
 
 void	get_commands(t_arg *args)
 {
-	t_arg	*ptr;
 	t_cmd	cmd;
-	int		i;
 
-	i = 0;
-	ptr = args;
 	data_hook(NULL)->exit_status = 0;
 	ft_bzero(&cmd, sizeof(t_cmd));
 	cmd.out = 1;
