@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/06 19:50:03 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 09:24:04 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,7 @@ void	handle_input(t_data *data)
 	int		next;
 
 	if (is_valid_input() == 0)
-	{
-		t_arg_free(data->args);
-		data->args = NULL;
 		return ;
-	}
 	// if (data->cmds[1] == NULL && builtins())
 	// 	return ;
 	cmds = data->cmds;
@@ -115,7 +111,7 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 	{
 		print(2, "minishell : too many arguments", 1);
-		return (get_argsc(av) * 1);
+		return (1 + ((int)av * 0));
 	}
 	data_hook(&data);
 	data_init(env);

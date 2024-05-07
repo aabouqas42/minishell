@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 19:12:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 09:55:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,11 @@ int	open_heredoc(t_arg *target)
 {
 	t_data	*data;
 	char	*in;
-	char	*tmp;
 	int		fd_in;
 	int		fd_out;
 
 	data = data_hook(NULL);
-	tmp = target->value;
-	target->value = expand_arg(tmp, 1);
-	free(tmp);
+	// target->value = expand_arg(target->value, 1);
 	// printf("open heredoc :) %s\n", target);
 	unlink("/tmp/minishell_heredoc");
 	//check open if fails

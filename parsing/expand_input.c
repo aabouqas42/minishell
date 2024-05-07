@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 19:11:49 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 09:58:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	var_case(char curr_char, char next_char)
 char	*expand_arg(char *str, int hd)
 {
 	char	*res;
+	char	*ptr;
 	char	qt;
 
-	qt = 0;
-	res = NULL;
+	(1) && (qt = 0, res = NULL, ptr = str);
 	while (str && *str != '\0')
 	{
 		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
@@ -51,7 +51,7 @@ char	*expand_arg(char *str, int hd)
 			res = _strnjoin(res, str, 1);
 		str++;
 	}
-	return (res);
+	return (free(ptr), res);
 }
 
 void	expand_input(t_arg *args)
@@ -67,7 +67,6 @@ void	expand_input(t_arg *args)
 		}
 		else
 			expended = expand_arg(args->value, 0);
-		free (args->value);
 		args->value = expended;
 		args = args->next;
 	}
