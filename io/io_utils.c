@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 13:46:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:29:33 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,11 @@ void	set_in(t_cmd *cmd, t_arg **arg)
 	(*arg) = (*arg)->next;
 }
 
-void	get_argv(t_cmd *cmd)
+void	init_redirections(t_cmd *cmd)
 {
 	t_arg	*args;
 
 	args = cmd->linked_argv;
-	cmd->argv = NULL;
 	while (args)
 	{
 		if (args->type == ARG_REDOUT || args->type == ARG_APPEND)
@@ -107,6 +106,21 @@ void	get_argv(t_cmd *cmd)
 			args = args->next;
 		else if (args->type == ARG_REDIN)
 			set_in(cmd, &args);
+		args = args->next;
+	}
+}
+
+void	init_clear_argv(t_cmd *cmd)
+{
+	t_arg	*args;
+
+	args = cmd->linked_argv;
+	cmd->argv = NULL;
+	while (args)
+	{
+		if (args->type == ARG_REDIN || args->type == ARG_REDOUT
+			|| args->type == ARG_APPEND || args->type == ARG_HERDOC)
+			args = args->next;
 		else
 			cmd->argv = _realloc(cmd->argv, args->value);
 		args = args->next;

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 15:44:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:46:45 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
 	int		child_pid;
-	// (void )first;
+	(void )first;
 	// (void )cmd;
 
 	data = data_hook(NULL);
@@ -55,10 +55,16 @@ void	program_exec(t_cmd *cmd, int first, int next)
 	}
 	else if (child_pid == 0)
 	{
-		get_argv(cmd);
+		//get argv should run inside the child proc to open redi files inside child proc
+		// the idea is initializing clean argv inside get_commands() and get open files here :)
+		init_redirections(cmd);
 		set_pipes(cmd, first, next);
 		set_io(cmd);
-		// printf("cmd : %s, in : %d, out : %d\n", cmd->argv[0], cmd->in, cmd->out);
+		if (is_builtin(cmd))
+		{
+			run_builtin(cmd);
+			exit(data->exit_status);
+		}
 		if (cmd->argv == NULL || is_valid_cmd(data, cmd->argv[0]) == 0)
 			exit(127);
 		init_env_array();
@@ -84,6 +90,15 @@ int	read_input(t_data *data)
 	return (1);
 }
 
+// void	exec_cmd(t_cmd *cmd, int next)
+// {
+// 	// check if built-in
+// 	// run built-in (func)
+// 	cmd->argv = init_redirections(cmd->linked_argv);
+// 	//else
+
+// }
+
 void	handle_input(t_data *data)
 {
 	t_cmd	*cmds;
@@ -95,14 +110,18 @@ void	handle_input(t_data *data)
 		// data->args = NULL;
 		return ;
 	}
-	// if (data->cmds[1] == NULL && builtins())
-	// 	return ;
 	cmds = data->cmds;
+	if (cmds && cmds->next == NULL && is_builtin(cmds))
+	{
+		printf("built-in:%s\n", cmds->argv[0]);
+		builtins(cmds);
+		return ;
+	}
 	data->oldfd = 0;
 	while (cmds)
 	{
 		next = cmds->next != NULL;
-		// prt_list(cmds->linked_argv);
+		printf("%s %p\n", cmds->argv[0], cmds->linked_argv);
 		program_exec(cmds, cmds == data->cmds, next);
 		cmds = cmds->next;
 	}
