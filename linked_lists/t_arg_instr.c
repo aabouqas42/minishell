@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:38:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 19:59:44 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:09:33 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	t_arg_put(char *value, t_arg_type type, t_arg **head)
 	end->next->type = type;
 }
 
-void	t_arg_insert(char *value, t_arg_type type, t_arg **head)
-{
+// void	t_arg_insert(char *value, t_arg_type type, t_arg **head)
+// {
 	
-}
+// }

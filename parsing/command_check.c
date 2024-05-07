@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 19:45:56 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:09:14 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ int	is_valid(char *cmd)
 		return (do_error(COMDNF_ERR, cmd), 0);
 	if (ft_strchr(cmd, '/') || ft_strchr(cmd, '.'))
 	{
-		if (is_fod(cmd) == _FILE && access(cmd, X_OK) == 0)
-			return (do_error(PERMIDEN_ERR, cmd), 0);
+		// if (is_fod(cmd) == _FILE && access(cmd, X_OK) == 0)
+		// 	return (do_error(PERMIDEN_ERR, cmd), 0);
 		if (is_fod(cmd) == _DIRE)
 			return (do_error(ISDIR_ERR, cmd), 0);
 		if (is_fod(cmd) == 0)

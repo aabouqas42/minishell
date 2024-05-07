@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 19:49:58 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:06:52 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	safe_exit(int status)
 	env_free_list(data->env);
 	data->env = NULL;
 	free (data->prompt);
-	if (status == -1)
-		print(1, "exit", 1);
+	// if (status == -1)
+	// 	print(1, "exit", 1);
 	exit(status);
 }
 

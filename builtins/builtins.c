@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 18:39:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:18:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int	is_builtin(t_cmd *cmd)
 
 int	run_builtin(t_cmd *cmd)
 {
+	t_data	*data;
+
+	data = data_hook(NULL);
 	if (cmd->out != 1 && dup2(cmd->out, 1))
 		close(cmd->out);
 	if (cmd->argv == NULL)
@@ -36,17 +39,17 @@ int	run_builtin(t_cmd *cmd)
 	if (is_same(cmd->argv[0], "exit"))
 		(print(1, "exit", 1), safe_exit(0));
 	if (is_same(cmd->argv[0], "cd"))
-		return (cd(data_hook(NULL)), 1);
+		return (cd(cmd->argv), 1);
 	if (is_same(cmd->argv[0], "echo"))
 		return (echo(cmd->argv), 1);
 	if (is_same(cmd->argv[0], "pwd"))
 		return (pwd(), 1);
 	if (is_same(cmd->argv[0], "env"))
-		return (env_print(data_hook(NULL)->env), 1);
+		return (env_print(data->env), 1);
 	if (is_same(cmd->argv[0], "export"))
 		return (_export(cmd->argv), 1);
 	if (is_same(cmd->argv[0], "unset"))
-		return (env_unset(data_hook(NULL)->args[1].value, &data_hook(NULL)->env), 1);
+		return (env_unset(data->args[1].value, &data->env), 1);
 	return (0);
 }
 
