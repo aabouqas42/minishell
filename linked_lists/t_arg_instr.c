@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_arg_instr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:38:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 12:31:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:59:44 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,9 @@ void	t_arg_put(char *value, t_arg_type type, t_arg **head)
 	end->next = _calloc(sizeof(t_arg));
 	end->next->value = value;
 	end->next->type = type;
+}
+
+void	t_arg_insert(char *value, t_arg_type type, t_arg **head)
+{
+	
 }

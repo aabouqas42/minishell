@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 18:46:18 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:16:14 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ typedef struct s_data
 	char	*usrinput;
 	char	*program_path;
 	int		exit_status;
-	int		syn_err;
 	int		oldfd;
 	int		fds[2];
 }	t_data;

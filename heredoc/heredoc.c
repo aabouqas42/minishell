@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 15:50:34 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:35:16 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	open_heredoc(t_arg *target)
 		if (target->type != ARG_QT)
 			in = expand(in);
 		print(fd_out, in, 1);
+		free (in);
 		in = readline("heredoc > ");
 	}
 	return (close(fd_out), fd_in);
