@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 13:41:38 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:53:08 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_heredoc(t_arg *userin)
 	return (0);
 }
 
-int	check_valid_redrict(char *file_name)
+int	check_valid_redirect(char *file_name)
 {
 	char	*str;
 
@@ -74,7 +74,7 @@ int	check_syntax(t_arg *arg)
 	{
 		if (check_ambiguous(arg->next->value) == 0)
 			return (0);
-		if (check_valid_redrict(arg->next->value) == 0)
+		if (check_valid_redirect(arg->next->value) == 0)
 			return (0);
 		if (arg->next->type > 1)
 			return (do_error(SYNTAX_ERR, arg->next->value), 0);

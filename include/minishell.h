@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 11:55:14 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:01:39 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef enum e_arg_type
 	ARG_REDOUT,
 	ARG_REDIN,
 	ARG_APPEND,
-	ARG_HERDOC,
+	ARG_HERDOC
 }	t_arg_type;
 
 typedef enum e_error_type
