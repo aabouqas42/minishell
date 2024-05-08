@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 12:38:12 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:40:24 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	struct termios	*curr_termios;
 	struct termios	*old_termios;
+	struct termios	*curr_termios;
 	t_cmd			*cmds;
 	t_env			*env;
 	t_arg			*args;
@@ -103,6 +103,7 @@ typedef struct s_data
 /**
  * T_ARG INSTRACTIONS
  */
+void	t_arg_insert(char *value, t_arg_type type, t_arg **head);
 void	t_arg_put(char *value, t_arg_type type, t_arg **head);
 void	t_arg_add(char *value, t_arg_type type);
 void	t_arg_free(t_arg *head);

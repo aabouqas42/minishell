@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/08 11:31:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:39:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,4 @@ char	*expand_arg(char *str, int hd)
 		str++;
 	}
 	return (free (ptr), res);
-}
-
-void	add_front(t_arg **head)
-{
-	if (*head == NULL)
-	{
-		
-	}
-}
-
-void	expand_input(t_arg *args)
-{
-	char	*expended;
-
-	while (args)
-	{
-		if (args->type == ARG_HERDOC)
-		{
-			expended = expand_arg(args->next->value, 1);
-			args = args->next;
-		}
-		else
-		{
-			//split expanded value again :) and remove old value from the data.args
-			expended = expand_arg(args->value, 0);
-			args->value = expended;
-		} // export a="ls -la"
-		args = args->next;
-	}
 }

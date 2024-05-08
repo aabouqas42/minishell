@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 12:32:54 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:59:41 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,30 +90,17 @@ int	read_input(t_data *data)
 	return (1);
 }
 
-// void	exec_cmd(t_cmd *cmd, int next)
-// {
-// 	// check if built-in
-// 	// run built-in (func)
-// 	cmd->argv = init_redirections(cmd->linked_argv);
-// 	//else
-
-// }
-
 void	handle_input(t_data *data)
 {
 	t_cmd	*cmds;
 	int		next;
 
 	if (is_valid_input() == 0)
-	{
-		// t_arg_free(data->args);
-		// data->args = NULL;
 		return ;
-	}
 	cmds = data->cmds;
 	if (cmds && cmds->next == NULL && is_builtin(cmds))
 	{
-		// printf("built-in:%s\n", cmds->argv[0]);
+		printf("built-in:%s\n", cmds->argv[0]);
 		builtins(cmds);
 		return ;
 	}
@@ -124,10 +111,6 @@ void	handle_input(t_data *data)
 		program_exec(cmds, cmds == data->cmds, next);
 		cmds = cmds->next;
 	}
-}
-void	signal_handler(int signal)
-{
-	rp_c
 }
 
 int	main(int ac, char **av, char **env)
@@ -141,7 +124,6 @@ int	main(int ac, char **av, char **env)
 	}
 	data_hook(&data);
 	data_init(env);
-	signal(SIGQUIT, signal_handler);
 	while (1)
 	{
 		if (read_input(&data) != -1)
