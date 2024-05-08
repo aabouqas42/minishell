@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/08 12:39:56 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/05/08 18:21:06 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,12 @@ NAME = minishell
 
 all: $(NAME)
 	@echo "\033[32mminishell Is Ready.\033[0m"
+	 @echo "\033[33m#Export This Variable First :\n\033[34m \
+	 export DYLD_LIBRARY_PATH=${HOME}/homebrew/Cellar/readline/8.2.10/lib\033[0m"
 
 $(NAME): $(LIBFT) $(NAME).c $(SRCS_O) $(INC)$(NAME).h
 	@echo "\033[32mCompiling Executable $(NAME) FROM [ $(SRCS_O) ]\033[0m"
-	@$(CC) $(NAME).c $(SRCS_O) $(LIBFT) -lreadline -o $(NAME)
+	@$(CC) $(NAME).c $(SRCS_O) -I ${HOME}/homebrew/Cellar/readline/8.2.10/include $(LIBFT) -L ${HOME}/homebrew/Cellar/readline/8.2.10/lib -lreadline -o $(NAME)
 
 %.o: %.c $(INC)$(NAME).h
 	@echo "\033[32mCompiling $<\033[0m"

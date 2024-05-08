@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 12:59:41 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:19:36 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ void	program_exec(t_cmd *cmd, int first, int next)
 	}
 	else if (child_pid == 0)
 	{
-		//get argv should run inside the child proc to open redi files inside child proc
-		// the idea is initializing clean argv inside get_commands() and get open files here :)
 		init_redirections(cmd);
 		set_pipes(cmd, first, next);
 		set_io(cmd);
@@ -113,15 +111,27 @@ void	handle_input(t_data *data)
 	}
 }
 
+void	sig_handle_sigint(int sig)
+{
+	(void)sig;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
+	signal(SIGINT, sig_handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	if (ac != 1)
 	{
 		print(2, "minishell : too many arguments", 1);
 		return (1 + ((size_t)av * 0));
 	}
+	
 	data_hook(&data);
 	data_init(env);
 	while (1)
