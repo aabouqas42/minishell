@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 19:46:04 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:01:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,14 @@ void	mini_api(char *res)
 
 	data = data_hook(NULL);
 	heredoc_expand = (_strchr(res, DQT) || _strchr(res, SQT));
-	if (_strchr(res, '$'))
+	if (!_strchr(res, '$') || (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC))
+		res = expand_arg(res, 1);
+	else
 	{
-		if (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC)
-			res = expand_arg(res, 1);
-		else
-		{
-			res = expand_arg(res, 0);
-			split_expanded(res);
-			free (res);
-			return ;
-		}
+		res = expand_arg(res, 0);
+		split_expanded(res);
+		free (res);
+		return ;
 	}
 	if (heredoc_expand)
 		t_arg_add(res, ARG_QT);

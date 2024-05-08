@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 18:24:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:53:01 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,5 +178,5 @@ void		print(int fd, char *str, int endl);
 int			is_builtin(t_cmd *cmd);
 void		prt_list(t_arg *arg);
 char		*expand_arg(char *str, int hd);
-
+void		rl_replace_line (const char *text, int clear_undo);
 #endif
