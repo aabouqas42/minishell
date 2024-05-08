@@ -6,7 +6,7 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/08 19:52:28 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/05/08 19:55:15 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,12 @@ NAME = minishell
 
 all: $(NAME)
 	@echo "\033[32mminishell Is Ready.\033[0m"
-#	Export This Variable First : \
-	export DYLD_LIBRARY_PATH=${HOME}/homebrew/Cellar/readline/8.2.10/lib"
+#	Do This Steps First : \
+	git clone https://github.com/Homebrew/brew.git ~/homebrew \
+	cd ~/homebrew/bin/ \
+	./brew install readline \
+	if you have errors about dylib do this step : \
+		export DYLD_LIBRARY_PATH=${HOME}/homebrew/Cellar/readline/8.2.10/lib"
 
 $(NAME): $(LIBFT) $(NAME).c $(SRCS_O) $(INC)$(NAME).h
 	@echo "\033[32mCompiling Executable $(NAME) FROM [ $(SRCS_O) ]\033[0m"
