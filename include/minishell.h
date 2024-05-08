@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 20:09:21 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:05:22 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_data
 /**
  * T_ARG INSTRACTIONS
  */
+void	t_arg_insert(char *value, t_arg_type type, t_arg **head);
 void	t_arg_put(char *value, t_arg_type type, t_arg **head);
 void	t_arg_add(char *value, t_arg_type type);
 void	t_arg_free(t_arg *head);
@@ -148,7 +149,7 @@ char		*_strndup(char *s1, size_t size);
 char		*_strchr(char *s, char c);
 int			is_valid_cmd(t_data *data, char *cmd);
 void		safe_exit(int status);
-void		split_usrin(char *usr_in);
+void		split_usrin(char *usr_in, int expand);
 int			is_same(char *s1, char *s2);
 int			builtins(t_cmd *cmd);
 int			cd(char **argv);

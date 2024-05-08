@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 20:10:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 09:56:00 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,23 @@ char	*expand_arg(char *str, int hd)
 
 void	expand_input(t_arg *args)
 {
-	char	*expended;
+	char	*expanded;
 
 	while (args)
 	{
 		if (args->type == ARG_HERDOC)
 		{
-			expended = expand_arg(args->next->value, 1);
+			expanded = expand_arg(args->next->value, 1);
 			args = args->next;
 		}
 		else
 		{
-			//split expanded value again :) and remove old value from the data.args
-			expended = expand_arg(args->value, 0);
+			expanded = expand_arg(args->value, 0);
 		}
-		args->value = expended;
+		args->value = expanded;
 		args = args->next;
 	}
+	// printf("--------\n");
+	// prt_list(data_hook(NULL)->args);
+	// printf("--------\n");
 }

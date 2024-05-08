@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 19:51:23 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:11:44 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,38 @@ size_t	is_symbole(char *str)
 	return (1);
 }
 
-void	split_usrin(char *usr_in)
+t_arg	*get_last(t_arg *head)
+{
+	if (head == NULL)
+		return (NULL);
+	while (head->next)
+		head = head->next;
+	return (head);
+}
+
+void	mini_api(char *res, int expand)
+{
+	t_data	*data;
+
+	data = data_hook(NULL);
+	if (expand)
+	{
+		if (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC)
+			res = expand_arg(res, 1);
+		else
+		{
+			res = expand_arg(res, 0);
+			split_usrin(res, 0);
+			return ;
+		}
+	}
+	if (_strchr(res, DQT) || _strchr(res, SQT))
+		t_arg_add(res, ARG_QT);
+	else
+		t_arg_add(res, ARG_WORD);
+}
+
+void	split_usrin(char *usr_in, int expand)
 {
 	char	*res;
 	char	qt;
@@ -62,10 +93,7 @@ void	split_usrin(char *usr_in)
 			res = _strnjoin(res, usr_in, 1);
 			usr_in++;
 		}
-		if (_strchr(res, DQT) || _strchr(res, SQT))
-			t_arg_add(res, ARG_QT);
-		else
-			t_arg_add(res, ARG_WORD);
+		mini_api(res, expand);
 		usr_in += is_symbole(usr_in);
 	}
 }

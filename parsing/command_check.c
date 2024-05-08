@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 20:09:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:05:31 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	is_valid_input(void)
 	data = data_hook(NULL);
 	if (check_qts(data->usrinput) == 0)
 		return (0);
-	split_usrin(data->usrinput);
-	expand_input(data->args);
+	split_usrin(data->usrinput, 1);
+	// prt_list(data->args);
 	// prt_list (data->args);
 	if (check_redirections(data->args) == 0)
 		return 0;
