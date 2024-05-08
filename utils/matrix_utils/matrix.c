@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 19:39:54 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:57:58 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	get_commands(t_arg *args)
 	data_hook(NULL)->exit_status = 0;
 	ft_bzero(&cmd, sizeof(t_cmd));
 	cmd.out = 1;
-	if (args->type > 1 && args->next == NULL)
+	if (args && args->type > 1 && args->next == NULL)
 		return (do_error(SYNTAX_ERR, "newline"));
 	while (args)
 	{

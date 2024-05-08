@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 11:11:44 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:24:59 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ size_t	is_symbole(char *str)
 		if (ft_strncmp(">", str, 1) == 0)
 			t_arg_add(_strnjoin(NULL, str, 1), ARG_REDOUT);
 	}
-	return (1);
+	return (*str != '\0');
 }
 
 t_arg	*get_last(t_arg *head)
@@ -52,29 +52,52 @@ t_arg	*get_last(t_arg *head)
 	return (head);
 }
 
-void	mini_api(char *res, int expand)
+void	split_expanded(char *usr_in)
+{
+	char	*res;
+	char	qt;
+
+	if (usr_in == NULL)
+		return ;
+	while (*usr_in)
+	{
+		usr_in = skiper(usr_in);
+		res = NULL;
+		qt = 0;
+		while (*usr_in && (!_spaces(*usr_in) || qt))
+		{
+			if ((*usr_in == DQT && qt != SQT) || (*usr_in == SQT && qt != DQT))
+				qt = (qt == 0) * (*usr_in);
+			res = _strnjoin(res, usr_in, 1);
+			usr_in++;
+		}
+		t_arg_add(res, ARG_WORD);
+		usr_in += (*usr_in != '\0');
+	}
+}
+
+void	mini_api(char *res)
 {
 	t_data	*data;
+	int		heredoc_expand;
 
 	data = data_hook(NULL);
-	if (expand)
+	heredoc_expand = (_strchr(res, DQT) || _strchr(res, SQT));
+	if (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC)
+		res = expand_arg(res, 1);
+	else
 	{
-		if (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC)
-			res = expand_arg(res, 1);
-		else
-		{
-			res = expand_arg(res, 0);
-			split_usrin(res, 0);
-			return ;
-		}
+		res = expand_arg(res, 0);
+		split_expanded(res);
+		return ;
 	}
-	if (_strchr(res, DQT) || _strchr(res, SQT))
+	if (heredoc_expand)
 		t_arg_add(res, ARG_QT);
 	else
 		t_arg_add(res, ARG_WORD);
 }
 
-void	split_usrin(char *usr_in, int expand)
+void	split_usrin(char *usr_in)
 {
 	char	*res;
 	char	qt;
@@ -93,7 +116,7 @@ void	split_usrin(char *usr_in, int expand)
 			res = _strnjoin(res, usr_in, 1);
 			usr_in++;
 		}
-		mini_api(res, expand);
+		mini_api(res);
 		usr_in += is_symbole(usr_in);
 	}
 }

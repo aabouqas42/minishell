@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 19:05:56 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:57:24 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	check_syntax(t_arg *arg)
 
 int	check_redirections(t_arg *usrin)
 {
-	if (usrin->type == ARG_PIPE)
+	if (usrin && usrin->type == ARG_PIPE)
 		return (do_error(SYNTAX_ERR, usrin->value), 0);
 	while (usrin)
 	{

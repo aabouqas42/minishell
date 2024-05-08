@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 11:15:35 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:37:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,30 +90,17 @@ int	read_input(t_data *data)
 	return (1);
 }
 
-// void	exec_cmd(t_cmd *cmd, int next)
-// {
-// 	// check if built-in
-// 	// run built-in (func)
-// 	cmd->argv = init_redirections(cmd->linked_argv);
-// 	//else
-
-// }
-
 void	handle_input(t_data *data)
 {
 	t_cmd	*cmds;
 	int		next;
 
 	if (is_valid_input() == 0)
-	{
-		// t_arg_free(data->args);
-		// data->args = NULL;
 		return ;
-	}
 	cmds = data->cmds;
 	if (cmds && cmds->next == NULL && is_builtin(cmds))
 	{
-		// printf("built-in:%s\n", cmds->argv[0]);
+		printf("built-in:%s\n", cmds->argv[0]);
 		builtins(cmds);
 		return ;
 	}
@@ -124,6 +111,11 @@ void	handle_input(t_data *data)
 		program_exec(cmds, cmds == data->cmds, next);
 		cmds = cmds->next;
 	}
+}
+
+void	f(int s)
+{
+	printf("hhh %d\n", s);
 }
 
 int	main(int ac, char **av, char **env)

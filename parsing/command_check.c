@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 11:05:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:43:57 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ int	is_valid_input(void)
 	data = data_hook(NULL);
 	if (check_qts(data->usrinput) == 0)
 		return (0);
-	split_usrin(data->usrinput, 1);
+	split_usrin(data->usrinput);
 	// prt_list(data->args);
-	// prt_list (data->args);
 	if (check_redirections(data->args) == 0)
 		return 0;
 	get_commands(data->args);
@@ -32,48 +31,6 @@ int	is_valid_input(void)
 	// 		close(data->cmds->in);
 	// 	data->cmds = data->cmds->next;
 	// }
-	return 1;
-	// no syntax error :)
-	// free 
-	// while (data->_args)
-	// {
-	// 	printf("--[%s]--\n", data->_args->value);
-	// 	data->_args = data->_args->next;
-	// }
-	// get_commands(data->_args);
-	// while (data->cmds)
-	// {
-		// printf("HEREDOCS OF : %s\n", data->cmds->_argv->value);
-		// int j = 0;
-		// while (data->cmds->heredocs && data->cmds->heredocs[j])
-		// {
-		// 	printf("[%s]", data->cmds->heredocs[j]);
-		// 	j++;
-		// }
-		// printf("\n");
-	// 	data->cmds = data->cmds->next;
-	// }
-	// init_heredocs(data->cmds);
-	// for (int i = 0; data->cmds[i].argv; i++)
-	// {
-	// 	data->cmds[i].out = 1;
-	// 	for (int j = 0;data->cmds[i].argv[j]; j++)
-	// 	{
-	// 		printf("[%s %d] ", data->cmds[i].argv[j], data->cmds[i].flags[j].is_io_op);
-	// 	}
-	// 	printf("in : %d , out : %d", data->cmds[i].in, data->cmds[i].out);
-	// 	printf("\n");
-	// }
-	// data->syn_err = 0;
-	// return (0);
-	// if (data->usrinput == NULL)
-	// 	return (0);
-	// if (check_redirections(data->args) == 0)
-	// 	return (0);
-	// expand_input(data->args);
-	// if (data->args == 0 || *data->args == NULL)
-	// 	return (0);
-	// get_commands(data->_args);
 	return (1);
 }
 
