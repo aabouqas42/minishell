@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 12:24:59 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:52:36 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,5 @@ void	split_usrin(char *usr_in)
 		mini_api(res);
 		usr_in += is_symbole(usr_in);
 	}
+	prt_list(data_hook(NULL)->args);
 }
