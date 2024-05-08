@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 17:03:54 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:38:39 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	data_init(char **base_env)
 	t_data	*data;
 
 	data = data_hook(NULL);
+	tcgetattr(0, data->old_termios);
 	ft_bzero(data, sizeof(t_data));
 	data->prompt = get_prompt();
 	export_base_envs(base_env);

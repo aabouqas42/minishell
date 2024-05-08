@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 20:10:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:31:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ char	*expand_arg(char *str, int hd)
 	return (free (ptr), res);
 }
 
+void	add_front(t_arg **head)
+{
+	if (*head == NULL)
+	{
+		
+	}
+}
+
 void	expand_input(t_arg *args)
 {
 	char	*expended;
@@ -69,8 +77,8 @@ void	expand_input(t_arg *args)
 		{
 			//split expanded value again :) and remove old value from the data.args
 			expended = expand_arg(args->value, 0);
-		}
-		args->value = expended;
+			args->value = expended;
+		} // export a="ls -la"
 		args = args->next;
 	}
 }

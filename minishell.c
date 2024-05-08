@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 20:20:21 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:32:54 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,29 +125,31 @@ void	handle_input(t_data *data)
 		cmds = cmds->next;
 	}
 }
+void	signal_handler(int signal)
+{
+	rp_c
+}
 
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	// leaks in cd built-in :(
 	if (ac != 1)
 	{
 		print(2, "minishell : too many arguments", 1);
-		return (1 + ((int)av * 0));
+		return (1 + ((size_t)av * 0));
 	}
 	data_hook(&data);
 	data_init(env);
+	signal(SIGQUIT, signal_handler);
 	while (1)
 	{
 		if (read_input(&data) != -1)
 		{
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
-			{
 				if (data.exit_status >> 8 == -1)
 					safe_exit(-1);
-			}
 		}
 		_free();
 	}
