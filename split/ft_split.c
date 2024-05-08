@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 12:24:59 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:07:12 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ void	split_expanded(char *usr_in)
 		{
 			if ((*usr_in == DQT && qt != SQT) || (*usr_in == SQT && qt != DQT))
 				qt = (qt == 0) * (*usr_in);
+			if (ft_strchr("<>|", *usr_in) && !qt)
+				break ;
 			res = _strnjoin(res, usr_in, 1);
 			usr_in++;
 		}
 		t_arg_add(res, ARG_WORD);
-		usr_in += (*usr_in != '\0');
+		usr_in += is_symbole(res);
 	}
 }
 
@@ -83,13 +85,16 @@ void	mini_api(char *res)
 
 	data = data_hook(NULL);
 	heredoc_expand = (_strchr(res, DQT) || _strchr(res, SQT));
-	if (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC)
-		res = expand_arg(res, 1);
-	else
+	if (_strchr(res, '$'))
 	{
-		res = expand_arg(res, 0);
-		split_expanded(res);
-		return ;
+		if (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC)
+			res = expand_arg(res, 1);
+		else
+		{
+			res = expand_arg(res, 0);
+			split_expanded(res);
+			return ;
+		}
 	}
 	if (heredoc_expand)
 		t_arg_add(res, ARG_QT);
