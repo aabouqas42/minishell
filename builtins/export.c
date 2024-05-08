@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:23:26 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 18:34:18 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:45:23 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	_export(char **argv)
 	while (argv[i])
 	{
 		set_value(argv[i]);
-		i++;
+		i += (argv[i] != NULL);
 	}
 	return (0);
 }

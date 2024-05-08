@@ -6,11 +6,11 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/08 17:29:41 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/05/08 19:52:28 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
@@ -35,8 +35,8 @@ NAME = minishell
 
 all: $(NAME)
 	@echo "\033[32mminishell Is Ready.\033[0m"
-	 @echo "\033[33m#Export This Variable First :\n\033[34m \
-	 export DYLD_LIBRARY_PATH=${HOME}/homebrew/Cellar/readline/8.2.10/lib\033[0m"
+#	Export This Variable First : \
+	export DYLD_LIBRARY_PATH=${HOME}/homebrew/Cellar/readline/8.2.10/lib"
 
 $(NAME): $(LIBFT) $(NAME).c $(SRCS_O) $(INC)$(NAME).h
 	@echo "\033[32mCompiling Executable $(NAME) FROM [ $(SRCS_O) ]\033[0m"

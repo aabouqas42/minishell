@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 19:35:16 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:22:04 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	open_heredoc(t_arg *target)
 	while (!is_same(in, target->value))
 	{
 		if (target->type != ARG_QT)
-			in = expand(in);
+			in = expand(in); 
 		print(fd_out, in, 1);
 		free (in);
 		in = readline("heredoc > ");

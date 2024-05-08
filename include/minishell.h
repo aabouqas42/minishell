@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 15:22:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:24:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,18 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	t_cmd	*cmds;
-	t_env	*env;
-	t_arg	*args;
-	char	**env_2d;
-	char	*prompt;
-	char	*usrinput;
-	char	*program_path;
-	int		exit_status;
-	int		oldfd;
-	int		fds[2];
+	struct termios	*old_termios;
+	struct termios	*curr_termios;
+	t_cmd			*cmds;
+	t_env			*env;
+	t_arg			*args;
+	char			**env_2d;
+	char			*prompt;
+	char			*usrinput;
+	char			*program_path;
+	int				exit_status;
+	int				oldfd;
+	int				fds[2];
 }	t_data;
 
 /**

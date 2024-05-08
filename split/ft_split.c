@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 18:19:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:48:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,30 @@ size_t	is_symbole(char *str)
 	return (*str != '\0');
 }
 
+size_t	is_symbole2(char *str)
+{
+	if (!ft_strncmp("<<", str, 2))
+	{
+		t_arg_add(_strnjoin(NULL, str, 2), ARG_WORD);
+		return (2);
+	}
+	if (!ft_strncmp(">>", str, 2))
+	{
+		t_arg_add(_strnjoin(NULL, str, 2), ARG_WORD);
+		return (2);
+	}
+	if (str && *str && ft_strchr("<>|", *str) != NULL)
+	{
+		if (ft_strncmp("|", str, 1) == 0)
+			t_arg_add(_strnjoin(NULL, str, 1), ARG_WORD);
+		if (ft_strncmp("<", str, 1) == 0)
+			t_arg_add(_strnjoin(NULL, str, 1), ARG_WORD);
+		if (ft_strncmp(">", str, 1) == 0)
+			t_arg_add(_strnjoin(NULL, str, 1), ARG_WORD);
+	}
+	return (*str != '\0');
+}
+
 t_arg	*get_last(t_arg *head)
 {
 	if (head == NULL)
@@ -68,13 +92,13 @@ void	split_expanded(char *usr_in)
 		{
 			if ((*usr_in == DQT && qt != SQT) || (*usr_in == SQT && qt != DQT))
 				qt = (qt == 0) * (*usr_in);
-			if (ft_strchr("<>|", *usr_in) && !qt)
+			if (_strchr("<>|", *usr_in) && !qt)
 				break ;
 			res = _strnjoin(res, usr_in, 1);
 			usr_in++;
 		}
 		t_arg_add(res, ARG_WORD);
-		usr_in += is_symbole(res);
+		usr_in += is_symbole2(usr_in);
 	}
 }
 
@@ -93,6 +117,7 @@ void	mini_api(char *res)
 		{
 			res = expand_arg(res, 0);
 			split_expanded(res);
+			free (res);
 			return ;
 		}
 	}
@@ -124,4 +149,5 @@ void	split_usrin(char *usr_in)
 		mini_api(res);
 		usr_in += is_symbole(usr_in);
 	}
+	prt_list(data_hook(NULL)->args);
 }
