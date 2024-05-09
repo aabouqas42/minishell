@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 12:20:00 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:25:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 
 typedef enum e_arg_type
 {
+	None = -1,
 	ARG_WORD,
 	ARG_QT,
 	ARG_PIPE,
@@ -103,10 +104,10 @@ typedef struct s_data
 /**
  * T_ARG INSTRACTIONS
  */
-void	t_arg_insert(char *value, t_arg_type type, t_arg **head);
-void	t_arg_put(char *value, t_arg_type type, t_arg **head);
-void	t_arg_add(char *value, t_arg_type type);
-void	t_arg_free(t_arg *head);
+void		t_arg_insert(char *value, t_arg_type type, t_arg **head);
+void		t_arg_put(char *value, t_arg_type type, t_arg **head);
+void		t_arg_add(char *value, t_arg_type type);
+void		t_arg_free(t_arg *head);
 
 /**
  * T_CMD INSTRACTIONS
@@ -178,5 +179,7 @@ void		print(int fd, char *str, int endl);
 int			is_builtin(t_cmd *cmd);
 void		prt_list(t_arg *arg);
 char		*expand_arg(char *str, int hd);
+void		split_expanded(char *usr_in);
 void		rl_replace_line (const char *text, int clear_undo);
+t_arg		*get_last(t_arg *head);
 #endif

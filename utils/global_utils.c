@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 17:35:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:24:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_arg_type	is_io_op(char	*str)
 {
 	if (str == NULL)
-		return (ARG_WORD);
+		return (None);
 	if (ft_strncmp(str, ">>", 3) == 0)
 		return (ARG_APPEND);
 	if (ft_strncmp(str, "<<", 3) == 0)
@@ -30,11 +30,15 @@ t_arg_type	is_io_op(char	*str)
 			return (ARG_PIPE);
 	}
 	return (ARG_WORD);
-	// return (
-	// 	(ft_strchr("<>|", *str) && *(str + 1) == 0)
-	// 	|| ft_strncmp(str, ">>", 3) == 0
-	// 	|| ft_strncmp(str, "<<", 3) == 0
-	// );
+}
+
+t_arg	*get_last(t_arg *head)
+{
+	if (head == NULL)
+		return (NULL);
+	while (head->next)
+		head = head->next;
+	return (head);
 }
 
 char	**_realloc(char **old_tab, char *to_append)
@@ -64,11 +68,6 @@ char	**_realloc(char **old_tab, char *to_append)
 	free(old_tab);
 	new_tab[i] = to_append;
 	return (new_tab);
-}
-
-int	_spaces(int c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
 }
 
 int	get_argsc(char **args)
