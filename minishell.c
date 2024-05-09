@@ -120,6 +120,7 @@ void	sig_handle_sigint(int sig)
 	rl_redisplay();
 }
 
+
 void f(int sig)
 {
 	(void)sig;
@@ -138,7 +139,7 @@ int	main(int ac, char **av, char **env)
 		print(2, "minishell : too many arguments", 1);
 		return (1 + ((size_t)av * 0));
 	}
-	
+
 	data_hook(&data);
 	data_init(env);
 	while (1)
