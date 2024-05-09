@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 09:46:39 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:44:08 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
 	int		child_pid;
-	(void )first;
-	// (void )cmd;
+	(void ) first;
 
 	data = data_hook(NULL);
 	if (next)
@@ -120,18 +119,17 @@ void	sig_handle_sigint(int sig)
 	rl_redisplay();
 }
 
-
-void f(int sig)
-{
-	(void)sig;
-}
+// void f(int sig)
+// {
+// 	(void)sig;
+// }
 
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
 	signal(SIGINT, sig_handle_sigint);
-	signal(SIGQUIT, f);
+	signal(SIGQUIT, sig_handle_sigint);
 
 	rl_catch_signals = 0;
 	if (ac != 1)
