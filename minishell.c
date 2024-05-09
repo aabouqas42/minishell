@@ -6,21 +6,22 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 14:25:47 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:19:57 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	prt_list(t_arg *arg)
-{
-	while (arg)
-	{
-		printf("[%s] ", arg->value);
-		arg = arg->next;
-	}
-	printf("\n");
-}
+// \
+// void	prt_list(t_arg *arg) \
+// { \
+// 	while (arg) \
+// 	{ \
+// 		printf("[%s] ", arg->value); \
+// 		arg = arg->next; \
+// 	} \
+// 	printf("\n"); \
+// }
 
 void	close_unused_fds(int next)
 {
@@ -41,23 +42,16 @@ void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
 	int		child_pid;
-	(void )first;
-	// (void )cmd;
 
 	data = data_hook(NULL);
 	if (next)
 		pipe(data->fds);
 	child_pid = fork();
 	if (child_pid == -1)
+		return ((void)print(2, "Unexpected Error", 1));
+	if (child_pid == 0)
 	{
-		print(2, "Unexpected Error", 1);
-		return ;
-	}
-	else if (child_pid == 0)
-	{
-		init_redirections(cmd);
-		set_pipes(cmd, first, next);
-		set_io(cmd);
+		(init_redirections(cmd), set_pipes(cmd, first, next), set_io(cmd));
 		if (is_builtin(cmd))
 		{
 			run_builtin(cmd);
@@ -111,49 +105,27 @@ void	handle_input(t_data *data)
 	}
 }
 
-void	sig_handle_sigint(int sig)
-{
-	printf("\n");
-	(void)sig;
-	if (g_fix_doubleprt)
-		return ;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-
-void f(int sig)
-{
-	(void)sig;
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	signal(SIGINT, sig_handle_sigint);
-	signal(SIGQUIT, f);
-
+	data_hook(&data);
+	catch_signals();
 	rl_catch_signals = 0;
 	if (ac != 1)
-	{
-		print(2, "minishell : too many arguments", 1);
-		return (1 + ((size_t)av * 0));
-	}
-
-	data_hook(&data);
+		return (print(2, "minishell : too many argu\
+				ments", 1), 1 + ((size_t)av * 0));
 	data_init(env);
 	while (1)
 	{
 		if (read_input(&data) != -1)
 		{
-			g_fix_doubleprt = 1;
+			data.fix_doubleprt = 1;
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
 				if (data.exit_status >> 8 == -1)
 					safe_exit(-1);
-			g_fix_doubleprt = 0;
+			data.fix_doubleprt = 0;
 		}
 		_free();
 	}

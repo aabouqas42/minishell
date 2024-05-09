@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 19:18:25 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:04:26 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	is_builtin(t_cmd *cmd)
 {
 	if (cmd != NULL && cmd->argv)
 	{
-		return  (is_same(cmd->argv[0], "exit")
-				|| is_same(cmd->argv[0], "cd")
-				|| is_same(cmd->argv[0], "echo")
-				|| is_same(cmd->argv[0], "pwd")
-				|| is_same(cmd->argv[0], "env")
-				|| is_same(cmd->argv[0], "export")
-				|| is_same(cmd->argv[0], "unset"));
+		return (is_same(cmd->argv[0], "exit")
+			|| is_same(cmd->argv[0], "cd")
+			|| is_same(cmd->argv[0], "echo")
+			|| is_same(cmd->argv[0], "pwd")
+			|| is_same(cmd->argv[0], "env")
+			|| is_same(cmd->argv[0], "export")
+			|| is_same(cmd->argv[0], "unset"));
 	}
 	return (0);
 }

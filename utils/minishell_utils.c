@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 20:06:52 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:16:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ void	safe_exit(int status)
 	data->usrinput = NULL;
 	free (data->program_path);
 	data->program_path = NULL;
-	// free_tab(data->args);
 	clear_history();
 	env_free_list(data->env);
 	data->env = NULL;
 	free (data->prompt);
-	// if (status == -1)
-	// 	print(1, "exit", 1);
 	exit(status);
 }
 
@@ -53,4 +50,21 @@ char	*get_prompt(void)
 		safe_exit(-1);
 	prompt = _strjoin(user, "@1337.ma $> ");
 	return (prompt);
+}
+
+void	init_clear_argv(t_cmd *cmd)
+{
+	t_arg	*args;
+
+	args = cmd->linked_argv;
+	cmd->argv = NULL;
+	while (args)
+	{
+		if (args->type == ARG_REDIN || args->type == ARG_REDOUT
+			|| args->type == ARG_APPEND || args->type == ARG_HERDOC)
+			args = args->next;
+		else
+			cmd->argv = _realloc(cmd->argv, args->value);
+		args = args->next;
+	}
 }

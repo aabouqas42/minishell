@@ -1,40 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_linked_list.c                                 :+:      :+:    :+:   */
+/*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 12:28:12 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 14:53:28 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/05/09 15:10:00 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/05/09 15:28:56 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	t_arg_free(t_arg *head)
+void	sig_handle_sigquit(int sig)
 {
-	t_arg	*next;
-
-	while (head)
-	{
-		next = head->next;
-		free (head->value);
-		head->value = NULL;
-		free (head);
-		head = next;
-	}
+	(void)sig;
 }
 
-void	t_cmd_free(t_cmd *head)
+void	sig_handle_sigint(int sig)
 {
-	t_cmd	*next;
+	t_data	*data;
 
-	while (head)
-	{
-		next = head->next;
-		t_arg_free(head->linked_argv);
-		free (head);
-		head = next;
-	}
+	data = data_hook(NULL);
+	printf("\n");
+	(void)sig;
+	if (data && data->fix_doubleprt)
+		return ;
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	catch_signals(void)
+{
+	signal(SIGINT, sig_handle_sigint);
+	signal(SIGQUIT, sig_handle_sigquit);
 }

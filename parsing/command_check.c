@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 12:21:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:52:30 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,8 @@ int	is_valid_input(void)
 		return (0);
 	split_usrin(data->usrinput);
 	if (check_redirections(data->args) == 0)
-		return 0;
+		return (0);
 	get_commands(data->args);
-	// while (data->cmds)
-	// {
-	// 	printf("in : %d, out : %d, cmd : %s\n", data->cmds->in, data->cmds->out, data->cmds->linked_argv->value);
-	// 	if (data->cmds->in != 0)
-	// 		close(data->cmds->in);
-	// 	data->cmds = data->cmds->next;
-	// }
 	return (1);
 }
 

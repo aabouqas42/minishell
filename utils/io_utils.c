@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 18:29:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:16:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,23 +106,6 @@ void	init_redirections(t_cmd *cmd)
 			args = args->next;
 		else if (args->type == ARG_REDIN)
 			set_in(cmd, &args);
-		args = args->next;
-	}
-}
-
-void	init_clear_argv(t_cmd *cmd)
-{
-	t_arg	*args;
-
-	args = cmd->linked_argv;
-	cmd->argv = NULL;
-	while (args)
-	{
-		if (args->type == ARG_REDIN || args->type == ARG_REDOUT
-			|| args->type == ARG_APPEND || args->type == ARG_HERDOC)
-			args = args->next;
-		else
-			cmd->argv = _realloc(cmd->argv, args->value);
 		args = args->next;
 	}
 }
