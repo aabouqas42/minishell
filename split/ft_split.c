@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 20:01:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 10:37:45 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ char	*skiper(char *str)
 	while (str && *str && _spaces(*str))
 		str++;
 	return (str);
+}
+
+int	_spaces(int c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
 }
 
 size_t	is_symbole(char *str)
@@ -41,65 +46,6 @@ size_t	is_symbole(char *str)
 			t_arg_add(_strnjoin(NULL, str, 1), ARG_REDOUT);
 	}
 	return (*str != '\0');
-}
-
-size_t	is_symbole2(char *str)
-{
-	if (!ft_strncmp("<<", str, 2))
-	{
-		t_arg_add(_strnjoin(NULL, str, 2), ARG_WORD);
-		return (2);
-	}
-	if (!ft_strncmp(">>", str, 2))
-	{
-		t_arg_add(_strnjoin(NULL, str, 2), ARG_WORD);
-		return (2);
-	}
-	if (str && *str && ft_strchr("<>|", *str) != NULL)
-	{
-		if (ft_strncmp("|", str, 1) == 0)
-			t_arg_add(_strnjoin(NULL, str, 1), ARG_WORD);
-		if (ft_strncmp("<", str, 1) == 0)
-			t_arg_add(_strnjoin(NULL, str, 1), ARG_WORD);
-		if (ft_strncmp(">", str, 1) == 0)
-			t_arg_add(_strnjoin(NULL, str, 1), ARG_WORD);
-	}
-	return (*str != '\0');
-}
-
-t_arg	*get_last(t_arg *head)
-{
-	if (head == NULL)
-		return (NULL);
-	while (head->next)
-		head = head->next;
-	return (head);
-}
-
-void	split_expanded(char *usr_in)
-{
-	char	*res;
-	char	qt;
-
-	if (usr_in == NULL)
-		return ;
-	while (*usr_in)
-	{
-		usr_in = skiper(usr_in);
-		res = NULL;
-		qt = 0;
-		while (*usr_in && (!_spaces(*usr_in) || qt))
-		{
-			if ((*usr_in == DQT && qt != SQT) || (*usr_in == SQT && qt != DQT))
-				qt = (qt == 0) * (*usr_in);
-			if (_strchr("<>|", *usr_in) && !qt)
-				break ;
-			res = _strnjoin(res, usr_in, 1);
-			usr_in++;
-		}
-		t_arg_add(res, ARG_WORD);
-		usr_in += is_symbole2(usr_in);
-	}
 }
 
 void	mini_api(char *res)
@@ -146,5 +92,5 @@ void	split_usrin(char *usr_in)
 		mini_api(res);
 		usr_in += is_symbole(usr_in);
 	}
-	prt_list(data_hook(NULL)->args);
+	// prt_list(data_hook(NULL)->args);
 }

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 19:53:01 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 10:24:28 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 
 typedef enum e_arg_type
 {
+	None = -1,
 	ARG_WORD,
 	ARG_QT,
 	ARG_PIPE,
@@ -178,5 +179,7 @@ void		print(int fd, char *str, int endl);
 int			is_builtin(t_cmd *cmd);
 void		prt_list(t_arg *arg);
 char		*expand_arg(char *str, int hd);
+void		split_expanded(char *usr_in);
 void		rl_replace_line (const char *text, int clear_undo);
+t_arg		*get_last(t_arg *head);
 #endif

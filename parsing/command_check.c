@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 18:05:51 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 10:48:21 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	is_valid_input(void)
 	if (check_qts(data->usrinput) == 0)
 		return (0);
 	split_usrin(data->usrinput);
-	prt_list(data->args);
 	if (check_redirections(data->args) == 0)
 		return 0;
 	get_commands(data->args);
