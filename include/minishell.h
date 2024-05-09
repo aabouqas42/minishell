@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 19:56:21 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:13:58 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void		sig_handle_sigint(int sig);
 
 int			open_heredoc(t_arg *target);
 t_data		*data_hook(t_data *data);
-void		init_heredocs(t_cmd *cmds);
 
 void		init_redirections(t_cmd *cmd);
 void		init_clear_argv(t_cmd *cmd);
@@ -179,16 +178,15 @@ void		set_io(t_cmd *cmd);
 void		set_pipes(t_cmd *cmd, int first, int next);
 int			is_valid_input(void);
 int			check_redirections(t_arg *usrin);
-void		expand_input(t_arg *args);
 char		*skiper(char *str);
 char		*_strchr(char *s, char c);
 int			get_argsc(char **args);
 void		print(int fd, char *str, int endl);
 int			is_builtin(t_cmd *cmd);
-void		prt_list(t_arg *arg);
-char		*expand_arg(char *str, int hd);
+void		prt_list(t_arg *arg); // REMOVE BFR PUSH
+char		*expand_arg(char *str, int hd, int rm_qts);
 void		split_expanded(char *usr_in);
 t_arg		*get_last(t_arg *head);
-void		check_arguments(int ac, char **av);
 int			var_case(char curr_char, char next_char);
+void		check_arguments(int ac, char **av);
 #endif

@@ -6,21 +6,11 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 19:28:31 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:20:43 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-void	prt_list(t_arg *arg)
-{
-	while (arg)
-	{
-		printf("[%s] ", arg->value);
-		arg = arg->next;
-	}
-	printf("\n");
-}
 
 void	close_unused_fds(int next)
 {
@@ -69,7 +59,10 @@ int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
 	if (data->usrinput == NULL)
+	{
+		printf("\x1b[1A%sexit\n", data->prompt);
 		safe_exit(1);
+	}
 	if (*data->usrinput)
 		add_history(data->usrinput);
 	if (*data->usrinput == '\0')
@@ -102,7 +95,6 @@ void	handle_input(t_data *data)
 		program_exec(cmds, cmds == data->cmds, next);
 		cmds = cmds->next;
 	}
-	printf("---[%s]---\n", data->program_path);
 }
 
 int	main(int ac, char **av, char **env)
@@ -110,6 +102,9 @@ int	main(int ac, char **av, char **env)
 	t_data		data;
 	extern int	rl_catch_signals;
 
+
+	// herdoc signals 
+	// update last program executed _
 	check_arguments(ac, av);
 	data_hook(&data);
 	catch_signals();

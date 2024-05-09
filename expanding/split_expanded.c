@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:15:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 19:57:38 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:15:52 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	*___expand_arg(char *str, int herdoc)
 	}
 	return (free (ptr), res);
 }
-
 
 void	split_expanded(char *usr_in)
 {
