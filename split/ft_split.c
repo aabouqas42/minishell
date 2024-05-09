@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 19:48:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:05:45 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,14 @@ void	mini_api(char *res)
 
 	data = data_hook(NULL);
 	heredoc_expand = (_strchr(res, DQT) || _strchr(res, SQT));
-	if (_strchr(res, '$'))
+	if (!_strchr(res, '$') || (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC))
+		res = expand_arg(res, 1);
+	else
 	{
-		if (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC)
-			res = expand_arg(res, 1);
-		else
-		{
-			res = expand_arg(res, 0);
-			split_expanded(res);
-			free (res);
-			return ;
-		}
+		res = expand_arg(res, 0);
+		split_expanded(res);
+		free (res);
+		return ;
 	}
 	if (heredoc_expand)
 		t_arg_add(res, ARG_QT);
@@ -149,5 +146,4 @@ void	split_usrin(char *usr_in)
 		mini_api(res);
 		usr_in += is_symbole(usr_in);
 	}
-	prt_list(data_hook(NULL)->args);
 }

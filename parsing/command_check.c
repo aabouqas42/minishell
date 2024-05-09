@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 18:05:51 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 10:05:41 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	is_valid_input(void)
 	if (check_qts(data->usrinput) == 0)
 		return (0);
 	split_usrin(data->usrinput);
-	prt_list(data->args);
 	if (check_redirections(data->args) == 0)
 		return 0;
 	get_commands(data->args);
@@ -55,13 +54,13 @@ int	is_valid(char *cmd)
 {
 	if (_strlen(cmd) == 0)
 		return (do_error(COMDNF_ERR, cmd), 0);
-	if (ft_strchr(cmd, '/') || ft_strchr(cmd, '.'))
+	if (ft_strchr(cmd, '/'))
 	{
-		// if (is_fod(cmd) == _FILE && access(cmd, X_OK) == 0)
-		// 	return (do_error(PERMIDEN_ERR, cmd), 0);
+		if (is_fod(cmd) == _FILE && access(cmd, X_OK) != 0)
+			return (do_error(PERMIDEN_ERR, cmd), 0);
 		if (is_fod(cmd) == _DIRE)
 			return (do_error(ISDIR_ERR, cmd), 0);
-		if (is_fod(cmd) == 0)
+		if (is_fod(cmd) == -1)
 			return (do_error(NSFODIR_ERR, cmd), 0);
 	}
 	return (1);

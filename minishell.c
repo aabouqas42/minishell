@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 18:19:36 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 09:46:39 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,19 @@ void	sig_handle_sigint(int sig)
 	rl_redisplay();
 }
 
+void f(int sig)
+{
+	(void)sig;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
 	signal(SIGINT, sig_handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, f);
+
+	rl_catch_signals = 0;
 	if (ac != 1)
 	{
 		print(2, "minishell : too many arguments", 1);
