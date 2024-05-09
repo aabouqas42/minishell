@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:15:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 10:31:29 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:58:44 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ void	split_expanded(char *usr_in)
 		{
 			if ((*usr_in == DQT && qt != SQT) || (*usr_in == SQT && qt != DQT))
 				qt = (qt == 0) * (*usr_in);
-			if (_strchr("<>|", *usr_in) && !qt)
+			else if (_strchr("<>|", *usr_in) && !qt)
 				break ;
-			res = _strnjoin(res, usr_in, 1);
+			else
+				res = _strnjoin(res, usr_in, 1);
 			usr_in++;
 		}
 		t_arg_add(res, ARG_WORD);

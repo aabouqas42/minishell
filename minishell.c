@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 15:19:57 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:00:48 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
 	if (data->usrinput == NULL)
-		safe_exit(1);
+	{
+		printf("\x1b[1A%sexit\n", data->prompt);
+        safe_exit(1);
+	}
 	if (*data->usrinput)
 		add_history(data->usrinput);
 	if (*data->usrinput == '\0')

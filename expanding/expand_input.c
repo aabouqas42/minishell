@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 12:07:43 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:41:41 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ int	set_var(char *argv_str, char **str)
 	return (i);
 }
 
-char	*expand_arg(char *str, int herdoc)
+char	*expand_arg(char *str, int hd, int rm_qts)
 {
 	char	*ptr;
 	char	*res;
 	char	qt;
 
-	(1337) && (qt = 0, res = NULL, ptr = str);
+	(13 & 37) && (qt = 0, res = NULL, ptr = str);
 	while (str && *str != '\0')
 	{
 		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
@@ -76,16 +76,45 @@ char	*expand_arg(char *str, int herdoc)
 			if (qt == 0)
 				res = _strnjoin(res, "", 1);
 		}
-		else if (*str == '$' && _strchr("\'\"", *(str + 1)) && qt == 0)
+		if (*str == '$' && _strchr("\'\"", *(str + 1)))
 		{
 			str++;
 			continue ;
 		}
-		else if (qt != SQT && var_case(*str, *(str + 1)) && herdoc == 0)
+		else if (qt != SQT && var_case(*str, *(str + 1)) && hd == 0)
 			str += set_var((str + 1), &res);
-		else
+		else if (rm_qts == 0 || (rm_qts && *str != qt))
 			res = _strnjoin(res, str, 1);
 		str++;
 	}
 	return (free (ptr), res);
 }
+
+// char	*expand_arg(char *str, int herdoc)
+// {
+// 	char	*ptr;
+// 	char	*res;
+// 	char	qt;
+
+// 	(1337) && (qt = 0, res = NULL, ptr = str);
+// 	while (str && *str != '\0')
+// 	{
+// 		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
+// 		{
+// 			qt = (qt == 0) * (*str);
+// 			if (qt == 0)
+// 				res = _strnjoin(res, "", 1);
+// 		}
+// 		else if (*str == '$' && _strchr("\'\"", *(str + 1)) && qt == 0)
+// 		{
+// 			str++;
+// 			continue ;
+// 		}
+// 		else if (qt != SQT && var_case(*str, *(str + 1)) && herdoc == 0)
+// 			str += set_var((str + 1), &res);
+// 		else
+// 			res = _strnjoin(res, str, 1);
+// 		str++;
+// 	}
+// 	return (free (ptr), res);
+// }

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 19:45:17 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:43:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ void	mini_api(char *res)
 	heredoc_expand = (_strchr(res, DQT) || _strchr(res, SQT));
 	if (!_strchr(res, '$') || (get_last(data->args)
 			&& get_last(data->args)->type == ARG_HERDOC))
-		res = expand_arg(res, 1);
+		res = expand_arg(res, 1, 1);
 	else
 	{
-		res = expand_arg(res, 0);
+		res = expand_arg(res, 0, 0);
+		printf("[%s]\n", res);
 		split_expanded(res);
 		free (res);
 		return ;
