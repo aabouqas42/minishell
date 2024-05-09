@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 12:25:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:56:21 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ typedef struct s_arg
 
 typedef struct s_cmd
 {
-	t_arg	*linked_argv;
-	char	**argv;
-	int		in;
-	int		out;
-	struct s_cmd *next;
+	t_arg			*linked_argv;
+	char			**argv;
+	int				in;
+	int				out;
+	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_data
@@ -98,6 +98,7 @@ typedef struct s_data
 	char			*program_path;
 	int				exit_status;
 	int				oldfd;
+	int				fix_doubleprt;
 	int				fds[2];
 }	t_data;
 
@@ -114,6 +115,13 @@ void		t_arg_free(t_arg *head);
  */
 void		t_cmd_add(t_cmd to_add);
 void		t_cmd_free(t_cmd *head);
+
+/**
+ * SIGNALS FUNCTIONS
+ */
+void		catch_signals(void);
+void		sig_handle_sigquit(int sig);
+void		sig_handle_sigint(int sig);
 
 int			open_heredoc(t_arg *target);
 t_data		*data_hook(t_data *data);
@@ -180,6 +188,7 @@ int			is_builtin(t_cmd *cmd);
 void		prt_list(t_arg *arg);
 char		*expand_arg(char *str, int hd);
 void		split_expanded(char *usr_in);
-void		rl_replace_line (const char *text, int clear_undo);
 t_arg		*get_last(t_arg *head);
+void		check_arguments(int ac, char **av);
+int			var_case(char curr_char, char next_char);
 #endif

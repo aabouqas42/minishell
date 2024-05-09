@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:38:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/08 11:35:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:54:27 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	t_arg_add(char *value, t_arg_type type)
 
 	data = data_hook(NULL);
 	if (value == NULL)
-		return;
+		return ;
 	end = data->args;
 	if (end == NULL)
 	{
 		data->args = _calloc(sizeof(t_arg));
 		data->args->value = value;
 		data->args->type = type;
-		return;
+		return ;
 	}
 	while (end->next)
 		end = end->next;
@@ -40,14 +40,14 @@ void	t_arg_put(char *value, t_arg_type type, t_arg **head)
 	t_arg	*end;
 
 	if (value == NULL || head == NULL)
-		return;
+		return ;
 	end = *head;
 	if (end == NULL)
 	{
 		(*head) = _calloc(sizeof(t_arg));
 		(*head)->value = value;
 		(*head)->type = type;
-		return;
+		return ;
 	}
 	while (end->next)
 		end = end->next;

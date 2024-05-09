@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/08 11:57:24 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:53:10 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_ambiguous(char *file_name)
 int	check_syntax(t_arg *arg)
 {
 	if (arg->type > 1 && arg->next == NULL)
-			return (do_error(SYNTAX_ERR, "newline"), 0);
+		return (do_error(SYNTAX_ERR, "newline"), 0);
 	if ((arg->type >= 3 && arg->type <= 5))
 	{
 		if (check_ambiguous(arg->next->value) == 0)
@@ -46,7 +46,7 @@ int	check_syntax(t_arg *arg)
 			return (do_error(SYNTAX_ERR, arg->next->value), 0);
 	}
 	if (arg->type == ARG_HERDOC && arg->next->type > 1)
-			return (do_error(SYNTAX_ERR, arg->next->value), 0);
+		return (do_error(SYNTAX_ERR, arg->next->value), 0);
 	if (arg->type == ARG_PIPE && arg->next->type == ARG_PIPE)
 		return (do_error(SYNTAX_ERR, arg->next->value), 0);
 	return (1);
@@ -59,7 +59,7 @@ int	check_redirections(t_arg *usrin)
 	while (usrin)
 	{
 		if (check_syntax(usrin) == 0)
-			return 0;
+			return (0);
 		usrin = usrin->next;
 	}
 	return (1);

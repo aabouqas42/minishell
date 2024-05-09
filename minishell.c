@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 12:44:08 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:28:31 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,16 @@ void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
 	int		child_pid;
-	(void ) first;
 
 	data = data_hook(NULL);
 	if (next)
 		pipe(data->fds);
 	child_pid = fork();
 	if (child_pid == -1)
+		return ((void)print(2, "Unexpected Error", 1));
+	if (child_pid == 0)
 	{
-		print(2, "Unexpected Error", 1);
-		return ;
-	}
-	else if (child_pid == 0)
-	{
-		init_redirections(cmd);
-		set_pipes(cmd, first, next);
-		set_io(cmd);
+		(init_redirections(cmd), set_pipes(cmd, first, next), set_io(cmd));
 		if (is_builtin(cmd))
 		{
 			run_builtin(cmd);
@@ -108,46 +102,29 @@ void	handle_input(t_data *data)
 		program_exec(cmds, cmds == data->cmds, next);
 		cmds = cmds->next;
 	}
+	printf("---[%s]---\n", data->program_path);
 }
-
-void	sig_handle_sigint(int sig)
-{
-	(void)sig;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-// void f(int sig)
-// {
-// 	(void)sig;
-// }
 
 int	main(int ac, char **av, char **env)
 {
-	t_data	data;
+	t_data		data;
+	extern int	rl_catch_signals;
 
-	signal(SIGINT, sig_handle_sigint);
-	signal(SIGQUIT, sig_handle_sigint);
-
-	rl_catch_signals = 0;
-	if (ac != 1)
-	{
-		print(2, "minishell : too many arguments", 1);
-		return (1 + ((size_t)av * 0));
-	}
-
+	check_arguments(ac, av);
 	data_hook(&data);
+	catch_signals();
+	rl_catch_signals = 0;
 	data_init(env);
 	while (1)
 	{
 		if (read_input(&data) != -1)
 		{
+			data.fix_doubleprt = 1;
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
 				if (data.exit_status >> 8 == -1)
 					safe_exit(-1);
+			data.fix_doubleprt = 0;
 		}
 		_free();
 	}

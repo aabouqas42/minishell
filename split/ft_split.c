@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 12:20:33 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:00:04 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ void	mini_api(char *res)
 
 	data = data_hook(NULL);
 	heredoc_expand = (_strchr(res, DQT) || _strchr(res, SQT));
-	if (!_strchr(res, '$') || (get_last(data->args) && get_last(data->args)->type == ARG_HERDOC))
+	if (!_strchr(res, '$') || (get_last(data->args)
+			&& get_last(data->args)->type == ARG_HERDOC))
 		res = expand_arg(res, 1);
 	else
 	{
+		printf("[%s]", res);
 		res = expand_arg(res, 0);
 		split_expanded(res);
 		free (res);
@@ -92,5 +94,4 @@ void	split_usrin(char *usr_in)
 		mini_api(res);
 		usr_in += is_symbole(usr_in);
 	}
-	// prt_list(data_hook(NULL)->args);
 }
