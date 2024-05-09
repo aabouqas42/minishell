@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 12:25:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:37:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define _DIRE 2
 # define DQT '\"'
 # define SQT '\''
+
+int	g_fix_doubleprt;
 
 typedef enum e_arg_type
 {

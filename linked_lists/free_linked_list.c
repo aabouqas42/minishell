@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_linked_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:28:12 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/07 10:39:15 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:33:49 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	t_arg_free(t_arg *head)
 	{
 		next = head->next;
 		free (head->value);
+		head->value = NULL;
 		free (head);
 		head = next;
 	}
