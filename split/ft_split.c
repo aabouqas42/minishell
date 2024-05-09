@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 16:56:49 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:45:17 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,9 @@ void	mini_api(char *res)
 		res = expand_arg(res, 1);
 	else
 	{
-		res 
-		int a = (res[0] != '\"' && res[0] != '\'');
 		res = expand_arg(res, 0);
-		printf("{%s}\n", res);
-		if (a)
-		{
-			split_expanded(res);
-			free (res);
-		}else{
-			t_arg_add(res, ARG_WORD);
-		}
+		split_expanded(res);
+		free (res);
 		return ;
 	}
 	if (heredoc_expand)
