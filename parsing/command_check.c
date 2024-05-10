@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 14:52:30 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:15:20 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	check_arguments(int ac, char **av)
+{
+	(void) av;
+	if (ac != 1)
+	{
+		print(2, "minishell : too many arguments", 1);
+		exit(1);
+	}
+}
 
 int	is_valid_input(void)
 {

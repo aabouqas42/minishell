@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 10:52:59 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:55:27 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ int	open_heredoc(t_arg *target)
 		free(in);
 		in = readline("heredoc > ");
 	}
-	return (close(fd_out), fd_in);
+	free(in);
+	close(fd_out);
+	return (fd_in);
 }

@@ -6,22 +6,11 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 21:13:00 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:57:38 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-// \
-// void	prt_list(t_arg *arg) \
-// { \
-// 	while (arg) \
-// 	{ \
-// 		printf("[%s] ", arg->value); \
-// 		arg = arg->next; \
-// 	} \
-// 	printf("\n"); \
-// }
 
 void	close_unused_fds(int next)
 {
@@ -37,7 +26,6 @@ void	close_unused_fds(int next)
 	else if (data->fds[0])
 		close(data->fds[0]);
 }
-
 void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
@@ -84,7 +72,6 @@ int	read_input(t_data *data)
 	}
 	return (1);
 }
-
 void	handle_input(t_data *data)
 {
 	t_cmd	*cmds;
@@ -110,14 +97,13 @@ void	handle_input(t_data *data)
 
 int	main(int ac, char **av, char **env)
 {
-	t_data	data;
+	t_data		data;
+	extern int	rl_catch_signals;
 
+	check_arguments(ac, av);
 	data_hook(&data);
 	catch_signals();
 	rl_catch_signals = 0;
-	if (ac != 1)
-		return (print(2, "minishell : too many argu\
-				ments", 1), 1 + ((size_t)av * 0));
 	data_init(env);
 	while (1)
 	{

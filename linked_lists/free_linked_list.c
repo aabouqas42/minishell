@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_linked_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:28:12 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 14:53:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/10 09:09:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	t_arg_free(t_arg *head)
 	while (head)
 	{
 		next = head->next;
+		// printf("---[%p]---\n", head->value);
 		free (head->value);
 		head->value = NULL;
 		free (head);

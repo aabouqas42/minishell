@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 20:50:20 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:13:58 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,5 +188,5 @@ char		*expand_arg(char *str, int hd, int rm_qts);
 void		split_expanded(char *usr_in);
 t_arg		*get_last(t_arg *head);
 int			var_case(char curr_char, char next_char);
-
+void		check_arguments(int ac, char **av);
 #endif
