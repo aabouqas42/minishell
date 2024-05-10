@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 21:13:58 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:00:35 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <sys/wait.h>
 # include <errno.h>
 # define _FILE 1
 # define _DIRE 2
@@ -87,8 +88,6 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	struct termios	*old_termios;
-	struct termios	*curr_termios;
 	t_cmd			*cmds;
 	t_env			*env;
 	t_arg			*args;
@@ -98,6 +97,7 @@ typedef struct s_data
 	char			*program_path;
 	int				exit_status;
 	int				oldfd;
+	int				in;
 	int				fix_doubleprt;
 	int				fds[2];
 }	t_data;
@@ -129,7 +129,7 @@ t_data		*data_hook(t_data *data);
 void		init_redirections(t_cmd *cmd);
 void		init_clear_argv(t_cmd *cmd);
 
-void		do_error(t_error_type errtype, char *reason);
+void		do_error(t_error_type errtype, char *progname, char *reason);
 t_env		*env_create(char *name, char *value);
 t_env		*env_get(char *name, t_data	*data);
 t_env		*env_get_last(t_env	*env);
@@ -141,7 +141,7 @@ int			env_export(char *name, char *value);
 int			env_valid_name(char *name);
 void		env_print(t_env	*head);
 void		env_sort(t_env *env);
-void		get_commands(t_arg *args);
+int			get_commands(t_arg *args);
 void		data_init(char **base_env);
 char		*get_prompt(void);
 char		*get_curr_path(void);
@@ -184,7 +184,8 @@ int			get_argsc(char **args);
 void		print(int fd, char *str, int endl);
 int			is_builtin(t_cmd *cmd);
 void		prt_list(t_arg *arg); // REMOVE BFR PUSH
-char		*expand_arg(char *str, int hd, int rm_qts);
+char		*exp_with_qts(char *str, int hd);
+char		*exp_with_no_qts(char *str, int hd);
 void		split_expanded(char *usr_in);
 t_arg		*get_last(t_arg *head);
 int			var_case(char curr_char, char next_char);

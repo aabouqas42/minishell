@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 15:16:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:05:18 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	set_out(t_cmd *cmd, t_arg **arg)
 	cmd->out = open((*arg)->next->value, action, 0666);
 	if (cmd->out == -1)
 	{
-		do_error(PERMIDEN_ERR, (*arg)->next->value);
+		do_error(PERMIDEN_ERR, "", (*arg)->next->value);
 		exit(-1);
 	}
 	*arg = (*arg)->next;
@@ -87,7 +87,7 @@ void	set_in(t_cmd *cmd, t_arg **arg)
 	cmd->in = open((*arg)->next->value, O_RDONLY);
 	if (cmd->in == -1)
 	{
-		do_error(NSFODIR_ERR, (*arg)->next->value);
+		do_error(NSFODIR_ERR, "", (*arg)->next->value);
 		safe_exit(-1);
 	}
 	(*arg) = (*arg)->next;

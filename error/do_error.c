@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:46:47 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 15:03:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:01:46 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,21 @@ static void	__syntax_err(char *reason)
 	data_hook(NULL)->exit_status = 258 << 8;
 }
 
-static void	__invnameenv_err(char *reason)
+static void	__invnameenv_err(char *progname, char *reason)
 {
-	print(2, "minishell : export: `", 0);
+	print(2, "minishell : ", 0);
+	print(2, progname, 0);
+	print(2, ": `", 0);
 	print(2, reason, 0);
 	print(2, "': not a valid identifier", 1);
 	data_hook(NULL)->exit_status = 127 << 8;
 }
 
-static void	__notdirectory_err(char *reason)
+static void	__notdirectory_err(char *progname, char *reason)
 {
-	print(2, "minishell : cd: ", 0);
+	print(2, "minishell : ", 0);
+	print(2, progname, 0);
+	print(2, ": `", 0);
 	print(2, reason, 0);
 	print(2, ": Not a directory", 1);
 	data_hook(NULL)->exit_status = 1 << 8;
@@ -44,14 +48,14 @@ static void	__custom_err(char *lmsg, char *reason, int e)
 	data_hook(NULL)->exit_status = e << 8;
 }
 
-void	do_error(t_error_type errtype, char *reason)
+void	do_error(t_error_type errtype, char *progname, char *reason)
 {
 	if (errtype == SYNTAX_ERR)
 		__syntax_err(reason);
 	if (errtype == INVNAMEENV_ERR)
-		__invnameenv_err(reason);
+		__invnameenv_err(progname, reason);
 	if (errtype == NOTDIRECTORY_ERR)
-		__notdirectory_err(reason);
+		__notdirectory_err(progname, reason);
 	if (errtype == PERMIDEN_ERR)
 		__custom_err(": Permission denied", reason, 126);
 	if (errtype == COMDNF_ERR)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 15:04:26 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:09:16 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ int	is_builtin(t_cmd *cmd)
 			|| is_same(cmd->argv[0], "env")
 			|| is_same(cmd->argv[0], "export")
 			|| is_same(cmd->argv[0], "unset"));
+	}
+	return (0);
+}
+
+int	unset(char **argv)
+{
+	t_data	*data;
+
+	data = data_hook(NULL);
+	while (argv && *argv)
+	{
+		if (env_valid_name(*argv))
+			env_unset(*argv, &data->env);
+		else
+			do_error(INVNAMEENV_ERR, "unset", *argv);
+		argv++;
 	}
 	return (0);
 }
@@ -49,7 +65,8 @@ int	run_builtin(t_cmd *cmd)
 	if (is_same(cmd->argv[0], "export"))
 		return (_export(cmd->argv), 1);
 	if (is_same(cmd->argv[0], "unset"))
-		return (env_unset(data->args[1].value, &data->env), 1);
+		return (unset(cmd->argv + 1));
+		// return (env_unset(cmd->argv[1], &data->env), 1);
 	return (0);
 }
 

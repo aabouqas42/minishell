@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:15:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 21:15:52 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:55:58 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	split_expanded(char *usr_in)
 	char	*res;
 	char	qt;
 
-	while (*usr_in)
+	while (usr_in && *usr_in)
 	{
 		usr_in = skiper(usr_in);
 		res = NULL;

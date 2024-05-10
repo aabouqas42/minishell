@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 21:12:55 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/10 11:59:31 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,10 @@ void	mini_api(char *res)
 	heredoc_expand = (_strchr(res, DQT) || _strchr(res, SQT));
 	if (!_strchr(res, '$') || (get_last(data->args)
 			&& get_last(data->args)->type == ARG_HERDOC))
-		res = expand_arg(res, 1, 1);
+		res = exp_with_no_qts(res, 1);
 	else
 	{
-		res = expand_arg(res, 0, 0);
-		printf("[%s]\n", res);
+		res = exp_with_qts(res, 0);
 		split_expanded(res);
 		free (res);
 		return ;

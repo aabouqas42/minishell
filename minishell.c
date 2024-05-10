@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/10 10:50:41 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:41:25 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	program_exec(t_cmd *cmd, int first, int next)
 		return ((void)print(2, "Unexpected Error", 1));
 	if (child_pid == 0)
 	{
+		// if (data->in)
+		// 	close(data->in);
 		(init_redirections(cmd), set_pipes(cmd, first, next), set_io(cmd));
 		if (is_builtin(cmd))
 		{
@@ -57,6 +59,7 @@ void	program_exec(t_cmd *cmd, int first, int next)
 int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
+	// print(open("file", O_RDWR), data->usrinput, 1);
 	if (data->usrinput == NULL)
 	{
 		printf("\x1b[1A%sexit\n", data->prompt);
@@ -95,6 +98,18 @@ void	handle_input(t_data *data)
 	}
 }
 
+void	close_fds(t_cmd *cmds)
+{
+	while (cmds)
+	{
+		if (cmds->in != 0)
+			close(cmds->in);
+		cmds = cmds->next;
+	}
+	if (cmds && cmds->in != 0)
+		close(cmds->in);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data		data;
@@ -102,11 +117,12 @@ int	main(int ac, char **av, char **env)
 
 	check_arguments(ac, av);
 	data_hook(&data);
-	catch_signals();
 	rl_catch_signals = 0;
 	data_init(env);
+	catch_signals();
 	while (1)
 	{
+		data.in = dup(0);
 		if (read_input(&data) != -1)
 		{
 			data.fix_doubleprt = 1;
@@ -116,7 +132,12 @@ int	main(int ac, char **av, char **env)
 					safe_exit(-1);
 			data.fix_doubleprt = 0;
 		}
+		// LOOP IN CMDS AND CLOSE ALL IN FDS IF IT'S NOT 0
+		close_fds(data.cmds);
 		_free();
+		// printf("%d\n", data.in);
+		dup2(data.in, 0);
+		close(data.in);
 	}
 	return (EXIT_SUCCESS);
 }

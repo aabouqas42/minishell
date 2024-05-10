@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 09:18:08 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:42:29 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	open_heredoc(t_arg *target)
 	fd_in = open("/tmp/minishell_heredoc", O_RDONLY);
 	unlink("/tmp/minishell_heredoc");
 	in = readline("heredoc > ");
-	while (!is_same(in, target->value))
+	while (in && !is_same(in, target->value))
 	{
 		if (target->type != ARG_QT)
 			in = expand(in);
