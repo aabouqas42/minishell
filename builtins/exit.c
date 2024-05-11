@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 08:54:08 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/11 10:53:43 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:09:51 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	strnum(char *s)
 	int	i;
 
 	i = 0;
+	if (s && _strchr("+-", *s))
+		s++;
 	while (s && s[i])
 	{
 		if (!ft_isdigit(s[i]))
