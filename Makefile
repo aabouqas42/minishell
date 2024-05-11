@@ -6,7 +6,7 @@
 #    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/10 17:55:04 by aabouqas         ###   ########.fr        #
+#    Updated: 2024/05/11 11:52:39 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,10 @@ SRCS = 	parsing/command_check.c parsing/check_redirections.c parsing/args_parsin
 		utils/data_init.c utils/free.c \
 		utils/io_utils.c \
 		signals/handle_signals.c \
-		env/env_list.c env/env_sort.c  env/env_list_read.c  env/env_utils.c \
+		env/env_list.c env/env_sort.c  env/env_list_read.c env/env_utils.c \
 		env/env_free.c \
 		heredoc/heredoc.c \
-		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c \
+		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c builtins/exit.c builtins/unset.c\
 		builtins/builtins.c \
 		error/do_error.c \
 		linked_lists/t_arg_instr.c linked_lists/t_cmd_instr.c linked_lists/free_linked_list.c \

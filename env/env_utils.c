@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:57:27 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/04 11:16:48 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:56:04 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	env_print(t_env	*head)
 {
 	while (head)
 	{
-		if (head->value)
+		if (head->value && *head->value)
 			printf("%s=%s\n", head->name, head->value);
 		head = head->next;
 	}

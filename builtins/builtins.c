@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 19:09:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:49:09 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,6 @@ int	is_builtin(t_cmd *cmd)
 	return (0);
 }
 
-int	unset(char **argv)
-{
-	t_data	*data;
-
-	data = data_hook(NULL);
-	while (argv && *argv)
-	{
-		if (env_valid_name(*argv))
-			env_unset(*argv, &data->env);
-		else
-			do_error(INVNAMEENV_ERR, "unset", *argv);
-		argv++;
-	}
-	return (0);
-}
-
 int	run_builtin(t_cmd *cmd)
 {
 	t_data	*data;
@@ -53,7 +37,7 @@ int	run_builtin(t_cmd *cmd)
 	if (cmd->argv == NULL)
 		return (0);
 	if (is_same(cmd->argv[0], "exit"))
-		(print(1, "exit", 1), safe_exit(0));
+		__exit(cmd);
 	if (is_same(cmd->argv[0], "cd"))
 		return (cd(cmd->argv), 1);
 	if (is_same(cmd->argv[0], "echo"))

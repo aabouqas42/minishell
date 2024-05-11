@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/10 19:41:25 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:13:48 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	close_unused_fds(int next)
 	else if (data->fds[0])
 		close(data->fds[0]);
 }
+
 void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;

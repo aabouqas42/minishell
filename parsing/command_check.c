@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/10 19:02:47 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:18:50 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	is_fod(char *name)
 
 int	is_valid(char *cmd)
 {
+	if (env_grepvalue("PATH") == NULL)
+		return (do_error(NSFODIR_ERR , "", cmd), 0);
 	if (_strlen(cmd) == 0)
 		return (do_error(COMDNF_ERR, "", cmd), 0);
 	if (ft_strchr(cmd, '/'))
@@ -64,7 +66,7 @@ int	is_valid(char *cmd)
 			return (do_error(PERMIDEN_ERR, "", cmd), 0);
 		if (is_fod(cmd) == _DIRE)
 			return (do_error(ISDIR_ERR, "", cmd), 0);
-		if (is_fod(cmd) == -1)
+		if (is_fod(cmd) == -1 || env_grepvalue("PATH") == NULL)
 			return (do_error(NSFODIR_ERR , "", cmd), 0);
 	}
 	return (1);
