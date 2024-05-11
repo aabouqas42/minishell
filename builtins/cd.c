@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 19:06:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:00:51 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ char	*get_curr_path(void)
 	char	*curr_path;
 
 	curr_path = getcwd(NULL, 0);
-	if (curr_path == NULL)
-		curr_path = env_grepvalue("PWD");
-	// 	safe_exit(-1);
 	return (curr_path);
 }
 

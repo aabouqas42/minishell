@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 11:50:20 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:02:09 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_data
 	t_env			*env;
 	t_arg			*args;
 	char			**env_2d;
+	char			*pwd;
 	char			*prompt;
 	char			*usrinput;
 	char			*program_path;
@@ -106,9 +107,10 @@ typedef struct s_data
 /**
  * T_ARG INSTRACTIONS
  */
-void		t_arg_insert(char *value, t_arg_type type, t_arg **head);
 void		t_arg_put(char *value, t_arg_type type, t_arg **head);
+void		t_arg_move_to(t_arg **src, t_arg **dest);
 void		t_arg_add(char *value, t_arg_type type);
+size_t		t_arg_size(t_arg *head);
 void		t_arg_free(t_arg *head);
 
 /**
@@ -160,7 +162,7 @@ char		*_strndup(char *s1, size_t size);
 char		*_strchr(char *s, char c);
 int			is_valid_cmd(t_data *data, char *cmd);
 void		safe_exit(int status);
-void		split_usrin(char *usr_in);
+int			split_usrin(char *usr_in);
 int			is_same(char *s1, char *s2);
 int			builtins(t_cmd *cmd);
 int			run_builtin(t_cmd *cmd);
@@ -190,7 +192,7 @@ void		prt_list(t_arg *arg); // REMOVE BFR PUSH
 char		*exp_with_qts(char *str, int hd);
 char		*exp_with_no_qts(char *str, int hd);
 void		split_expanded(char *usr_in);
-t_arg		*get_last(t_arg *head);
+t_arg		*t_arg_get_last(t_arg *head);
 int			var_case(char curr_char, char next_char);
 void		check_arguments(int ac, char **av);
 void		custom_err(char *progname, char *reason, char *msg, int e);

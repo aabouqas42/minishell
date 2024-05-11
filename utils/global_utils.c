@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 12:24:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 09:13:05 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ t_arg_type	is_io_op(char	*str)
 			return (ARG_PIPE);
 	}
 	return (ARG_WORD);
-}
-
-t_arg	*get_last(t_arg *head)
-{
-	if (head == NULL)
-		return (NULL);
-	while (head->next)
-		head = head->next;
-	return (head);
 }
 
 char	**_realloc(char **old_tab, char *to_append)

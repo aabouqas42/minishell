@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:15:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 17:55:58 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 10:54:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static size_t	is_symbole(char *str)
 {
+	t_data	*data;
+
+	data = data_hook(NULL);
 	if (str == NULL || *str == '\0')
 		return (0);
 	if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
@@ -67,7 +70,11 @@ void	split_expanded(char *usr_in)
 		while (*usr_in && (!_spaces(*usr_in) || qt))
 		{
 			if ((*usr_in == DQT && qt != SQT) || (*usr_in == SQT && qt != DQT))
+			{
 				qt = (qt == 0) * (*usr_in);
+				if (qt == 0)
+					res = _strnjoin(res, "", 1);
+			}
 			else if (_strchr("<>|", *usr_in) && !qt)
 				break ;
 			else

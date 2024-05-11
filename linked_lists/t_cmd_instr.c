@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:38:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 14:54:40 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 09:13:41 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,13 @@ void	t_cmd_add(t_cmd to_add)
 	end->next->argv = to_add.argv;
 	end->next->in = to_add.in;
 	end->next->out = to_add.out;
+}
+
+t_cmd	*t_cmd_get_last(t_cmd *head)
+{
+	if (head == NULL)
+		return (NULL);
+	while (head->next)
+		head = head->next;
+	return (head);
 }
