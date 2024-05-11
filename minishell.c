@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 15:34:23 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:36:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	handle_input(t_data *data)
 	cmds = data->cmds;
 	if (cmds && cmds->next == NULL && is_builtin(cmds))
 	{
-		// printf("built-in:%s\n", cmds->argv[0]);
+		printf("built-in:%s\n", cmds->argv[0]);
 		builtins(cmds);
 		return ;
 	}
