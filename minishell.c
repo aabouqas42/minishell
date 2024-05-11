@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 14:24:31 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:57:13 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	read_input(t_data *data)
 	if (data->usrinput == NULL)
 	{
 		printf("\x1b[1A%sexit\n", data->prompt);
-		safe_exit(1);
+		safe_exit(127);
 	}
 	if (*data->usrinput)
 		add_history(data->usrinput);
