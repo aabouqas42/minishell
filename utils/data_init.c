@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/11 12:54:21 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 20:01:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	export_default_envs(void)
 		env_export("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
 	if (env_grepvalue("SHLVL") == NULL)
 		env_export("SHLVL", "1");
-	if (env_grepvalue("PWD") == NULL)
-		env_export("PWD", get_curr_path());
+	env_export("PWD", get_curr_path());
 }
 
 void	export_base_envs(char **base_env)
@@ -60,5 +59,5 @@ void	data_init(char **base_env)
 	data->prompt = get_prompt();
 	export_base_envs(base_env);
 	export_default_envs();
-	data->pwd = get_curr_path();
+	data->pwd = _strdup(env_grepvalue("PWD"));
 }
