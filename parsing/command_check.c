@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 13:04:13 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:03:21 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_valid_input(void)
 		return (0);
 	if (split_usrin(data->usrinput) == 0)
 		return (0);
-	prt_list(data->args);
+	// prt_list(data->args);
 	if (check_redirections(data->args) == 0)
 		return (0);
 	if (get_commands(data->args) == 0)
