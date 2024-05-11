@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 10:03:15 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 14:38:20 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_valid_input(void)
 		return (0);
 	if (split_usrin(data->usrinput) == 0)
 		return (0);
-	prt_list(data->args);
+	// prt_list(data->args);
 	if (check_redirections(data->args) == 0)
 		return (0);
 	if (get_commands(data->args) == 0)
@@ -60,7 +60,9 @@ int	is_fod(char *name)
 
 int	is_valid(char *cmd)
 {
-	if (_strlen(cmd) == 0)
+	if (env_grepvalue("PATH") == NULL)
+		return (do_error(NSFODIR_ERR , "", cmd), 0);
+	if (_strlen(cmd) == 0 || is_same(cmd, ".."))
 		return (do_error(COMDNF_ERR, "", cmd), 0);
 	if (ft_strchr(cmd, '/'))
 	{
@@ -68,7 +70,7 @@ int	is_valid(char *cmd)
 			return (do_error(PERMIDEN_ERR, "", cmd), 0);
 		if (is_fod(cmd) == _DIRE)
 			return (do_error(ISDIR_ERR, "", cmd), 0);
-		if (is_fod(cmd) == -1)
+		if (is_fod(cmd) == -1 || env_grepvalue("PATH") == NULL)
 			return (do_error(NSFODIR_ERR , "", cmd), 0);
 	}
 	return (1);

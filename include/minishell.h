@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 12:49:50 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:02:09 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ typedef enum e_error_type
 	AMBIGUOUS_ERR,
 	PERMIDEN_ERR,
 	INVNAMEENV_ERR,
-	NOTDIRECTORY_ERR
+	NOTDIRECTORY_ERR,
+	ARGNUMREQ_ERR
 }	t_error_type;
 
 typedef struct s_env
@@ -164,10 +165,12 @@ void		safe_exit(int status);
 int			split_usrin(char *usr_in);
 int			is_same(char *s1, char *s2);
 int			builtins(t_cmd *cmd);
+int			run_builtin(t_cmd *cmd);
 int			cd(char **argv);
 int			pwd(void);
 int			_export(char **argv);
-int			run_builtin(t_cmd *cmd);
+int			unset(char **argv);
+void		__exit(t_cmd *cmd);
 void		echo(char **argv);
 char		**_realloc(char **old_tab, char *to_append);
 void		*_calloc(size_t size);
@@ -192,4 +195,5 @@ void		split_expanded(char *usr_in);
 t_arg		*t_arg_get_last(t_arg *head);
 int			var_case(char curr_char, char next_char);
 void		check_arguments(int ac, char **av);
+void		custom_err(char *progname, char *reason, char *msg, int e);
 #endif

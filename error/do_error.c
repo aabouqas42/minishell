@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:46:47 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/10 19:01:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 10:38:47 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,18 @@ static void	__custom_err(char *lmsg, char *reason, int e)
 	print(2, lmsg, 1);
 	data_hook(NULL)->exit_status = e << 8;
 }
+
+void	custom_err(char *progname, char *reason, char *msg, int e)
+{
+	print(2, "minishell: ", 0);
+	print(2, progname, 0);
+	print(2, ": ", 0);
+	print(2, reason, 0);
+	print(2, ": ", 0);
+	print(2, msg, 1);
+	data_hook(NULL)->exit_status = e << 8;
+}
+
 
 void	do_error(t_error_type errtype, char *progname, char *reason)
 {

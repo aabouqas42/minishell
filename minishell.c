@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 14:28:09 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:34:23 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	close_unused_fds(int next)
 	else if (data->fds[0])
 		close(data->fds[0]);
 }
+
 void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
@@ -39,8 +40,8 @@ void	program_exec(t_cmd *cmd, int first, int next)
 		return ((void)print(2, "Unexpected Error", 1));
 	if (child_pid == 0)
 	{
-		// if (data->in)
-		// 	close(data->in);
+		if (data->in)
+			close(data->in);
 		(init_redirections(cmd), set_pipes(cmd, first, next), set_io(cmd));
 		if (is_builtin(cmd))
 		{
@@ -85,7 +86,7 @@ void	handle_input(t_data *data)
 	cmds = data->cmds;
 	if (cmds && cmds->next == NULL && is_builtin(cmds))
 	{
-		printf("built-in:%s\n", cmds->argv[0]);
+		// printf("built-in:%s\n", cmds->argv[0]);
 		builtins(cmds);
 		return ;
 	}
