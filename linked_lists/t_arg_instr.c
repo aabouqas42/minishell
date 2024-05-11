@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:38:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 14:54:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 10:56:22 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,43 @@ void	t_arg_put(char *value, t_arg_type type, t_arg **head)
 	end->next->value = value;
 	end->next->type = type;
 }
+
+t_arg	*t_arg_get_last(t_arg *head)
+{
+	if (head == NULL)
+		return (NULL);
+	while (head->next)
+		head = head->next;
+	return (head);
+}
+
+size_t	t_arg_size(t_arg *head)
+{
+	size_t	i;
+
+	i = 0;
+	while (head)
+	{
+		i++;
+		head = head->next;
+	}
+	return (i);
+}
+
+// void	t_arg_move_to(t_arg **src, t_arg **dest)
+// {
+// 	t_arg	*src_tmp;
+// 	t_arg	*tmp;
+
+// 	if (src == NULL || *src == NULL || dest == NULL)
+// 		return ;
+// 	src_tmp = *src;
+// 	while (src_tmp)
+// 	{
+// 		tmp = src_tmp->next;
+// 		t_arg_put(src_tmp->value, src_tmp->type, dest);
+// 		free(src_tmp);
+// 		src_tmp = tmp;
+// 	}
+// 	*src = NULL;
+// }

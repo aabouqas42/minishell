@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:37 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 09:46:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 10:43:48 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	_free_nodes(t_arg *nodes)
 	{
 		next_node = nodes->next;
 		free (nodes);
-		nodes = nodes->next;
+		nodes = next_node;
 	}
 }
 

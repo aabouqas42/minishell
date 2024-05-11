@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:23:26 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/08 19:45:23 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:08:40 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	set_value(char *name)
 		if (env_valid_name(name))
 			env_export(name, NULL);
 		else
-			do_error(INVNAMEENV_ERR, name);
+			do_error(INVNAMEENV_ERR, "export", name);
 		return ;
 	}
 	if (*(save - 1) == '+')
@@ -37,7 +37,7 @@ static void	set_value(char *name)
 	if (env_valid_name(name))
 		env_export(name, value);
 	else
-		do_error(INVNAMEENV_ERR, name);
+		do_error(INVNAMEENV_ERR, "export", name);
 	free(value);
 }
 

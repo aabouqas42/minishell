@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 10:55:27 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 08:55:15 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	open_heredoc(t_arg *target)
 	fd_in = open("/tmp/minishell_heredoc", O_RDONLY);
 	unlink("/tmp/minishell_heredoc");
 	in = readline("heredoc > ");
-	while (!is_same(in, target->value))
+	while (in && !is_same(in, target->value))
 	{
 		if (target->type != ARG_QT)
 			in = expand(in);

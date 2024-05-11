@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/09 21:13:58 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:49:50 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <sys/wait.h>
 # include <errno.h>
 # define _FILE 1
 # define _DIRE 2
@@ -87,17 +88,17 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	struct termios	*old_termios;
-	struct termios	*curr_termios;
 	t_cmd			*cmds;
 	t_env			*env;
 	t_arg			*args;
 	char			**env_2d;
+	char			*pwd;
 	char			*prompt;
 	char			*usrinput;
 	char			*program_path;
 	int				exit_status;
 	int				oldfd;
+	int				in;
 	int				fix_doubleprt;
 	int				fds[2];
 }	t_data;
@@ -105,9 +106,10 @@ typedef struct s_data
 /**
  * T_ARG INSTRACTIONS
  */
-void		t_arg_insert(char *value, t_arg_type type, t_arg **head);
 void		t_arg_put(char *value, t_arg_type type, t_arg **head);
+void		t_arg_move_to(t_arg **src, t_arg **dest);
 void		t_arg_add(char *value, t_arg_type type);
+size_t		t_arg_size(t_arg *head);
 void		t_arg_free(t_arg *head);
 
 /**
@@ -129,7 +131,7 @@ t_data		*data_hook(t_data *data);
 void		init_redirections(t_cmd *cmd);
 void		init_clear_argv(t_cmd *cmd);
 
-void		do_error(t_error_type errtype, char *reason);
+void		do_error(t_error_type errtype, char *progname, char *reason);
 t_env		*env_create(char *name, char *value);
 t_env		*env_get(char *name, t_data	*data);
 t_env		*env_get_last(t_env	*env);
@@ -141,7 +143,7 @@ int			env_export(char *name, char *value);
 int			env_valid_name(char *name);
 void		env_print(t_env	*head);
 void		env_sort(t_env *env);
-void		get_commands(t_arg *args);
+int			get_commands(t_arg *args);
 void		data_init(char **base_env);
 char		*get_prompt(void);
 char		*get_curr_path(void);
@@ -159,7 +161,7 @@ char		*_strndup(char *s1, size_t size);
 char		*_strchr(char *s, char c);
 int			is_valid_cmd(t_data *data, char *cmd);
 void		safe_exit(int status);
-void		split_usrin(char *usr_in);
+int			split_usrin(char *usr_in);
 int			is_same(char *s1, char *s2);
 int			builtins(t_cmd *cmd);
 int			cd(char **argv);
@@ -184,9 +186,10 @@ int			get_argsc(char **args);
 void		print(int fd, char *str, int endl);
 int			is_builtin(t_cmd *cmd);
 void		prt_list(t_arg *arg); // REMOVE BFR PUSH
-char		*expand_arg(char *str, int hd, int rm_qts);
+char		*exp_with_qts(char *str, int hd);
+char		*exp_with_no_qts(char *str, int hd);
 void		split_expanded(char *usr_in);
-t_arg		*get_last(t_arg *head);
+t_arg		*t_arg_get_last(t_arg *head);
 int			var_case(char curr_char, char next_char);
 void		check_arguments(int ac, char **av);
 #endif

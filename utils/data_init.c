@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 20:21:46 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:54:21 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,5 @@ void	data_init(char **base_env)
 	data->prompt = get_prompt();
 	export_base_envs(base_env);
 	export_default_envs();
+	data->pwd = get_curr_path();
 }

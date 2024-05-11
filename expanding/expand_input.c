@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/09 21:13:26 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:03:18 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	set_last_exit(char **str)
 	exit_status = ft_itoa(data->exit_status >> 8);
 	if (exit_status == NULL)
 		safe_exit(-1);
-	*str = _strnjoin(*str, exit_status, _strlenc(exit_status, '\0'));
+	*str = _strnjoin(*str, exit_status, _strlen(exit_status));
 	free(exit_status);
 	if (*str == NULL)
 		safe_exit(-1);
@@ -61,7 +61,71 @@ int	set_var(char *argv_str, char **str)
 	return (i);
 }
 
-char	*expand_arg(char *str, int hd, int rm_qts)
+
+// char	*expand_arg(char *str, int hd, int rm_qts)
+// {
+// 	char	*ptr;
+// 	char	*res;
+// 	char	qt;
+
+// 	(13 & 37) && (qt = 0, res = NULL, ptr = str);
+// 	while (str && *str != '\0')
+// 	{
+// 		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
+// 		{
+// 			qt = (qt == 0) * (*str);
+// 			if (qt == 0)
+// 				res = _strnjoin(res, "", 1);
+// 			if (rm_qts)
+// 			{
+// 				str++;
+// 				continue;
+// 			}
+// 		}
+// 		if (*str == '$' && _strchr("\'\"", *(str + 1)))
+// 		{
+// 			str++;
+// 			continue ;
+// 		}
+// 		else if (qt != SQT && var_case(*str, *(str + 1)) && hd == 0)
+// 			str += set_var((str + 1), &res);
+// 		else if (rm_qts == 0 || (rm_qts && *str != qt))
+// 			res = _strnjoin(res, str, 1);
+// 		str++;
+// 	}
+// 	return (free (ptr), res);
+// }
+
+char	*exp_with_no_qts(char *str, int herdoc)
+{
+	char	*ptr;
+	char	*res;
+	char	qt;
+
+	(1337) && (qt = 0, res = NULL, ptr = str);
+	while (str && *str != '\0')
+	{
+		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
+		{
+			qt = (qt == 0) * (*str);
+			if (qt == 0)
+				res = _strnjoin(res, "", 1);
+		}
+		else if (*str == '$' && _strchr("\'\"", *(str + 1)) && qt == 0)
+		{
+			str++;
+			continue ;
+		}
+		else if (qt != SQT && var_case(*str, *(str + 1)) && herdoc == 0)
+			str += set_var((str + 1), &res);
+		else
+			res = _strnjoin(res, str, 1);
+		str++;
+	}
+	return (free (ptr), res);
+}
+
+char	*exp_with_qts(char *str, int herdoc)
 {
 	char	*ptr;
 	char	*res;
@@ -76,45 +140,16 @@ char	*expand_arg(char *str, int hd, int rm_qts)
 			if (qt == 0)
 				res = _strnjoin(res, "", 1);
 		}
-		if (*str == '$' && _strchr("\'\"", *(str + 1)))
+		if (*str == '$' && _strchr("\'\"", *(str + 1)) && qt == 0)
 		{
 			str++;
 			continue ;
 		}
-		else if (qt != SQT && var_case(*str, *(str + 1)) && hd == 0)
+		else if (qt != SQT && var_case(*str, *(str + 1)) && herdoc == 0)
 			str += set_var((str + 1), &res);
-		else if (rm_qts == 0 || (rm_qts && *str != qt))
+		else
 			res = _strnjoin(res, str, 1);
 		str++;
 	}
 	return (free (ptr), res);
 }
-
-// char	*expand_arg(char *str, int herdoc)
-// {
-// 	char	*ptr;
-// 	char	*res;
-// 	char	qt;
-
-// 	(1337) && (qt = 0, res = NULL, ptr = str);
-// 	while (str && *str != '\0')
-// 	{
-// 		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
-// 		{
-// 			qt = (qt == 0) * (*str);
-// 			if (qt == 0)
-// 				res = _strnjoin(res, "", 1);
-// 		}
-// 		else if (*str == '$' && _strchr("\'\"", *(str + 1)) && qt == 0)
-// 		{
-// 			str++;
-// 			continue ;
-// 		}
-// 		else if (qt != SQT && var_case(*str, *(str + 1)) && herdoc == 0)
-// 			str += set_var((str + 1), &res);
-// 		else
-// 			res = _strnjoin(res, str, 1);
-// 		str++;
-// 	}
-// 	return (free (ptr), res);
-// }

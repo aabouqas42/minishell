@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/07 18:32:41 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:03:48 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_valid_flag(char *flag)
 	i = flag[0] == '-';
 	while (flag && flag[i] && flag[i] == 'n')
 		i++;
-	return (i == _strlenc(flag, '\0'));
+	return (i == _strlen(flag));
 }
 
 void	echo(char **argv)
