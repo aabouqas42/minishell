@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 13:02:04 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/11 14:24:31 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	program_exec(t_cmd *cmd, int first, int next)
 		return ((void)print(2, "Unexpected Error", 1));
 	if (child_pid == 0)
 	{
-		// if (data->in)
-		// 	close(data->in);
+		if (data->in)
+			close(data->in);
 		(init_redirections(cmd), set_pipes(cmd, first, next), set_io(cmd));
 		if (is_builtin(cmd))
 		{
