@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:35:06 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/11 20:11:11 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 10:56:59 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ int	pwd(void)
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 	{
-		print(1, "pwd: error retrieving current \
-directory: getcwd: cannot access parent directories: \
-No such file or directory", 1);
-		return (0);
+		custom_err("pwd", "getcwd", "Unexpected Error", 255);
+		return (-1);
 	}
 	print(1, pwd, 1);
 	free(pwd);

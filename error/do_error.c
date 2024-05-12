@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:46:47 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 10:38:47 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:40:22 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	__invnameenv_err(char *progname, char *reason)
 	print(2, ": `", 0);
 	print(2, reason, 0);
 	print(2, "': not a valid identifier", 1);
-	data_hook(NULL)->exit_status = 127 << 8;
+	data_hook(NULL)->exit_status = 1 << 8;
 }
 
 static void	__notdirectory_err(char *progname, char *reason)

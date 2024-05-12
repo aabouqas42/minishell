@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 19:05:18 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:20:48 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_out(t_cmd *cmd, t_arg **arg)
 	if (cmd->out == -1)
 	{
 		do_error(PERMIDEN_ERR, "", (*arg)->next->value);
-		exit(-1);
+		exit(1);
 	}
 	*arg = (*arg)->next;
 }
@@ -88,7 +88,7 @@ void	set_in(t_cmd *cmd, t_arg **arg)
 	if (cmd->in == -1)
 	{
 		do_error(NSFODIR_ERR, "", (*arg)->next->value);
-		safe_exit(-1);
+		safe_exit(1);
 	}
 	(*arg) = (*arg)->next;
 }

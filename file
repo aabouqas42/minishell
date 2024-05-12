@@ -1,3 +1,1 @@
-ls
-ls | cat -e
-echo $PATH
+pwd

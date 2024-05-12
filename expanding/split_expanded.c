@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:15:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/11 10:54:37 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 09:08:14 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*___expand_arg(char *str, int herdoc)
 			str++;
 			continue ;
 		}
-		else if (qt != SQT && var_case(*str, *(str + 1)) && herdoc == 0)
+		else if (qt != SQT && is_var(*str, *(str + 1)) && herdoc == 0)
 			str += set_var((str + 1), &res);
 		res = _strnjoin(res, str, 1);
 		str++;

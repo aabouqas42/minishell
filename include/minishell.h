@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 11:19:03 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:45:05 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_data
 	t_cmd			*cmds;
 	t_env			*env;
 	t_arg			*args;
+	struct termios	old_term;
 	char			**env_2d;
 	char			*pwd;
 	char			*prompt;
@@ -105,11 +106,17 @@ typedef struct s_data
 }	t_data;
 
 /**
+ * KIIIING HELPERS :)
+*/
+t_data		*data_hook(t_data *data);
+void		safe_exit(int status);
+
+/**
  * T_ARG INSTRACTIONS
  */
 void		t_arg_put(char *value, t_arg_type type, t_arg **head);
-void		t_arg_move_to(t_arg **src, t_arg **dest);
 void		t_arg_add(char *value, t_arg_type type);
+t_arg		*t_arg_get_last(t_arg *head);
 size_t		t_arg_size(t_arg *head);
 void		t_arg_free(t_arg *head);
 
@@ -122,78 +129,101 @@ void		t_cmd_free(t_cmd *head);
 /**
  * SIGNALS FUNCTIONS
  */
-void		catch_signals(void);
 void		sig_handle_sigquit(int sig);
 void		sig_handle_sigint(int sig);
+void		catch_signals(void);
 
-int			open_heredoc(t_arg *target);
-t_data		*data_hook(t_data *data);
-
-void		init_redirections(t_cmd *cmd);
-void		init_clear_argv(t_cmd *cmd);
-
-void		do_error(t_error_type errtype, char *progname, char *reason);
+/**
+ * ENV FUNCTIONS
+*/
 t_env		*env_create(char *name, char *value);
-t_env		*env_get(char *name, t_data	*data);
-t_env		*env_get_last(t_env	*env);
-size_t		env_size(t_env *env);
-void		init_env_array(void);
-char		*env_grepvalue(char *name);
-int			env_unset(char *name, t_env **env);
 int			env_export(char *name, char *value);
+t_env		*env_get(char *name, t_data	*data);
+int			env_unset(char *name, t_env **env);
 int			env_valid_name(char *name);
-void		env_print(t_env	*head);
-void		env_sort(t_env *env);
-int			get_commands(t_arg *args);
-void		data_init(char **base_env);
-char		*get_prompt(void);
-char		*get_curr_path(void);
-t_arg_type	is_io_op(char	*str);
-void		free_tab(char **array);
-void		_free(void);
-void		env_free(t_env *env);
+char		*env_grepvalue(char *name);
+t_env		*env_get_last(t_env	*env);
 void		env_free_list(t_env *env);
-size_t		_strlenc(char *str, char c);
-size_t		_strlen(char *str);
-char		*_strjoin(char *str1, char *str2);
+void		env_print(t_env	*head);
+size_t		env_size(t_env *env);
+void		env_sort(t_env *env);
+void		env_free(t_env *env);
+void		init_env_array(void);
+
+/**
+ * ADV LIBFT FUNCTIONS
+*/
 char		*_strnjoin(char *str1, char *str2, size_t size);
-char		*_strdup(char *s1);
+char		**_realloc(char **old_tab, char *to_append);
+void		print(int fd, char *str, int endl);
+char		*_strjoin(char *str1, char *str2);
 char		*_strndup(char *s1, size_t size);
+size_t		_strlenc(char *str, char c);
+int			str_equal(char *s1, char *s2);
 char		*_strchr(char *s, char c);
-int			is_valid_cmd(t_data *data, char *cmd);
-void		safe_exit(int status);
-int			split_usrin(char *usr_in);
-int			is_same(char *s1, char *s2);
-int			builtins(t_cmd *cmd);
+void		*_calloc(size_t size);
+char		*skiper(char *str);
+size_t		_strlen(char *str);
+char		*_strdup(char *s1);
+int			_spaces(int c);
+
+/**
+ * BUILT-INS FUNCTIONS
+*/
 int			run_builtin(t_cmd *cmd);
+int			is_builtin(t_cmd *cmd);
+int			builtins(t_cmd *cmd);
+int			_export(char **argv);
+void		__exit(t_cmd *cmd);
+int			unset(char **argv);
+void		echo(char **argv);
 int			cd(char **argv);
 int			pwd(void);
-int			_export(char **argv);
-int			unset(char **argv);
-void		__exit(t_cmd *cmd);
-void		echo(char **argv);
-char		**_realloc(char **old_tab, char *to_append);
-void		*_calloc(size_t size);
-int			_spaces(int c);
-int			set_var(char *argv_str, char **str);
-int			check_qts(char *str);
-int			is_fod(char *name);
-void		set_out(t_cmd *cmd, t_arg **arg);
-void		set_io(t_cmd *cmd);
-void		set_pipes(t_cmd *cmd, int first, int next);
-int			is_valid_input(void);
-int			check_redirections(t_arg *usrin);
-char		*skiper(char *str);
-char		*_strchr(char *s, char c);
-int			get_argsc(char **args);
-void		print(int fd, char *str, int endl);
-int			is_builtin(t_cmd *cmd);
-void		prt_list(t_arg *arg); // REMOVE BFR PUSH
-char		*exp_with_qts(char *str, int hd);
-char		*exp_with_no_qts(char *str, int hd);
-void		split_expanded(char *usr_in);
-t_arg		*t_arg_get_last(t_arg *head);
-int			var_case(char curr_char, char next_char);
+
+/**
+ * ERRORS HANDLING
+*/
+void		do_error(t_error_type errtype, char *progname, char *reason);
+void		custom_err(char *progname, char *reason, char *msg, int es);
 void		check_arguments(int ac, char **av);
-void		custom_err(char *progname, char *reason, char *msg, int e);
+
+/**
+ * 	IO OPERATORS
+*/
+void		set_pipes(t_cmd *cmd, int first, int next);
+int			is_var(char curr_char, char next_char);
+int			is_valid_cmd(t_data *data, char *cmd);
+int			set_var(char *argv_str, char **str);
+char		*exp_with_no_qts(char *str, int hd);
+char		*exp_with_qts(char *str, int hd);
+int			check_redirections(t_arg *usrin);
+void		set_out(t_cmd *cmd, t_arg **arg);
+void		init_redirections(t_cmd *cmd);
+void		split_expanded(char *usr_in);
+int			open_heredoc(t_arg *target);
+void		init_clear_argv(t_cmd *cmd);
+void		data_init(char **base_env);
+int			split_usrin(char *usr_in);
+int			get_commands(t_arg *args);
+int			get_argsc(char **args);
+t_arg_type	is_io_op(char	*str);
+char		*get_curr_path(int p);
+int			check_qts(char *str);
+int			is_valid_input(void);
+void		set_io(t_cmd *cmd);
+int			is_fod(char *name);
+char		*get_prompt(void);
+
+/**
+ * FREE FREE FREEEEE :)
+*/
+void		free_tab(char **array);
+void		_free(void);
+
+/**
+ * TMP FUNCTIONS :(
+*/
+// REMOVE BFR PUSH
+void		prt_list(t_arg *arg);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 17:00:44 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:25:28 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	check_arguments(int ac, char **av)
 	}
 }
 
-void		prt_list(t_arg *arg){while (arg){printf("[%s{%d}]\n", arg->value, arg->type); arg = arg->next;}}
+// void	prt_list(t_arg *arg){while (arg){printf("[%s{%d}]\n", arg->value, arg->type); arg = arg->next;}}
 
 int	is_valid_input(void)
 {

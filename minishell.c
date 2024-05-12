@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 17:00:55 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:40:32 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	program_exec(t_cmd *cmd, int first, int next)
 			exit(data->exit_status);
 		}
 		if (cmd->argv == NULL || is_valid_cmd(data, cmd->argv[0]) == 0)
-			exit(127);
+			exit(data->exit_status >> 8);
 		init_env_array();
 		execve(data->program_path, cmd->argv, data->env_2d);
 		exit(errno);
@@ -62,8 +62,12 @@ int	read_input(t_data *data)
 	data->usrinput = readline(data->prompt);
 	if (data->usrinput == NULL)
 	{
-		printf("\x1b[1A%sexit\n", data->prompt);
-		safe_exit(127);
+		if (isatty(0))
+		{
+			printf("\x1b[1A%sexit\n", data->prompt);
+			safe_exit(127);
+		}
+		safe_exit(0);
 	}
 	if (*data->usrinput)
 		add_history(data->usrinput);
@@ -82,14 +86,10 @@ void	handle_input(t_data *data)
 	int		next;
 
 	if (is_valid_input() == 0)
-	{
-		printf("hhhh\n");
 		return ;
-	}
 	cmds = data->cmds;
 	if (cmds && cmds->next == NULL && is_builtin(cmds))
 	{
-		printf("built-in:%s\n", cmds->argv[0]);
 		builtins(cmds);
 		return ;
 	}
@@ -102,7 +102,7 @@ void	handle_input(t_data *data)
 	}
 }
 
-void	leaks(t_data *data)
+void	restore(t_data *data)
 {
 	t_cmd	*cmds;
 
@@ -113,6 +113,7 @@ void	leaks(t_data *data)
 			close(cmds->in);
 		cmds = cmds->next;
 	}
+	tcsetattr(STDIN_FILENO, TCSANOW, &data->old_term);
 	dup2 (data->in, 0);
 	close(data->in);
 	_free();
@@ -121,11 +122,9 @@ void	leaks(t_data *data)
 int	main(int ac, char **av, char **env)
 {
 	t_data		data;
-	extern int	rl_catch_signals;
 
 	check_arguments(ac, av);
 	data_hook(&data);
-	rl_catch_signals = 0;
 	data_init(env);
 	catch_signals();
 	while (1)
@@ -140,7 +139,7 @@ int	main(int ac, char **av, char **env)
 					safe_exit(-1);
 			data.fix_doubleprt = 0;
 		}
-		leaks(&data);
+		restore(&data);
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 13:05:33 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 12:51:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ void	create_heredoc(t_cmd *cmd, t_arg *target)
 	cmd->in = open_heredoc(target);
 }
 
+static int	is_tty(int in)
+{
+	if (is_fod("/dev/stdin") == -1)
+	{
+		if (in != 0)
+			close(in);
+		return (0);
+	}
+	return (1);
+}
+
 int	get_commands(t_arg *args)
 {
 	t_cmd	cmd;
@@ -33,12 +44,8 @@ int	get_commands(t_arg *args)
 	{
 		while (args && args->type != ARG_PIPE)
 		{
-			if (is_fod("/dev/stdin") == -1)
-			{
-				if (cmd.in != 0)
-					close(cmd.in);
+			if (is_tty(cmd.in) == 0)
 				return (0);
-			}
 			data_hook(NULL)->fix_doubleprt = 2;
 			if (args->type == ARG_HERDOC && args->next)
 				create_heredoc(&cmd, args->next);
@@ -46,8 +53,7 @@ int	get_commands(t_arg *args)
 			data_hook(NULL)->fix_doubleprt = 1;
 			args = args->next;
 		}
-		init_clear_argv(&cmd);
-		t_cmd_add(cmd);
+		(init_clear_argv(&cmd), t_cmd_add(cmd));
 		ft_bzero(&cmd, sizeof(t_cmd));
 		cmd.out = 1;
 		if (args)

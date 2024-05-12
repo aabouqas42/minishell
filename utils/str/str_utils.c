@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:57:39 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 18:00:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 09:11:45 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	_strlen(char *str)
 	return (_strlenc(str, 0));
 }
 
-int	is_same(char *s1, char *s2)
+int	str_equal(char *s1, char *s2)
 {
 	int	i;
 
