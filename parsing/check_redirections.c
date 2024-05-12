@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/11 10:38:01 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:52:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_valid_redirect(char *file_name)
 int	check_syntax(t_arg *arg)
 {
 	if (arg->type > 1 && arg->next == NULL)
-		return (do_error(SYNTAX_ERR, "","newline"), 0);
+		return (do_error(SYNTAX_ERR, "", "newline"), 0);
 	if ((arg->type >= 3 && arg->type <= 5))
 	{
 		if (check_valid_redirect(arg->next->value) == 0)

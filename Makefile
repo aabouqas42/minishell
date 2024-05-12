@@ -6,11 +6,11 @@
 #    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/12 11:28:35 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/05/12 15:01:19 by mait-elk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
@@ -29,7 +29,7 @@ SRCS = 	parsing/command_check.c parsing/check_redirections.c parsing/args_parsin
 		heredoc/heredoc.c \
 		builtins/cd.c builtins/echo.c builtins/pwd.c builtins/export.c builtins/exit.c builtins/unset.c\
 		builtins/builtins.c \
-		error/do_error.c \
+		error/do_error.c error/cust_err.c \
 		linked_lists/t_arg_instr.c linked_lists/t_cmd_instr.c linked_lists/free_linked_list.c \
 		expanding/split_expanded.c expanding/expand_input.c
 		#multiples/

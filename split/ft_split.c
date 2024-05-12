@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 11:48:55 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:51:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ int	mini_api(char *res)
 		save = _strdup(res);
 		res = exp_with_qts(res, 0);
 		split_expanded(res);
-		if (lastarg && lastarg->type >= 2 && lastarg->type <= 5 && (res == NULL || t_arg_size(lastarg->next) > 1))
+		if (lastarg && lastarg->type >= 2 && lastarg->type <= 5
+			&& (res == NULL || t_arg_size(lastarg->next) > 1))
 			return (do_error(AMBIGUOUS_ERR, "", save), free(save), 0);
 		return (free(save), free(res), 1);
 	}
 	if (heredoc_expand)
-		t_arg_add(res, ARG_QT);
-	else
-		t_arg_add(res, ARG_WORD);
+		return (t_arg_add(res, ARG_QT), 1);
+	t_arg_add(res, ARG_WORD);
 	return (1);
 }
 

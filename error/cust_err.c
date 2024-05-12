@@ -1,40 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_linked_list.c                                 :+:      :+:    :+:   */
+/*   cust_err.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 12:28:12 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 14:52:51 by mait-elk         ###   ########.fr       */
+/*   Created: 2024/05/12 14:54:20 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/05/12 14:55:02 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	t_arg_free(t_arg *head)
+void	custom_err(char *progname, char *reason, char *msg, int es)
 {
-	t_arg	*next;
-
-	while (head)
-	{
-		next = head->next;
-		free (head->value);
-		head->value = NULL;
-		free (head);
-		head = next;
-	}
-}
-
-void	t_cmd_free(t_cmd *head)
-{
-	t_cmd	*next;
-
-	while (head)
-	{
-		next = head->next;
-		t_arg_free(head->linked_argv);
-		free (head);
-		head = next;
-	}
+	print(2, "minishell: ", 0);
+	print(2, progname, 0);
+	print(2, ": ", 0);
+	print(2, reason, 0);
+	print(2, ": ", 0);
+	print(2, msg, 1);
+	data_hook(NULL)->exit_status = es << 8;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 11:45:29 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 12:51:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	create_heredoc(t_cmd *cmd, t_arg *target)
 
 static int	is_tty(int in)
 {
-	if (!isatty(0))
+	if (is_fod("/dev/stdin") == -1)
 	{
 		if (in != 0)
 			close(in);
@@ -44,8 +44,8 @@ int	get_commands(t_arg *args)
 	{
 		while (args && args->type != ARG_PIPE)
 		{
-			// if (is_tty(cmd.in) == 0)
-			// 	return (0);
+			if (is_tty(cmd.in) == 0)
+				return (0);
 			data_hook(NULL)->fix_doubleprt = 2;
 			if (args->type == ARG_HERDOC && args->next)
 				create_heredoc(&cmd, args->next);

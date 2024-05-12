@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 11:00:31 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:45:13 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	cd(char **argv)
 	if (chdir(argv[1]) != 0)
 	{
 		free (old_path);
-		do_error(NSFODIR_ERR, "cd", argv[1]);
+		custom_err("cd", argv[1], "No such file or directory", 1);
 		return (1);
 	}
 	free (data->pwd);

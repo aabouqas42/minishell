@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 08:54:08 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/11 17:09:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:55:26 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void	__exit(t_cmd *cmd)
 		print(1, "exit", 1);
 		custom_err(argv[0], argv[1], "numeric argument required", 255);
 		safe_exit(255);
-	} else if (get_argsc(argv) > 2) {
+	}
+	else if (get_argsc(argv) > 2)
+	{
 		custom_err(argv[0], "", "too many arguments", 1);
 		return ;
 	}

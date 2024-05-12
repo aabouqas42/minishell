@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:46:47 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 10:38:47 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:54:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	__invnameenv_err(char *progname, char *reason)
 	print(2, ": `", 0);
 	print(2, reason, 0);
 	print(2, "': not a valid identifier", 1);
-	data_hook(NULL)->exit_status = 127 << 8;
+	data_hook(NULL)->exit_status = 1 << 8;
 }
 
 static void	__notdirectory_err(char *progname, char *reason)
@@ -47,18 +47,6 @@ static void	__custom_err(char *lmsg, char *reason, int e)
 	print(2, lmsg, 1);
 	data_hook(NULL)->exit_status = e << 8;
 }
-
-void	custom_err(char *progname, char *reason, char *msg, int e)
-{
-	print(2, "minishell: ", 0);
-	print(2, progname, 0);
-	print(2, ": ", 0);
-	print(2, reason, 0);
-	print(2, ": ", 0);
-	print(2, msg, 1);
-	data_hook(NULL)->exit_status = e << 8;
-}
-
 
 void	do_error(t_error_type errtype, char *progname, char *reason)
 {

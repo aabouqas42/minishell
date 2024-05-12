@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 10:54:02 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:58:02 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	export_base_envs(char **base_env)
 
 void	data_init(char **base_env)
 {
-	t_data	*data;
+	t_data		*data;
+	extern int	rl_catch_signals;
 
 	data = data_hook(NULL);
 	ft_bzero(data, sizeof(t_data));
@@ -68,4 +69,20 @@ void	data_init(char **base_env)
 	export_default_envs();
 	data->pwd = _strdup(env_grepvalue("PWD"));
 	tcgetattr(STDIN_FILENO, &data->old_term);
+	rl_catch_signals = 0;
+}
+
+void	close_unused_fds(int next)
+{
+	t_data	*data;
+
+	data = data_hook(NULL);
+	if (data->fds[1])
+		close(data->fds[1]);
+	if (data->oldfd)
+		close(data->oldfd);
+	if (next)
+		data->oldfd = data->fds[0];
+	else if (data->fds[0])
+		close(data->fds[0]);
 }

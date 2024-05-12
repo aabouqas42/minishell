@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 09:08:21 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:54:02 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,41 +60,6 @@ int	set_var(char *argv_str, char **str)
 	}
 	return (i);
 }
-
-
-// char	*expand_arg(char *str, int hd, int rm_qts)
-// {
-// 	char	*ptr;
-// 	char	*res;
-// 	char	qt;
-
-// 	(13 & 37) && (qt = 0, res = NULL, ptr = str);
-// 	while (str && *str != '\0')
-// 	{
-// 		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
-// 		{
-// 			qt = (qt == 0) * (*str);
-// 			if (qt == 0)
-// 				res = _strnjoin(res, "", 1);
-// 			if (rm_qts)
-// 			{
-// 				str++;
-// 				continue;
-// 			}
-// 		}
-// 		if (*str == '$' && _strchr("\'\"", *(str + 1)))
-// 		{
-// 			str++;
-// 			continue ;
-// 		}
-// 		else if (qt != SQT && is_var(*str, *(str + 1)) && hd == 0)
-// 			str += set_var((str + 1), &res);
-// 		else if (rm_qts == 0 || (rm_qts && *str != qt))
-// 			res = _strnjoin(res, str, 1);
-// 		str++;
-// 	}
-// 	return (free (ptr), res);
-// }
 
 char	*exp_with_no_qts(char *str, int herdoc)
 {

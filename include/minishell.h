@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 10:53:54 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:57:47 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ int			pwd(void);
  * ERRORS HANDLING
 */
 void		do_error(t_error_type errtype, char *progname, char *reason);
-void		custom_err(char *progname, char *reason, char *msg, int e);
+void		custom_err(char *progname, char *reason, char *msg, int es);
 void		check_arguments(int ac, char **av);
 
 /**
@@ -203,6 +203,7 @@ void		split_expanded(char *usr_in);
 int			open_heredoc(t_arg *target);
 void		init_clear_argv(t_cmd *cmd);
 void		data_init(char **base_env);
+void		close_unused_fds(int next);
 int			split_usrin(char *usr_in);
 int			get_commands(t_arg *args);
 int			get_argsc(char **args);

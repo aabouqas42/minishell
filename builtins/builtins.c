@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 09:10:01 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:56:29 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	run_builtin(t_cmd *cmd)
 		return (_export(cmd->argv), 1);
 	if (str_equal(cmd->argv[0], "unset"))
 		return (unset(cmd->argv + 1));
-		// return (env_unset(cmd->argv[1], &data->env), 1);
 	return (0);
 }
 
