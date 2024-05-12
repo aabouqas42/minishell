@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 16:03:45 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:14:32 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_builtin(t_cmd *cmd)
 	return (0);
 }
 
-int	run_builtin(t_cmd *cmd)
+int	run_builtin(t_cmd *cmd, int in, int out)
 {
 	t_data	*data;
 
@@ -37,7 +37,7 @@ int	run_builtin(t_cmd *cmd)
 	if (cmd->argv == NULL)
 		return (0);
 	if (str_equal(cmd->argv[0], "exit"))
-		__exit(cmd);
+		(close(in), close(out), __exit(cmd));
 	if (str_equal(cmd->argv[0], "cd"))
 		return (cd(cmd->argv), 1);
 	if (str_equal(cmd->argv[0], "echo"))
@@ -67,7 +67,7 @@ int	builtins(t_cmd *cmd)
 		close(cmd->in);
 	if (cmd->out != 1 && dup2(cmd->out, 1))
 		close(cmd->out);
-	ret = run_builtin(cmd);
+	ret = run_builtin(cmd, in, out);
 	dup2(in, 0);
 	dup2(out, 1);
 	close(out);

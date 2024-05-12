@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 15:41:06 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:17:01 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int			_spaces(int c);
 /**
  * BUILT-INS FUNCTIONS
 */
-int			run_builtin(t_cmd *cmd);
+int			run_builtin(t_cmd *cmd, int in, int out);
 int			is_builtin(t_cmd *cmd);
 int			builtins(t_cmd *cmd);
 int			_export(char **argv);
@@ -220,11 +220,5 @@ char		*get_prompt(void);
 */
 void		free_tab(char **array);
 void		_free(void);
-
-/**
- * TMP FUNCTIONS :(
-*/
-// REMOVE BFR PUSH
-void		prt_list(t_arg *arg);
 
 #endif

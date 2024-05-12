@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 16:04:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:17:33 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	program_exec(t_cmd *cmd, int first, int next)
 			exit(1);
 		(set_pipes(cmd, first, next), set_io(cmd));
 		if (is_builtin(cmd))
-			((void)run_builtin(cmd), exit(data->exit_status));
+			((void)run_builtin(cmd, -1, -1), exit(data->exit_status));
 		if (cmd->argv == NULL || is_valid_cmd(data, cmd->argv[0]) == 0)
 			exit(data->exit_status >> 8);
 		init_env_array();
