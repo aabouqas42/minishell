@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/11 20:01:05 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 10:54:02 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,18 @@
 
 void	export_default_envs(void)
 {
+	char	*curr_path;
+
+	curr_path = get_curr_path(1);
 	if (env_grepvalue("PATH") == NULL)
 		env_export("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
 	if (env_grepvalue("SHLVL") == NULL)
 		env_export("SHLVL", "1");
-	env_export("PWD", get_curr_path());
+	if (curr_path != NULL)
+	{
+		env_export("PWD", curr_path);
+		free (curr_path);
+	}
 }
 
 void	export_base_envs(char **base_env)
@@ -30,7 +37,7 @@ void	export_base_envs(char **base_env)
 	{
 		value = ft_strchr(*base_env, '=');
 		*(value) = '\0';
-		if (is_same(*base_env, "SHLVL"))
+		if (str_equal(*base_env, "SHLVL"))
 		{
 			if (ft_atoi(value +1) == 999)
 				env_export(*base_env, "");
@@ -60,4 +67,5 @@ void	data_init(char **base_env)
 	export_base_envs(base_env);
 	export_default_envs();
 	data->pwd = _strdup(env_grepvalue("PWD"));
+	tcgetattr(STDIN_FILENO, &data->old_term);
 }

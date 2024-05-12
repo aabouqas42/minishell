@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 19:13:01 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:40:34 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,11 @@ void	program_exec(t_cmd *cmd, int first, int next)
 int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
+	// printf("%s\n", data->usrinput);
 	// print(open("file", O_RDWR), data->usrinput, 1);
 	if (data->usrinput == NULL)
 	{
-		printf("\x1b[1A%sexit\n", data->prompt);
+		// printf("\x1b[1A%sexit\n", data->prompt);
 		safe_exit(127);
 	}
 	if (*data->usrinput)
@@ -86,7 +87,7 @@ void	handle_input(t_data *data)
 	cmds = data->cmds;
 	if (cmds && cmds->next == NULL && is_builtin(cmds))
 	{
-		printf("built-in:%s\n", cmds->argv[0]);
+		// printf("built-in:%s\n", cmds->argv[0]);
 		builtins(cmds);
 		return ;
 	}
@@ -128,12 +129,14 @@ int	main(int ac, char **av, char **env)
 		{
 			data.fix_doubleprt = 1;
 			handle_input(&data);
+			// printf("[%d]\n", data.);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
 				if (data.exit_status >> 8 == -1)
 					safe_exit(-1);
 			data.fix_doubleprt = 0;
 		}
 		// LOOP IN CMDS AND CLOSE ALL IN FDS IF IT'S NOT 0
+		tcsetattr(STDIN_FILENO, TCSANOW, &data.old_term);
 		close_fds(data.cmds);
 		_free();
 		// printf("%d\n", data.in);

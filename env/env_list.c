@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:43:52 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/11 18:53:09 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 09:10:24 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*env_grepvalue(char *name)
 		env = data->env;
 		while (env)
 		{
-			if (is_same(env->name, name))
+			if (str_equal(env->name, name))
 				return (env->value);
 			env = env->next;
 		}
@@ -81,14 +81,14 @@ int	env_unset(char *name, t_env **env)
 	tmp = *env;
 	if (tmp == NULL)
 		return (1);
-	if (is_same(tmp->name, name))
+	if (str_equal(tmp->name, name))
 	{
 		*env = (*env)->next;
 		return (env_free(tmp), 1);
 	}
 	while (tmp->next)
 	{
-		if (is_same(tmp->next->name, name))
+		if (str_equal(tmp->next->name, name))
 		{
 			todelete = tmp->next;
 			tmp->next = tmp->next->next;

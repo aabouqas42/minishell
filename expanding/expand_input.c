@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/10 17:03:18 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 09:08:21 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	var_case(char curr_char, char next_char)
+int	is_var(char curr_char, char next_char)
 {
 	if (curr_char == '$')
 		if (ft_isalnum(next_char) || (next_char && _strchr("_?", next_char)))
@@ -87,7 +87,7 @@ int	set_var(char *argv_str, char **str)
 // 			str++;
 // 			continue ;
 // 		}
-// 		else if (qt != SQT && var_case(*str, *(str + 1)) && hd == 0)
+// 		else if (qt != SQT && is_var(*str, *(str + 1)) && hd == 0)
 // 			str += set_var((str + 1), &res);
 // 		else if (rm_qts == 0 || (rm_qts && *str != qt))
 // 			res = _strnjoin(res, str, 1);
@@ -116,7 +116,7 @@ char	*exp_with_no_qts(char *str, int herdoc)
 			str++;
 			continue ;
 		}
-		else if (qt != SQT && var_case(*str, *(str + 1)) && herdoc == 0)
+		else if (qt != SQT && is_var(*str, *(str + 1)) && herdoc == 0)
 			str += set_var((str + 1), &res);
 		else
 			res = _strnjoin(res, str, 1);
@@ -145,7 +145,7 @@ char	*exp_with_qts(char *str, int herdoc)
 			str++;
 			continue ;
 		}
-		else if (qt != SQT && var_case(*str, *(str + 1)) && herdoc == 0)
+		else if (qt != SQT && is_var(*str, *(str + 1)) && herdoc == 0)
 			str += set_var((str + 1), &res);
 		else
 			res = _strnjoin(res, str, 1);

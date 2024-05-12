@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/11 19:15:06 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:43:14 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ void	create_heredoc(t_cmd *cmd, t_arg *target)
 	cmd->in = open_heredoc(target);
 }
 
+// static int	is_tty(int in)
+// {
+// 	if (!isatty(0))
+// 	{
+// 		if (in != 0)
+// 			close(in);
+// 		return (0);
+// 	}
+// 	return (1);
+// }
+
 int	get_commands(t_arg *args)
 {
 	t_cmd	cmd;
@@ -33,12 +44,8 @@ int	get_commands(t_arg *args)
 	{
 		while (args && args->type != ARG_PIPE)
 		{
-			if (!isatty(0))
-			{
-				if (cmd.in != 0)
-					close(cmd.in);
-				return (0);
-			}
+			// if (is_tty(cmd.in) == 0)
+			// 	return (0);
 			data_hook(NULL)->fix_doubleprt = 2;
 			if (args->type == ARG_HERDOC && args->next)
 				create_heredoc(&cmd, args->next);
@@ -46,8 +53,7 @@ int	get_commands(t_arg *args)
 			data_hook(NULL)->fix_doubleprt = 1;
 			args = args->next;
 		}
-		init_clear_argv(&cmd);
-		t_cmd_add(cmd);
+		(init_clear_argv(&cmd), t_cmd_add(cmd));
 		ft_bzero(&cmd, sizeof(t_cmd));
 		cmd.out = 1;
 		if (args)
