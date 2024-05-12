@@ -60,7 +60,6 @@ void	program_exec(t_cmd *cmd, int first, int next)
 int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
-	// print(open("file", O_RDWR), data->usrinput, 1);
 	if (data->usrinput == NULL)
 	{
 		printf("\x1b[1A%sexit\n", data->prompt);

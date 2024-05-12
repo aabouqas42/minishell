@@ -1,2 +1,3 @@
 ls
-
+ls | cat -e
+echo $PATH

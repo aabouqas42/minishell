@@ -37,7 +37,7 @@ int	is_valid_input(void)
 		return (0);
 	if (get_commands(data->args) == 0)
 		return (0);
-	 prt_list(data->args);
+//	 prt_list(data->args);
 	return (1);
 }
 

@@ -33,7 +33,7 @@ int	get_commands(t_arg *args)
 	{
 		while (args && args->type != ARG_PIPE)
 		{
-			if (!isatty(0))
+			if (is_fod("/dev/stdin") == -1)
 			{
 				if (cmd.in != 0)
 					close(cmd.in);

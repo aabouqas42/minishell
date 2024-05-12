@@ -21,7 +21,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9109acb-f709-4a34-84ac-1c8027e84fc8" name="Changes" comment="" />
+    <list default="true" id="b9109acb-f709-4a34-84ac-1c8027e84fc8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/minishell.c" beforeDir="false" afterPath="$PROJECT_DIR$/minishell.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/matrix_utils/matrix.c" beforeDir="false" afterPath="$PROJECT_DIR$/utils/matrix_utils/matrix.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,7 +164,7 @@
       <option name="presentableId" value="Default" />
       <updated>1715499429754</updated>
       <workItem from="1715499431951" duration="262000" />
-      <workItem from="1715499826161" duration="10737000" />
+      <workItem from="1715499826161" duration="11153000" />
     </task>
     <servers />
   </component>
