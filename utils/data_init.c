@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 17:58:53 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:19:14 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	export_default_envs(void)
 
 	curr_path = get_curr_path(1);
 	if (env_grepvalue("PATH") == NULL)
-		env_export("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
+		env_export("PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	if (env_grepvalue("SHLVL") == NULL)
 		env_export("SHLVL", "1");
 	if (curr_path != NULL)
