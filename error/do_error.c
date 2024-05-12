@@ -48,7 +48,7 @@ static void	__custom_err(char *lmsg, char *reason, int e)
 	data_hook(NULL)->exit_status = e << 8;
 }
 
-void	custom_err(char *progname, char *reason, char *msg, int e)
+void	custom_err(char *progname, char *reason, char *msg, int es)
 {
 	print(2, "minishell: ", 0);
 	print(2, progname, 0);
@@ -56,7 +56,7 @@ void	custom_err(char *progname, char *reason, char *msg, int e)
 	print(2, reason, 0);
 	print(2, ": ", 0);
 	print(2, msg, 1);
-	data_hook(NULL)->exit_status = e << 8;
+	data_hook(NULL)->exit_status = es << 8;
 }
 
 

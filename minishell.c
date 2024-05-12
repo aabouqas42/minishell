@@ -76,13 +76,17 @@ int	read_input(t_data *data)
 	}
 	return (1);
 }
+
 void	handle_input(t_data *data)
 {
 	t_cmd	*cmds;
 	int		next;
 
 	if (is_valid_input() == 0)
+	{
+		printf("hhhh\n");
 		return ;
+	}
 	cmds = data->cmds;
 	if (cmds && cmds->next == NULL && is_builtin(cmds))
 	{
@@ -99,16 +103,20 @@ void	handle_input(t_data *data)
 	}
 }
 
-void	close_fds(t_cmd *cmds)
+void	leaks(t_data *data)
 {
+	t_cmd	*cmds;
+
+	cmds = data->cmds;
 	while (cmds)
 	{
 		if (cmds->in != 0)
 			close(cmds->in);
 		cmds = cmds->next;
 	}
-	if (cmds && cmds->in != 0)
-		close(cmds->in);
+	dup2 (data->in, 0);
+	close(data->in);
+	_free();
 }
 
 int	main(int ac, char **av, char **env)
@@ -133,12 +141,7 @@ int	main(int ac, char **av, char **env)
 					safe_exit(-1);
 			data.fix_doubleprt = 0;
 		}
-		// LOOP IN CMDS AND CLOSE ALL IN FDS IF IT'S NOT 0
-		close_fds(data.cmds);
-		_free();
-		// printf("%d\n", data.in);
-		dup2(data.in, 0);
-		close(data.in);
+		leaks(&data);
 	}
 	return (EXIT_SUCCESS);
 }
