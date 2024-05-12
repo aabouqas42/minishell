@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 14:52:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:42:13 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,13 @@ int	is_valid(char *cmd)
 		if (is_fod(cmd) == _DIRE)
 			return (do_error(ISDIR_ERR, "", cmd), 0);
 		if (is_fod(cmd) == -1 || env_grepvalue("PATH") == NULL)
-			return (do_error(NSFODIR_ERR, "", cmd), 0);
+		{
+			print(2, "minishell: ", 0);
+			print(2, cmd, 0);
+			print(2, ": No such file or directory", 1);
+			data_hook(NULL)->exit_status = 127 << 8;
+			return (0);
+		}
 	}
 	return (1);
 }

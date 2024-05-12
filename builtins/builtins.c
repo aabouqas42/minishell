@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 14:56:29 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:03:45 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	builtins(t_cmd *cmd)
 
 	in = dup(0);
 	out = dup(1);
-	init_redirections(cmd);
+	if (init_redirections(cmd) == 0)
+		return (0);
 	if (cmd->in != 0 && dup2(cmd->in, 0))
 		close(cmd->in);
 	if (cmd->out != 1 && dup2(cmd->out, 1))

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 14:57:47 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:41:06 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ char		*exp_with_no_qts(char *str, int hd);
 char		*exp_with_qts(char *str, int hd);
 int			check_redirections(t_arg *usrin);
 void		set_out(t_cmd *cmd, t_arg **arg);
-void		init_redirections(t_cmd *cmd);
+int			init_redirections(t_cmd *cmd);
 void		split_expanded(char *usr_in);
 int			open_heredoc(t_arg *target);
 void		init_clear_argv(t_cmd *cmd);

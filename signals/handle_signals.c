@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:10:00 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 15:00:18 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:03:18 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	sig_handle_sigquit(int sig)
 
 void	sig_handle_sigint(int sig)
 {
-	(void)sig;
 	t_data	*data;
 
+	(void)sig;
 	data = data_hook(NULL);
 	if (data && data->fix_doubleprt == 2)
 	{

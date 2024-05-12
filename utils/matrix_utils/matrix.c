@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 12:51:53 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:13:26 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,21 @@ void	create_heredoc(t_cmd *cmd, t_arg *target)
 	cmd->in = open_heredoc(target);
 }
 
-static int	is_tty(int in)
+static int	stdin_closed(t_cmd cmd)
 {
-	if (is_fod("/dev/stdin") == -1)
+	if (read(0, NULL, 0) == -1)
 	{
-		if (in != 0)
-			close(in);
-		return (0);
+		while (cmd.linked_argv)
+		{
+			free(cmd.linked_argv);
+			cmd.linked_argv = cmd.linked_argv->next;
+		}
+		cmd.linked_argv = NULL;
+		if (cmd.in != 0)
+			close(cmd.in);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	get_commands(t_arg *args)
@@ -44,7 +50,7 @@ int	get_commands(t_arg *args)
 	{
 		while (args && args->type != ARG_PIPE)
 		{
-			if (is_tty(cmd.in) == 0)
+			if (stdin_closed(cmd))
 				return (0);
 			data_hook(NULL)->fix_doubleprt = 2;
 			if (args->type == ARG_HERDOC && args->next)

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:46:47 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 14:54:25 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:46:20 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	do_error(t_error_type errtype, char *progname, char *reason)
 	if (errtype == ISDIR_ERR)
 		__custom_err(": is a directory", reason, 126);
 	if (errtype == NSFODIR_ERR)
-		__custom_err(": No such file or directory", reason, 127);
+		__custom_err(": No such file or directory", reason, 1);
 	if (errtype == AMBIGUOUS_ERR)
 		__custom_err(": ambiguous redirect", reason, 127);
 }
