@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 17:21:35 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:23:32 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	safe_exit(int status)
 	t_data	*data;
 
 	data = data_hook(NULL);
+	restore(data);
 	free (data->usrinput);
 	data->usrinput = NULL;
 	free (data->program_path);
@@ -34,7 +35,8 @@ void	safe_exit(int status)
 	env_free_list(data->env);
 	data->env = NULL;
 	free (data->prompt);
-	close(data->in);
+	close(data->def_in);
+	close(data->def_out);
 	exit(status);
 }
 

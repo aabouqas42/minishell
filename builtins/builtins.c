@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:38:17 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 17:08:52 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:01:20 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,10 @@ int	run_builtin(t_cmd *cmd)
 
 int	builtins(t_cmd *cmd)
 {
+	t_data	*data;
 	int		ret;
-	int		in;
-	int		out;
 
-	in = dup(0);
-	out = dup(1);
+	data = data_hook(NULL);
 	if (init_redirections(cmd) == 0)
 		return (0);
 	if (cmd->in != 0 && dup2(cmd->in, 0))
@@ -68,10 +66,8 @@ int	builtins(t_cmd *cmd)
 	if (cmd->out != 1 && dup2(cmd->out, 1))
 		close(cmd->out);
 	ret = run_builtin(cmd);
-	dup2(in, 0);
-	dup2(out, 1);
-	close(out);
-	close(in);
+	dup2(data->def_in, 0);
+	dup2(data->def_out, 1);
 	cmd->in = 0;
 	cmd->out = 1;
 	return (ret);

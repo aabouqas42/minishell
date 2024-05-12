@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 17:11:13 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:40:07 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,9 @@ typedef struct s_data
 	char			*program_path;
 	int				exit_status;
 	int				oldfd;
-	int				in;
 	int				fix_doubleprt;
+	int				def_in;
+	int				def_out;
 	int				fds[2];
 }	t_data;
 
@@ -221,11 +222,5 @@ char		*get_prompt(void);
 void		free_tab(char **array);
 void		_free(void);
 void		restore(t_data *data);
-
-/**
- * TMP FUNCTIONS :(
-*/
-// REMOVE BFR PUSH
-void		prt_list(t_arg *arg);
 
 #endif

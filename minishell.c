@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 17:16:48 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:38:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void	program_exec(t_cmd *cmd, int first, int next)
 		return ((void)print(2, "Unexpected Error", 1));
 	if (child_pid == 0)
 	{
-		if (data->in)
-			close(data->in);
+		(close(data->def_in), close(data->def_out));
 		if (init_redirections(cmd) == 0)
 			exit(1);
 		(set_pipes(cmd, first, next), set_io(cmd));
@@ -77,7 +76,6 @@ void	handle_input(t_data *data)
 		builtins(cmds);
 		return ;
 	}
-	exit(0);
 	data->oldfd = 0;
 	while (cmds)
 	{
@@ -99,28 +97,20 @@ void	restore(t_data *data)
 		cmds = cmds->next;
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &data->old_term);
-	dup2 (data->in, 0);
-	close(data->in);
+	dup2 (data->def_in, 0);
 	_free();
-}
-
-void	lek()
-{
-	system("lsof -c minishell");
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_data		data;
 
-	atexit(lek);
 	check_arguments(ac, av);
 	data_hook(&data);
 	data_init(env);
 	catch_signals();
 	while (1)
 	{
-		data.in = dup(0);
 		if (read_input(&data) != -1)
 		{
 			data.fix_doubleprt = 1;

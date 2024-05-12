@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 14:58:02 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:58:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	data_init(char **base_env)
 	export_default_envs();
 	data->pwd = _strdup(env_grepvalue("PWD"));
 	tcgetattr(STDIN_FILENO, &data->old_term);
+	data->def_in = dup(0);
+	data->def_out = dup(1);
 	rl_catch_signals = 0;
 }
 
