@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 16:04:28 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:16:48 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	handle_input(t_data *data)
 		builtins(cmds);
 		return ;
 	}
+	exit(0);
 	data->oldfd = 0;
 	while (cmds)
 	{
@@ -103,10 +104,16 @@ void	restore(t_data *data)
 	_free();
 }
 
+void	lek()
+{
+	system("lsof -c minishell");
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data		data;
 
+	atexit(lek);
 	check_arguments(ac, av);
 	data_hook(&data);
 	data_init(env);
