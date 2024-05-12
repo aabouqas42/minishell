@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 11:43:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:45:29 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	create_heredoc(t_cmd *cmd, t_arg *target)
 	cmd->in = open_heredoc(target);
 }
 
-// static int	is_tty(int in)
-// {
-// 	if (!isatty(0))
-// 	{
-// 		if (in != 0)
-// 			close(in);
-// 		return (0);
-// 	}
-// 	return (1);
-// }
+static int	is_tty(int in)
+{
+	if (!isatty(0))
+	{
+		if (in != 0)
+			close(in);
+		return (0);
+	}
+	return (1);
+}
 
 int	get_commands(t_arg *args)
 {
