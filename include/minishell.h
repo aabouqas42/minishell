@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 09:00:38 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:40:20 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int			pwd(void);
 */
 void		do_error(t_error_type errtype, char *progname, char *reason);
 void		custom_err(char *progname, char *reason, char *msg, int es);
-void		check_arguments(int ac, char **av);
+void		checker(int ac, char **av);
 
 /**
  * 	IO OPERATORS

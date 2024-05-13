@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 10:50:03 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:59:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,17 @@ void	restore(t_data *data)
 	_free();
 }
 
+void hhh()
+{
+	system("leaks minishell");
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data		data;
 
-	check_arguments(ac, av);
+	atexit(hhh);
+	checker(ac, av);
 	data_hook(&data);
 	data_init(env);
 	catch_signals();
