@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 08:54:08 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/13 09:55:11 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:51:37 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	__exit(t_cmd *cmd)
 		print(1, "exit", 1);
 		safe_exit(0);
 	}
-	if ((strnum(av[1]) == 0 && get_argsc(av) >= 2) || (ft_atoi(av[1]) == -1 && av[1][0] != '-'))
+	if ((strnum(av[1]) == 0 && get_argsc(av) >= 2)
+		|| (ft_atoi(av[1]) == -1 && av[1][0] != '-'))
 	{
 		print(1, "exit", 1);
 		custom_err(av[0], av[1], "numeric argument required", 255);

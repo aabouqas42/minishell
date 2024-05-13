@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 14:54:02 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:15:26 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	set_last_exit(char **str)
 	free(exit_status);
 	if (*str == NULL)
 		safe_exit(-1);
-	data->exit_status = 0;
 	return (0);
 }
 

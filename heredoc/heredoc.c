@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:53:02 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/13 10:05:03 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:50:59 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*expand(char *str)
 	free (str);
 	return (new_str);
 }
+
 void	_close(int in, int out)
 {
 	close (in);

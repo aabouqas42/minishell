@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 16:42:13 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:41:38 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int	is_valid(char *cmd)
 {
 	if (env_grepvalue("PATH") == NULL && is_fod(cmd) == _DIRE)
 		return (do_error(ISDIR_ERR, "", cmd), 0);
-	if (env_grepvalue("PATH") == NULL)
-		return (do_error(NSFODIR_ERR, "", cmd), 0);
 	if (_strlen(cmd) == 0)
 		return (do_error(COMDNF_ERR, "", cmd), 0);
 	if (ft_strchr(cmd, '/'))
@@ -69,7 +67,7 @@ int	is_valid(char *cmd)
 			return (do_error(PERMIDEN_ERR, "", cmd), 0);
 		if (is_fod(cmd) == _DIRE)
 			return (do_error(ISDIR_ERR, "", cmd), 0);
-		if (is_fod(cmd) == -1 || env_grepvalue("PATH") == NULL)
+		if (is_fod(cmd) == -1)
 		{
 			print(2, "minishell: ", 0);
 			print(2, cmd, 0);
@@ -95,7 +93,7 @@ int	is_valid_cmd(t_data *data, char *cmd)
 	while (paths && paths[i])
 	{
 		paths[i] = _strjoin(paths[i], "/");
-		data->program_path = ft_strjoin(paths[i], cmd);
+		data->program_path = _strjoin(paths[i], cmd);
 		if (access(data->program_path, X_OK) == 0
 			&& is_fod(data->program_path) == _FILE)
 			break ;

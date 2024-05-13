@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 18:40:07 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/13 09:00:38 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ char		*get_prompt(void);
 /**
  * FREE FREE FREEEEE :)
 */
+void		child_proc_free(t_cmd *cmdptr, t_data *data);
 void		free_tab(char **array);
 void		_free(void);
 void		restore(t_data *data);
