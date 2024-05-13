@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 08:54:08 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 14:55:26 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/13 09:55:11 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,24 @@ int	strnum(char *s)
 
 void	__exit(t_cmd *cmd)
 {
-	char	**argv;
+	char	**av;
 
-	argv = cmd->argv;
-	if (argv[1] == NULL)
+	av = cmd->argv;
+	if (av[1] == NULL)
 	{
 		print(1, "exit", 1);
 		safe_exit(0);
 	}
-	if (strnum(argv[1]) == 0 && get_argsc(argv) >= 2)
+	if ((strnum(av[1]) == 0 && get_argsc(av) >= 2) || (ft_atoi(av[1]) == -1 && av[1][0] != '-'))
 	{
 		print(1, "exit", 1);
-		custom_err(argv[0], argv[1], "numeric argument required", 255);
+		custom_err(av[0], av[1], "numeric argument required", 255);
 		safe_exit(255);
 	}
-	else if (get_argsc(argv) > 2)
+	else if (get_argsc(av) > 2)
 	{
-		custom_err(argv[0], "", "too many arguments", 1);
+		custom_err(av[0], "", "too many arguments", 1);
 		return ;
 	}
-	safe_exit(ft_atoi(argv[1]));
+	safe_exit(ft_atoi(av[1]));
 }

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 18:23:32 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/13 08:55:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	safe_exit(int status)
 	clear_history();
 	env_free_list(data->env);
 	data->env = NULL;
-	free (data->prompt);
+	free(data->prompt);
+	data->prompt = NULL;
 	close(data->def_in);
 	close(data->def_out);
 	exit(status);
