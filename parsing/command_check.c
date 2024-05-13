@@ -3,82 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/06 18:53:56 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:41:38 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	check_arguments(int ac, char **av)
+{
+	(void) av;
+	if (ac != 1)
+	{
+		print(2, "minishell : too many arguments", 1);
+		exit(1);
+	}
+}
 
 int	is_valid_input(void)
 {
 	t_data	*data;
 
 	data = data_hook(NULL);
-	split_usrin(data->usrinput);
+	if (check_qts(data->usrinput) == 0)
+		return (0);
+	if (split_usrin(data->usrinput) == 0)
+		return (0);
 	if (check_redirections(data->args) == 0)
-	{
-		int i = 0;
-		while (data->heredocs && data->heredocs[i]) {
-			t_arg	arg = (t_arg){data->heredocs[i], ARG_WORD, NULL};
-			close(open_heredoc(&arg));
-			i++;
-		}
-		return 0;
-	}
-	expand_input(data->args);
-	get_commands(data->args);
-	// while (data->cmds)
-	// {
-	// 	printf("in : %d, out : %d, cmd : %s\n", data->cmds->in, data->cmds->out, data->cmds->linked_argv->value);
-	// 	if (data->cmds->in != 0)
-	// 		close(data->cmds->in);
-	// 	data->cmds = data->cmds->next;
-	// }
-	return 1;
-	// no syntax error :)
-	// free 
-	// while (data->_args)
-	// {
-	// 	printf("--[%s]--\n", data->_args->value);
-	// 	data->_args = data->_args->next;
-	// }
-	// get_commands(data->_args);
-	// while (data->cmds)
-	// {
-		// printf("HEREDOCS OF : %s\n", data->cmds->_argv->value);
-		// int j = 0;
-		// while (data->cmds->heredocs && data->cmds->heredocs[j])
-		// {
-		// 	printf("[%s]", data->cmds->heredocs[j]);
-		// 	j++;
-		// }
-		// printf("\n");
-	// 	data->cmds = data->cmds->next;
-	// }
-	// init_heredocs(data->cmds);
-	// for (int i = 0; data->cmds[i].argv; i++)
-	// {
-	// 	data->cmds[i].out = 1;
-	// 	for (int j = 0;data->cmds[i].argv[j]; j++)
-	// 	{
-	// 		printf("[%s %d] ", data->cmds[i].argv[j], data->cmds[i].flags[j].is_io_op);
-	// 	}
-	// 	printf("in : %d , out : %d", data->cmds[i].in, data->cmds[i].out);
-	// 	printf("\n");
-	// }
-	// data->syn_err = 0;
-	// return (0);
-	// if (data->usrinput == NULL)
-	// 	return (0);
-	// if (check_redirections(data->args) == 0)
-	// 	return (0);
-	// expand_input(data->args);
-	// if (data->args == 0 || *data->args == NULL)
-	// 	return (0);
-	// get_commands(data->_args);
+		return (0);
+	if (get_commands(data->args) == 0)
+		return (0);
 	return (1);
 }
 
@@ -101,16 +57,24 @@ int	is_fod(char *name)
 
 int	is_valid(char *cmd)
 {
+	if (env_grepvalue("PATH") == NULL && is_fod(cmd) == _DIRE)
+		return (do_error(ISDIR_ERR, "", cmd), 0);
 	if (_strlen(cmd) == 0)
-		return (do_error(COMDNF_ERR, cmd), 0);
-	if (ft_strchr(cmd, '/') || ft_strchr(cmd, '.'))
+		return (do_error(COMDNF_ERR, "", cmd), 0);
+	if (ft_strchr(cmd, '/'))
 	{
-		if (is_fod(cmd) == _FILE && access(cmd, X_OK) == 0)
-			return (do_error(PERMIDEN_ERR, cmd), 0);
+		if (is_fod(cmd) == _FILE && access(cmd, X_OK) != 0)
+			return (do_error(PERMIDEN_ERR, "", cmd), 0);
 		if (is_fod(cmd) == _DIRE)
-			return (do_error(ISDIR_ERR, cmd), 0);
-		if (is_fod(cmd) == 0)
-			return (do_error(NSFODIR_ERR, cmd), 0);
+			return (do_error(ISDIR_ERR, "", cmd), 0);
+		if (is_fod(cmd) == -1)
+		{
+			print(2, "minishell: ", 0);
+			print(2, cmd, 0);
+			print(2, ": No such file or directory", 1);
+			data_hook(NULL)->exit_status = 127 << 8;
+			return (0);
+		}
 	}
 	return (1);
 }
@@ -125,21 +89,19 @@ int	is_valid_cmd(t_data *data, char *cmd)
 	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == 0)
 		return (data->program_path = _strdup(cmd), 1);
 	paths = ft_split(env_grepvalue("PATH"), ':');
-	if (paths == NULL)
-		safe_exit(-1);
 	i = 0;
 	while (paths && paths[i])
 	{
 		paths[i] = _strjoin(paths[i], "/");
-		data->program_path = ft_strjoin(paths[i], cmd);
-		if (access(data->program_path, X_OK) == 0)
+		data->program_path = _strjoin(paths[i], cmd);
+		if (access(data->program_path, X_OK) == 0
+			&& is_fod(data->program_path) == _FILE)
 			break ;
 		free (data->program_path);
 		data->program_path = NULL;
 		i++;
 	}
-	free_tab(paths);
 	if (data->program_path == NULL)
-		do_error(COMDNF_ERR, cmd);
+		do_error(COMDNF_ERR, "", cmd);
 	return (data->program_path != NULL);
 }

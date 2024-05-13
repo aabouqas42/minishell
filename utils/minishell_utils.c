@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 19:49:58 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:23:32 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ void	safe_exit(int status)
 	t_data	*data;
 
 	data = data_hook(NULL);
+	restore(data);
 	free (data->usrinput);
 	data->usrinput = NULL;
 	free (data->program_path);
 	data->program_path = NULL;
-	// free_tab(data->args);
 	clear_history();
 	env_free_list(data->env);
 	data->env = NULL;
 	free (data->prompt);
-	if (status == -1)
-		print(1, "exit", 1);
+	close(data->def_in);
+	close(data->def_out);
 	exit(status);
 }
 
@@ -53,4 +53,21 @@ char	*get_prompt(void)
 		safe_exit(-1);
 	prompt = _strjoin(user, "@1337.ma $> ");
 	return (prompt);
+}
+
+void	init_clear_argv(t_cmd *cmd)
+{
+	t_arg	*args;
+
+	args = cmd->linked_argv;
+	cmd->argv = NULL;
+	while (args)
+	{
+		if (args->type == ARG_REDIN || args->type == ARG_REDOUT
+			|| args->type == ARG_APPEND || args->type == ARG_HERDOC)
+			args = args->next;
+		else
+			cmd->argv = _realloc(cmd->argv, args->value);
+		args = args->next;
+	}
 }

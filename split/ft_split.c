@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/06 17:34:25 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:51:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ char	*skiper(char *str)
 	while (str && *str && _spaces(*str))
 		str++;
 	return (str);
+}
+
+int	_spaces(int c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
 }
 
 size_t	is_symbole(char *str)
@@ -40,10 +45,39 @@ size_t	is_symbole(char *str)
 		if (ft_strncmp(">", str, 1) == 0)
 			t_arg_add(_strnjoin(NULL, str, 1), ARG_REDOUT);
 	}
+	return (*str != '\0');
+}
+
+int	mini_api(char *res)
+{
+	t_data	*data;
+	t_arg	*lastarg;
+	char	*save;
+	int		heredoc_expand;
+
+	data = data_hook(NULL);
+	heredoc_expand = (_strchr(res, DQT) || _strchr(res, SQT));
+	if (!_strchr(res, '$') || (t_arg_get_last(data->args)
+			&& t_arg_get_last(data->args)->type == ARG_HERDOC))
+		res = exp_with_no_qts(res, 1);
+	else
+	{
+		lastarg = t_arg_get_last(data->args);
+		save = _strdup(res);
+		res = exp_with_qts(res, 0);
+		split_expanded(res);
+		if (lastarg && lastarg->type >= 2 && lastarg->type <= 5
+			&& (res == NULL || t_arg_size(lastarg->next) > 1))
+			return (do_error(AMBIGUOUS_ERR, "", save), free(save), 0);
+		return (free(save), free(res), 1);
+	}
+	if (heredoc_expand)
+		return (t_arg_add(res, ARG_QT), 1);
+	t_arg_add(res, ARG_WORD);
 	return (1);
 }
 
-void	split_usrin(char *usr_in)
+int	split_usrin(char *usr_in)
 {
 	char	*res;
 	char	qt;
@@ -62,10 +96,9 @@ void	split_usrin(char *usr_in)
 			res = _strnjoin(res, usr_in, 1);
 			usr_in++;
 		}
-		if (_strchr(res, DQT) || _strchr(res, SQT))
-			t_arg_add(res, ARG_QT);
-		else
-			t_arg_add(res, ARG_WORD);
+		if (mini_api(res) == 0)
+			return (0);
 		usr_in += is_symbole(usr_in);
 	}
+	return (1);
 }

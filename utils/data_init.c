@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 17:03:54 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:19:14 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 void	export_default_envs(void)
 {
+	char	*curr_path;
+
+	curr_path = get_curr_path(1);
 	if (env_grepvalue("PATH") == NULL)
-		env_export("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
+		env_export("PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	if (env_grepvalue("SHLVL") == NULL)
 		env_export("SHLVL", "1");
-	if (env_grepvalue("PWD") == NULL)
-		env_export("PWD", get_curr_path());
+	if (curr_path != NULL)
+	{
+		env_export("PWD", curr_path);
+		free (curr_path);
+	}
 }
 
 void	export_base_envs(char **base_env)
@@ -31,7 +37,7 @@ void	export_base_envs(char **base_env)
 	{
 		value = ft_strchr(*base_env, '=');
 		*(value) = '\0';
-		if (is_same(*base_env, "SHLVL"))
+		if (str_equal(*base_env, "SHLVL"))
 		{
 			if (ft_atoi(value +1) == 999)
 				env_export(*base_env, "");
@@ -53,11 +59,32 @@ void	export_base_envs(char **base_env)
 
 void	data_init(char **base_env)
 {
-	t_data	*data;
+	t_data		*data;
+	extern int	rl_catch_signals;
 
 	data = data_hook(NULL);
 	ft_bzero(data, sizeof(t_data));
 	data->prompt = get_prompt();
 	export_base_envs(base_env);
 	export_default_envs();
+	data->pwd = _strdup(env_grepvalue("PWD"));
+	tcgetattr(STDIN_FILENO, &data->old_term);
+	data->def_in = dup(0);
+	data->def_out = dup(1);
+	rl_catch_signals = 0;
+}
+
+void	close_unused_fds(int next)
+{
+	t_data	*data;
+
+	data = data_hook(NULL);
+	if (data->fds[1])
+		close(data->fds[1]);
+	if (data->oldfd)
+		close(data->oldfd);
+	if (next)
+		data->oldfd = data->fds[0];
+	else if (data->fds[0])
+		close(data->fds[0]);
 }

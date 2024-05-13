@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 17:23:09 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:41:16 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	set_out(t_cmd *cmd, t_arg **arg)
 		close(cmd->out);
 	cmd->out = open((*arg)->next->value, action, 0666);
 	if (cmd->out == -1)
-		exit(-1);
+	{
+		do_error(PERMIDEN_ERR, "", (*arg)->next->value);
+		exit(1);
+	}
 	*arg = (*arg)->next;
 }
 
@@ -77,25 +80,25 @@ void	set_io(t_cmd *cmd)
 		close (data->fds[1]);
 }
 
-void	set_in(t_cmd *cmd, t_arg **arg)
+int	set_in(t_cmd *cmd, t_arg **arg)
 {
 	if (cmd->in != 0)
 		close(cmd->in);
 	cmd->in = open((*arg)->next->value, O_RDONLY);
 	if (cmd->in == -1)
 	{
-		do_error(NSFODIR_ERR, (*arg)->next->value);
-		safe_exit(-1);
+		do_error(NSFODIR_ERR, "", (*arg)->next->value);
+		return (0);
 	}
 	(*arg) = (*arg)->next;
+	return (1);
 }
 
-void	get_argv(t_cmd *cmd)
+int	init_redirections(t_cmd *cmd)
 {
 	t_arg	*args;
 
 	args = cmd->linked_argv;
-	cmd->argv = NULL;
 	while (args)
 	{
 		if (args->type == ARG_REDOUT || args->type == ARG_APPEND)
@@ -103,9 +106,11 @@ void	get_argv(t_cmd *cmd)
 		else if (args->type == ARG_HERDOC)
 			args = args->next;
 		else if (args->type == ARG_REDIN)
-			set_in(cmd, &args);
-		else
-			cmd->argv = _realloc(cmd->argv, args->value);
+		{
+			if (set_in(cmd, &args) == 0)
+				return (0);
+		}
 		args = args->next;
 	}
+	return (1);
 }

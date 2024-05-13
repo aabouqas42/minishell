@@ -1,50 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 01:44:15 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/10 17:03:48 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/05/11 11:48:44 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/05/11 11:49:21 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	is_valid_flag(char *flag)
+int	unset(char **argv)
 {
-	size_t	i;
-
-	if (flag == NULL || *flag == '\0')
-		return (0);
-	i = flag[0] == '-';
-	while (flag && flag[i] && flag[i] == 'n')
-		i++;
-	return (i == _strlen(flag));
-}
-
-void	echo(char **argv)
-{
-	int		i;
-	int		new_line;
 	t_data	*data;
 
-	i = 1;
-	new_line = 1;
 	data = data_hook(NULL);
-	while (is_valid_flag(argv[i]))
+	while (argv && *argv)
 	{
-		new_line = 0;
-		i++;
+		if (env_valid_name(*argv))
+			env_unset(*argv, &data->env);
+		else
+			do_error(INVNAMEENV_ERR, "unset", *argv);
+		argv++;
 	}
-	while (argv[i])
-	{
-		print(1, argv[i], 0);
-		i++;
-		if (argv[i])
-			print(1, " ", 0);
-	}
-	if (new_line)
-		print(1, "\n", 0);
+	return (0);
 }

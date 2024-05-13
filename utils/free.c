@@ -3,14 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:37 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/06 20:30:24 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/13 09:54:15 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	_free_nodes(t_arg *nodes)
+{
+	t_arg	*next_node;
+
+	while (nodes)
+	{
+		next_node = nodes->next;
+		free (nodes);
+		nodes = next_node;
+	}
+}
+
+void	_free_child(void)
+{
+	t_data	*data;
+
+	data = data_hook(NULL);
+	_free_nodes(data->args);
+	data->args = NULL;
+	close(data->def_in);
+	close(data->def_out);
+	env_free_list(data->env);
+	data->env = NULL;
+	free(data->usrinput);
+	data->usrinput = NULL;
+	free(data->prompt);
+	data->prompt = NULL;
+	free (data->pwd);
+	data->pwd = NULL;
+}
+
+void	child_proc_free(t_cmd *cmdptr, t_data *data)
+{
+	t_cmd	*tmp;
+	t_cmd	*cmds;
+
+	cmds = data->cmds;
+	_free_child();
+	while (cmds)
+	{
+		tmp = cmds->next;
+		if (cmds != cmdptr)
+		{
+			if (cmds->in != 0)
+				close(cmds->in);
+			if (cmds->out != 1)
+				close(cmds->out);
+			free(cmds);
+		}
+		_free_nodes(cmds->linked_argv);
+		cmds = tmp;
+	}
+}
 
 void	free_tab(char **array)
 {
@@ -27,34 +81,26 @@ void	free_tab(char **array)
 	free(array);
 }
 
-void	free_matrix(char ***matrix)
-{
-	int	i;
-
-	if (matrix == NULL)
-		return ;
-	i = 0;
-	while (matrix[i] != NULL)
-	{
-		free_tab(matrix[i]);
-		i++;
-	}
-	free (matrix);
-}
-
 void	_free(void)
 {
 	t_data	*data;
+	t_cmd	*next_argv;
 
 	data = data_hook(NULL);
-	printf("[%p - %p]\n", data->args, data->cmds);
-	t_cmd_free(data->cmds);
-	free(data->args);
-	data->cmds = NULL;
-	// t_arg_free(data->args);
+	t_arg_free(data->args);
 	data->args = NULL;
-	free_tab(data->heredocs);
-	data->heredocs = NULL;
-	free (data->usrinput);
+	while (data->cmds)
+	{
+		next_argv = data->cmds->next;
+		free(data->cmds->argv);
+		_free_nodes(data->cmds->linked_argv);
+		free(data->cmds);
+		data->cmds = next_argv;
+	}
+	free(data->program_path);
+	data->program_path = NULL;
+	free_tab(data->env_2d);
+	data->env_2d = NULL;
+	free(data->usrinput);
 	data->usrinput = NULL;
 }
