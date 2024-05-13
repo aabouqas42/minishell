@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lalex-ku <lalex-ku@42sp.org.br>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:35:06 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/13 10:27:59 by mait-elk         ###   ########.fr       */
+/*   Created: 2022/06/22 17:32:45 by lalex-ku          #+#    #+#             */
+/*   Updated: 2022/06/22 17:32:50 by lalex-ku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
 
-int	pwd(void)
+int	main(int argc, char const *argv[])
 {
-	char	*pwd;
+	int	pid;
 
-	pwd = getcwd(NULL, 0);
-	if (pwd == NULL)
+	pid = fork();
+	open("infile", O_RDONLY);
+	while (1)
 	{
-		custom_err("pwd", "getcwd", "Unexpected Error", 255);
-		return (-1);
+		printf("Helloo miniHELL %i\n", pid);
+		sleep(1);
 	}
-	print(1, pwd, 1);
-	free(pwd);
 	return (0);
 }
