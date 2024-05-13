@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 10:17:44 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:50:03 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ void	program_exec(t_cmd *cmd, int first, int next)
 		pipe(data->fds);
 	child_pid = fork();
 	if (child_pid == -1)
-		return ((void)print(2, "Unexpected Error", 1));
+		return (print(2, "Unexpected Error", 1), safe_exit(1));
 	if (child_pid == 0)
 	{
 		(close(data->def_in), close(data->def_out));
 		if (init_redirections(cmd) == 0)
-			exit(1);
+			safe_exit(1);
 		(set_pipes(cmd, first, next), set_io(cmd));
 		if (is_builtin(cmd))
 			((void)run_builtin(cmd), exit(data->exit_status));
 		if (cmd->argv == NULL || is_valid_cmd(data, cmd->argv[0]) == 0)
-			exit(data->exit_status >> 8);
+			safe_exit(data->exit_status >> 8);
 		init_env_array();
 		execve(data->program_path, cmd->argv, data->env_2d);
-		exit(errno);
+		safe_exit(errno);
 	}
 	close_unused_fds(next);
 }
