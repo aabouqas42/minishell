@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:45:37 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/13 09:54:15 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:17:10 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,15 @@ void	child_proc_free(t_cmd *cmdptr, t_data *data)
 				close(cmds->in);
 			if (cmds->out != 1)
 				close(cmds->out);
+			_free_nodes(cmds->linked_argv);
+			cmds->linked_argv = NULL;
 			free(cmds);
 		}
-		_free_nodes(cmds->linked_argv);
+		else
+		{
+			_free_nodes(cmds->linked_argv);
+			cmds->linked_argv = NULL;
+		}
 		cmds = tmp;
 	}
 }
