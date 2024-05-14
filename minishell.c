@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 10:50:03 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:22:28 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	program_exec(t_cmd *cmd, int first, int next)
 		return (print(2, "Unexpected Error", 1), safe_exit(1));
 	if (child_pid == 0)
 	{
-		(close(data->def_in), close(data->def_out));
 		if (init_redirections(cmd) == 0)
 			safe_exit(1);
 		(set_pipes(cmd, first, next), set_io(cmd));
@@ -34,6 +33,7 @@ void	program_exec(t_cmd *cmd, int first, int next)
 		if (cmd->argv == NULL || is_valid_cmd(data, cmd->argv[0]) == 0)
 			safe_exit(data->exit_status >> 8);
 		init_env_array();
+		child_proc_free(cmd, data);
 		execve(data->program_path, cmd->argv, data->env_2d);
 		safe_exit(errno);
 	}
@@ -47,7 +47,9 @@ int	read_input(t_data *data)
 	{
 		if (isatty(0))
 		{
-			printf("\x1b[1A%sexit\n", data->prompt);
+			print(1, "\x1b[1A", 0);
+			print(1, data->prompt, 0);
+			print(1, "exit", 1);
 			safe_exit(127);
 		}
 		safe_exit(0);

@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:10:00 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 16:03:18 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:10:21 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sig_handle_sigint(int sig)
 		close(0);
 		return ;
 	}
-	printf("\n");
+	print(1, "", 1);
 	if (data && data->fix_doubleprt)
 		return ;
 	rl_on_new_line();
