@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:10:00 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 16:43:54 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:10:21 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	sig_handle_sigint(int sig)
 		close(0);
 		return ;
 	}
+	print(1, "", 1);
 	if (data && data->fix_doubleprt)
 		return ;
-	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

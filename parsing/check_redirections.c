@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/13 16:52:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:52:36 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ int	check_valid_redirect(char *file_name)
 
 int	check_syntax(t_arg *arg)
 {
-	if (arg && arg->type > 1 && arg->next == NULL)
+	if (arg->type > 1 && arg->next == NULL)
 		return (do_error(SYNTAX_ERR, "", "newline"), 0);
-	if (arg && (arg->type >= 3 && arg->type <= 5))
+	if ((arg->type >= 3 && arg->type <= 5))
 	{
 		if (check_valid_redirect(arg->next->value) == 0)
 			return (0);
 		if (arg->next->type > 1)
 			return (do_error(SYNTAX_ERR, "", arg->next->value), 0);
 	}
-	if (arg && arg->type == ARG_HERDOC && arg->next->type > 1)
+	if (arg->type == ARG_HERDOC && arg->next->type > 1)
 		return (do_error(SYNTAX_ERR, "", arg->next->value), 0);
-	if (arg && arg->type == ARG_PIPE && arg->next->type == ARG_PIPE)
+	if (arg->type == ARG_PIPE && arg->next->type == ARG_PIPE)
 		return (do_error(SYNTAX_ERR, "", arg->next->value), 0);
 	return (1);
 }

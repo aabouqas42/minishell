@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 16:50:18 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:51:11 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ int	split_usrin(char *usr_in)
 	char	*res;
 	char	qt;
 
-	while (usr_in && *usr_in)
+	while (*usr_in)
 	{
 		usr_in = skiper(usr_in);
 		res = NULL;
 		qt = 0;
-		while (usr_in && *usr_in && (!_spaces(*usr_in) || qt))
+		while (*usr_in && (!_spaces(*usr_in) || qt))
 		{
 			if ((*usr_in == DQT && qt != SQT) || (*usr_in == SQT && qt != DQT))
 				qt = (qt == 0) * (*usr_in);
