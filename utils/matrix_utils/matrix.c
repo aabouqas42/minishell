@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 16:13:26 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/14 20:14:55 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static int	stdin_closed(t_cmd cmd)
 
 int	get_commands(t_arg *args)
 {
+	t_arg	*tmp;
 	t_cmd	cmd;
 
 	data_hook(NULL)->exit_status = 0;
@@ -55,7 +56,16 @@ int	get_commands(t_arg *args)
 			data_hook(NULL)->fix_doubleprt = 2;
 			if (args->type == ARG_HERDOC && args->next)
 				create_heredoc(&cmd, args->next);
-			t_arg_put(args->value, args->type, &cmd.linked_argv);
+			tmp = args->list;
+			if (tmp)
+			{
+				while (tmp)
+				{
+					t_arg_put(tmp->value, tmp->type, &cmd.linked_argv);
+					tmp = tmp->next;
+				}
+			}else
+				t_arg_put(args->value, args->type, &cmd.linked_argv);
 			data_hook(NULL)->fix_doubleprt = 1;
 			args = args->next;
 		}

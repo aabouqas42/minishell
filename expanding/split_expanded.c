@@ -6,13 +6,13 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:15:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 09:08:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:07:12 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static size_t	is_symbole(char *str)
+static size_t	is_symbole(char *str, t_arg **head)
 {
 	t_data	*data;
 
@@ -21,11 +21,11 @@ static size_t	is_symbole(char *str)
 		return (0);
 	if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
 	{
-		t_arg_add(_strnjoin(NULL, str, 2), ARG_WORD);
+		t_arg_put(_strnjoin(NULL, str, 2), ARG_WORD, head);
 		return (2);
 	}
 	if (str && *str && ft_strchr("<>|", *str) != NULL)
-		t_arg_add(_strnjoin(NULL, str, 1), ARG_WORD);
+		t_arg_put(_strnjoin(NULL, str, 1), ARG_WORD, head);
 	return (1);
 }
 
@@ -57,7 +57,7 @@ char	*___expand_arg(char *str, int herdoc)
 	return (free (ptr), res);
 }
 
-void	split_expanded(char *usr_in)
+void	split_expanded(char *usr_in, t_arg	**head)
 {
 	char	*res;
 	char	qt;
@@ -75,13 +75,13 @@ void	split_expanded(char *usr_in)
 				if (qt == 0)
 					res = _strnjoin(res, "", 1);
 			}
-			else if (_strchr("<>|", *usr_in) && !qt)
+			if (_strchr("<>|", *usr_in) && !qt)
 				break ;
 			else
 				res = _strnjoin(res, usr_in, 1);
 			usr_in++;
 		}
-		t_arg_add(res, ARG_WORD);
-		usr_in += is_symbole(usr_in);
+		t_arg_put(res, ARG_WORD, head);
+		usr_in += is_symbole(usr_in, head);
 	}
 }

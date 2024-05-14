@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 09:00:38 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:02:37 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_flag
 typedef struct s_arg
 {
 	char			*value;
+	struct s_arg	*list;
 	t_arg_type		type;
 	struct s_arg	*next;
 }	t_arg;
@@ -200,7 +201,7 @@ char		*exp_with_qts(char *str, int hd);
 int			check_redirections(t_arg *usrin);
 void		set_out(t_cmd *cmd, t_arg **arg);
 int			init_redirections(t_cmd *cmd);
-void		split_expanded(char *usr_in);
+void		split_expanded(char *usr_in, t_arg	**head);
 int			open_heredoc(t_arg *target);
 void		init_clear_argv(t_cmd *cmd);
 void		data_init(char **base_env);
