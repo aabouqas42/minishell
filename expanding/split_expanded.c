@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:15:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 09:08:14 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/14 19:49:16 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*___expand_arg(char *str, int herdoc)
 	char	*ptr;
 	char	*res;
 	char	qt;
+
 
 	(1337) && (qt = 0, res = NULL, ptr = str);
 	while (str && *str != '\0')

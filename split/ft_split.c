@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 14:51:11 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:05:44 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ int	mini_api(char *res)
 		lastarg = t_arg_get_last(data->args);
 		save = _strdup(res);
 		res = exp_with_qts(res, 0);
+		printf("%s\n", res);
 		split_expanded(res);
-		if (lastarg && lastarg->type >= 2 && lastarg->type <= 5
+		if (lastarg && lastarg->type > 2 && lastarg->type <= 5
 			&& (res == NULL || t_arg_size(lastarg->next) > 1))
 			return (do_error(AMBIGUOUS_ERR, "", save), free(save), 0);
 		return (free(save), free(res), 1);
@@ -82,12 +83,12 @@ int	split_usrin(char *usr_in)
 	char	*res;
 	char	qt;
 
-	while (*usr_in)
+	while (usr_in && *usr_in)
 	{
 		usr_in = skiper(usr_in);
 		res = NULL;
 		qt = 0;
-		while (*usr_in && (!_spaces(*usr_in) || qt))
+		while (usr_in && *usr_in && (!_spaces(*usr_in) || qt))
 		{
 			if ((*usr_in == DQT && qt != SQT) || (*usr_in == SQT && qt != DQT))
 				qt = (qt == 0) * (*usr_in);
