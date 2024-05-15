@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 09:00:38 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:24:18 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void		init_env_array(void);
 */
 char		*_strnjoin(char *str1, char *str2, size_t size);
 char		**_realloc(char **old_tab, char *to_append);
+int			_str_n_equal(char *s1, char *s2, size_t n);
 void		print(int fd, char *str, int endl);
 char		*_strjoin(char *str1, char *str2);
 char		*_strndup(char *s1, size_t size);

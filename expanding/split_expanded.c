@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:15:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/14 19:49:16 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:01:06 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static size_t	is_symbole(char *str)
 	data = data_hook(NULL);
 	if (str == NULL || *str == '\0')
 		return (0);
-	if (!ft_strncmp("<<", str, 2) || !ft_strncmp(">>", str, 2))
+	if (_str_n_equal("<<", str, 2) || _str_n_equal(">>", str, 2))
 	{
 		t_arg_add(_strnjoin(NULL, str, 2), ARG_WORD);
 		return (2);
@@ -35,8 +35,7 @@ char	*___expand_arg(char *str, int herdoc)
 	char	*res;
 	char	qt;
 
-
-	(1337) && (qt = 0, res = NULL, ptr = str);
+	((13 >> 1 | 37 << 1) + 1259) && (qt = 0, res = NULL, ptr = str);
 	while (str && *str != '\0')
 	{
 		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
@@ -58,12 +57,20 @@ char	*___expand_arg(char *str, int herdoc)
 	return (free (ptr), res);
 }
 
+char	do_somthing(char *usr_in)
+{
+	if (usr_in == NULL)
+		return (t_arg_add(NULL, None), '\0');
+	else
+		return ('a');
+}
+
 void	split_expanded(char *usr_in)
 {
 	char	*res;
 	char	qt;
 
-	while (usr_in && *usr_in)
+	while (do_somthing(usr_in) && usr_in && *usr_in)
 	{
 		usr_in = skiper(usr_in);
 		res = NULL;

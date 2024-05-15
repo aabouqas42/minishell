@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:38:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/14 12:43:15 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:29:52 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	t_arg_add(char *value, t_arg_type type)
 	t_arg	*end;
 
 	data = data_hook(NULL);
-	if (value == NULL)
-		return ;
 	end = data->args;
+	if (value == NULL && type != -1)
+		return ;
 	if (end == NULL)
 	{
 		data->args = _calloc(sizeof(t_arg));

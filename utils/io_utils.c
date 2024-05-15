@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 15:41:16 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:07:33 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,27 @@ void	set_io(t_cmd *cmd)
 
 int	set_in(t_cmd *cmd, t_arg **arg)
 {
-	if (cmd->in != 0)
-		close(cmd->in);
-	cmd->in = open((*arg)->next->value, O_RDONLY);
-	if (cmd->in == -1)
+	t_arg	*tmp;
+	int		fd;
+
+	fd = open((*arg)->next->value, O_RDONLY);
+	if (fd == -1)
 	{
+		cmd->in = fd;
 		do_error(NSFODIR_ERR, "", (*arg)->next->value);
 		return (0);
 	}
 	(*arg) = (*arg)->next;
+	tmp = *arg;
+	while (tmp)
+	{
+		if (tmp->type == ARG_HERDOC)
+			return (1);
+		tmp = tmp->next;
+	}
+	if (cmd->in != 0)
+		close(cmd->in);
+	cmd->in = fd;
 	return (1);
 }
 

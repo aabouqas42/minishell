@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/14 16:05:44 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:28:35 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,23 @@ int	_spaces(int c)
 
 size_t	is_symbole(char *str)
 {
-	if (!ft_strncmp("<<", str, 2))
+	if (_str_n_equal("<<", str, 2))
 	{
 		t_arg_add(_strnjoin(NULL, str, 2), ARG_HERDOC);
 		return (2);
 	}
-	if (!ft_strncmp(">>", str, 2))
+	if (_str_n_equal(">>", str, 2))
 	{
 		t_arg_add(_strnjoin(NULL, str, 2), ARG_APPEND);
 		return (2);
 	}
 	if (str && *str && ft_strchr("<>|", *str) != NULL)
 	{
-		if (ft_strncmp("|", str, 1) == 0)
+		if (_str_n_equal("|", str, 1))
 			t_arg_add(_strnjoin(NULL, str, 1), ARG_PIPE);
-		if (ft_strncmp("<", str, 1) == 0)
+		if (_str_n_equal("<", str, 1))
 			t_arg_add(_strnjoin(NULL, str, 1), ARG_REDIN);
-		if (ft_strncmp(">", str, 1) == 0)
+		if (_str_n_equal(">", str, 1))
 			t_arg_add(_strnjoin(NULL, str, 1), ARG_REDOUT);
 	}
 	return (*str != '\0');
@@ -56,20 +56,17 @@ int	mini_api(char *res)
 	int		heredoc_expand;
 
 	data = data_hook(NULL);
+	lastarg = t_arg_get_last(data->args);
 	heredoc_expand = (_strchr(res, DQT) || _strchr(res, SQT));
-	if (!_strchr(res, '$') || (t_arg_get_last(data->args)
-			&& t_arg_get_last(data->args)->type == ARG_HERDOC))
+	if (!_strchr(res, '$') || (lastarg && lastarg->type == ARG_HERDOC))
 		res = exp_with_no_qts(res, 1);
 	else
 	{
-		lastarg = t_arg_get_last(data->args);
 		save = _strdup(res);
 		res = exp_with_qts(res, 0);
-		printf("%s\n", res);
 		split_expanded(res);
-		if (lastarg && lastarg->type > 2 && lastarg->type <= 5
-			&& (res == NULL || t_arg_size(lastarg->next) > 1))
-			return (do_error(AMBIGUOUS_ERR, "", save), free(save), 0);
+		if (lastarg && lastarg->type > 2 && lastarg->type <= 5 && (res == NULL || t_arg_size(lastarg->next) > 1))
+			return (do_error(AMBIGUOUS_ERR, "", save), free(res), free(save), 0);
 		return (free(save), free(res), 1);
 	}
 	if (heredoc_expand)
@@ -95,7 +92,7 @@ int	split_usrin(char *usr_in)
 			if (ft_strchr("<>|", *usr_in) && !qt)
 				break ;
 			res = _strnjoin(res, usr_in, 1);
-			usr_in++;
+			usr_in+= (*usr_in != '\0');
 		}
 		if (mini_api(res) == 0)
 			return (0);

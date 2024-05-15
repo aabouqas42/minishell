@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/14 15:39:58 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:06:09 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ int	read_input(t_data *data)
 {
 	data->usrinput = readline(data->prompt);
 	if (data->usrinput == NULL)
-		safe_exit(data->exit_status);
+	{
+		print(1, "\x1b[1A", 0);
+		print(1, data->prompt, 0);
+		print(1, "exit", 1);
+		safe_exit(127);
+	}
 	if (*data->usrinput)
 		add_history(data->usrinput);
 	if (*data->usrinput == '\0')
@@ -109,8 +114,11 @@ int	main(int ac, char **av, char **env)
 			data.fix_doubleprt = 1;
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
+			{
+				// printf("%d\n", data.exit_status >> 8);
 				if (data.exit_status >> 8 == -1)
-					safe_exit(-1);
+					safe_exit(data.exit_status);
+			}
 			data.fix_doubleprt = 0;
 		}
 		restore(&data);

@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+         #
+#    By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/10 20:25:49 by mait-elk          #+#    #+#              #
-#    Updated: 2024/05/13 11:24:41 by mait-elk         ###   ########.fr        #
+#    Updated: 2024/05/15 20:08:09 by aabouqas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 CC = cc $(CFLAGS)
 INC = include/
 LIBFT = libft/libft.a
@@ -18,7 +18,7 @@ SRCS = 	parsing/command_check.c parsing/check_redirections.c parsing/args_parsin
 		utils/global_utils.c \
 		utils/minishell_utils.c\
 		split/ft_split.c \
-		utils/str/str_utils.c \
+		utils/str_utils/s1.c utils/str_utils/s2.c \
 		utils/protected/protected_funcs.c\
 		utils/matrix_utils/matrix.c \
 		utils/data_init.c utils/free.c \
