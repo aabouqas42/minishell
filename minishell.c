@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 10:47:09 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 14:09:20 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	read_input(t_data *data)
 		print(1, "\x1b[1A", 0);
 		print(1, data->prompt, 0);
 		print(1, "exit", 1);
-		safe_exit(127);
+		safe_exit(data->exit_status >> 8);
 	}
 	if (*data->usrinput)
 		add_history(data->usrinput);

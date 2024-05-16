@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 13:45:13 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 15:02:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,16 @@ int	go_to_home(t_data *data)
 		free (old_path);
 		return (0);
 	}
-	if (chdir(home) == 0)
+	if (chdir(home) != 0)
 	{
-		env_export("OLD_PWD", old_path);
-		env_export("PWD", home);
-		free (data->pwd);
-		data->pwd = _strdup(home);
+		do_error(NOTDIRECTORY_ERR, "cd", home);
+		free (old_path);
+		return (0);
 	}
+	env_export("OLD_PWD", old_path);
+	env_export("PWD", home);
+	free (data->pwd);
+	data->pwd = _strdup(home);
 	free (old_path);
 	return (1);
 }
