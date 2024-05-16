@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/15 19:06:09 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:00:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int	main(int ac, char **av, char **env)
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
 			{
-				// printf("%d\n", data.exit_status >> 8);
 				if (data.exit_status >> 8 == -1)
 					safe_exit(data.exit_status);
 			}
