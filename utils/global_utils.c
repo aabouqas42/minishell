@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/15 19:26:50 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 12:01:52 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	fix_qt_err(char *str)
+{
+	if (*str == '"')
+		*str = 2;
+	if (*str == '\"')
+		*str = 1;
+	return (1);
+}
 
 t_arg_type	is_io_op(char	*str)
 {

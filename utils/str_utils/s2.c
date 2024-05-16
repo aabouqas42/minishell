@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   s2.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:48:03 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 11:12:09 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 11:54:47 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	_str_n_equal(char *s1, char *s2, size_t n)
 	}
 	return (1);
 }
+
 size_t	_strlenc(char *str, char c)
 {
 	size_t	size;
@@ -88,4 +89,3 @@ void	*_calloc(size_t size)
 		res[size] = '\0';
 	return ((void *)res);
 }
-

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/16 11:28:09 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 20:08:09 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_ambiguous(t_arg *lastarg, char *res, char *reason)
 		type = lastarg->type;
 		if (type == ARG_APPEND || type == ARG_REDIN || type == ARG_REDOUT)
 		{
-			if (res == NULL || t_arg_size(lastarg->next) > 1)
+			if (res == NULL || *res == '\0' || t_arg_size(lastarg->next) > 1)
 			{
 				do_error(AMBIGUOUS_ERR, "", reason);
 				free (reason);

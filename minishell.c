@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 14:09:20 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 20:39:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	program_exec(t_cmd *cmd, int first, int next)
 		execve(data->program_path, cmd->argv, data->env_2d);
 		safe_exit(errno);
 	}
+	cmd->pid = child_pid;
 	close_unused_fds(next);
 }
 
@@ -99,10 +100,36 @@ void	restore(t_data *data)
 	_free();
 }
 
+void	wait_childs()
+{
+	t_data	*data;
+	t_cmd	*cmds;
+	int		exit_status;
+
+	data = data_hook(NULL);
+	cmds = data->cmds;
+	while (cmds)
+	{
+		waitpid(cmds->pid, &exit_status, 0);
+		cmds = cmds->next;
+	}
+#error FIX SIGNALS TESTS : [> $ajsdajsd , ls | asdasasd , cat + ctrl c]
+	printf("[%d]{%d}\n", data->exit_status, exit_status);
+	if (WIFSIGNALED(exit_status) && data->exit_status == 0)
+	{
+		if (exit_status == 3)
+			print(2, "Quit: 3", 1);
+		data->exit_status = (exit_status + 128) << 8;
+	}
+	else if (data->exit_status == 0)
+		data->exit_status = exit_status;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data		data;
 
+	// atexit(s);
 	check_arguments(ac, av);
 	data_hook(&data);
 	data_init(env);
@@ -113,11 +140,7 @@ int	main(int ac, char **av, char **env)
 		{
 			data.fix_doubleprt = 1;
 			handle_input(&data);
-			while (waitpid(-1, &data.exit_status, 0) != -1)
-			{
-				if (data.exit_status >> 8 == -1)
-					safe_exit(data.exit_status);
-			}
+			wait_childs();
 			data.fix_doubleprt = 0;
 		}
 		restore(&data);

@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 11:23:14 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:31:15 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_cmd
 {
 	t_arg			*linked_argv;
 	char			**argv;
+	int				pid;
 	int				in;
 	int				out;
 	struct s_cmd	*next;
@@ -213,6 +214,7 @@ int			get_argsc(char **args);
 t_arg_type	is_io_op(char	*str);
 char		*get_curr_path(int p);
 int			check_qts(char *str);
+int			fix_qt_err(char *str);
 int			is_valid_input(void);
 void		set_io(t_cmd *cmd);
 int			is_fod(char *name);

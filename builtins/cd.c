@@ -6,11 +6,24 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/16 15:02:30 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:00:55 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	check_perm(char *name)
+{
+	if (name)
+	{
+		if (is_fod(name) == _DIRE && access(name, X_OK) == -1)
+		{
+			custom_err("cd", name, "Permission denied", 1);
+			return (0);
+		}
+	}
+	return (1);
+}
 
 char	*get_curr_path(int p)
 {
@@ -71,8 +84,9 @@ int	cd(char **argv)
 	if (chdir(argv[1]) != 0)
 	{
 		free (old_path);
-		custom_err("cd", argv[1], "No such file or directory", 1);
-		return (1);
+		if (check_perm(argv[1]) == 0)
+			return (1);
+		return (custom_err("cd", argv[1], "No such file or directory", 1), 1);
 	}
 	free (data->pwd);
 	data->pwd = get_curr_path(1);
