@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 10:47:09 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 14:52:53 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	read_input(t_data *data)
 		print(1, "\x1b[1A", 0);
 		print(1, data->prompt, 0);
 		print(1, "exit", 1);
-		safe_exit(127);
+		safe_exit(data->exit_status >> 8);
 	}
 	if (*data->usrinput)
 		add_history(data->usrinput);
@@ -115,8 +115,8 @@ int	main(int ac, char **av, char **env)
 			handle_input(&data);
 			while (waitpid(-1, &data.exit_status, 0) != -1)
 			{
-				if (data.exit_status >> 8 == -1)
-					safe_exit(data.exit_status);
+				if (WTERMSIG(data.exit_status) > 0)
+					data.exit_status = (128 + WTERMSIG(data.exit_status)) << 8;
 			}
 			data.fix_doubleprt = 0;
 		}
