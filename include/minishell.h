@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 10:05:45 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:49:34 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,6 @@ void		check_arguments(int ac, char **av);
 /**
  * 	IO OPERATORS
 */
-void		rl_replace_line (const char *text, int clear_undo);
 void		set_pipes(t_cmd *cmd, int first, int next);
 int			is_var(char curr_char, char next_char);
 int			is_valid_cmd(t_data *data, char *cmd);
