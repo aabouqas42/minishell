@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 09:00:38 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:05:45 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void		init_env_array(void);
 */
 char		*_strnjoin(char *str1, char *str2, size_t size);
 char		**_realloc(char **old_tab, char *to_append);
+int			_str_n_equal(char *s1, char *s2, size_t n);
 void		print(int fd, char *str, int endl);
 char		*_strjoin(char *str1, char *str2);
 char		*_strndup(char *s1, size_t size);
@@ -191,6 +192,7 @@ void		check_arguments(int ac, char **av);
 /**
  * 	IO OPERATORS
 */
+void		rl_replace_line (const char *text, int clear_undo);
 void		set_pipes(t_cmd *cmd, int first, int next);
 int			is_var(char curr_char, char next_char);
 int			is_valid_cmd(t_data *data, char *cmd);

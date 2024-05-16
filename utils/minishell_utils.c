@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/13 08:55:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:08:57 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	init_clear_argv(t_cmd *cmd)
 			args = args->next;
 		else
 			cmd->argv = _realloc(cmd->argv, args->value);
-		args = args->next;
+		if (args)
+			args = args->next;
 	}
 }

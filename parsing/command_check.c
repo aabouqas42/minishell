@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:55:21 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/13 10:41:38 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:02:27 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void	check_arguments(int ac, char **av)
 {
 	(void) av;
+	// if (!isatty(0))
+	// {
+	// 	print(2, "minishell: TTY Required :)", 1);
+	// 	exit(1);
+	// }
 	if (ac != 1)
 	{
 		print(2, "minishell : too many arguments", 1);

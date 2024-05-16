@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/11 09:13:05 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:26:50 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ t_arg_type	is_io_op(char	*str)
 {
 	if (str == NULL)
 		return (None);
-	if (ft_strncmp(str, ">>", 3) == 0)
+	if (_str_n_equal(str, ">>", 3))
 		return (ARG_APPEND);
-	if (ft_strncmp(str, "<<", 3) == 0)
+	if (_str_n_equal(str, "<<", 3))
 		return (ARG_HERDOC);
 	if (ft_strchr("<>|", *str) && *(str + 1) == 0)
 	{

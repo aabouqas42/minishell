@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_list_read.c                                    :+:      :+:    :+:   */
+/*   s2.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 02:17:22 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/15 19:27:09 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/05/15 19:17:32 by aabouqas          #+#    #+#             */
+/*   Updated: 2024/05/15 19:23:19 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-t_env	*env_get(char *name, t_data	*data)
+int	_str_n_equal(char *s1, char *s2, size_t n)
 {
-	t_env	*i;
+	size_t	i;
 
-	if (name && data && *name != '\0')
+	if (s1 == NULL || s2 == NULL)
+		return (0);
+	i = 0;
+	while ((s1[i] || s2[i]) && i < n)
 	{
-		i = data->env;
-		while (i)
-		{
-			if (_str_n_equal(i->name, name, _strlen(name) + 1))
-				return (i);
-			i = i->next;
-		}
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
 	}
-	return (NULL);
+	return (1);
 }
