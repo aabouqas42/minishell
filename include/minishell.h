@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 10:49:34 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/16 11:23:14 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ int			pwd(void);
 */
 void		do_error(t_error_type errtype, char *progname, char *reason);
 void		custom_err(char *progname, char *reason, char *msg, int es);
+int			check_ambiguous(t_arg *lastarg, char *res, char *reason);
 void		check_arguments(int ac, char **av);
 
 /**

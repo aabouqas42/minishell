@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/15 16:08:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 11:44:51 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	init_clear_argv(t_cmd *cmd)
 	cmd->argv = NULL;
 	while (args)
 	{
-		if (args->type == ARG_REDIN || args->type == ARG_REDOUT
-			|| args->type == ARG_APPEND || args->type == ARG_HERDOC)
+		if (args->type >= 3)
 			args = args->next;
 		else
 			cmd->argv = _realloc(cmd->argv, args->value);

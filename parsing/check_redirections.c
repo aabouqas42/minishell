@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:07:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/15 16:24:46 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 11:28:09 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,27 @@ int	check_valid_redirect(char *file_name)
 		return (0);
 	}
 	return (1);
+}
+
+int	check_ambiguous(t_arg *lastarg, char *res, char *reason)
+{
+	t_arg_type	type;
+
+	if (lastarg)
+	{
+		type = lastarg->type;
+		if (type == ARG_APPEND || type == ARG_REDIN || type == ARG_REDOUT)
+		{
+			if (res == NULL || t_arg_size(lastarg->next) > 1)
+			{
+				do_error(AMBIGUOUS_ERR, "", reason);
+				free (reason);
+				free (res);
+				return (1);
+			}
+		}
+	}
+	return (0);
 }
 
 int	check_syntax(t_arg *arg)
@@ -43,7 +64,10 @@ int	check_syntax(t_arg *arg)
 int	check_redirections(t_arg *usrin)
 {
 	if (usrin && usrin->type == ARG_PIPE)
-		return (do_error(SYNTAX_ERR, "", usrin->value), 0);
+	{
+		do_error(SYNTAX_ERR, "", usrin->value);
+		return (0);
+	}
 	while (usrin)
 	{
 		if (check_syntax(usrin) == 0)
