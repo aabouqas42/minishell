@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:35:06 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/13 10:27:59 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:00:56 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	pwd(void)
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 	{
-		custom_err("pwd", "getcwd", "Unexpected Error", 255);
+		if (data_hook(NULL)->pwd)
+			return (print(1, data_hook(NULL)->pwd, 1), 1);
+		else
+			custom_err("pwd", "getcwd", "Unexpected Error", 255);
 		return (-1);
 	}
 	print(1, pwd, 1);

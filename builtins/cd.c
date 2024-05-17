@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:12:33 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/16 16:00:55 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:04:17 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_curr_path(int p)
 	if (curr_path == NULL)
 	{
 		if (p)
-			custom_err("pwd", "getcwd", "Unexpected Error", 255);
+			custom_err("cd", "getcwd", "Unexpected Error", 255);
 		return (NULL);
 	}
 	return (curr_path);
@@ -72,7 +72,7 @@ int	cd(char **argv)
 	char	*old_path;
 
 	data = data_hook(NULL);
-	if (argv && (argv[1] == NULL || str_equal(argv[1], "~")))
+	if (argv && argv[1] == NULL)
 		return (go_to_home(data));
 	old_path = get_curr_path(0);
 	if (is_fod(argv[1]) == _FILE)
@@ -89,7 +89,7 @@ int	cd(char **argv)
 		return (custom_err("cd", argv[1], "No such file or directory", 1), 1);
 	}
 	free (data->pwd);
-	data->pwd = get_curr_path(1);
+	data->pwd = get_curr_path(0);
 	env_export("PWD", data->pwd);
 	env_export("OLD_PWD", old_path);
 	return (free(old_path), 1);

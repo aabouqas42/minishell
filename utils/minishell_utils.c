@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/16 11:44:51 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:11:30 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,28 @@ void	init_clear_argv(t_cmd *cmd)
 		if (args)
 			args = args->next;
 	}
+}
+
+void	wait_childs(void)
+{
+	t_data	*data;
+	t_cmd	*cmds;
+	int		exit_status;
+
+	data = data_hook(NULL);
+	cmds = data->cmds;
+	exit_status = 0;
+	while (cmds)
+	{
+		waitpid(cmds->pid, &exit_status, 0);
+		cmds = cmds->next;
+	}
+	if (WIFSIGNALED(exit_status))
+	{
+		if (exit_status == 3)
+			print(2, "Quit: 3", 1);
+		data->exit_status = (exit_status + 128) << 8;
+	}
+	else if (exit_status)
+		data->exit_status = exit_status;
 }
