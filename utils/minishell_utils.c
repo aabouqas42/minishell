@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/18 09:50:03 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/18 09:58:56 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,14 @@ void	safe_exit(int status)
 char	*get_prompt(void)
 {
 	char	*prompt;
-	char	*user;
 
-	user = getenv("USER");
-	user = _strdup(user);
-	if (user == NULL || *user == '\0')
-		user = _strdup("unknown");
-	if (user == NULL)
-		safe_exit(-1);
-	prompt = _strjoin(user, "@1337.ma $> ");
+	prompt = NULL;
+	prompt = _strjoin(prompt,"[ ");
+	if (env_grepvalue("PWD") == NULL)
+		prompt = _strjoin(prompt, "unknown");
+	else
+		prompt = _strjoin(prompt, data_hook(NULL)->pwd);
+	prompt = _strjoin(prompt," ] $> ");
 	return (prompt);
 }
 

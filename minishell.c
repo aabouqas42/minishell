@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/18 09:49:52 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/18 09:54:18 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	restore(t_data *data)
 	tcsetattr(STDIN_FILENO, TCSANOW, &data->old_term);
 	dup2 (data->def_in, 0);
 	_free();
+	free (data->prompt);
+	data->prompt = get_prompt();
 }
 
 int	main(int ac, char **av, char **env)

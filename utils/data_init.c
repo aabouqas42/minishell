@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:43:03 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/12 19:19:14 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/18 09:59:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ void	data_init(char **base_env)
 
 	data = data_hook(NULL);
 	ft_bzero(data, sizeof(t_data));
-	data->prompt = get_prompt();
 	export_base_envs(base_env);
 	export_default_envs();
-	data->pwd = _strdup(env_grepvalue("PWD"));
+	data->pwd = _strdup(getenv("PWD"));
+	data->prompt = get_prompt();
 	tcgetattr(STDIN_FILENO, &data->old_term);
 	data->def_in = dup(0);
 	data->def_out = dup(1);
