@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 10:00:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/18 09:45:42 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
-	int		child_pid;
 
 	data = data_hook(NULL);
 	if (next)
-		pipe(data->fds);
-	child_pid = fork();
-	if (child_pid == -1)
+		if (pipe(data->fds) != 0)
+			return (print(2, "Unexpected Error", 1), safe_exit(1));
+	cmd->pid = fork();
+	if (cmd->pid == -1)
 		return (print(2, "Unexpected Error", 1), safe_exit(1));
-	if (child_pid == 0)
+	if (cmd->pid == 0)
 	{
 		if (init_redirections(cmd) == 0)
 			safe_exit(1);
@@ -48,7 +48,7 @@ int	read_input(t_data *data)
 		print(1, "\x1b[1A", 0);
 		print(1, data->prompt, 0);
 		print(1, "exit", 1);
-		safe_exit(127);
+		safe_exit(data->exit_status >> 8);
 	}
 	if (*data->usrinput)
 		add_history(data->usrinput);
@@ -113,11 +113,7 @@ int	main(int ac, char **av, char **env)
 		{
 			data.fix_doubleprt = 1;
 			handle_input(&data);
-			while (waitpid(-1, &data.exit_status, 0) != -1)
-			{
-				if (data.exit_status >> 8 == -1)
-					safe_exit(data.exit_status);
-			}
+			wait_childs();
 			data.fix_doubleprt = 0;
 		}
 		restore(&data);

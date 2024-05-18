@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:07:50 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/15 19:28:35 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:20:38 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	mini_api(char *res)
 		save = _strdup(res);
 		res = exp_with_qts(res, 0);
 		split_expanded(res);
-		if (lastarg && lastarg->type > 2 && lastarg->type <= 5 && (res == NULL || t_arg_size(lastarg->next) > 1))
-			return (do_error(AMBIGUOUS_ERR, "", save), free(res), free(save), 0);
+		if (check_ambiguous(lastarg, res, save))
+			return (0);
 		return (free(save), free(res), 1);
 	}
 	if (heredoc_expand)
@@ -92,7 +92,7 @@ int	split_usrin(char *usr_in)
 			if (ft_strchr("<>|", *usr_in) && !qt)
 				break ;
 			res = _strnjoin(res, usr_in, 1);
-			usr_in+= (*usr_in != '\0');
+			usr_in += (*usr_in != '\0');
 		}
 		if (mini_api(res) == 0)
 			return (0);
