@@ -6,13 +6,13 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:46:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/15 19:07:33 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:41:19 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	set_out(t_cmd *cmd, t_arg **arg)
+int	set_out(t_cmd *cmd, t_arg **arg)
 {
 	t_data	*data;
 	int		action;
@@ -29,9 +29,10 @@ void	set_out(t_cmd *cmd, t_arg **arg)
 	if (cmd->out == -1)
 	{
 		do_error(PERMIDEN_ERR, "", (*arg)->next->value);
-		exit(1);
+		return (0);
 	}
 	*arg = (*arg)->next;
+	return (1);
 }
 
 void	set_pipes(t_cmd *cmd, int first, int next)
@@ -82,14 +83,18 @@ void	set_io(t_cmd *cmd)
 
 int	set_in(t_cmd *cmd, t_arg **arg)
 {
+	char	*name;
 	t_arg	*tmp;
 	int		fd;
 
-	fd = open((*arg)->next->value, O_RDONLY);
+	name = (*arg)->next->value;
+	fd = open(name, O_RDONLY);
 	if (fd == -1)
 	{
 		cmd->in = fd;
-		do_error(NSFODIR_ERR, "", (*arg)->next->value);
+		if (is_fod(name) != -1 && access(name, R_OK) != 0)
+			return (do_error(PERMIDEN_ERR, "", name), 0);
+		do_error(NSFODIR_ERR, "", name);
 		return (0);
 	}
 	(*arg) = (*arg)->next;
@@ -102,8 +107,7 @@ int	set_in(t_cmd *cmd, t_arg **arg)
 	}
 	if (cmd->in != 0)
 		close(cmd->in);
-	cmd->in = fd;
-	return (1);
+	return (cmd->in = fd, 1);
 }
 
 int	init_redirections(t_cmd *cmd)
@@ -114,7 +118,10 @@ int	init_redirections(t_cmd *cmd)
 	while (args)
 	{
 		if (args->type == ARG_REDOUT || args->type == ARG_APPEND)
-			set_out(cmd, &args);
+		{
+			if (set_out(cmd, &args) == 0)
+				return (0);
+		}
 		else if (args->type == ARG_HERDOC)
 			args = args->next;
 		else if (args->type == ARG_REDIN)

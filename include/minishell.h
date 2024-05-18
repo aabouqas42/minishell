@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:22:49 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 10:05:45 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:27:26 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_cmd
 {
 	t_arg			*linked_argv;
 	char			**argv;
+	int				pid;
 	int				in;
 	int				out;
 	struct s_cmd	*next;
@@ -187,12 +188,13 @@ int			pwd(void);
 */
 void		do_error(t_error_type errtype, char *progname, char *reason);
 void		custom_err(char *progname, char *reason, char *msg, int es);
+int			check_ambiguous(t_arg *lastarg, char *res, char *reason);
 void		check_arguments(int ac, char **av);
+void		wait_childs(void);
 
 /**
  * 	IO OPERATORS
 */
-void		rl_replace_line (const char *text, int clear_undo);
 void		set_pipes(t_cmd *cmd, int first, int next);
 int			is_var(char curr_char, char next_char);
 int			is_valid_cmd(t_data *data, char *cmd);
@@ -200,7 +202,7 @@ int			set_var(char *argv_str, char **str);
 char		*exp_with_no_qts(char *str, int hd);
 char		*exp_with_qts(char *str, int hd);
 int			check_redirections(t_arg *usrin);
-void		set_out(t_cmd *cmd, t_arg **arg);
+int			set_out(t_cmd *cmd, t_arg **arg);
 int			init_redirections(t_cmd *cmd);
 void		split_expanded(char *usr_in);
 int			open_heredoc(t_arg *target);
@@ -213,6 +215,7 @@ int			get_argsc(char **args);
 t_arg_type	is_io_op(char	*str);
 char		*get_curr_path(int p);
 int			check_qts(char *str);
+int			fix_qt_err(char *str);
 int			is_valid_input(void);
 void		set_io(t_cmd *cmd);
 int			is_fod(char *name);

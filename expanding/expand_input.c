@@ -6,7 +6,7 @@
 /*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:29 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/13 10:15:26 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/16 12:02:05 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*exp_with_qts(char *str, int herdoc)
 		if ((*str == DQT && qt != SQT) || (*str == SQT && qt != DQT))
 		{
 			qt = (qt == 0) * (*str);
-			if (qt == 0)
+			if (fix_qt_err(str) && qt == 0)
 				res = _strnjoin(res, "", 1);
 		}
 		if (*str == '$' && _strchr("\'\"", *(str + 1)) && qt == 0)

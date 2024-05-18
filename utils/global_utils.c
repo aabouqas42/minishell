@@ -6,11 +6,20 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:12:23 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/15 19:26:50 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:20:20 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	fix_qt_err(char *str)
+{
+	if (*str == '"')
+		*str = 2;
+	if (*str == '\'')
+		*str = 1;
+	return (1);
+}
 
 t_arg_type	is_io_op(char	*str)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/15 16:08:57 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/18 09:45:25 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	safe_exit(int status)
 	data->prompt = NULL;
 	close(data->def_in);
 	close(data->def_out);
+	close(data->fds[0]);
+	close(data->fds[1]);
 	exit(status);
 }
 
@@ -64,12 +66,35 @@ void	init_clear_argv(t_cmd *cmd)
 	cmd->argv = NULL;
 	while (args)
 	{
-		if (args->type == ARG_REDIN || args->type == ARG_REDOUT
-			|| args->type == ARG_APPEND || args->type == ARG_HERDOC)
+		if (args->type >= 3)
 			args = args->next;
 		else
 			cmd->argv = _realloc(cmd->argv, args->value);
 		if (args)
 			args = args->next;
 	}
+}
+
+void	wait_childs(void)
+{
+	t_data	*data;
+	t_cmd	*cmds;
+	int		exit_status;
+
+	data = data_hook(NULL);
+	cmds = data->cmds;
+	exit_status = 0;
+	while (cmds)
+	{
+		waitpid(cmds->pid, &exit_status, 0);
+		cmds = cmds->next;
+	}
+	if (WIFSIGNALED(exit_status))
+	{
+		if (exit_status == 3)
+			print(2, "Quit: 3", 1);
+		data->exit_status = (exit_status + 128) << 8;
+	}
+	else if (exit_status)
+		data->exit_status = exit_status;
 }

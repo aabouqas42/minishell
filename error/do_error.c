@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:46:47 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/12 15:46:20 by mait-elk         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:34:31 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	__notdirectory_err(char *progname, char *reason)
 {
 	print(2, "minishell : ", 0);
 	print(2, progname, 0);
-	print(2, ": `", 0);
+	print(2, ": ", 0);
 	print(2, reason, 0);
 	print(2, ": Not a directory", 1);
 	data_hook(NULL)->exit_status = 1 << 8;
@@ -65,5 +65,5 @@ void	do_error(t_error_type errtype, char *progname, char *reason)
 	if (errtype == NSFODIR_ERR)
 		__custom_err(": No such file or directory", reason, 1);
 	if (errtype == AMBIGUOUS_ERR)
-		__custom_err(": ambiguous redirect", reason, 127);
+		__custom_err(": ambiguous redirect", reason, 1);
 }

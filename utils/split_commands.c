@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   split_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 13:34:25 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/16 10:13:12 by aabouqas         ###   ########.fr       */
+/*   Created: 2024/05/16 12:13:57 by mait-elk          #+#    #+#             */
+/*   Updated: 2024/05/16 16:47:28 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
 void	create_heredoc(t_cmd *cmd, t_arg *target)
 {
@@ -24,12 +24,15 @@ void	create_heredoc(t_cmd *cmd, t_arg *target)
 
 static int	stdin_closed(t_cmd cmd)
 {
+	t_arg	*node;
+
 	if (read(0, NULL, 0) == -1)
 	{
 		while (cmd.linked_argv)
 		{
+			node = cmd.linked_argv->next;
 			free(cmd.linked_argv);
-			cmd.linked_argv = cmd.linked_argv->next;
+			cmd.linked_argv = node;
 		}
 		cmd.linked_argv = NULL;
 		if (cmd.in != 0)

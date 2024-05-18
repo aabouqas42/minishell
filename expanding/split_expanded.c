@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mait-elk <mait-elk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:15:57 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/15 20:01:06 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:34:40 by mait-elk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	split_expanded(char *usr_in)
 		qt = 0;
 		while (*usr_in && (!_spaces(*usr_in) || qt))
 		{
-			if ((*usr_in == DQT && qt != SQT) || (*usr_in == SQT && qt != DQT))
+			if ((*usr_in == 2 && qt != 1) || (*usr_in == 1 && qt != 2))
 			{
 				qt = (qt == 0) * (*usr_in);
 				if (qt == 0)
