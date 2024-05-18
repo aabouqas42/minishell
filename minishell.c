@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:31:13 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/17 10:10:00 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/18 10:03:47 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void	program_exec(t_cmd *cmd, int first, int next)
 {
 	t_data	*data;
-	int		child_pid;
 
 	data = data_hook(NULL);
 	if (next)
-		pipe(data->fds);
-	child_pid = fork();
-	if (child_pid == -1)
+		if (pipe(data->fds) != 0)
+			return (print(2, "Unexpected Error", 1), safe_exit(1));
+	cmd->pid = fork();
+	if (cmd->pid == -1)
 		return (print(2, "Unexpected Error", 1), safe_exit(1));
-	if (child_pid == 0)
+	if (cmd->pid == 0)
 	{
 		if (init_redirections(cmd) == 0)
 			safe_exit(1);
@@ -37,7 +37,6 @@ void	program_exec(t_cmd *cmd, int first, int next)
 		execve(data->program_path, cmd->argv, data->env_2d);
 		safe_exit(errno);
 	}
-	cmd->pid = child_pid;
 	close_unused_fds(next);
 }
 
@@ -98,6 +97,8 @@ void	restore(t_data *data)
 	tcsetattr(STDIN_FILENO, TCSANOW, &data->old_term);
 	dup2 (data->def_in, 0);
 	_free();
+	free (data->prompt);
+	data->prompt = get_prompt();
 }
 
 int	main(int ac, char **av, char **env)
