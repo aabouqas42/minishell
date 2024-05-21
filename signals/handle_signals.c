@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:10:00 by mait-elk          #+#    #+#             */
-/*   Updated: 2024/05/16 19:44:17 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:49:28 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	sig_handle_sigint(int sig)
 	if (data && data->fix_doubleprt == 2)
 	{
 		close(0);
+		data->exit_status = 1 << 8;
 		return ;
 	}
 	if (data && data->fix_doubleprt)

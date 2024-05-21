@@ -6,7 +6,7 @@
 /*   By: aabouqas <aabouqas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:06:16 by aabouqas          #+#    #+#             */
-/*   Updated: 2024/05/18 09:58:56 by aabouqas         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:48:53 by aabouqas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ void	safe_exit(int status)
 	data->prompt = NULL;
 	close(data->def_in);
 	close(data->def_out);
-	close(data->fds[0]);
-	close(data->fds[1]);
+	if (data->fds[0] != 0)
+		close(data->fds[0]);
+	if (data->fds[1] != 0)
+		close(data->fds[1]);
 	exit(status);
 }
 
@@ -48,12 +50,11 @@ char	*get_prompt(void)
 	char	*prompt;
 
 	prompt = NULL;
-	prompt = _strjoin(prompt,"[ ");
-	if (env_grepvalue("PWD") == NULL)
+	if (env_grepvalue("USER") == NULL)
 		prompt = _strjoin(prompt, "unknown");
 	else
-		prompt = _strjoin(prompt, data_hook(NULL)->pwd);
-	prompt = _strjoin(prompt," ] $> ");
+		prompt = _strjoin(prompt, env_grepvalue("USER"));
+	prompt = _strjoin(prompt,"@1337 $> ");
 	return (prompt);
 }
 
